@@ -1,0 +1,21 @@
+id,nome,email,tipo_usuario,data_cadastro
+1,Carlos Eduardo Silva,carlos.silva@saepsaude.com.br,funcionario,2026-01-10
+2,Mariana Oliveira Santos,mariana.oliveira@saepsaude.com.br,funcionario,2026-01-12
+3,Roberto Souza Lima,roberto.souza@saepsaude.com.br,funcionario,2026-01-15
+4,Fernanda Costa Pereira,fernanda.costa@saepsaude.com.br,funcionario,2026-01-20
+5,Lucas Mendes Rocha,lucas.mendes@saepsaude.com.br,funcionario,2026-01-22
+6,Camila Rodrigues Alves,camila.rodrigues@gmail.com,cliente,2026-02-01
+7,Gabriel Martins Barbosa,gabriel.martins@outlook.com,cliente,2026-02-02
+8,Beatriz Almeida Carvalho,beatriz.almeida@yahoo.com.br,cliente,2026-02-03
+9,Thiago Ferreira Ramos,thiago.ramos@gmail.com,cliente,2026-02-05
+10,Juliana Ribeiro Castro,juliana.castro@hotmail.com,cliente,2026-02-06
+11,Rafael Gomes Araujo,rafael.gomes@gmail.com,cliente,2026-02-07
+12,Patricia Cardoso Dias,patricia.dias@outlook.com,cliente,2026-02-08
+13,Rodrigo Fernandes Melo,rodrigo.melo@gmail.com,cliente,2026-02-10
+14,Aline Correia Azevedo,aline.azevedo@yahoo.com.br,cliente,2026-02-11
+15,Bruno Nunes Marques,bruno.marques@gmail.com,cliente,2026-02-12
+16,Vanessa Teixeira Cavalcanti,vanessa.teixeira@outlook.com,cliente,2026-02-14
+17,Diego Monteiro Barros,diego.barros@gmail.com,cliente,2026-02-15
+18,Amanda Moreira Guimaraes,amanda.guimaraes@hotmail.com,cliente,2026-02-16
+19,Leonardo Pinto Cunha,leonardo.cunha@gmail.com,cliente,2026-02-18
+20,Letricia Moura Freitas,leticia.freitas@outlook.com,cliente,2026-02-20

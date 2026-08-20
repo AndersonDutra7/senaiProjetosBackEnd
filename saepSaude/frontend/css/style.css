@@ -1,0 +1,425 @@
+:root {
+  --branco: #ffffff;
+  --preto: #000000;
+  --cinza-escuro: #333333;
+  --roxo: #483dad;
+  --vermelho: #ff0000;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #f2f2f2;
+  color: var(--preto);
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ═══════════ PERFIL (COLUNA 1) ═══════════ */
+.perfil {
+  width: 280px;
+  min-width: 280px;
+  background: var(--cinza-escuro);
+  color: var(--branco);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px;
+  min-height: 100vh;
+}
+
+.perfil-topo {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.perfil-logo {
+  max-width: 100px;
+  margin: 0 auto 10px;
+  display: block;
+}
+
+.perfil-nome-empresa {
+  font-size: 1.3rem;
+}
+
+.perfil-usuario {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.perfil-foto {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 8px;
+}
+
+.perfil-nome-usuario {
+  font-weight: bold;
+}
+
+.perfil-totais {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 24px;
+}
+
+.perfil-total {
+  text-align: center;
+}
+
+.perfil-total-valor {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.perfil-total-label {
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+.btn-atividade {
+  background: transparent;
+  color: var(--branco);
+  border-top: 1px solid var(--branco);
+  border-bottom: 1px solid var(--branco);
+  border-left: none;
+  border-right: none;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn-atividade:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.perfil-rodape {
+  margin-top: auto;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.perfil-redes {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin: 10px 0;
+}
+
+.perfil-redes img {
+  width: 20px;
+  height: 20px;
+  filter: invert(1);
+}
+
+.perfil-copyright {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+/* ═══════════ MAIN (COLUNA 2) ═══════════ */
+.main {
+  flex: 1;
+  padding: 24px 32px;
+  background: var(--branco);
+}
+
+.main-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.btn-login,
+.btn-logout {
+  background: var(--branco);
+  color: var(--cinza-escuro);
+  border: 1px solid var(--cinza-escuro);
+  padding: 8px 20px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.btn-logout {
+  background: var(--cinza-escuro);
+  color: var(--branco);
+  border: none;
+}
+
+.filtros {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filtro-btn {
+  background: var(--cinza-escuro);
+  color: var(--branco);
+  border: none;
+  padding: 8px 18px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.filtro-btn.ativo {
+  background: var(--roxo);
+}
+
+.lista-atividades {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.card-atividade {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 16px;
+  background: var(--branco);
+}
+
+.card-titulo {
+  text-align: center;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+
+.card-autor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.card-autor-foto {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #ccc;
+}
+
+.card-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.card-interacoes {
+  display: flex;
+  gap: 18px;
+}
+
+.card-interacoes button {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.card-interacoes img {
+  width: 20px;
+  height: 20px;
+}
+
+.icone-coracao.curtido {
+  filter: invert(19%) sepia(97%) saturate(7414%) hue-rotate(357deg) brightness(97%) contrast(113%);
+}
+
+.card-comentario-form {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.input-comentario {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-enviar-comentario {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-enviar-comentario img {
+  width: 20px;
+  height: 20px;
+}
+
+.paginacao {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.paginacao button {
+  background: var(--branco);
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.paginacao button.ativa {
+  background: var(--roxo);
+  color: var(--branco);
+  border-color: var(--roxo);
+}
+
+.paginacao button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ═══════════ FORMULÁRIO DE ATIVIDADE ═══════════ */
+.secao-form-atividade {
+  max-width: 420px;
+  margin: 40px auto;
+}
+
+.form-titulo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.campo label {
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.campo input,
+.campo select {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.campo input.campo-invalido,
+.campo select.campo-invalido {
+  border-color: var(--vermelho);
+}
+
+.erro-campo {
+  color: var(--vermelho);
+  font-size: 0.8rem;
+  min-height: 16px;
+  margin-top: 3px;
+}
+
+.btn-criar-atividade {
+  width: 100%;
+  background: var(--cinza-escuro);
+  color: var(--branco);
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* ═══════════ MODAL DE LOGIN ═══════════ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal {
+  background: var(--branco);
+  padding: 28px;
+  border-radius: 8px;
+  width: 320px;
+  position: relative;
+}
+
+.modal-titulo {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.btn-fechar-modal {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-fechar-modal img {
+  width: 16px;
+  height: 16px;
+}
+
+.modal-botoes {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.btn-cancelar {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--cinza-escuro);
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-confirmar-login {
+  flex: 1;
+  background: var(--cinza-escuro);
+  color: var(--branco);
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .app {
+    flex-direction: column;
+  }
+  .perfil {
+    width: 100%;
+    min-height: auto;
+  }
+}

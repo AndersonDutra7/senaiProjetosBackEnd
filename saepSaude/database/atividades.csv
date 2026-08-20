@@ -1,0 +1,21 @@
+id,usuario_id,tipo_atividade,distancia_km,duracao_min,data_atividade,descricao
+1,1,Corrida,5.20,30,2026-02-01,Corrida matinal na praça central
+2,2,Ciclismo,18.50,55,2026-02-01,Pedalada na ciclovia à beira-mar
+3,1,Caminhada,3.10,35,2026-02-02,Caminhada leve pós-expediente
+4,3,Natação,1.50,45,2026-02-03,Treino de nado livre na piscina club
+5,4,Musculação,0.00,60,2026-02-03,Treino A - Membros inferiores
+6,5,Corrida,8.00,48,2026-02-04,Treino de tiro e ritmo acelerado
+7,6,Corrida,4.00,28,2026-02-05,Primeira corrida utilizando a plataforma
+8,7,Ciclismo,25.00,75,2026-02-05,Pedal longo de final de tarde
+9,8,Caminhada,5.00,50,2026-02-06,Caminhada no parque da cidade
+10,9,Futebol,0.00,90,2026-02-06,Partida semanal com amigos
+11,10,Musculação,0.00,50,2026-02-07,Treino B - Superiores e core
+12,2,Corrida,6.50,38,2026-02-08,Corrida de rua ritmada
+13,11,Natação,2.00,50,2026-02-08,Treino de resistência e borboleta
+14,12,Ciclismo,12.30,40,2026-02-09,Deslocamento urbano de bicicleta
+15,13,Corrida,10.00,58,2026-02-10,Preparatório para prova de 10k
+16,14,Caminhada,4.20,42,2026-02-11,Caminhada ao ar livre
+17,15,Musculação,0.00,65,2026-02-12,Treino de hipertrofia
+18,16,Corrida,3.00,20,2026-02-14,Corrida rápida de aquecimento
+19,17,Ciclismo,30.00,90,2026-02-15,Pedal de longa distância na estrada
+20,18,Natação,1.20,40,2026-02-16,Treino técnico de braçadas

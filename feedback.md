@@ -1,0 +1,7 @@
+Pontos de Melhoria:
+
+Estrutura e Organização do Documento Técnico: Seus conteúdos estão de forma contínua sem uma hierarquia visual de tópicos (ex.: 1. Arquitetura da Solução, 2. Regras de Negócio, 3. Modelagem de Dados - DER). Por se tratar de um documento técnico, é importante estruturá-lo com seções bem demarcadas, sumário/cabeçalhos padronizados e manter o leiaute limpo.
+
+Qualidade e Legibilidade do Diagrama (DER): Embora o uso da ferramenta ERD do pgAdmin seja uma ótima prática para alinhar o diagrama ao banco, a imagem inserida apresentou baixa resolução e elementos reduzidos, dificultando a leitura visual dos tipos de dados e relacionamentos. Em documentações técnicas, certifique-se de exportar o diagrama em alta definição (ou formato vetorial/SVG) e ajustar a organização visual antes da captura, garantindo que chaves, tipos e cardinalidades fiquem perfeitamente legíveis.
+
+Restrição de Unicidade na Tabela de Curtidas (Constraint UNIQUE): A Regra de Negócio nº 4 define que um usuário não pode curtir a mesma atividade duas vezes. Embora a tabela curtida tenha sido modelada com usuario_id e atividade_id, faltou especificar no documento/modelo a aplicação de uma restrição de unicidade (Constraint UNIQUE) para a combinação desses dois campos, garantindo essa regra diretamente na camada do banco de dados.

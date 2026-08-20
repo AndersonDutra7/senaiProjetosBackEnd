@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avaliação Prática – Sistema Web SAEPSaúde</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap');
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11pt;
+        color: #000;
+        background: #fff;
+      }
+
+      /* ── PAGE LAYOUT ── */
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 15mm 15mm 15mm 15mm;
+      }
+
+      /* ── HEADER TABLE ── */
+      .header-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 14px;
+      }
+      .header-table td,
+      .header-table th {
+        border: 1px solid #000;
+        padding: 3px 6px;
+        vertical-align: middle;
+        font-size: 10pt;
+      }
+      .logo-cell {
+        width: 140px;
+        text-align: center;
+        vertical-align: middle !important;
+        padding: 8px;
+      }
+      .logo-cell span {
+        font-size: 9pt;
+        font-weight: normal;
+        display: block;
+        font-style: normal;
+      }
+
+      .senai-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .senai-brand img {
+        max-width: 120px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+      .title-cell {
+        text-align: center;
+        font-weight: bold;
+        font-size: 13pt;
+        letter-spacing: 1px;
+        padding: 6px;
+      }
+      .desemp-cell {
+        width: 90px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 10pt;
+        vertical-align: top;
+      }
+      .info-row td {
+        font-size: 10pt;
+      }
+      .label-bold {
+        font-weight: bold;
+      }
+      .estudante-row td {
+        font-weight: bold;
+        font-size: 10.5pt;
+      }
+
+      /* ── CAIXA DE CAPACIDADES GERAIS ── */
+      .capacidades-box {
+        margin-bottom: 18px;
+      }
+      .capacidades-header {
+        background: #2e5496;
+        color: #fff;
+        font-weight: bold;
+        font-size: 12pt;
+        padding: 10px 10px;
+        margin-top: 18px;
+        margin-bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .capacidades-content {
+        border: 1px solid #2e5496;
+        border-top: none;
+        padding: 8px 10px 10px 10px;
+        margin-bottom: 4px;
+      }
+      .capacidades-content p {
+        margin-bottom: 3px;
+      }
+      .capacidades-content p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* ── SECTION DIVIDER ── */
+      .section-divider {
+        margin: 28px 0;
+        border-top: 3px solid #2e5496;
+        border-bottom: 3px solid #2e5496;
+        padding: 12px 0 8px 0;
+      }
+      .section-title {
+        font-size: 13pt;
+        font-weight: bold;
+        color: #2e5496;
+        text-align: center;
+        margin-bottom: 4px;
+      }
+
+      /* ── PRINT ── */
+      @media print {
+        * {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
+        body {
+          background: #fff;
+        }
+
+        .page {
+          margin: 0;
+          padding: 12mm 14mm;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- ══════════════════ CABEÇALHO ══════════════════ -->
+      <table class="header-table">
+        <tr>
+          <td class="logo-cell" rowspan="7">
+            <div class="senai-brand">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_sfpOEDmPPoL6K0aQL4qg5SsWL_41ZqhyF7zW1509kA&s=10"
+                alt="Logo SENAI"
+              />
+            </div>
+          </td>
+          <td class="title-cell">AVALIAÇÃO PRÁTICA - SA</td>
+          <td class="desemp-cell" rowspan="7">Desempenho</td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Data:</span>
+            <em style="color: #2e5496">12/08/2026</em>
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Docente:</span>
+            <em style="color: #2e5496">Anderson Raulino Dutra</em>
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Curso Técnico em:</span>
+            <em style="color: #2e5496; font-weight: bold"
+              >{{curso}}</em
+            >
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Unidade Curricular:</span>
+            <em style="color: #2e5496; font-weight: bold"
+              >Informática para Internet</em
+            >
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Turma:</span>
+            <em style="color: #2e5496; font-weight: bold"
+              >T TIIN 2025/1 M2 - 463013</em
+            >
+          </td>
+        </tr>
+        <tr class="estudante-row">
+          <td><strong>Estudante:</strong></td>
+        </tr>
+      </table>
+
+      <!-- ══════════════════ CAIXA DE CAPACIDADES TÉCNICAS ══════════════════ -->
+      <div class="capacidades-box">
+        <div class="capacidades-header">CAPACIDADES TÉCNICAS</div>
+        <div class="capacidades-content">
+          <p>
+            <strong>CT1:</strong> Interpretar requisitos e regras de negócio de um sistema web a partir de um cenário e de especificações técnicas fornecidas.
+          </p>
+          <p>
+            <strong>CT2:</strong> Modelar a estrutura das tabelas do banco de dados (funcionários, clientes, atividades, curtidas e comentários) atendendo às regras de negócio do sistema.
+          </p>
+          <p>
+            <strong>CT3:</strong> Criar o banco de dados relacional por meio de scripts SQL e importar dados de arquivos CSV para o sistema.
+          </p>
+          <p>
+            <strong>CT4:</strong> Desenvolver uma aplicação web dinâmica (SPA), com carregamento e persistência de dados sem recarregar a página.
+          </p>
+          <p>
+            <strong>CT5:</strong> Implementar regras de negócio de interface — autenticação, listagem, paginação, curtidas, comentários e cadastro — conforme especificações técnicas.
+          </p>
+        </div>
+      </div>
+
+      <!-- ══════════════════ CAIXA DE CAPACIDADES SOCIOEMOCIONAIS ══════════════════ -->
+      <div class="capacidades-box">
+        <div class="capacidades-header">CAPACIDADES SOCIOEMOCIONAIS</div>
+        <div class="capacidades-content">
+          <p>
+            <strong>CS1:</strong> Demonstrar atenção aos detalhes ao seguir fielmente as regras de negócio e o padrão visual definidos nas especificações.
+          </p>
+          <p>
+            <strong>CS2:</strong> Reconhecer a importância da organização do código e da estrutura de arquivos do projeto entregue.
+          </p>
+          <p>
+            <strong>CS3:</strong> Agir com autonomia e senso crítico ao tomar decisões de layout dentro dos limites estabelecidos pelas regras de negócio.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-divider">
+        <div class="section-title">
+          SISTEMA SAEPSAÚDE — REDE DE ATIVIDADES FÍSICAS
+        </div>
+      </div>
+
+      <!-- ══════════════════ CAIXA DE CONTEXTO GERAL ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px;">
+        <div class="capacidades-header">CONTEXTO DA SITUAÇÃO DE APRENDIZAGEM</div>
+        <div class="capacidades-content" style="padding: 12px 14px;">
+          <p style="margin-bottom: 10px; line-height: 1.5;">
+            Em um cenário em que a preocupação com a saúde e o bem-estar está crescendo, muitas pessoas buscam maneiras eficazes e personalizadas de gerenciar suas atividades físicas. A empresa de artigos esportivos <strong>SAEPSaúde</strong> está iniciando um projeto e deseja fazer um sistema web, a fim de incentivar seus clientes a monitorarem suas práticas esportivas, onde possam registrar e listar as atividades físicas realizadas e receber curtidas e comentários de outros usuários sobre seu desempenho.
+          </p>
+          <p style="margin-bottom: 10px; line-height: 1.5;">
+            Inicialmente, um protótipo foi criado utilizando dados de alguns funcionários, mas a empresa deseja expandir a plataforma para seus clientes e agregar novas funcionalidades. Para que essa expansão ocorra, é essencial que no novo sistema seja possível implementar futuras atualizações contínuas sem comprometer a integridade das informações já armazenadas.
+          </p>
+          <p style="margin-bottom: 10px; line-height: 1.5;">
+            A equipe da SAEPSaúde que desenvolveu o protótipo também solicita que seja modelada a estrutura das tabelas com os dados dos funcionários e dos clientes para atender a regra de negócios e garantir futuras manutenções no sistema. Além disso, para garantir uma experiência de usuário fluida, a equipe opta por desenvolver o sistema que permita interações rápidas e que todo o conteúdo possa ser carregado de forma dinâmica e sem precisar atualizar a página, conforme as especificações.
+          </p>
+          <p style="margin-bottom: 10px; line-height: 1.5;">
+            Os dados coletados dos funcionários, <strong>atividades.csv</strong> e <strong>usuarios.csv</strong>, no protótipo devem ser importados para o novo sistema.
+          </p>
+          <p style="margin-bottom: 0; line-height: 1.5;">
+            Com essa abordagem, a SAEPSaúde garante uma base sólida para seu sistema, ao mesmo tempo que possibilita a flexibilidade para futuras expansões e melhorias.
+          </p>
+        </div>
+      </div>
+
+      <!-- ══════════════════ ESPECIFICAÇÕES: PÁGINA PRINCIPAL ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px;">
+        <div class="capacidades-header">1.1 ESPECIFICAÇÕES — PÁGINA PRINCIPAL</div>
+        <div class="capacidades-content" style="padding: 12px 14px;">
+          <p style="margin-bottom: 12px; line-height: 1.5;">
+            O layout é livre, desde que a página seja dividida em duas colunas — <strong>Perfil</strong> e <strong>Main</strong> — e que as regras de negócio abaixo estejam presentes.
+          </p>
+
+          <div style="font-weight: bold; color: #2e5496; font-size: 11pt; margin-bottom: 8px; text-transform: uppercase;">
+            Coluna 1 — Componente Perfil
+          </div>
+          <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #fff; margin-bottom: 16px;">
+            <thead>
+              <tr style="background-color: #2e5496; color: #ffffff;">
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: left; width: 30%;">Elemento</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: left;">Regra de Negócio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Fundo e identidade</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Cor de fundo <strong>#333333</strong>; logo <strong>SAEPSaude.png</strong> e nome da empresa em <strong>#FFFFFF</strong>, carregados dinamicamente a partir do banco de dados.</td>
+              </tr>
+              <tr style="background-color: #fcfdfe;">
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Totais</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Quantidade total de <strong>atividades</strong> e de <strong>calorias</strong>, carregadas do banco de dados da empresa.</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Botão Atividades</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Desabilitado para usuários não logados; fonte e bordas superior/inferior em <strong>#FFFFFF</strong>, texto centralizado.</td>
+              </tr>
+              <tr style="background-color: #fcfdfe;">
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Rodapé</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Fixado na base do Perfil; fundo <strong>#333333</strong>, fonte <strong>#FFFFFF</strong>; texto "SAEPSaúde" + ícones Instagram/Twitter/TikTok + "Copyright-2024".</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="font-weight: bold; color: #2e5496; font-size: 11pt; margin-bottom: 8px; text-transform: uppercase;">
+            Coluna 2 — Componente Main
+          </div>
+          <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #fff;">
+            <thead>
+              <tr style="background-color: #2e5496; color: #ffffff;">
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: left; width: 30%;">Seção</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: left;">Regra de Negócio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Cabeçalho</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Botão <strong>Login</strong> no canto superior direito, fundo <strong>#FFFFFF</strong> e fonte <strong>#333333</strong>.</td>
+              </tr>
+              <tr style="background-color: #fcfdfe;">
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Filtros</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Opções "Corrida", "Caminhada" e "Trilha", centralizadas, fundo <strong>#333333</strong> e fonte <strong>#FFFFFF</strong>.</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Listagem de Atividades</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Cada card exibe título (centralizado), foto e nome do usuário, distância, duração, calorias e data no formato <strong>HH:MM - DD/MM/YY</strong> — todos carregados do banco. Ícones "coração.svg" e "comentário.svg" no canto direito, cada um com sua contagem de interações persistida.</td>
+              </tr>
+              <tr style="background-color: #fcfdfe;">
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Paginação</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Limite de <strong>4 atividades</strong> por página; página inicial "1" ativa com fundo <strong>#483DAD</strong> e fonte <strong>#FFFFFF</strong>.</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Acesso não logado</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Filtros, paginação, like e comentário só funcionam logado; qualquer clique nessas ações sem login abre o popup/modal de Login. Likes e comentários devem persistir no banco para não se perderem ao recarregar.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+<!-- ══════════════════ ESPECIFICAÇÕES: LOGIN ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px;">
+        <div class="capacidades-header">1.2 ESPECIFICAÇÕES — LOGIN</div>
+        <div class="capacidades-content" style="padding: 12px 14px;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #fff;">
+            <thead>
+              <tr style="background-color: #2e5496; color: #ffffff;">
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: left; width: 30%;">Elemento</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: left;">Regra de Negócio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Estrutura do modal</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Formulário com campos de <strong>e-mail</strong> e <strong>senha</strong>, cada um com label; botões "Cancelar" e "Login" e ícone "x.svg" para fechar.</td>
+              </tr>
+              <tr style="background-color: #fcfdfe;">
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Botão Cancelar</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Sem cor de fundo, borda <strong>#333333</strong>; fecha o modal ao ser clicado.</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Botão Login</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Fundo <strong>#333333</strong>, fonte <strong>#FFFFFF</strong>; ao clicar, valida as credenciais no banco de dados.</td>
+              </tr>
+              <tr style="background-color: #fcfdfe;">
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Validação — campo vazio</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Borda do input em vermelho + mensagem "email ou senha obrigatório".</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Validação — credencial incorreta</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Borda do input em vermelho + mensagem "email ou senha incorreta".</td>
+              </tr>
+              <tr style="background-color: #fcfdfe;">
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Sucesso</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Credenciais válidas direcionam o usuário para a SPA com suas informações carregadas (perfil, atividades, calorias) e habilitam o botão "Atividade".</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+<!-- ══════════════════ INTERAÇÃO: CURTIR ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px;">
+        <div class="capacidades-header">1.3 INTERAÇÃO DO USUÁRIO — CURTIR</div>
+        <div class="capacidades-content" style="padding: 12px 14px;">
+          <p style="margin-bottom: 10px; line-height: 1.5;">
+            Com o usuário logado, o cabeçalho do Main exibe o botão <strong>Logout</strong> (fundo <strong>#333333</strong>, fonte <strong>#FFFFFF</strong>), e o Perfil passa a mostrar a foto, o nome e os totais de atividades/calorias do usuário logado.
+          </p>
+          <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #fff;">
+            <thead>
+              <tr style="background-color: #2e5496; color: #ffffff;">
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: left; width: 30%;">Ação</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: left;">Comportamento Esperado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Curtir</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">1 clique = +1 like; ícone "coração.svg" muda para <strong>#FF0000</strong>; máximo de 1 like por usuário/atividade.</td>
+              </tr>
+              <tr style="background-color: #fcfdfe;">
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Descurtir</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Novo clique = -1 like; ícone retorna para <strong>#FFFFFF</strong>; só é permitido para quem curtiu antes.</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Persistência</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Toda alteração de like deve ser salva no banco de dados.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+<!-- ══════════════════ INTERAÇÃO: COMENTÁRIO ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px;">
+        <div class="capacidades-header">1.4 INTERAÇÃO DO USUÁRIO — COMENTÁRIO</div>
+        <div class="capacidades-content" style="padding: 12px 14px;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #fff;">
+            <thead>
+              <tr style="background-color: #2e5496; color: #ffffff;">
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: left; width: 30%;">Ação</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: left;">Comportamento Esperado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Logout</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Encerra a sessão e retorna à tela inicial da SPA.</td>
+              </tr>
+              <tr style="background-color: #fcfdfe;">
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Filtros (corrida/caminhada/trilha)</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Listam apenas atividades do tipo selecionado, respeitando a paginação de 4 itens por página.</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Abrir comentário</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Clique no ícone "chat.svg" abre, abaixo da atividade, um campo com placeholder "Escrever um comentário..." e botão "send.svg".</td>
+              </tr>
+              <tr style="background-color: #fcfdfe;">
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Validação</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Só envia com mais de 2 caracteres; campo vazio exibe "não é possível enviar um comentário vazio".</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Persistência</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Comentário salvo e contador atualizado no banco de dados.</td>
+              </tr>
+              <tr style="background-color: #fcfdfe;">
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Paginação avançada</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Navegação Próxima/Anterior/Primeira/Última; página ativa em <strong>#483DAD</strong> com fonte <strong>#FFFFFF</strong>; "Anterior" desabilitado na primeira página e "Próxima" desabilitado na última.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+<!-- ══════════════════ INTERAÇÃO: CADASTRAR E LISTAR ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px;">
+        <div class="capacidades-header">1.5 INTERAÇÃO DO USUÁRIO — CADASTRAR E LISTAR ATIVIDADE</div>
+        <div class="capacidades-content" style="padding: 12px 14px;">
+          <p style="margin-bottom: 10px; line-height: 1.5;">
+            Ao clicar em "Atividade" no Perfil, o botão assume fundo <strong>#483DAD</strong> e fonte <strong>#FFFFFF</strong>, direcionando para o formulário <strong>"Crie sua atividade"</strong> (título centralizado).
+          </p>
+          <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #fff;">
+            <thead>
+              <tr style="background-color: #2e5496; color: #ffffff;">
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: left; width: 30%;">Elemento</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: left;">Regra de Negócio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Campos do formulário</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Tipo de atividade (aceita apenas "corrida", "caminhada" ou "trilha"), distância (numérico, metros) e duração (numérico, minutos) — todos com label e placeholder.</td>
+              </tr>
+              <tr style="background-color: #fcfdfe;">
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Botão Criar Atividade</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Fundo <strong>#333333</strong>, fonte <strong>#FFFFFF</strong>.</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Validação</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Campo ausente = borda vermelha + texto "Campo obrigatório".</td>
+              </tr>
+              <tr style="background-color: #fcfdfe;">
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Persistência e listagem</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Ao preencher tudo corretamente, a atividade é salva e aparece como a <strong>primeira</strong> da lista no Main, com título, foto, nome do usuário, distância, duração, calorias e data de criação.</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Conversões de exibição</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">Distância convertida de metros para <strong>km</strong>; duração convertida de minutos para <strong>horas</strong>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+<!-- ══════════════════ PADRÕES GERAIS ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px;">
+        <div class="capacidades-header">ORIENTAÇÕES GERAIS — PADRÕES VISUAIS</div>
+        <div class="capacidades-content" style="padding: 12px 14px;">
+          <p style="margin-bottom: 10px; line-height: 1.5;">
+            Toda a interface deve utilizar a fonte <strong>Segoe UI</strong>. A paleta de cores permitida é a seguinte:
+          </p>
+          <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #fff;">
+            <thead>
+              <tr style="background-color: #2e5496; color: #ffffff;">
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: center; width: 25%;">RGB</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: center; width: 25%;">Hexadecimal</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: center;">Cor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">255, 255, 255</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">#FFFFFF</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; background-color: #FFFFFF;"></td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">0, 0, 0</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">#000000</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; background-color: #000000;"></td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">51, 51, 51</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">#333333</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; background-color: #333333;"></td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">72, 61, 173</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">#483DAD</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; background-color: #483DAD;"></td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">255, 0, 0</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center;">#FF0000</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; background-color: #FF0000;"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════════════ DETALHAMENTO DAS ETAPAS — CRONOGRAMA DE AULAS ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px;">
+        <div class="capacidades-header">DETALHAMENTO DAS ETAPAS — CRONOGRAMA DE AULAS</div>
+        <div class="capacidades-content" style="padding: 12px 14px;">
+
+          <!-- ── ETAPA 1 (AULAS 01+02) ── -->
+          <div style="margin-bottom: 18px;">
+            <div style="background-color: #2e5496; color: #ffffff; padding: 6px 10px; font-weight: bold; font-size: 10.5pt; border-radius: 2px 2px 0 0;">
+              ETAPA 1 — Planejamento e Modelagem de Dados <span style="font-weight: normal; font-size: 9pt;">(Aulas 01 e 02)</span>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #ffffff; border: 1px solid #2e5496; border-top: none;">
+              <thead>
+                <tr style="background-color: #f2f4f8; color: #000000;">
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: center; width: 10%;">Item</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: left; width: 25%;">Artefato</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; text-align: left;">Instruções de Elaboração</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">1.1</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Leitura do Desafio e Arquitetura</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Interpretar o caderno de prova, levantar as regras de negócio e definir a arquitetura da solução (front HTML/CSS/JS, back Node.js/Express, banco PostgreSQL).</td>
+                </tr>
+                <tr style="background-color: #fcfdfe;">
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">1.2</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Modelagem das Tabelas</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Analisar <em>usuarios.csv</em> e <em>atividades.csv</em>, identificar as entidades (funcionários, clientes, atividades, curtidas, comentários) e modelar o DER com chaves primárias e estrangeiras.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">1.3</td>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Entrega da Estrutura em PDF</td>
+                  <td style="padding: 6px 8px; border-bottom: none;">Exportar o diagrama/estrutura das tabelas em arquivo <strong>PDF</strong> — Entrega 1 concluída.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── ETAPA 2 (AULA 03) ── -->
+          <div style="margin-bottom: 18px;">
+            <div style="background-color: #2e5496; color: #ffffff; padding: 6px 10px; font-weight: bold; font-size: 10.5pt; border-radius: 2px 2px 0 0;">
+              ETAPA 2 — Banco de Dados e Importação de Dados <span style="font-weight: normal; font-size: 9pt;">(Aula 03)</span>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #ffffff; border: 1px solid #2e5496; border-top: none;">
+              <thead>
+                <tr style="background-color: #f2f4f8; color: #000000;">
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: center; width: 10%;">Item</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: left; width: 25%;">Artefato</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; text-align: left;">Instruções de Elaboração</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">2.1</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Script DDL (CREATE)</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Criar o banco no PostgreSQL/pgAdmin e escrever os comandos <code>CREATE TABLE</code> das tabelas modeladas na Etapa 1, com chaves e constraints.</td>
+                </tr>
+                <tr style="background-color: #fcfdfe;">
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">2.2</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Importação dos Dados</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Importar os dados de <em>atividades.csv</em> e <em>usuarios.csv</em> do protótipo para o banco criado, conferindo a integridade das informações.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">2.3</td>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Entrega do Banco em SQL</td>
+                  <td style="padding: 6px 8px; border-bottom: none;">Exportar o banco completo em arquivo <strong>.SQL</strong> — Entrega 2 concluída.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── ETAPA 3 (AULA 04) ── -->
+          <div style="margin-bottom: 18px;">
+            <div style="background-color: #2e5496; color: #ffffff; padding: 6px 10px; font-weight: bold; font-size: 10.5pt; border-radius: 2px 2px 0 0;">
+              ETAPA 3 — Setup do Backend Node.js <span style="font-weight: normal; font-size: 9pt;">(Aula 04)</span>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #ffffff; border: 1px solid #2e5496; border-top: none;">
+              <thead>
+                <tr style="background-color: #f2f4f8; color: #000000;">
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: center; width: 10%;">Item</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: left; width: 25%;">Artefato</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; text-align: left;">Instruções de Elaboração</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">3.1</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Inicialização do Projeto</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Criar o projeto Node.js (<code>npm init</code>) e instalar as dependências: <em>express</em>, <em>pg</em>, <em>cors</em>, <em>dotenv</em>.</td>
+                </tr>
+                <tr style="background-color: #fcfdfe;">
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">3.2</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Estrutura e Conexão</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Organizar a estrutura de pastas (rotas/controllers) e configurar o pool de conexão com o PostgreSQL via variáveis de ambiente.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">3.3</td>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Rota de Teste</td>
+                  <td style="padding: 6px 8px; border-bottom: none;">Criar e validar uma rota de teste (ex: <code>GET /status</code>) confirmando que o servidor está rodando e conectado ao banco.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── ETAPA 4 (AULA 05) ── -->
+          <div style="margin-bottom: 18px;">
+            <div style="background-color: #2e5496; color: #ffffff; padding: 6px 10px; font-weight: bold; font-size: 10.5pt; border-radius: 2px 2px 0 0;">
+              ETAPA 4 — API de Leitura (Atividades e Perfil) <span style="font-weight: normal; font-size: 9pt;">(Aula 05)</span>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #ffffff; border: 1px solid #2e5496; border-top: none;">
+              <thead>
+                <tr style="background-color: #f2f4f8; color: #000000;">
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: center; width: 10%;">Item</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: left; width: 25%;">Artefato</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; text-align: left;">Instruções de Elaboração</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">4.1</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Endpoint da Empresa/Perfil</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Criar <code>GET /empresa</code> retornando nome, logo e totais de atividades/calorias para o componente Perfil.</td>
+                </tr>
+                <tr style="background-color: #fcfdfe;">
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">4.2</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Endpoint de Atividades</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Criar <code>GET /atividades</code> com paginação (4 por página) e filtro por tipo (corrida/caminhada/trilha), formatando a data como <strong>HH:MM - DD/MM/YY</strong>.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">4.3</td>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Testes dos Endpoints</td>
+                  <td style="padding: 6px 8px; border-bottom: none;">Validar as rotas criadas com Thunder Client/Insomnia, conferindo os dados retornados pelo banco.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── ETAPA 5 (AULA 06) ── -->
+          <div style="margin-bottom: 18px;">
+            <div style="background-color: #2e5496; color: #ffffff; padding: 6px 10px; font-weight: bold; font-size: 10.5pt; border-radius: 2px 2px 0 0;">
+              ETAPA 5 — Frontend Estático (Layout) <span style="font-weight: normal; font-size: 9pt;">(Aula 06)</span>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #ffffff; border: 1px solid #2e5496; border-top: none;">
+              <thead>
+                <tr style="background-color: #f2f4f8; color: #000000;">
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: center; width: 10%;">Item</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: left; width: 25%;">Artefato</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; text-align: left;">Instruções de Elaboração</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">5.1</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Estrutura HTML</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Montar o <code>index.html</code> com o layout em colunas (Perfil + Main: cabeçalho, filtros, listagem, paginação).</td>
+                </tr>
+                <tr style="background-color: #fcfdfe;">
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">5.2</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Estilização</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Aplicar a paleta de cores obrigatória (#FFFFFF, #333333, #483DAD, #FF0000) e a fonte <strong>Segoe UI</strong> em todo o layout.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">5.3</td>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Componentes Estáticos</td>
+                  <td style="padding: 6px 8px; border-bottom: none;">Construir os cards de atividade, ícones (coração/comentário/redes sociais) e estados visuais (ativo/inativo), ainda sem dados dinâmicos.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── ETAPA 6 (AULA 07) ── -->
+          <div style="margin-bottom: 18px;">
+            <div style="background-color: #2e5496; color: #ffffff; padding: 6px 10px; font-weight: bold; font-size: 10.5pt; border-radius: 2px 2px 0 0;">
+              ETAPA 6 — Integração Front-Back (Consumo da API) <span style="font-weight: normal; font-size: 9pt;">(Aula 07)</span>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #ffffff; border: 1px solid #2e5496; border-top: none;">
+              <thead>
+                <tr style="background-color: #f2f4f8; color: #000000;">
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: center; width: 10%;">Item</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: left; width: 25%;">Artefato</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; text-align: left;">Instruções de Elaboração</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">6.1</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Consumo da API</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Conectar o frontend às rotas <code>GET /empresa</code> e <code>GET /atividades</code> via <code>fetch</code>.</td>
+                </tr>
+                <tr style="background-color: #fcfdfe;">
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">6.2</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Renderização Dinâmica</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Renderizar os cards de atividade dinamicamente a partir da resposta da API, sem recarregar a página.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">6.3</td>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Filtros e Paginação</td>
+                  <td style="padding: 6px 8px; border-bottom: none;">Implementar os filtros (corrida/caminhada/trilha) e a paginação dinâmica, com destaque da página ativa.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── ETAPA 7 (AULA 08) ── -->
+          <div style="margin-bottom: 18px;">
+            <div style="background-color: #2e5496; color: #ffffff; padding: 6px 10px; font-weight: bold; font-size: 10.5pt; border-radius: 2px 2px 0 0;">
+              ETAPA 7 — Autenticação (Login/Logout) <span style="font-weight: normal; font-size: 9pt;">(Aula 08)</span>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #ffffff; border: 1px solid #2e5496; border-top: none;">
+              <thead>
+                <tr style="background-color: #f2f4f8; color: #000000;">
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: center; width: 10%;">Item</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: left; width: 25%;">Artefato</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; text-align: left;">Instruções de Elaboração</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">7.1</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Modal de Login</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Construir o popup/modal com campos de e-mail e senha, labels, e botões "Cancelar"/"Login".</td>
+                </tr>
+                <tr style="background-color: #fcfdfe;">
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">7.2</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Endpoint e Validação</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Criar <code>POST /login</code> validando credenciais no banco, com mensagens de erro para campo obrigatório e credencial incorreta.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">7.3</td>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Controle de Sessão</td>
+                  <td style="padding: 6px 8px; border-bottom: none;">Gerenciar o estado de "logado" no frontend, alternando header (Login/Logout) e habilitando filtros, paginação, like e comentário.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── ETAPA 8 (AULA 09) ── -->
+          <div style="margin-bottom: 18px;">
+            <div style="background-color: #2e5496; color: #ffffff; padding: 6px 10px; font-weight: bold; font-size: 10.5pt; border-radius: 2px 2px 0 0;">
+              ETAPA 8 — Interações: Curtir e Comentar <span style="font-weight: normal; font-size: 9pt;">(Aula 09)</span>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #ffffff; border: 1px solid #2e5496; border-top: none;">
+              <thead>
+                <tr style="background-color: #f2f4f8; color: #000000;">
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: center; width: 10%;">Item</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: left; width: 25%;">Artefato</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; text-align: left;">Instruções de Elaboração</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">8.1</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Curtir/Descurtir</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Implementar o toggle de like (1 por usuário/atividade), atualizando o ícone "coração.svg" para #FF0000 quando curtido.</td>
+                </tr>
+                <tr style="background-color: #fcfdfe;">
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">8.2</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Comentários</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Implementar a seção de comentário (mínimo de caracteres), com aviso de campo vazio quando aplicável.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">8.3</td>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Persistência</td>
+                  <td style="padding: 6px 8px; border-bottom: none;">Persistir likes e comentários no banco de dados e atualizar os contadores em tempo real.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── ETAPA 9 (AULA 10) ── -->
+          <div style="margin-bottom: 0;">
+            <div style="background-color: #2e5496; color: #ffffff; padding: 6px 10px; font-weight: bold; font-size: 10.5pt; border-radius: 2px 2px 0 0;">
+              ETAPA 9 — Cadastro de Atividades e Entrega Final <span style="font-weight: normal; font-size: 9pt;">(Aula 10)</span>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #ffffff; border: 1px solid #2e5496; border-top: none;">
+              <thead>
+                <tr style="background-color: #f2f4f8; color: #000000;">
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: center; width: 10%;">Item</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: left; width: 25%;">Artefato</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; text-align: left;">Instruções de Elaboração</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">9.1</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Formulário de Cadastro</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Construir "Crie sua atividade" com validação de campos obrigatórios, tipos aceitos (corrida/caminhada/trilha) e placeholders.</td>
+                </tr>
+                <tr style="background-color: #fcfdfe;">
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">9.2</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Persistência e Listagem</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8;">Salvar a atividade no banco e listá-la como a primeira da lista, convertendo distância para km e duração para horas.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">9.3</td>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Revisão e Entrega Final</td>
+                  <td style="padding: 6px 8px; border-bottom: none;">Criar um README com as instruções de como rodar a aplicação. Revisar todas as regras de negócio do caderno e organizar a pasta final do sistema SAEPSaúde — Entrega 3 concluída.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ================================================================= -->
+      <!-- LISTA DE VERIFICAÇÃO — CRITÉRIOS DE AVALIAÇÃO -->
+      <!-- ================================================================= -->
+      <div class="capacidades-box" style="margin-bottom: 25px;">
+        <div class="capacidades-header">
+          LISTA DE VERIFICAÇÃO — CRITÉRIOS DE AVALIAÇÃO PRÁTICA
+        </div>
+        <div class="capacidades-content" style="padding: 0;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #ffffff;">
+            <thead>
+              <tr style="background-color: #2e5496; color: #ffffff;">
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: left; width: 40%;">Critério de Avaliação</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: left; width: 30%;">Capacidade Avaliada</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: center; width: 7%;">Atingiu</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: center; width: 8%;">Parcialmente</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: center; width: 7%;">Não Atingiu</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: center; width: 8%;">Obs.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Critério 1 -->
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">
+                  Modelou corretamente as tabelas de funcionários e clientes, contemplando os dados de perfil, atividades e credenciais de login.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; font-size: 9.5pt;">
+                  <strong>CT2:</strong> Modelar a estrutura das tabelas do banco de dados.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;"></td>
+              </tr>
+              <!-- Critério 2 -->
+              <tr style="background-color: #fcfdfe;">
+                <td style="padding: 8px; border: 1px solid #d0d7de;">
+                  Escreveu o script DDL do banco de dados e importou corretamente os dados de atividades.csv e usuarios.csv.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; font-size: 9.5pt;">
+                  <strong>CT3:</strong> Criar o banco de dados e importar dados de arquivos CSV.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;"></td>
+              </tr>
+              <!-- Critério 3 -->
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">
+                  Implementou a página principal com perfil, filtros, listagem e paginação, carregando os dados dinamicamente do banco de dados.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; font-size: 9.5pt;">
+                  <strong>CT4:</strong> Desenvolver uma aplicação web dinâmica (SPA).
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;"></td>
+              </tr>
+              <!-- Critério 4 -->
+              <tr style="background-color: #fcfdfe;">
+                <td style="padding: 8px; border: 1px solid #d0d7de;">
+                  Implementou o login com validação de campos obrigatórios e de credenciais incorretas.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; font-size: 9.5pt;">
+                  <strong>CT5:</strong> Implementar regras de negócio de interface.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;"></td>
+              </tr>
+              <!-- Critério 5 -->
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">
+                  Implementou a funcionalidade de curtir com persistência no banco de dados e atualização visual do ícone.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; font-size: 9.5pt;">
+                  <strong>CT5:</strong> Implementar regras de negócio de interface.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;"></td>
+              </tr>
+              <!-- Critério 6 -->
+              <tr style="background-color: #fcfdfe;">
+                <td style="padding: 8px; border: 1px solid #d0d7de;">
+                  Implementou a inserção de comentários com validação de campo vazio e persistência no banco de dados.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; font-size: 9.5pt;">
+                  <strong>CT5:</strong> Implementar regras de negócio de interface.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;"></td>
+              </tr>
+              <!-- Critério 7 -->
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de;">
+                  Implementou o cadastro de atividades com validação de campos obrigatórios e listagem correta (distância em km, duração em horas).
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; font-size: 9.5pt;">
+                  <strong>CT5:</strong> Implementar regras de negócio de interface.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;"></td>
+              </tr>
+              <!-- Critério Socioemocional -->
+              <tr style="background-color: #fcfdfe;">
+                <td style="padding: 8px; border: 1px solid #d0d7de;">
+                  Seguiu fielmente o padrão visual (cores, fonte InSegoe UI) e manteve organização e clareza na estrutura de arquivos do projeto.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; font-size: 9.5pt;">
+                  <strong>CS1/CS2:</strong> Atenção aos detalhes e organização do projeto.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

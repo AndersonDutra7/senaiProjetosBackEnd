@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAEPSaúde</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="app">
+    <!-- ═══════════ COLUNA 1 — PERFIL ═══════════ -->
+    <aside class="perfil">
+      <div class="perfil-topo">
+        <img id="perfil-logo" class="perfil-logo" src="" alt="Logo" hidden />
+        <h1 id="perfil-nome-empresa" class="perfil-nome-empresa">SAEPSaúde</h1>
+      </div>
+
+      <div id="perfil-usuario" class="perfil-usuario" hidden>
+        <img id="perfil-foto" class="perfil-foto" src="" alt="Foto do usuário" />
+        <p id="perfil-nome-usuario" class="perfil-nome-usuario"></p>
+      </div>
+
+      <div class="perfil-totais">
+        <div class="perfil-total">
+          <span id="total-atividades" class="perfil-total-valor">0</span>
+          <span class="perfil-total-label">Atividades</span>
+        </div>
+        <div class="perfil-total">
+          <span id="total-calorias" class="perfil-total-valor">0</span>
+          <span class="perfil-total-label">Calorias</span>
+        </div>
+      </div>
+
+      <button id="btn-atividade" class="btn-atividade" disabled>Atividade</button>
+
+      <footer class="perfil-rodape">
+        <p>SAEPSaúde</p>
+        <div class="perfil-redes">
+          <a href="#" aria-label="Instagram" title="Instagram">
+            <img src="assets/icons/instagram.svg" alt="Instagram" />
+          </a>
+          <a href="#" aria-label="Twitter" title="Twitter">
+            <img src="assets/icons/twitter.svg" alt="Twitter" />
+          </a>
+          <a href="#" aria-label="TikTok" title="TikTok">
+            <img src="assets/icons/tiktok.svg" alt="TikTok" />
+          </a>
+        </div>
+        <p class="perfil-copyright">Copyright-2024</p>
+      </footer>
+    </aside>
+
+    <!-- ═══════════ COLUNA 2 — MAIN ═══════════ -->
+    <main class="main">
+      <header class="main-header">
+        <button id="btn-login" class="btn-login">Login</button>
+        <button id="btn-logout" class="btn-logout" hidden>Logout</button>
+      </header>
+
+      <!-- Listagem de atividades -->
+      <section id="secao-listagem" class="secao-listagem">
+        <nav class="filtros">
+          <button class="filtro-btn" data-tipo="">Todas</button>
+          <button class="filtro-btn" data-tipo="corrida">Corrida</button>
+          <button class="filtro-btn" data-tipo="caminhada">Caminhada</button>
+          <button class="filtro-btn" data-tipo="trilha">Trilha</button>
+        </nav>
+
+        <div id="lista-atividades" class="lista-atividades"></div>
+
+        <nav id="paginacao" class="paginacao"></nav>
+      </section>
+
+      <!-- Formulário "Crie sua atividade" -->
+      <section id="secao-form-atividade" class="secao-form-atividade" hidden>
+        <h2 class="form-titulo">Crie sua atividade</h2>
+        <form id="form-atividade" novalidate>
+          <div class="campo">
+            <label for="input-tipo">Tipo de atividade</label>
+            <select id="input-tipo" name="tipo">
+              <option value="">Selecione...</option>
+              <option value="corrida">Corrida</option>
+              <option value="caminhada">Caminhada</option>
+              <option value="trilha">Trilha</option>
+            </select>
+            <span class="erro-campo"></span>
+          </div>
+          <div class="campo">
+            <label for="input-distancia">Distância (metros)</label>
+            <input type="number" id="input-distancia" name="distancia" placeholder="Ex: 5000" min="1" />
+            <span class="erro-campo"></span>
+          </div>
+          <div class="campo">
+            <label for="input-duracao">Duração (minutos)</label>
+            <input type="number" id="input-duracao" name="duracao" placeholder="Ex: 30" min="1" />
+            <span class="erro-campo"></span>
+          </div>
+          <button type="submit" class="btn-criar-atividade">Criar Atividade</button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <!-- ═══════════ MODAL DE LOGIN ═══════════ -->
+  <div id="modal-login" class="modal-overlay" hidden>
+    <div class="modal">
+      <button id="btn-fechar-modal" class="btn-fechar-modal" aria-label="Fechar">
+        <img src="assets/icons/x.svg" alt="Fechar" />
+      </button>
+      <h2 class="modal-titulo">Login</h2>
+      <form id="form-login" novalidate>
+        <div class="campo">
+          <label for="input-email">E-mail</label>
+          <input type="email" id="input-email" name="email" placeholder="seu@email.com" />
+          <span class="erro-campo"></span>
+        </div>
+        <div class="campo">
+          <label for="input-senha">Senha</label>
+          <input type="password" id="input-senha" name="senha" placeholder="Sua senha" />
+          <span class="erro-campo"></span>
+        </div>
+        <div class="modal-botoes">
+          <button type="button" id="btn-cancelar-login" class="btn-cancelar">Cancelar</button>
+          <button type="submit" class="btn-confirmar-login">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Template de card de atividade (clonado via JS) -->
+  <template id="template-card-atividade">
+    <article class="card-atividade">
+      <h3 class="card-titulo"></h3>
+      <div class="card-autor">
+        <img class="card-autor-foto" src="" alt="" />
+        <span class="card-autor-nome"></span>
+      </div>
+      <div class="card-info">
+        <span class="card-distancia"></span>
+        <span class="card-duracao"></span>
+        <span class="card-calorias"></span>
+        <span class="card-data"></span>
+      </div>
+      <div class="card-interacoes">
+        <button class="card-curtir">
+          <img class="icone-coracao" src="assets/icons/coracao.svg" alt="Curtir" />
+          <span class="card-total-curtidas">0</span>
+        </button>
+        <button class="card-comentar">
+          <img src="assets/icons/chat.svg" alt="Comentar" />
+          <span class="card-total-comentarios">0</span>
+        </button>
+      </div>
+      <div class="card-comentario-form" hidden>
+        <input type="text" class="input-comentario" placeholder="Escrever um comentário..." />
+        <button class="btn-enviar-comentario" aria-label="Enviar">
+          <img src="assets/icons/send.svg" alt="Enviar" />
+        </button>
+        <span class="erro-campo erro-comentario"></span>
+      </div>
+    </article>
+  </template>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

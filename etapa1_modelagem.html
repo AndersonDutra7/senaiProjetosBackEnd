@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Etapa 1 — Planejamento e Modelagem de Dados — SAEPSaúde</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 10pt;
+        color: #333333;
+        background-color: #ffffff;
+        line-height: 1.4;
+      }
+
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 15mm;
+        background: #ffffff;
+      }
+
+      /* ── HEADER TABLE ── */
+      .header-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 16px;
+      }
+      .header-table td,
+      .header-table th {
+        border: 1px solid #333333;
+        padding: 4px 8px;
+        vertical-align: middle;
+        font-size: 9.5pt;
+      }
+      .logo-cell {
+        width: 130px;
+        text-align: center;
+        padding: 6px;
+      }
+      .logo-cell img {
+        max-width: 110px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+      .title-cell {
+        text-align: center;
+        font-weight: bold;
+        font-size: 12pt;
+        color: #483dad;
+        letter-spacing: 0.5px;
+      }
+      .desemp-cell {
+        width: 90px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 9pt;
+        color: #333333;
+        vertical-align: top;
+      }
+      .label-bold {
+        font-weight: bold;
+        color: #000000;
+      }
+
+      /* ── BOXES ── */
+      .box {
+        margin-bottom: 16px;
+        border: 1px solid #483dad;
+      }
+      .box-header {
+        background-color: #483dad;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 11pt;
+        padding: 8px 12px;
+        text-transform: uppercase;
+      }
+      .box-content {
+        padding: 12px;
+        background-color: #ffffff;
+      }
+
+      /* ── TITLES ── */
+      .section-title {
+        font-size: 12pt;
+        font-weight: bold;
+        color: #483dad;
+        border-bottom: 2px solid #483dad;
+        padding-bottom: 4px;
+        margin-top: 18px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+      }
+
+      .subsection-title {
+        font-size: 10.5pt;
+        font-weight: bold;
+        color: #333333;
+        margin-top: 10px;
+        margin-bottom: 6px;
+      }
+
+      /* ── TABLES ── */
+      table.data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 8px;
+        margin-bottom: 12px;
+        font-size: 9pt;
+      }
+      table.data-table th {
+        background-color: #483dad;
+        color: #ffffff;
+        border: 1px solid #483dad;
+        padding: 6px 8px;
+        text-align: left;
+      }
+      table.data-table td {
+        border: 1px solid #333333;
+        padding: 5px 8px;
+      }
+
+      /* ── CODE BOXES ── */
+      pre {
+        background-color: #333333;
+        color: #ffffff;
+        padding: 10px 12px;
+        font-family: Consolas, 'Courier New', monospace;
+        font-size: 8.5pt;
+        line-height: 1.3;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        margin-top: 6px;
+        margin-bottom: 12px;
+        border: 1px solid #000000;
+      }
+
+      /* ── LISTS & TEXT ── */
+      p {
+        margin-bottom: 8px;
+        text-align: justify;
+      }
+      ul, ol {
+        margin-left: 20px;
+        margin-bottom: 10px;
+      }
+      li {
+        margin-bottom: 4px;
+      }
+
+      .highlight {
+        color: #483dad;
+        font-weight: bold;
+      }
+
+      /* ── PRINT CONFIG ── */
+      @media print {
+        body {
+          background: #ffffff;
+        }
+        .page {
+          margin: 0;
+          padding: 10mm;
+          width: 100%;
+        }
+        .page-break {
+          page-break-before: always;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- ══════════════════ CABEÇALHO OFICIAL ══════════════════ -->
+      <table class="header-table">
+        <tr>
+          <td class="logo-cell" rowspan="7">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_sfpOEDmPPoL6K0aQL4qg5SsWL_41ZqhyF7zW1509kA&s=10"
+              alt="Logo SENAI"
+            />
+          </td>
+          <td class="title-cell">PLANEJAMENTO E MODELAGEM DE DADOS</td>
+          <td class="desemp-cell" rowspan="7">Desempenho</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-bold">Projeto:</span>
+            <span class="highlight">Sistema Web SAEPSaúde — Rede de Atividades Físicas</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-bold">Etapa Entregue:</span>
+            <span class="highlight">ETAPA 1 — Item 1.1, 1.2 e 1.3</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-bold">Data:</span>
+            <span>12/08/2026</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-bold">Docente:</span>
+            <span>Anderson Raulino Dutra</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-bold">Curso / Unidade Curricular:</span>
+            <span>Técnico em Informática para Internet — Informática para Internet</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-bold">Turma:</span>
+            <span>T TIIN 2025/1 M2 - 463013</span>
+          </td>
+        </tr>
+      </table>
+
+      <!-- ══════════════════ IDENTIFICAÇÃO DO ESTUDANTE ══════════════════ -->
+      <div class="box">
+        <div class="box-header">IDENTIFICAÇÃO DO ESTUDANTE</div>
+        <div class="box-content">
+          <p><strong>Nome do Estudante:</strong> [ Insira Seu Nome Completo Aqui ]</p>
+          <p style="margin-bottom: 0;"><strong>Status da Entrega:</strong> Finalizada para Avaliação Prática — Etapa 1</p>
+        </div>
+      </div>
+
+      <!-- ══════════════════ ITEM 1.1 — LEITURA DO DESAFIO E ARQUITETURA ══════════════════ -->
+      <div class="section-title">ETAPA 1.1 — LEITURA DO DESAFIO E ARQUITETURA</div>
+
+      <div class="box">
+        <div class="box-header">1. LEVANTAMENTO DAS REGRAS DE NEGÓCIO</div>
+        <div class="box-content">
+          <ul>
+            <li><strong>RN01 – Gestão Unificada de Usuários:</strong> O sistema deve permitir o cadastro e gerenciamento tanto dos funcionários migrados do protótipo quanto dos novos clientes externos.</li>
+            <li><strong>RN02 – Registro de Práticas Esportivas:</strong> Cada usuário pode registrar suas atividades informando tipo de exercício, distância (km), duração (minutos), data e uma descrição opcional.</li>
+            <li><strong>RN03 – Arquitetura Dinâmica (SPA):</strong> A interface deve permitir a interação do usuário, listagem e persistência de dados sem necessidade de recarregar a página.</li>
+            <li><strong>RN04 – Interatividade Social:</strong> Permite que os usuários curtam e comentem nas atividades publicadas. Cada usuário pode dar no máximo uma curtida por atividade.</li>
+            <li><strong>RN05 – Migração e Integridade Legada:</strong> Importação obrigatória dos arquivos <code>usuarios.csv</code> e <code>atividades.csv</code> para o banco relacional sem perda do histórico.</li>
+            <li><strong>RN06 – Padrão Visual Estrito:</strong> Uso exclusivo da fonte <strong>Segoe UI</strong> e da paleta homologada (#FFFFFF, #000000, #333333, #483DAD e #FF0000).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-header">2. DEFINIÇÃO DA ARQUITETURA DA SOLUÇÃO</div>
+        <div class="box-content">
+          <p>A aplicação adota uma arquitetura em 3 Camadas (3-Tier Architecture) para garantir escalabilidade, integridade das regras de negócio e facilidade na manutenção contínua:</p>
+          
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 25%;">Camada</th>
+                <th style="width: 25%;">Tecnologia</th>
+                <th>Função na Solução SAEPSaúde</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Apresentação (Frontend)</strong></td>
+                <td>HTML5, CSS3, JavaScript (Vanilla ES6+)</td>
+                <td>Interface Single Page Application (SPA). Faz a renderização dinâmica, consumo da API REST via <code>fetch()</code> e aplicação dos padrões visuais da marca.</td>
+              </tr>
+              <tr>
+                <td><strong>Negócio (Backend)</strong></td>
+                <td>Node.js + Express.js</td>
+                <td>Provedor de API RESTful. Responsável pela autenticação, validação dos dados de entrada, rotas de curtidas/comentários e regra de negócio.</td>
+              </tr>
+              <tr>
+                <td><strong>Dados (Persistence)</strong></td>
+                <td>PostgreSQL</td>
+                <td>Banco de dados relacional. Mantém a integridade referencial via Chaves Primárias e Estrangeiras e executa a carga inicial dos CSVs.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- QUEBRA DE PÁGINA SE IMPRESSO -->
+      <div class="page-break"></div>
+
+      <!-- ══════════════════ ITEM 1.2 — MODELAGEM DAS TABELAS (DER) ══════════════════ -->
+      <div class="section-title">ETAPA 1.2 — MODELAGEM DAS TABELAS E ESTRUTURA DO BANCO</div>
+
+      <div class="box">
+        <div class="box-header">1. DICIONÁRIO DE DADOS DAS ENTIDADES</div>
+        <div class="box-content">
+          
+          <div class="subsection-title">Tabela: <code>usuarios</code></div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Campo</th>
+                <th>Tipo</th>
+                <th>Restrições</th>
+                <th>Descrição</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>id</code></td>
+                <td>SERIAL</td>
+                <td>PRIMARY KEY</td>
+                <td>Identificador único do usuário.</td>
+              </tr>
+              <tr>
+                <td><code>nome</code></td>
+                <td>VARCHAR(150)</td>
+                <td>NOT NULL</td>
+                <td>Nome completo.</td>
+              </tr>
+              <tr>
+                <td><code>email</code></td>
+                <td>VARCHAR(150)</td>
+                <td>UNIQUE, NOT NULL</td>
+                <td>E-mail único de acesso.</td>
+              </tr>
+              <tr>
+                <td><code>tipo_usuario</code></td>
+                <td>VARCHAR(20)</td>
+                <td>NOT NULL</td>
+                <td>Diferencia 'funcionario' de 'cliente'.</td>
+              </tr>
+              <tr>
+                <td><code>data_cadastro</code></td>
+                <td>DATE</td>
+                <td>DEFAULT CURRENT_DATE</td>
+                <td>Data de inclusão no sistema.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="subsection-title">Tabela: <code>atividades</code></div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Campo</th>
+                <th>Tipo</th>
+                <th>Restrições</th>
+                <th>Descrição</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>id</code></td>
+                <td>SERIAL</td>
+                <td>PRIMARY KEY</td>
+                <td>Identificador único da atividade.</td>
+              </tr>
+              <tr>
+                <td><code>usuario_id</code></td>
+                <td>INTEGER</td>
+                <td>FOREIGN KEY (usuarios.id)</td>
+                <td>Chave estrangeira do autor da atividade.</td>
+              </tr>
+              <tr>
+                <td><code>tipo_atividade</code></td>
+                <td>VARCHAR(50)</td>
+                <td>NOT NULL</td>
+                <td>Tipo do exercício (Corrida, Ciclismo, etc).</td>
+              </tr>
+              <tr>
+                <td><code>distancia_km</code></td>
+                <td>NUMERIC(5,2)</td>
+                <td>DEFAULT 0.00</td>
+                <td>Distância percorrida em km.</td>
+              </tr>
+              <tr>
+                <td><code>duracao_min</code></td>
+                <td>INTEGER</td>
+                <td>NOT NULL</td>
+                <td>Tempo de duração em minutos.</td>
+              </tr>
+              <tr>
+                <td><code>data_atividade</code></td>
+                <td>DATE</td>
+                <td>NOT NULL</td>
+                <td>Data da prática esportiva.</td>
+              </tr>
+              <tr>
+                <td><code>descricao</code></td>
+                <td>TEXT</td>
+                <td>OPCIONAL</td>
+                <td>Observações sobre o treino.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="subsection-title">Tabelas de Interação Social: <code>curtidas</code> e <code>comentarios</code></div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Tabela</th>
+                <th>Atributos Principais</th>
+                <th>Chaves Estrangeiras (FK)</th>
+                <th>Regras Específicas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>curtidas</code></td>
+                <td><code>id</code>, <code>usuario_id</code>, <code>atividade_id</code>, <code>data_curtida</code></td>
+                <td>FK <code>usuarios(id)</code><br>FK <code>atividades(id)</code></td>
+                <td>Restrição <code>UNIQUE(usuario_id, atividade_id)</code> para impedir curtidas duplicadas do mesmo usuário.</td>
+              </tr>
+              <tr>
+                <td><code>comentarios</code></td>
+                <td><code>id</code>, <code>usuario_id</code>, <code>atividade_id</code>, <code>texto</code>, <code>data_comentario</code></td>
+                <td>FK <code>usuarios(id)</code><br>FK <code>atividades(id)</code></td>
+                <td>Permite múltiplos comentários do mesmo usuário em uma mesma atividade.</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-header">2. DIAGRAMA DE ENTIDADE-RELACIONAMENTO (DER)</div>
+        <div class="box-content">
+          <pre>
++-------------------------+               +-------------------------+
+|        USUARIOS         |               |       ATIVIDADES        |
++-------------------------+               +-------------------------+
+| PK  id                  | 1           N | PK  id                  |
+|     nome                |---------------+<| FK  usuario_id          |
+|     email               |               |     tipo_atividade      |
+|     tipo_usuario        |               |     distancia_km        |
+|     data_cadastro       |               |     duracao_min         |
++-------------------------+               |     data_atividade      |
+     |               |                    |     descricao           |
+     | 1             | 1                  +-------------------------+
+     |               |                         |               |
+     | N             | N                       | 1             | 1
+     v               v                         v N             v N
++-------------------------+               +-------------------------+
+|        CURTIDAS         |               |       COMENTARIOS       |
++-------------------------+               +-------------------------+
+| PK  id                  |               | PK  id                  |
+| FK  usuario_id          |               | FK  usuario_id          |
+| FK  atividade_id        |<--------------| FK  atividade_id        |
+|     data_curtida        |               |     texto               |
++-------------------------+               |     data_comentario     |
+                                          +-------------------------+
+          </pre>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-header">3. SCRIPT SQL DDL — CRIAÇÃO DO BANCO DE DADOS (POSTGRESQL)</div>
+        <div class="box-content">
+<pre>
+-- 1. Tabela de Usuários (Funcionários + Clientes)
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(150) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    tipo_usuario VARCHAR(20) NOT NULL CHECK (tipo_usuario IN ('funcionario', 'cliente')),
+    data_cadastro DATE DEFAULT CURRENT_DATE
+);
+
+-- 2. Tabela de Atividades
+CREATE TABLE atividades (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    tipo_atividade VARCHAR(50) NOT NULL,
+    distancia_km NUMERIC(5,2) DEFAULT 0.00,
+    duracao_min INTEGER NOT NULL,
+    data_atividade DATE NOT NULL,
+    descricao TEXT
+);
+
+-- 3. Tabela de Curtidas
+CREATE TABLE curtidas (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    atividade_id INTEGER NOT NULL REFERENCES atividades(id) ON DELETE CASCADE,
+    data_curtida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uk_usuario_atividade_curtida UNIQUE (usuario_id, atividade_id)
+);
+
+-- 4. Tabela de Comentários
+CREATE TABLE comentarios (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    atividade_id INTEGER NOT NULL REFERENCES atividades(id) ON DELETE CASCADE,
+    texto TEXT NOT NULL,
+    data_comentario TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+</pre>
+        </div>
+      </div>
+
+      <!-- ══════════════════ ITEM 1.3 — ENTREGA E CONCLUSÃO ══════════════════ -->
+      <div class="section-title">ETAPA 1.3 — ENTREGA DA ESTRUTURA EM PDF</div>
+      
+      <div class="box">
+        <div class="box-header">CONCLUSÃO DA ENTREGA 1</div>
+        <div class="box-content">
+          <p>
+            A documentação de requisitos, arquitetura e modelagem relacional da **Etapa 1** encontra-se concluída e validada. A estrutura lógica garante o suporte total à migração dos arquivos <code>usuarios.csv</code> e <code>atividades.csv</code>, assegurando a expansão contínua do sistema da **SAEPSaúde** sem perda de integridade dos dados já armazenados.
+          </p>
+          <p style="margin-bottom: 0;">
+            <strong>Próximos Passos:</strong> Exportar este documento em formato PDF para submissão da Entrega 1 e dar início ao desenvolvimento do backend em Node.js/Express e das rotas de integração com o PostgreSQL.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>

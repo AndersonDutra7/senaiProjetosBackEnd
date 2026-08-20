@@ -1,0 +1,18 @@
+# Dependências de pacotes
+node_modules/
+
+# Variáveis de ambiente (senhas e chaves)
+.env
+*.env
+
+# Logs do Node / NPM
+*.log
+npm-debug.log*
+
+# Arquivos do Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Configurações locais de IDE / Editor
+.vscode/
+.idea/

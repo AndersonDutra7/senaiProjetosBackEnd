@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SAEPVision</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="user-section">
+        <img
+          id="fotoPerfil"
+          class="avatar"
+          src="assets/logo.png"
+          alt="Avatar"
+        />
+        <span id="nomeUsuario">@SAEPVision</span>
+        <button id="btnVerPerfil" class="btn-preto" disabled>Ver Perfil</button>
+      </div>
+      <h1 class="empresa">SAEPVision</h1>
+      <button id="btnLogin" class="btn-preto">Entrar</button>
+    </header>
+
+    <main>
+      <div class="busca">
+        <input id="inputBusca" placeholder="Digite o nome do fotógrafo" />
+        <img src="assets/lupa.svg" class="icone-lupa" alt="Buscar" />
+      </div>
+      <div id="galeria" class="galeria"></div>
+    </main>
+
+    <footer>
+      <span>SAEPVision</span>
+      <div class="redes">
+        <img src="assets/instagram.svg" alt="Instagram" />
+        <img src="assets/tiktok.svg" alt="TikTok" />
+        <img src="assets/linkedin.svg" alt="LinkedIn" />
+        <img src="assets/youtube.svg" alt="YouTube" />
+      </div>
+      <span>Copyright 2026-2027</span>
+    </footer>
+
+    <!-- Modal de login -->
+    <div id="modalLogin" class="overlay oculto">
+      <div class="modal">
+        <div class="modal-topo">
+          <h2>Login</h2>
+          <button id="fecharModal" class="btn-fechar">×</button>
+        </div>
+        <input id="loginUsuario" placeholder="Digite seu nome" />
+        <span id="erroUsuario" class="erro"></span>
+        <input id="loginSenha" type="password" placeholder="Digite sua senha" />
+        <span id="erroSenha" class="erro"></span>
+        <span id="erroLogin" class="erro"></span>
+        <div class="modal-botoes">
+          <button id="btnCancelar" class="btn-outline">Cancelar</button>
+          <button id="btnConfirmarLogin" class="btn-preto">Login</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Painel Lateral -->
+    <aside id="painelPerfil" class="painel-lateral oculto">
+      <div class="painel-topo">
+        <button id="fecharPainel" class="btn-fechar">×</button>
+      </div>
+
+      <p><span id="totalCurtidas">0</span> Likes</p>
+      <p><span id="totalPublicacoes">0</span> Publicações</p>
+
+      <button id="btnSuasPublicacoes" class="btn-destaque">
+        Suas publicações
+      </button>
+
+      <form id="formCadastro" enctype="multipart/form-data" novalidate>
+        <div class="grupo-input">
+          <label for="campoTitulo">Título da Imagem</label>
+          <input
+            id="campoTitulo"
+            name="titulo"
+            placeholder="ex.: Dedo de Deus"
+          />
+          <span id="erroTitulo" class="msg-erro"></span>
+        </div>
+
+        <div class="grupo-input">
+          <label for="campoLocal">Fonte de origem</label>
+          <input
+            id="campoLocal"
+            name="local"
+            placeholder="ex.: Rio de Janeiro"
+          />
+          <span id="erroLocal" class="msg-erro"></span>
+        </div>
+
+        <div class="grupo-input">
+          <label for="campoImagem">Imagem</label>
+          <input
+            id="campoImagem"
+            name="imagem"
+            type="file"
+            accept=".jpg,.jpeg,.png,.gif,.webp"
+          />
+          <span id="erroImagem" class="msg-erro"></span>
+        </div>
+
+        <button type="submit" class="btn-preto">Cadastrar</button>
+      </form>
+
+      <div id="listaPublicacoesPerfil"></div>
+    </aside>
+
+    <script src="app.js"></script>
+  </body>
+</html>

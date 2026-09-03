@@ -1,0 +1,8 @@
+id,nome,usuario,senha,tipo,telefone,foto_perfil
+1,Rafael Souza,rafael.souza,123456,vendedor,(48) 99123-4567,
+2,Camila Torres,camila.torres,123456,vendedor,(48) 99876-5432,
+3,Bruno Martins,bruno.martins,123456,vendedor,(47) 99654-3210,
+4,Juliana Alves,juliana.alves,123456,cliente,(48) 99111-2222,
+5,Diego Ferreira,diego.ferreira,123456,cliente,(47) 99333-4444,
+6,Larissa Gomes,larissa.gomes,123456,cliente,(48) 99555-6666,
+7,Eduardo Lima,eduardo.lima,123456,cliente,(49) 99777-8888,

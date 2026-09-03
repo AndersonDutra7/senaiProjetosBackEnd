@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manual de Referência — Full Stack</title>
+    <style>
+      :root {
+        --bg: #11161c;
+        --surface: #171e26;
+        --surface-2: #1d2530;
+        --border: #2a3441;
+        --text: #e7e4da;
+        --text-muted: #8d97a3;
+        --accent: #e8a33d;
+
+        --l1: #ff6b4a; /* HTML */
+        --l2: #f7df1e; /* JavaScript */
+        --l3: #4ade80; /* Node.js */
+        --l4: #94a3b8; /* Express */
+        --l5: #60a5fa; /* PostgreSQL */
+        --l6: #c084fc; /* CSS */
+
+        --font-display: 'Palatino Linotype', Palatino, 'Iowan Old Style',
+          Georgia, serif;
+        --font-body: -apple-system, 'Segoe UI', Roboto, system-ui, sans-serif;
+        --font-mono: 'SF Mono', Consolas, Menlo, 'Liberation Mono', monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      /* ---------- LAYOUT ---------- */
+      .app {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        min-height: 100vh;
+      }
+
+      /* ---------- SIDEBAR / SPINE ---------- */
+      .spine {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        border-right: 1px solid var(--border);
+        background: var(--surface);
+        padding: 28px 22px;
+        overflow-y: auto;
+      }
+
+      .spine__brand {
+        font-family: var(--font-display);
+        font-size: 1.15rem;
+        letter-spacing: 0.02em;
+        margin: 0 0 4px;
+      }
+
+      .spine__sub {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin: 0 0 6px;
+      }
+
+      .spine__badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.7rem;
+        color: var(--l3);
+        background: rgba(111, 191, 139, 0.1);
+        border: 1px solid rgba(111, 191, 139, 0.35);
+        padding: 4px 9px;
+        border-radius: 999px;
+        margin: 10px 0 28px;
+      }
+
+      .spine__badge::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--l3);
+      }
+
+      .stack-nav {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        position: relative;
+      }
+
+      .stack-nav::before {
+        content: '';
+        position: absolute;
+        left: 15px;
+        top: 8px;
+        bottom: 8px;
+        width: 1px;
+        background: var(--border);
+      }
+
+      .stack-nav li {
+        position: relative;
+      }
+
+      .stack-nav a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 6px;
+        text-decoration: none;
+        border-radius: 8px;
+        color: var(--text-muted);
+        font-size: 0.92rem;
+        transition: color 0.15s ease, background 0.15s ease;
+      }
+
+      .stack-nav a:hover {
+        color: var(--text);
+        background: var(--surface-2);
+      }
+
+      .stack-nav a.active {
+        color: var(--text);
+      }
+
+      .stack-nav .num {
+        position: relative;
+        z-index: 1;
+        width: 31px;
+        height: 31px;
+        flex: 0 0 31px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+      }
+
+      .stack-nav a.active .num,
+      .stack-nav a:hover .num {
+        border-color: var(--dot);
+        color: var(--dot);
+      }
+
+      .stack-nav li:nth-child(1) {
+        --dot: var(--l1);
+      }
+      .stack-nav li:nth-child(2) {
+        --dot: var(--l6);
+      }
+      .stack-nav li:nth-child(3) {
+        --dot: var(--l2);
+      }
+      .stack-nav li:nth-child(4) {
+        --dot: var(--l3);
+      }
+      .stack-nav li:nth-child(5) {
+        --dot: var(--l4);
+      }
+      .stack-nav li:nth-child(6) {
+        --dot: var(--l5);
+      }
+
+      .stack-nav small {
+        display: block;
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        font-weight: 400;
+      }
+
+      .spine__foot {
+        margin-top: 30px;
+        padding-top: 18px;
+        border-top: 1px solid var(--border);
+        font-size: 0.72rem;
+        color: var(--text-muted);
+      }
+
+      /* ---------- MAIN ---------- */
+      main {
+        padding: 56px 64px 120px;
+        max-width: 880px;
+      }
+
+      .intro h1 {
+        font-family: var(--font-display);
+        font-size: 2.1rem;
+        margin: 0 0 10px;
+      }
+      .intro p {
+        color: var(--text-muted);
+        max-width: 60ch;
+      }
+
+      section.layer {
+        margin-top: 110px;
+        scroll-margin-top: 30px;
+      }
+
+      .layer__head {
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+        padding-bottom: 18px;
+        border-bottom: 2px solid var(--accent-color, var(--border));
+        margin-bottom: 34px;
+      }
+
+      .layer__head .big-num {
+        font-family: var(--font-mono);
+        font-size: 2.6rem;
+        color: var(--accent-color, var(--text-muted));
+        opacity: 0.55;
+      }
+
+      .layer__head h2 {
+        font-family: var(--font-display);
+        font-size: 1.9rem;
+        margin: 0;
+      }
+
+      .layer__head .tag {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        color: var(--accent-color, var(--text-muted));
+        border: 1px solid var(--accent-color, var(--border));
+        padding: 3px 8px;
+        border-radius: 5px;
+        margin-left: auto;
+        align-self: center;
+      }
+
+      h3.topic {
+        font-size: 1.08rem;
+        margin: 42px 0 6px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      h3.topic::before {
+        content: '';
+        width: 4px;
+        height: 16px;
+        background: var(--accent-color, var(--border));
+        border-radius: 2px;
+        display: inline-block;
+      }
+
+      .topic-desc {
+        color: var(--text-muted);
+        margin: 0 0 14px;
+        font-size: 0.95rem;
+        max-width: 64ch;
+      }
+
+      pre {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--accent-color, var(--border));
+        border-radius: 8px;
+        padding: 16px 18px;
+        overflow-x: auto;
+        margin: 0 0 8px;
+      }
+
+      code {
+        font-family: var(--font-mono);
+        font-size: 0.86rem;
+        color: #cdd6de;
+      }
+
+      pre .cm {
+        color: #6b7684;
+        font-style: italic;
+      } /* comment */
+      pre .tg {
+        color: var(--accent-color, var(--l1));
+      } /* tag/keyword */
+      pre .at {
+        color: #d9b36c;
+      } /* attribute */
+      pre .st {
+        color: #8fc98a;
+      } /* string */
+
+      .note {
+        display: flex;
+        gap: 12px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        margin: 16px 0 30px;
+      }
+      .note b {
+        color: var(--text);
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+
+      table.ref {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.88rem;
+        margin: 6px 0 30px;
+      }
+      table.ref th,
+      table.ref td {
+        text-align: left;
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--border);
+      }
+      table.ref th {
+        color: var(--text-muted);
+        font-weight: 500;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+      table.ref code {
+        font-size: 0.82rem;
+      }
+
+      .cheat {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 20px 22px;
+        margin-top: 30px;
+      }
+      .cheat h4 {
+        margin: 0 0 10px;
+        font-family: var(--font-display);
+        font-weight: normal;
+        font-size: 1.05rem;
+      }
+      .cheat ul {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--text-muted);
+        font-size: 0.88rem;
+      }
+      .cheat li {
+        margin-bottom: 6px;
+      }
+      .cheat code {
+        color: var(--text);
+      }
+
+      .locked {
+        margin-top: 110px;
+        padding: 40px;
+        border: 1px dashed var(--border);
+        border-radius: 10px;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .locked .big-num {
+        font-family: var(--font-mono);
+        font-size: 2.2rem;
+        opacity: 0.35;
+      }
+      .locked strong {
+        color: var(--text);
+        display: block;
+        font-family: var(--font-display);
+        font-size: 1.15rem;
+        margin-bottom: 4px;
+        font-weight: normal;
+      }
+
+      ::selection {
+        background: rgba(232, 163, 61, 0.35);
+      }
+
+      @media (max-width: 860px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+        .spine {
+          position: relative;
+          height: auto;
+        }
+        main {
+          padding: 36px 22px 100px;
+        }
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="spine">
+        <p class="spine__brand">Manual de Referência</p>
+        <p class="spine__sub">HTML/CSS · JS · Node · Express · PostgreSQL</p>
+        <span class="spine__badge">funciona 100% offline</span>
+
+        <ul class="stack-nav">
+          <li>
+            <a href="#html" class="active"
+              ><span class="num">01</span
+              ><span>HTML<small>Estrutura da Web</small></span></a
+            >
+          </li>
+          <li>
+            <a href="#css"
+              ><span class="num">02</span
+              ><span>CSS<small>Estilo da Web</small></span></a
+            >
+          </li>
+          <li>
+            <a href="#javascript"
+              ><span class="num">03</span
+              ><span>JavaScript<small>Lógica no Navegador</small></span></a
+            >
+          </li>
+          <li>
+            <a href="#nodejs"
+              ><span class="num">04</span
+              ><span>Node.js<small>JS no Servidor</small></span></a
+            >
+          </li>
+          <li>
+            <a href="#express"
+              ><span class="num">05</span
+              ><span>Express<small>Framework Server Web</small></span></a
+            >
+          </li>
+          <li>
+            <a href="#postgresql"
+              ><span class="num">06</span
+              ><span>PostgreSQL<small>Banco de Dados</small></span></a
+            >
+          </li>
+        </ul>
+
+        <div class="spine__foot">
+          Documento único (.html), sem dependências externas.<br />
+          Use <kbd style="font-family: var(--font-mono)">Ctrl/Cmd+F</kbd> para
+          buscar durante a prova.
+        </div>
+      </aside>
+
+      <main>
+        <div class="intro">
+          <h1>Guia de Referência — Full Stack</h1>
+          <p>
+            Material de apoio para a prova offline. Cobre do front-end (HTML,
+            CSS, JavaScript) ao back-end (Node.js, Express) até a persistência
+            de dados (PostgreSQL), na ordem em que essas camadas se conectam
+            numa aplicação real.
+          </p>
+        </div>
+
+    <!-- ================= 01 HTML ================= -->
+    <section class="layer" id="html" style="--accent-color: var(--l1)">
+      <div class="layer__head">
+        <span class="big-num">01</span>
+        <h2>HTML &amp; CSS</h2>
+        <span class="tag">camada de apresentação</span>
+      </div>
+
+      <h3 class="topic">1. Estrutura Base (o "Boilerplate")</h3>
+      <p class="topic-desc">O esqueleto padrão que todo documento HTML precisa ter. É o ponto de partida de qualquer página.</p>
+      <pre><code><span class="tg">&lt;!DOCTYPE html&gt;</span>
+<span class="tg">&lt;html</span> <span class="at">lang</span>=<span class="st">"pt-BR"</span><span class="tg">&gt;</span>
+<span class="tg">&lt;head&gt;</span>
+  <span class="tg">&lt;meta</span> <span class="at">charset</span>=<span class="st">"UTF-8"</span><span class="tg">&gt;</span>
+  <span class="tg">&lt;meta</span> <span class="at">name</span>=<span class="st">"viewport"</span> <span class="at">content</span>=<span class="st">"width=device-width, initial-scale=1.0"</span><span class="tg">&gt;</span>
+  <span class="tg">&lt;title&gt;</span>Minha Página<span class="tg">&lt;/title&gt;</span>
+<span class="tg">&lt;/head&gt;</span>
+<span class="tg">&lt;body&gt;</span>
+  <span class="cm">&lt;!-- conteúdo visível vai aqui --&gt;</span>
+<span class="tg">&lt;/body&gt;</span>
+<span class="tg">&lt;/html&gt;</span></code></pre>
+      <table class="ref">
+        <tr><th>Tag / Atributo</th><th>Para que serve</th></tr>
+        <tr><td><code>&lt;!DOCTYPE html&gt;</code></td><td>Diz ao navegador que o documento é HTML5</td></tr>
+        <tr><td><code>&lt;html&gt;</code></td><td>Elemento raiz, envolve tudo</td></tr>
+        <tr><td><code>&lt;head&gt;</code></td><td>Metadados — não aparece na tela</td></tr>
+        <tr><td><code>&lt;body&gt;</code></td><td>Conteúdo visível da página</td></tr>
+        <tr><td><code>meta charset="UTF-8"</code></td><td>Garante acentuação e caracteres especiais corretos (ç, ã, é...)</td></tr>
+        <tr><td><code>meta name="viewport"</code></td><td>Faz a página se adaptar a telas de celular (responsividade)</td></tr>
+        <tr><td><code>&lt;title&gt;</code></td><td>Nome que aparece na aba do navegador</td></tr>
+      </table>
+
+      <h3 class="topic">2. Textos e Hierarquia</h3>
+      <p class="topic-desc">Tags que dão estrutura e ênfase ao texto.</p>
+      <pre><code><span class="tg">&lt;h1&gt;</span>Título principal da página<span class="tg">&lt;/h1&gt;</span>
+<span class="tg">&lt;h2&gt;</span>Subtítulo de seção<span class="tg">&lt;/h2&gt;</span>
+<span class="tg">&lt;h3&gt;</span>Subtítulo menor<span class="tg">&lt;/h3&gt;</span>
+
+<span class="tg">&lt;p&gt;</span>
+  Este é um parágrafo com uma palavra em <span class="tg">&lt;strong&gt;</span>negrito<span class="tg">&lt;/strong&gt;</span>
+  e outra em <span class="tg">&lt;em&gt;</span>itálico<span class="tg">&lt;/em&gt;</span>.<span class="tg">&lt;br&gt;</span>
+  Esta linha aparece logo abaixo, por causa do <span class="tg">&lt;br&gt;</span>.
+<span class="tg">&lt;/p&gt;</span></code></pre>
+      <div class="note">📌 <div><b>Regra do &lt;h1&gt;:</b> use apenas <b>um</b> <code>&lt;h1&gt;</code> por página — ele representa o título principal do documento. Os demais níveis (<code>h2</code> a <code>h6</code>) organizam o conteúdo em subseções, sempre em ordem decrescente de importância, sem pular níveis arbitrariamente.</div></div>
+      <table class="ref">
+        <tr><th>Tag</th><th>Significado</th></tr>
+        <tr><td><code>&lt;h1&gt;</code>…<code>&lt;h6&gt;</code></td><td>Títulos, do mais (h1) ao menos (h6) importante</td></tr>
+        <tr><td><code>&lt;p&gt;</code></td><td>Parágrafo de texto</td></tr>
+        <tr><td><code>&lt;strong&gt;</code></td><td>Destaque de <b>importância</b> (visualmente negrito)</td></tr>
+        <tr><td><code>&lt;em&gt;</code></td><td>Ênfase (visualmente itálico)</td></tr>
+        <tr><td><code>&lt;br&gt;</code></td><td>Quebra de linha simples, sem abrir novo parágrafo</td></tr>
+      </table>
+
+      <h3 class="topic">3. Links e Mídias</h3>
+      <p class="topic-desc">Como conectar páginas entre si e inserir conteúdo externo (imagens, vídeo, áudio).</p>
+
+      <pre><code><span class="cm">&lt;!-- link relativo: aponta para um arquivo dentro do próprio projeto --&gt;</span>
+<span class="tg">&lt;a</span> <span class="at">href</span>=<span class="st">"contato.html"</span><span class="tg">&gt;</span>Fale conosco<span class="tg">&lt;/a&gt;</span>
+
+<span class="cm">&lt;!-- link absoluto: aponta para outro domínio --&gt;</span>
+<span class="tg">&lt;a</span> <span class="at">href</span>=<span class="st">"https://exemplo.com"</span> <span class="at">target</span>=<span class="st">"_blank"</span> <span class="at">rel</span>=<span class="st">"noopener"</span><span class="tg">&gt;</span>
+  Visitar site externo
+<span class="tg">&lt;/a&gt;</span></code></pre>
+      <table class="ref">
+        <tr><th>Atributo</th><th>Para que serve</th></tr>
+        <tr><td><code>href</code></td><td>Destino do link — caminho relativo (<code>/sobre.html</code>) ou absoluto (<code>https://...</code>)</td></tr>
+        <tr><td><code>target="_blank"</code></td><td>Abre o link em uma nova aba</td></tr>
+        <tr><td><code>rel="noopener"</code></td><td>Boa prática de segurança ao usar <code>target="_blank"</code></td></tr>
+      </table>
+
+      <pre><code><span class="tg">&lt;img</span> <span class="at">src</span>=<span class="st">"logo.png"</span> <span class="at">alt</span>=<span class="st">"Logo da empresa"</span><span class="tg">&gt;</span></code></pre>
+      <table class="ref">
+        <tr><th>Atributo</th><th>Para que serve</th></tr>
+        <tr><td><code>src</code></td><td>Caminho do arquivo de imagem</td></tr>
+        <tr><td><code>alt</code></td><td>Texto alternativo — lido por leitores de tela e exibido se a imagem não carregar</td></tr>
+      </table>
+
+      <p class="topic-desc">Outras mídias comuns:</p>
+      <pre><code><span class="cm">&lt;!-- vídeo com controles de play/pause --&gt;</span>
+<span class="tg">&lt;video</span> <span class="at">src</span>=<span class="st">"aula.mp4"</span> <span class="at">controls</span> <span class="at">width</span>=<span class="st">"480"</span><span class="tg">&gt;&lt;/video&gt;</span>
+
+<span class="cm">&lt;!-- áudio --&gt;</span>
+<span class="tg">&lt;audio</span> <span class="at">src</span>=<span class="st">"musica.mp3"</span> <span class="at">controls</span><span class="tg">&gt;&lt;/audio&gt;</span>
+
+<span class="cm">&lt;!-- iframe: incorpora outra página/documento dentro da atual --&gt;</span>
+<span class="tg">&lt;iframe</span> <span class="at">src</span>=<span class="st">"https://exemplo.com/mapa"</span> <span class="at">width</span>=<span class="st">"600"</span> <span class="at">height</span>=<span class="st">"400"</span><span class="tg">&gt;&lt;/iframe&gt;</span></code></pre>
+      <table class="ref">
+        <tr><th>Tag</th><th>Uso</th></tr>
+        <tr><td><code>&lt;video&gt;</code></td><td>Reproduz vídeo; <code>controls</code> exibe a barra de play/pause/volume</td></tr>
+        <tr><td><code>&lt;audio&gt;</code></td><td>Reproduz áudio; mesma lógica do <code>controls</code></td></tr>
+        <tr><td><code>&lt;iframe&gt;</code></td><td>Incorpora outra página HTML dentro da atual (ex: mapa, vídeo do YouTube)</td></tr>
+      </table>
+
+      <h3 class="topic">4. Agrupamento e Semântica de Layout</h3>
+      <p class="topic-desc">Containers neutros vs. tags que descrevem o papel do conteúdo.</p>
+      <pre><code><span class="cm">&lt;!-- div: bloco genérico, sem significado próprio --&gt;</span>
+<span class="tg">&lt;div</span> <span class="at">class</span>=<span class="st">"card"</span><span class="tg">&gt;</span>...<span class="tg">&lt;/div&gt;</span>
+
+<span class="cm">&lt;!-- span: em linha, sem significado próprio --&gt;</span>
+<span class="tg">&lt;p&gt;</span>Preço: <span class="tg">&lt;span</span> <span class="at">class</span>=<span class="st">"preco"</span><span class="tg">&gt;</span>R$ 49,90<span class="tg">&lt;/span&gt;</span><span class="tg">&lt;/p&gt;</span></code></pre>
+      <p class="topic-desc">Já as tags semânticas comunicam a <b>função</b> do bloco — importante para leitores de tela e para deixar a estrutura do documento organizada:</p>
+      <table class="ref">
+        <tr><th>Tag</th><th>Papel</th></tr>
+        <tr><td><code>&lt;div&gt;</code></td><td>Container em <b>bloco</b> (quebra linha e ocupa toda a largura disponível). Usado para estruturar blocos de layout.</td></tr>
+<tr><td><code>&lt;span&gt;</code></td><td>Container em <b>linha</b> (não quebra linha, ocupa só a largura do texto). Usado para destacar ou estilizar trechos específicos.</td></tr>
+        <tr><td><code>&lt;header&gt;</code></td><td>Cabeçalho da página ou de uma seção</td></tr>
+        <tr><td><code>&lt;nav&gt;</code></td><td>Bloco de links de navegação</td></tr>
+        <tr><td><code>&lt;main&gt;</code></td><td>Conteúdo principal da página (único por página)</td></tr>
+        <tr><td><code>&lt;section&gt;</code></td><td>Agrupamento temático de conteúdo</td></tr>
+        <tr><td><code>&lt;article&gt;</code></td><td>Conteúdo independente e reutilizável (post, card, notícia)</td></tr>
+        <tr><td><code>&lt;footer&gt;</code></td><td>Rodapé da página ou de uma seção</td></tr>
+      </table>
+
+      <h3 class="topic">5. Listas</h3>
+      <p class="topic-desc">Duas formas de agrupar itens: quando a ordem não importa, e quando importa.</p>
+      <pre><code><span class="cm">&lt;!-- não ordenada: menus, itens sem sequência --&gt;</span>
+<span class="tg">&lt;ul&gt;</span>
+  <span class="tg">&lt;li&gt;</span>Início<span class="tg">&lt;/li&gt;</span>
+  <span class="tg">&lt;li&gt;</span>Produtos<span class="tg">&lt;/li&gt;</span>
+  <span class="tg">&lt;li&gt;</span>Contato<span class="tg">&lt;/li&gt;</span>
+<span class="tg">&lt;/ul&gt;</span>
+
+<span class="cm">&lt;!-- ordenada: passo a passo, ranking, sequência numérica --&gt;</span>
+<span class="tg">&lt;ol&gt;</span>
+  <span class="tg">&lt;li&gt;</span>Criar o projeto<span class="tg">&lt;/li&gt;</span>
+  <span class="tg">&lt;li&gt;</span>Instalar as dependências<span class="tg">&lt;/li&gt;</span>
+  <span class="tg">&lt;li&gt;</span>Rodar o servidor<span class="tg">&lt;/li&gt;</span>
+<span class="tg">&lt;/ol&gt;</span></code></pre>
+      <table class="ref">
+        <tr><th>Tag</th><th>Quando usar</th></tr>
+        <tr><td><code>&lt;ul&gt;</code></td><td>Lista não ordenada — menus de navegação, conjuntos sem sequência</td></tr>
+        <tr><td><code>&lt;ol&gt;</code></td><td>Lista ordenada — passos, rankings, qualquer sequência numérica</td></tr>
+        <tr><td><code>&lt;li&gt;</code></td><td>Cada item da lista, dentro de <code>&lt;ul&gt;</code> ou <code>&lt;ol&gt;</code></td></tr>
+      </table>
+
+      <h3 class="topic">6. Formulários (tópico vital para Node/Express)</h3>
+      <p class="topic-desc">É como o usuário envia dados para o servidor. Fundamental para entender as próximas camadas do stack.</p>
+      <pre><code><span class="tg">&lt;form</span> <span class="at">action</span>=<span class="st">"/cadastro"</span> <span class="at">method</span>=<span class="st">"POST"</span><span class="tg">&gt;</span>
+
+  <span class="tg">&lt;label</span> <span class="at">for</span>=<span class="st">"nome"</span><span class="tg">&gt;</span>Nome<span class="tg">&lt;/label&gt;</span>
+  <span class="tg">&lt;input</span> <span class="at">type</span>=<span class="st">"text"</span> <span class="at">id</span>=<span class="st">"nome"</span> <span class="at">name</span>=<span class="st">"nome"</span>
+    <span class="at">placeholder</span>=<span class="st">"Digite seu nome"</span> <span class="at">required</span><span class="tg">&gt;</span>
+
+  <span class="tg">&lt;label</span> <span class="at">for</span>=<span class="st">"email"</span><span class="tg">&gt;</span>E-mail<span class="tg">&lt;/label&gt;</span>
+  <span class="tg">&lt;input</span> <span class="at">type</span>=<span class="st">"email"</span> <span class="at">id</span>=<span class="st">"email"</span> <span class="at">name</span>=<span class="st">"email"</span> <span class="at">required</span><span class="tg">&gt;</span>
+
+  <span class="tg">&lt;label</span> <span class="at">for</span>=<span class="st">"idade"</span><span class="tg">&gt;</span>Idade<span class="tg">&lt;/label&gt;</span>
+  <span class="tg">&lt;input</span> <span class="at">type</span>=<span class="st">"number"</span> <span class="at">id</span>=<span class="st">"idade"</span> <span class="at">name</span>=<span class="st">"idade"</span> <span class="at">value</span>=<span class="st">"18"</span><span class="tg">&gt;</span>
+
+  <span class="tg">&lt;label&gt;&lt;input</span> <span class="at">type</span>=<span class="st">"checkbox"</span> <span class="at">name</span>=<span class="st">"aceite"</span><span class="tg">&gt;</span> Aceito os termos<span class="tg">&lt;/label&gt;</span>
+
+  <span class="tg">&lt;label&gt;&lt;input</span> <span class="at">type</span>=<span class="st">"radio"</span> <span class="at">name</span>=<span class="st">"plano"</span> <span class="at">value</span>=<span class="st">"basico"</span><span class="tg">&gt;</span> Básico<span class="tg">&lt;/label&gt;</span>
+  <span class="tg">&lt;label&gt;&lt;input</span> <span class="at">type</span>=<span class="st">"radio"</span> <span class="at">name</span>=<span class="st">"plano"</span> <span class="at">value</span>=<span class="st">"premium"</span><span class="tg">&gt;</span> Premium<span class="tg">&lt;/label&gt;</span>
+
+  <span class="tg">&lt;label</span> <span class="at">for</span>=<span class="st">"bio"</span><span class="tg">&gt;</span>Sobre você<span class="tg">&lt;/label&gt;</span>
+  <span class="tg">&lt;textarea</span> <span class="at">id</span>=<span class="st">"bio"</span> <span class="at">name</span>=<span class="st">"bio"</span> <span class="at">placeholder</span>=<span class="st">"Conte um pouco sobre você"</span><span class="tg">&gt;&lt;/textarea&gt;</span>
+
+  <span class="tg">&lt;label</span> <span class="at">for</span>=<span class="st">"cidade"</span><span class="tg">&gt;</span>Cidade<span class="tg">&lt;/label&gt;</span>
+  <span class="tg">&lt;select</span> <span class="at">id</span>=<span class="st">"cidade"</span> <span class="at">name</span>=<span class="st">"cidade"</span><span class="tg">&gt;</span>
+    <span class="tg">&lt;option</span> <span class="at">value</span>=<span class="st">"floripa"</span><span class="tg">&gt;</span>Florianópolis<span class="tg">&lt;/option&gt;</span>
+    <span class="tg">&lt;option</span> <span class="at">value</span>=<span class="st">"sp"</span><span class="tg">&gt;</span>São Paulo<span class="tg">&lt;/option&gt;</span>
+  <span class="tg">&lt;/select&gt;</span>
+
+  <span class="tg">&lt;button</span> <span class="at">type</span>=<span class="st">"submit"</span><span class="tg">&gt;</span>Cadastrar<span class="tg">&lt;/button&gt;</span>
+
+<span class="tg">&lt;/form&gt;</span></code></pre>
+
+      <table class="ref">
+        <tr><th>Atributo</th><th>Para que serve</th></tr>
+        <tr><td><code>action</code></td><td>URL/rota para onde os dados do formulário são enviados</td></tr>
+        <tr><td><code>method</code></td><td><code>GET</code> (dados na URL, para buscas) ou <code>POST</code> (dados no corpo da requisição, para criar/alterar)</td></tr>
+        <tr><td><code>for</code> (no label)</td><td>Deve ser igual ao <code>id</code> do input — clicar no label foca o campo</td></tr>
+        <tr><td><code>required</code></td><td>Impede o envio se o campo estiver vazio</td></tr>
+        <tr><td><code>placeholder</code></td><td>Texto de exemplo dentro do campo, some ao digitar</td></tr>
+        <tr><td><code>value</code></td><td>Valor pré-preenchido do campo</td></tr>
+      </table>
+
+      <div class="note">⚠️ <div><b>O atributo <code>name</code> é obrigatório:</b> é ele — e não o <code>id</code> — que o navegador usa como chave ao enviar os dados. Sem <code>name="..."</code> no input, o Express <b>não recebe aquele campo</b> em <code>req.body</code>. O <code>id</code> serve só para ligar o <code>&lt;label&gt;</code> e para estilizar/selecionar via JS — ele não é enviado ao servidor.</div></div>
+
+      <table class="ref">
+        <tr><th>Elemento</th><th>Uso</th></tr>
+        <tr><td><code>&lt;textarea&gt;</code></td><td>Campo de texto de várias linhas</td></tr>
+        <tr><td><code>&lt;select&gt;</code> / <code>&lt;option&gt;</code></td><td>Lista suspensa de opções</td></tr>
+        <tr><td><code>&lt;button type="submit"&gt;</code></td><td>Envia o formulário</td></tr>
+      </table>
+
+      <h3 class="topic">7. Tabelas</h3>
+      <p class="topic-desc">Para exibir dados tabulares — linhas e colunas.</p>
+      <pre><code><span class="tg">&lt;table&gt;</span>
+  <span class="tg">&lt;thead&gt;</span>
+    <span class="tg">&lt;tr&gt;</span>
+      <span class="tg">&lt;th&gt;</span>Nome<span class="tg">&lt;/th&gt;</span>
+      <span class="tg">&lt;th&gt;</span>E-mail<span class="tg">&lt;/th&gt;</span>
+    <span class="tg">&lt;/tr&gt;</span>
+  <span class="tg">&lt;/thead&gt;</span>
+  <span class="tg">&lt;tbody&gt;</span>
+    <span class="tg">&lt;tr&gt;</span>
+      <span class="tg">&lt;td&gt;</span>Maria<span class="tg">&lt;/td&gt;</span>
+      <span class="tg">&lt;td&gt;</span>maria@email.com<span class="tg">&lt;/td&gt;</span>
+    <span class="tg">&lt;/tr&gt;</span>
+  <span class="tg">&lt;/tbody&gt;</span>
+<span class="tg">&lt;/table&gt;</span></code></pre>
+      <table class="ref">
+        <tr><th>Tag</th><th>Papel</th></tr>
+        <tr><td><code>&lt;table&gt;</code></td><td>Elemento raiz da tabela</td></tr>
+        <tr><td><code>&lt;thead&gt;</code></td><td>Agrupa a linha de cabeçalho</td></tr>
+        <tr><td><code>&lt;tbody&gt;</code></td><td>Agrupa as linhas de dados</td></tr>
+        <tr><td><code>&lt;tr&gt;</code></td><td>Uma linha (table row)</td></tr>
+        <tr><td><code>&lt;th&gt;</code></td><td>Célula de cabeçalho de coluna (negrito, centralizado por padrão)</td></tr>
+        <tr><td><code>&lt;td&gt;</code></td><td>Célula de dado comum (table data)</td></tr>
+      </table>
+    </section>
+
+    <!-- ================= 02 CSS ================= -->
+    <section class="layer" id="css" style="--accent-color: var(--l6)">
+      <div class="layer__head">
+        <span class="big-num">02</span>
+        <h2>CSS3 — Estilização e Layout</h2>
+        <span class="tag">camada visual</span>
+      </div>
+
+      <!-- 1. SINTAXE E INCLUSÃO -->
+      <h3 class="topic">1. Sintaxe Base e Formas de Inclusão</h3>
+      <p class="topic-desc">Anatomia de uma regra estilística e os métodos de vinculação ao documento HTML.</p>
+  <pre><code><span class="cm">/* Sintaxe: Seletor { propriedade: valor; } */</span>
+<span class="tg">h1</span> {
+  <span class="at">color</span>: <span class="st">#2b2b2b</span>;
+  <span class="at">font-size</span>: <span class="st">2rem</span>;
+}
+
+<span class="cm">/* Inclusão no HTML (&lt;head&gt;) */</span>
+<span class="tg">&lt;link</span> <span class="at">rel</span>=<span class="st">"stylesheet"</span> <span class="at">href</span>=<span class="st">"estilo.css"</span><span class="tg">&gt;</span></code></pre>
+
+      <table class="ref">
+        <tr><th>Método</th><th>Sintaxe / Exemplo</th><th>Descrição e Uso Prático</th></tr>
+        <tr><td><code>&lt;link&gt;</code> (Externo)</td><td><code>&lt;link rel="stylesheet" href="style.css"&gt;</code></td><td>Padrão de mercado. Arquivo separado, reutilizável e armazenável em cache.</td></tr>
+        <tr><td><code>&lt;style&gt;</code> (Interno)</td><td><code>&lt;style&gt; body { background: #fff; } &lt;/style&gt;</code></td><td>Inserido no <code>&lt;head&gt;</code> do documento. Utilizado apenas para testes de prototipagem rápida.</td></tr>
+        <tr><td>Atributo <code>style</code> (Inline)</td><td><code>&lt;p style="color: red;"&gt;</code></td><td>Inserido direto na tag. Evitar: possui especificidade altíssima e impede manutenção.</td></tr>
+        <tr><td>Regra <code>@import</code></td><td><code>@import url('estilos.css');</code></td><td>Usado dentro de um arquivo CSS para puxar outro. Evitar em excesso (gera requisições em cadeia).</td></tr>
+      </table>
+
+      <!-- 2. SELETORES, COMBINADORES E PSEUDO-ELEMENTOS -->
+      <h3 class="topic">2. Seletores, Combinadores e Pseudoclasses</h3>
+      <p class="topic-desc">Mecanismos de alvejamento de elementos no DOM, hierarquia de especificidade e estados operacionais.</p>
+  <pre><code><span class="cm">/* Combinadores e Seletores Compostos */</span>
+<span class="tg">article > p</span> { <span class="at">font-weight</span>: <span class="st">bold</span>; }      <span class="cm">/* Filho direto */</span>
+<span class="tg">input[type="text"]</span> { <span class="at">border</span>: <span class="st">1px solid</span>; } <span class="cm">/* Atributo exato */</span>
+
+<span class="cm">/* Pseudoclasses e Pseudoelementos */</span>
+<span class="tg">.btn:hover</span> { <span class="at">background</span>: <span class="st">#0056b3</span>; }
+<span class="tg">.card::before</span> { <span class="at">content</span>: <span class="st">"★ "</span>; }</code></pre>
+
+      <table class="ref">
+        <tr><th>Tipo</th><th>Sintaxe</th><th>Descrição / Exemplo de Aplicação</th></tr>
+        <tr><td>Universal</td><td><code>*</code></td><td>Seleciona 100% dos elementos da página. Usado no reset de CSS.</td></tr>
+        <tr><td>Tag</td><td><code>h1</code>, <code>p</code>, <code>button</code></td><td>Seleciona por tipo de elemento HTML. Baixa especificidade (0,0,0,1).</td></tr>
+        <tr><td>Classe (<code>.</code>)</td><td><code>.btn</code>, <code>.card-title</code></td><td>Seleção reutilizável padrão. Especificidade média (0,0,1,0).</td></tr>
+        <tr><td>ID (<code>#</code>)</td><td><code>#main-header</code></td><td>Seleciona elemento único. Alta especificidade (0,1,0,0). Deve ser usado com moderação.</td></tr>
+        <tr><td>Atributo</td><td><code>[disabled]</code>, <code>[type="submit"]</code></td><td>Seleciona com base na presença ou valor de atributos HTML.</td></tr>
+        <tr><td>Filho Direto</td><td><code>div > p</code></td><td>Aplica estilos apenas ao <code>&lt;p&gt;</code> que for filho imediato da <code>&lt;div&gt;</code>.</td></tr>
+        <tr><td>Descendente</td><td><code>div p</code></td><td>Aplica a qualquer <code>&lt;p&gt;</code> aninhado dentro da <code>&lt;div&gt;</code>, em qualquer nível.</td></tr>
+        <tr><td>Irmão Adjacente</td><td><code>h2 + p</code></td><td>Aplica ao <code>&lt;p&gt;</code> posicionado imediatamente após o <code>&lt;h2&gt;</code>.</td></tr>
+        <tr><td>Irmão Geral</td><td><code>h2 ~ p</code></td><td>Aplica a todos os <code>&lt;p&gt;</code> irmãos que venham depois do <code>&lt;h2&gt;</code>.</td></tr>
+        <tr><td><code>:hover</code></td><td><code>a:hover</code></td><td>Estado disparado quando o cursor do usuário passa sobre o elemento.</td></tr>
+        <tr><td><code>:focus</code></td><td><code>input:focus</code></td><td>Estado de campo ativo (recebendo entrada do teclado ou clique).</td></tr>
+        <tr><td><code>:active</code></td><td><code>button:active</code></td><td>Estado durante o momento exato do clique do mouse.</td></tr>
+        <tr><td><code>:disabled</code> / <code>:checked</code></td><td><code>input:disabled</code></td><td>Pseudoclasses para formulários em estado desabilitado ou marcados.</td></tr>
+        <tr><td><code>:nth-child(n)</code></td><td><code>li:nth-child(odd)</code> | <code>li:nth-child(2)</code></td><td>Seleciona por posição matemática. Aceita números, <code>odd</code> (ímpar), <code>even</code> (par) ou <code>2n+1</code>.</td></tr>
+        <tr><td><code>:not(seletor)</code></td><td><code>button:not(.primary)</code></td><td>Negação: aplica estilos a todos os elementos que NÃO correspondem ao seletor.</td></tr>
+        <tr><td><code>::before</code> / <code>::after</code></td><td><code>.box::before { content: ""; }</code></td><td>Cria pseudo-elementos antes/depois do conteúdo da tag. Exige a propriedade <code>content</code>.</td></tr>
+      </table>
+
+      <!-- 3. BOX MODEL -->
+      <h3 class="topic">3. Box Model (Modelo de Caixa) e Dimensões</h3>
+      <p class="topic-desc">Cálculo de renderização espacial: todo elemento retangular é composto por Margem, Borda, Preenchimento e Conteúdo.</p>
+  <pre><code><span class="tg">*</span> {
+  <span class="at">box-sizing</span>: <span class="st">border-box</span>; <span class="cm">/* Essencial: width/height viram o tamanho final */</span>
+}
+
+<span class="tg">.container</span> {
+  <span class="at">width</span>: <span class="st">100%</span>;
+  <span class="at">max-width</span>: <span class="st">1200px</span>;
+  <span class="at">margin</span>: <span class="st">0 auto</span>;        <span class="cm">/* Centraliza container com largura definida */</span>
+  <span class="at">padding</span>: <span class="st">24px 16px</span>;    <span class="cm">/* 24px topo/base, 16px laterais */</span>
+  <span class="at">border</span>: <span class="st">1px solid #ddd</span>;
+}</code></pre>
+
+      <div class="note">📌 <div><b>Sintaxes Abreviadas (Shorthands) de Padding e Margin:</b><br>
+      • 1 valor (<code>padding: 10px</code>) = aplica em todos os 4 lados.<br>
+      • 2 valores (<code>margin: 10px 20px</code>) = [1º: Topo/Base] [2º: Esquerda/Direita].<br>
+      • 3 valores (<code>margin: 10px 20px 30px</code>) = [1º: Topo] [2º: Esquerda/Direita] [3º: Base].<br>
+      • 4 valores (<code>padding: 10px 20px 15px 5px</code>) = Sentido horário: [Topo] [Direita] [Base] [Esquerda].</div></div>
+
+      <table class="ref">
+        <tr><th>Propriedade</th><th>Valores Mais Utilizados</th><th>Comportamento Operacional</th></tr>
+        <tr><td><code>box-sizing</code></td><td><code>border-box</code> | <code>content-box</code> (padrão)</td><td>Com <code>border-box</code>, <code>padding</code> e <code>border</code> são absorvidos dentro da largura definida em <code>width</code>.</td></tr>
+        <tr><td><code>width</code> / <code>height</code></td><td><code>auto</code> | <code>px</code> | <code>%</code> | <code>rem</code> | <code>vw</code> / <code>vh</code></td><td>Define largura e altura fixas ou relativas do elemento.</td></tr>
+        <tr><td><code>min-width</code> / <code>max-width</code></td><td><code>300px</code> | <code>100%</code> | <code>1200px</code></td><td>Limites dimensionais. Vital para responsividade em telas móveis.</td></tr>
+        <tr><td><code>padding</code></td><td><code>8px</code> | <code>16px 24px</code> | <code>0 auto</code></td><td>Espaçamento interno. Empurra o conteúdo para dentro, longe da borda.</td></tr>
+        <tr><td><code>margin</code></td><td><code>16px</code> | <code>0 auto</code> (centraliza bloco) | <code>-10px</code></td><td>Espaçamento externo. Empurra elementos vizinhos. Aceita valores negativos.</td></tr>
+        <tr><td><code>border</code></td><td><code>1px solid #ccc</code> | <code>2px dashed red</code></td><td>Shorthand para: [espessura] [estilo: solid|dashed|dotted|none] [cor].</td></tr>
+        <tr><td><code>border-radius</code></td><td><code>4px</code> | <code>8px</code> | <code>50%</code> (círculo perfeito)</td><td>Arredondamento das quinas do elemento retangular.</td></tr>
+        <tr><td><code>outline</code></td><td><code>2px solid blue</code> | <code>none</code></td><td>Linha externa à borda. Não ocupa espaço no Box Model. Utilizada no estado <code>:focus</code>.</td></tr>
+        <tr><td><code>overflow</code></td><td><code>visible</code> | <code>hidden</code> | <code>scroll</code> | <code>auto</code></td><td>Gerencia conteúdo que excede o tamanho do container (<code>hidden</code> corta, <code>auto</code> cria rolagem).</td></tr>
+      </table>
+
+      <!-- 4. FLEXBOX -->
+      <h3 class="topic">4. Layout Unidimensional — Flexbox</h3>
+      <p class="topic-desc">Sistema para alinhamento e distribuição de espaço de itens em uma única direção (linha ou coluna).</p>
+  <pre><code><span class="tg">.flex-container</span> {
+  <span class="at">display</span>: <span class="st">flex</span>;
+  <span class="at">flex-direction</span>: <span class="st">row</span>;
+  <span class="at">flex-wrap</span>: <span class="st">wrap</span>;
+  <span class="at">justify-content</span>: <span class="st">space-between</span>;
+  <span class="at">align-items</span>: <span class="st">center</span>;
+  <span class="at">gap</span>: <span class="st">16px</span>;
+}
+
+<span class="tg">.flex-item</span> {
+  <span class="at">flex</span>: <span class="st">1 1 200px</span>; <span class="cm">/* flex-grow | flex-shrink | flex-basis */</span>
+}</code></pre>
+
+      <p class="topic-desc"><b>Propriedades do Container (Pai):</b></p>
+      <table class="ref">
+        <tr><th>Propriedade</th><th>Valores Possíveis</th><th>Descrição Detalhada</th></tr>
+        <tr><td><code>display</code></td><td><code>flex</code> | <code>inline-flex</code></td><td>Ativa o contexto Flexbox para todos os filhos diretos do elemento.</td></tr>
+        <tr><td><code>flex-direction</code></td><td><code>row</code> | <code>row-reverse</code> | <code>column</code> | <code>column-reverse</code></td><td>Define o eixo principal (Main Axis). <code>row</code> = horizontal (esquerda -> direita); <code>column</code> = vertical.</td></tr>
+        <tr><td><code>flex-wrap</code></td><td><code>nowrap</code> | <code>wrap</code> | <code>wrap-reverse</code></td><td><code>nowrap</code> (padrão) esmaga os itens em 1 linha; <code>wrap</code> permite quebra de linha quando não há espaço.</td></tr>
+        <tr><td><code>flex-flow</code></td><td><code>row wrap</code> (exemplo de shorthand)</td><td>Atalho para declaração conjunta de <code>flex-direction</code> e <code>flex-wrap</code>.</td></tr>
+        <tr><td><code>justify-content</code></td><td><code>flex-start</code> | <code>flex-end</code> | <code>center</code> | <code>space-between</code> | <code>space-around</code> | <code>space-evenly</code></td><td>Alinhamento ao longo do <b>Eixo Principal</b>.<br>
+        • <code>space-between</code>: cola o primeiro e último item nas extremidades.<br>
+        • <code>space-around</code>: espaço igual em volta de cada item.<br>
+        • <code>space-evenly</code>: espaçamento perfeitamente idêntico entre todos os itens e as bordas.</td></tr>
+        <tr><td><code>align-items</code></td><td><code>stretch</code> | <code>flex-start</code> | <code>flex-end</code> | <code>center</code> | <code>baseline</code></td><td>Alinhamento ao longo do <b>Eixo Cruzado</b> (perpendicular ao principal).<br>
+        • <code>stretch</code>: estica os itens para preencher a altura do container.<br>
+        • <code>baseline</code>: alinha o texto interno de todos os elementos na mesma linha.</td></tr>
+        <tr><td><code>align-content</code></td><td><code>stretch</code> | <code>flex-start</code> | <code>flex-end</code> | <code>center</code> | <code>space-between</code></td><td>Alinha as <b>linhas inteiras</b> quando há <code>flex-wrap: wrap</code> e múltiplos eixos com espaço sobressalente.</td></tr>
+        <tr><td><code>gap</code></td><td><code>16px</code> | <code>1rem</code> | <code>10px 20px</code></td><td>Define a distância mínima diretamente entre os itens flexíveis, eliminando a necessidade de margens manuais.</td></tr>
+      </table>
+
+      <p class="topic-desc"><b>Propriedades dos Itens Filhos:</b></p>
+      <table class="ref">
+        <tr><th>Propriedade</th><th>Valores / Formato</th><th>Descrição e Uso</th></tr>
+        <tr><td><code>flex-grow</code></td><td>Número puro (ex: <code>0</code>, <code>1</code>, <code>2</code>)</td><td>Fator de expansão. <code>1</code> instrui o item a crescer para ocupar o espaço vago do container.</td></tr>
+        <tr><td><code>flex-shrink</code></td><td>Número puro (ex: <code>1</code>, <code>0</code>)</td><td>Fator de encolhimento. <code>0</code> impede que o item seja esmagado se o container encolher.</td></tr>
+        <tr><td><code>flex-basis</code></td><td><code>auto</code> | <code>200px</code> | <code>50%</code></td><td>Tamanho base inicial do elemento antes da distribuição do espaço sobressalente via grow/shrink.</td></tr>
+        <tr><td><code>flex</code></td><td><code>flex: 1</code> | <code>flex: 0 0 250px</code></td><td>Shorthand para <code>flex-grow</code>, <code>flex-shrink</code> e <code>flex-basis</code>. Sintaxe <code>flex: 1</code> equivale a <code>1 1 0%</code>.</td></tr>
+        <tr><td><code>align-self</code></td><td><code>auto</code> | <code>flex-start</code> | <code>flex-end</code> | <code>center</code> | <code>stretch</code></td><td>Sobrescreve a regra de <code>align-items</code> definida no pai apenas para este item específico.</td></tr>
+        <tr><td><code>order</code></td><td>Inteiro positivo/negativo (ex: <code>-1</code>, <code>2</code>)</td><td>Altera a ordenação de renderização visual do elemento sem alterar o HTML. Padrão: <code>0</code>.</td></tr>
+      </table>
+
+      <!-- 5. CSS GRID -->
+      <h3 class="topic">5. Layout Bidimensional — CSS Grid</h3>
+      <p class="topic-desc">Sistema para construção de interfaces complexas baseadas em linhas e colunas simultâneas.</p>
+  <pre><code><span class="tg">.grid-layout</span> {
+  <span class="at">display</span>: <span class="st">grid</span>;
+  <span class="at">grid-template-columns</span>: <span class="st">repeat(auto-fit, minmax(250px, 1fr))</span>;
+  <span class="at">gap</span>: <span class="st">20px</span>;
+}
+
+<span class="tg">.dashboard</span> {
+  <span class="at">display</span>: <span class="st">grid</span>;
+  <span class="at">grid-template-columns</span>: <span class="st">240px 1fr</span>;
+  <span class="at">grid-template-rows</span>: <span class="st">60px 1fr 40px</span>;
+  <span class="at">grid-template-areas</span>: 
+    <span class="st">"header header"</span>
+    <span class="st">"sidebar main"</span>
+    <span class="st">"footer footer"</span>;
+}</code></pre>
+
+      <table class="ref">
+        <tr><th>Propriedade / Função</th><th>Valores e Exemplos Práticos</th><th>Descrição Operacional</th></tr>
+        <tr><td><code>grid-template-columns</code></td><td><code>200px 1fr 2fr</code> | <code>repeat(3, 1fr)</code></td><td>Define a quantidade e largura das colunas. A unidade <code>fr</code> representa uma fração do espaço livre.</td></tr>
+        <tr><td><code>grid-template-rows</code></td><td><code>80px auto 50px</code> | <code>repeat(2, 200px)</code></td><td>Define a altura das linhas da grade.</td></tr>
+        <tr><td><code>grid-template-areas</code></td><td>Sintaxe por nomes em aspas (ver bloco de código acima)</td><td>Mapeia a estrutura visual da página por nomes. Os itens filhos usam <code>grid-area: nome</code> para se posicionar.</td></tr>
+        <tr><td><code>repeat(n, valor)</code></td><td><code>repeat(4, 1fr)</code> | <code>repeat(2, 100px)</code></td><td>Função utilitária para repetir tamanhos de colunas/linhas sem redundância.</td></tr>
+        <tr><td><code>minmax(min, max)</code></td><td><code>minmax(200px, 1fr)</code></td><td>Garante que o elemento nunca seja menor que o mínimo nem maior que o máximo definido.</td></tr>
+        <tr><td><code>auto-fit</code> / <code>auto-fill</code></td><td><code>repeat(auto-fit, minmax(200px, 1fr))</code></td><td>Cria colunas responsivas automáticas que se ajustam e quebram linha sem necessidade de Media Queries.</td></tr>
+        <tr><td><code>gap</code></td><td><code>20px</code> | <code>row-gap: 10px; column-gap: 30px;</code></td><td>Espaçamento entre células da grade.</td></tr>
+        <tr><td><code>justify-items</code> / <code>align-items</code></td><td><code>stretch</code> | <code>center</code> | <code>start</code> | <code>end</code></td><td>Alinha o conteúdo de <b>todas as células</b> nos eixos horizontal (justify) e vertical (align).</td></tr>
+        <tr><td><code>place-items</code></td><td><code>place-items: center;</code></td><td>Shorthand para <code>align-items</code> + <code>justify-items</code>. Centraliza conteúdo dentro da célula.</td></tr>
+        <tr><td><code>grid-column</code> (Item)</td><td><code>1 / 3</code> | <code>span 2</code> | <code>1 / -1</code> (da 1ª à última coluna)</td><td>Define onde o item filho começa e termina nas colunas da grade (linha de início / linha de fim).</td></tr>
+        <tr><td><code>grid-row</code> (Item)</td><td><code>2 / 4</code> | <code>span 3</code></td><td>Define a ocupação vertical do item pelas linhas da grade.</td></tr>
+        <tr><td><code>grid-area</code> (Item)</td><td><code>header</code> | <code>1 / 2 / 3 / 4</code></td><td>Atribui o item a uma área nomeada em <code>grid-template-areas</code> ou shorthand para linhas/colunas.</td></tr>
+      </table>
+
+      <!-- 6. DISPLAY E POSICIONAMENTO -->
+      <h3 class="topic">6. Display, Posicionamento e Camadas</h3>
+      <p class="topic-desc">Controle sobre o fluxo de renderização, ordenação em eixos Z e posicionamento de elementos no espaço.</p>
+  <pre><code><span class="tg">.modal-overlay</span> {
+  <span class="at">position</span>: <span class="st">fixed</span>;
+  <span class="at">top</span>: <span class="st">0</span>;
+  <span class="at">left</span>: <span class="st">0</span>;
+  <span class="at">width</span>: <span class="st">100vw</span>;
+  <span class="at">height</span>: <span class="st">100vh</span>;
+  <span class="at">z-index</span>: <span class="st">9999</span>;
+}
+
+<span class="tg">.card-badge</span> {
+  <span class="at">position</span>: <span class="st">absolute</span>;
+  <span class="at">top</span>: <span class="st">12px</span>;
+  <span class="at">right</span>: <span class="st">12px</span>;
+}</code></pre>
+
+      <p class="topic-desc"><b>Modos de Exibição (Display):</b></p>
+      <table class="ref">
+        <tr><th>Valor de <code>display</code></th><th>Comportamento no Fluxo</th><th>Aceita Width/Height/Margin?</th></tr>
+        <tr><td><code>block</code></td><td>Ocupa 100% da largura disponível. Força quebra de linha antes e depois. Ex: <code>div</code>, <code>p</code>, <code>h1</code>.</td><td>Sim, aceita todas as propriedades.</td></tr>
+        <tr><td><code>inline</code></td><td>Ocupa apenas o espaço exato do texto/conteúdo. Não quebra linha. Ex: <code>span</code>, <code>strong</code>, <code>a</code>.</td><td>NÃO aceita <code>width</code>, <code>height</code>, ou <code>margin</code> vertical.</td></tr>
+        <tr><td><code>inline-block</code></td><td>Permanece em linha (sem quebrar linha), mas passa a respeitar dimensões e margens externas.</td><td>Sim, aceita todas as propriedades. Ideal para botões.</td></tr>
+        <tr><td><code>flex</code> / <code>grid</code></td><td>Converte o container em elemento bloco e ativa gerenciamento de filhos via Flexbox ou Grid.</td><td>Sim.</td></tr>
+        <tr><td><code>none</code></td><td>Remove completamente o elemento da tela e da árvore de renderização (não ocupa espaço).</td><td>Não se aplica.</td></tr>
+      </table>
+
+      <p class="topic-desc"><b>Tipos de Posicionamento (Position):</b></p>
+      <table class="ref">
+        <tr><th>Valor</th><th>Âncora de Referência</th><th>Comportamento / Uso Prático</th></tr>
+        <tr><td><code>static</code> (padrão)</td><td>Fluxo normal do documento</td><td>Posicionamento padrão. Ignora propriedades <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code> e <code>z-index</code>.</td></tr>
+        <tr><td><code>relative</code></td><td>A sua própria posição original</td><td>Desloca o elemento a partir de sua vaga original sem tirá-lo do fluxo. Serve de âncora para filhos <code>absolute</code>.</td></tr>
+        <tr><td><code>absolute</code></td><td>Ancestral mais próximo com position diferente de <code>static</code></td><td>Sai totalmente do fluxo. Posiciona-se com base no container pai relativo. Se não houver, usa o documento HTML.</td></tr>
+        <tr><td><code>fixed</code></td><td>Viewport (Janela do navegador)</td><td>Sai do fluxo. Fica travado na tela mesmo ao rolar a página. Utilizado para modais, cookies e menus fixos.</td></tr>
+        <tr><td><code>sticky</code></td><td>Fluxo + limite de rolagem do container</td><td>Híbrido: comporta-se como <code>relative</code> até atingir um limite na rolagem (ex: <code>top: 0</code>), tornando-se "preso" (fixed).</td></tr>
+      </table>
+
+      <p class="topic-desc"><b>Eixo Z e Visibilidade:</b></p>
+      <table class="ref">
+        <tr><th>Propriedade</th><th>Valores</th><th>Efeito Prático</th></tr>
+        <tr><td><code>z-index</code></td><td>Inteiros (ex: <code>-1</code>, <code>0</code>, <code>10</code>, <code>9999</code>)</td><td>Controla a pilha de sobreposição no eixo Z. Só funciona em elementos com <code>position</code> diferente de <code>static</code>.</td></tr>
+        <tr><td><code>opacity</code></td><td><code>0</code> a <code>1</code> (ex: <code>0.5</code>)</td><td>Define o nível de transparência do elemento e de todos os seus filhos.</td></tr>
+        <tr><td><code>visibility</code></td><td><code>visible</code> | <code>hidden</code></td><td>Com <code>hidden</code>, o elemento fica invisível, mas DIFERENTE de <code>display: none</code>, <b>ele continua ocupando espaço físico na tela</b>.</td></tr>
+      </table>
+
+      <!-- 7. TIPOGRAFIA, CORES E RESPONSIVIDADE -->
+      <h3 class="topic">7. Tipografia, Cores e Responsividade</h3>
+      <p class="topic-desc">Estilização de texto, manipulação de cores, unidades de medida e adaptação para dispositivos.</p>
+  <pre><code><span class="tg">:root</span> {
+  <span class="at">--primary-color</span>: <span class="st">#007bff</span>;
+  <span class="at">--bg-dark</span>: <span class="st">#121212</span>;
+}
+
+<span class="tg">body</span> {
+  <span class="at">color</span>: <span class="st">var(--primary-color)</span>;
+  <span class="at">font-family</span>: <span class="st">'Inter', system-ui, sans-serif</span>;
+  <span class="at">font-size</span>: <span class="st">1rem</span>;
+}
+
+<span class="cm">/* Media Query para telas de até 768px (Smartphones/Tablets) */</span>
+<span class="tg">@media</span> (<span class="at">max-width</span>: <span class="st">768px</span>) {
+  <span class="tg">.menu</span> { <span class="at">flex-direction</span>: <span class="st">column</span>; }
+}</code></pre>
+
+      <table class="ref">
+        <tr><th>Categoria</th><th>Propriedades / Sintaxe</th><th>Descrição e Boas Práticas</th></tr>
+        <tr><td>Tipografia Base</td><td><code>font-family</code>, <code>font-size</code>, <code>font-weight</code></td><td><code>font-weight</code> varia de <code>100</code> a <code>900</code> (<code>400</code> = normal, <code>700</code> = negrito). Usar fontes de sistema como fallback.</td></tr>
+        <tr><td>Formatação de Texto</td><td><code>line-height</code>, <code>text-align</code>, <code>text-transform</code>, <code>text-decoration</code></td><td><code>line-height: 1.5</code> garante boa legibilidade. <code>text-transform: uppercase</code>; <code>text-decoration: none</code> remove sublinhado de links.</td></tr>
+        <tr><td>Sistemas de Cores</td><td><code>#Hex</code>, <code>rgb()</code>, <code>rgba()</code>, <code>hsl()</code></td><td><code>rgba(0,0,0, 0.5)</code> permite canal alfa para transparência. Hexadecimal de 6 dígitos (<code>#ffffff</code>) é a norma.</td></tr>
+        <tr><td>Variáveis CSS</td><td><code>--minha-var: #fff;</code> e <code>var(--minha-var)</code></td><td>Declaradas no escopo <code>:root</code> para reutilização centralizada de temas e paletas de cores.</td></tr>
+        <tr><td>Unidades Absolutas</td><td><code>px</code></td><td>Tamanho fixo. Evitar uso em <code>font-size</code> por motivos de acessibilidade em leitores de tela.</td></tr>
+        <tr><td>Unidades Relativas</td><td><code>rem</code>, <code>em</code>, <code>%</code></td><td><code>1rem</code> equivale ao tamanho padrão do elemento raiz HTML (geralmente <code>16px</code>). <code>em</code> é relativo ao elemento pai.</td></tr>
+        <tr><td>Unidades de Viewport</td><td><code>vw</code>, <code>vh</code>, <code>vmin</code>, <code>vmax</code></td><td><code>100vw</code> = 100% da largura da janela; <code>100vh</code> = 100% da altura visível da janela.</td></tr>
+        <tr><td>Media Queries</td><td><code>@media (max-width: 768px) { ... }</code></td><td>Aplica blocos de código CSS apenas se as condições de tela forem atendidas (Mobile-First aborda <code>min-width</code>).</td></tr>
+      </table>
+
+      <!-- COLA RÁPIDA -->
+      <div class="cheat">
+        <h4>Cola rápida — CSS de Produção</h4>
+        <ul>
+          <li><b>Reset Essencial:</b> Inicie todo projeto com <code>* { box-sizing: border-box; margin: 0; padding: 0; }</code>.</li>
+          <li><b>Centralização Suprema com Flex:</b> <code>display: flex; justify-content: center; align-items: center;</code> no container.</li>
+          <li><b>Centralização Suprema com Grid:</b> <code>display: grid; place-items: center;</code> no container.</li>
+          <li><b>Grade Automática Sem Media Query:</b> <code>grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));</code>.</li>
+          <li><b>Âncora Absoluta:</b> Para usar <code>position: absolute</code> em um filho, o pai PRECISA ter <code>position: relative</code> (ou outro que não seja static).</li>
+          <li><b>Centralizar Bloco Fixo:</b> Elementos com <code>width</code> definido e <code>display: block</code> são centralizados na horizontal via <code>margin: 0 auto;</code>.</li>
+          <li><b>Formulários no Express:</b> Inputs e Buttons necessitam da regra <code>font-family: inherit;</code> pois não herdam a fonte do <code>body</code> por padrão.</li>
+          <li><b>Evite ID no CSS:</b> Estilize elementos com seletores de <b>Classe (<code>.</code>)</b>. Deixe IDs reservados para navegação por âncora ou seletores JavaScript.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= 03 JAVASCRIPT ================= -->
+    <section class="layer" id="javascript" style="--accent-color: var(--l2)">
+      <div class="layer__head">
+        <span class="big-num">03</span>
+        <h2>JavaScript — Lógica e Manipulação DOM</h2>
+        <span class="tag">camada de comportamento</span>
+      </div>
+
+      <!-- 1. INCLUSÃO E VARIÁVEIS -->
+      <h3 class="topic">1. Inclusão, Declaração e Escopo</h3>
+      <p class="topic-desc">Como vincular scripts ao HTML e as formas modernas de armazenamento de dados em memória.</p>
+  <pre><code><span class="cm">&lt;!-- No arquivo index.html (antes de fechar o &lt;/body&gt;) --&gt;</span>
+<span class="tg">&lt;script</span> <span class="at">src</span>=<span class="st">"app.js"</span> <span class="at">defer</span><span class="tg">&gt;&lt;/script&gt;</span>
+
+<span class="cm">// No arquivo app.js</span>
+<span class="tg">const</span> NOME_APP = <span class="st">"MeuSistema"</span>; <span class="cm">// Valor imutável (reatribuição negada)</span>
+<span class="tg">let</span> contador = <span class="st">0</span>;            <span class="cm">// Valor mutável de escopo de bloco</span>
+<span class="tg">var</span> antigo = <span class="st">"evitar"</span>;         <span class="cm">// Escopo de função/global (não utilizar)</span></code></pre>
+
+      <table class="ref">
+        <tr><th>Keyword</th><th>Escopo</th><th>Permite Reatribuição?</th><th>Permite Redeclaração?</th><th>Uso Prático</th></tr>
+        <tr><td><code>const</code></td><td>Bloco <code>{ }</code></td><td>NÃO</td><td>NÃO</td><td>Padrão obrigatório. Use para tudo por padrão (funções, módulos, seletores do DOM, valores fixos). *Objetos/Arrays internos ainda podem sofrer mutação.</td></tr>
+        <tr><td><code>let</code></td><td>Bloco <code>{ }</code></td><td>SIM</td><td>NÃO</td><td>Utilize apenas quando a variável precisar receber um novo valor ao longo da execução (ex: contadores, variáveis de acúmulo).</td></tr>
+        <tr><td><code>var</code></td><td>Função / Global</td><td>SIM</td><td>SIM</td><td>Obsoleto (ES5). Sofre <i>hoisting</i> (elevação) sem inicialização e ignora blocos como <code>if</code> e <code>for</code>. Evitar.</td></tr>
+      </table>
+
+      <!-- 2. TIPOS DE DADOS E OPERADORES -->
+      <h3 class="topic">2. Tipos de Dados, Comparações e Operadores Modernos</h3>
+      <p class="topic-desc">Tipagem dinâmica, checagem estrita de igualdade e operadores de curto-circuito do ES6+.</p>
+  <pre><code><span class="cm">// Comparação Estrita e Template Literals</span>
+<span class="tg">const</span> preco = <span class="st">49.90</span>;
+<span class="tg">const</span> mensagem = <span class="st">`O valor total é R$ ${preco.toFixed(2)}`</span>;
+
+<span class="cm">// Operadores Modernos (Nullish Coalescing e Optional Chaining)</span>
+<span class="tg">const</span> usuario = { perfil: { nome: <span class="st">"Ana"</span> } };
+<span class="tg">const</span> cidade = usuario?.perfil?.endereco?.cidade ?? <span class="st">"Não informada"</span>;</code></pre>
+
+      <table class="ref">
+        <tr><th>Operador / Recurso</th><th>Sintaxe</th><th>Descrição Operacional</th></tr>
+        <tr><td><code>===</code> / <code>!==</code></td><td><code>a === b</code></td><td><b>Igualdade Estrita:</b> Compara VALOR e TIPO sem coerção forçada. Sempre utilize em vez de <code>==</code>.</td></tr>
+        <tr><td><code>==</code> / <code>!=</code></td><td><code>a == b</code></td><td><b>Igualdade Solta:</b> Tenta converter os tipos antes de comparar (ex: <code>"5" == 5</code> retorna <code>true</code>). Evitar.</td></tr>
+        <tr><td>Template Literals</td><td><code>`Texto ${variavel}`</code></td><td>Interpolação de strings via crases. Permite quebras de linha nativas e execução de expressões JS internos.</td></tr>
+        <tr><td>Encadeamento Opcional</td><td><code>objeto?.propriedade</code></td><td>Acessa propriedades aninhadas sem estourar erro <code>TypeError</code> caso a referência anterior seja <code>null</code> ou <code>undefined</code>.</td></tr>
+        <tr><td>Coalescência Nula</td><td><code>valorA ?? valorB</code></td><td>Retorna <code>valorB</code> apenas se <code>valorA</code> for estritamente <code>null</code> ou <code>undefined</code> (diferente do <code>||</code> que falha com <code>0</code> ou <code>""</code>).</td></tr>
+        <tr><td>Ternário</td><td><code>condicao ? exp1 : exp2</code></td><td>Estrutura condicional enxuta de linha única. Retorna <code>exp1</code> se verdadeiro e <code>exp2</code> se falso.</td></tr>
+      </table>
+
+      <!-- 3. FUNÇÕES -->
+      <h3 class="topic">3. Funções e Arrow Functions</h3>
+      <p class="topic-desc">Blocos de código reutilizáveis, sintaxes modernas de declaração e manipulação do contexto <code>this</code>.</p>
+  <pre><code><span class="cm">// Função Declarativa Tradicional</span>
+<span class="tg">function</span> somar(a, b = <span class="st">0</span>) {
+  <span class="tg">return</span> a + b;
+}
+
+<span class="cm">// Arrow Function (Sintaxe enxuta)</span>
+<span class="tg">const</span> multiplicar = (a, b) => a * b;
+
+<span class="cm">// Arrow Function com corpo de bloco</span>
+<span class="tg">const</span> processar = (dados) => {
+  <span class="tg">const</span> limpo = dados.trim();
+  <span class="tg">return</span> limpo.toUpperCase();
+};</code></pre>
+
+      <table class="ref">
+        <tr><th>Tipo de Declaração</th><th>Sintaxe</th><th>Diferenciais e Regras de Uso</th></tr>
+        <tr><td>Declarativa</td><td><code>function nome() { }</code></td><td>Sofre <i>hoisting</i> (pode ser invocada antes de sua linha de declaração no arquivo). Possui contexto próprio de <code>this</code>.</td></tr>
+        <tr><td>Expressão de Função</td><td><code>const fn = function() { }</code></td><td>Atribuída a uma variável. Não sofre hoisting completo.</td></tr>
+        <tr><td>Arrow Function</td><td><code>const fn = (p) => { }</code></td><td>Sintaxe moderna. Não possui <code>this</code> próprio (herda o <code>this</code> do escopo pai). Não sofre hoisting.</td></tr>
+        <tr><td>Arrow Retorno Implícito</td><td><code>const fn = x => x * 2</code></td><td>Se houver apenas um parâmetro, os parênteses são opcionais. Sem chaves <code>{ }</code>, o valor é retornado automaticamente.</td></tr>
+        <tr><td>Parâmetro Padrão</td><td><code>function f(a = 10) { }</code></td><td>Define um valor default caso o parâmetro seja omitido na chamada da função.</td></tr>
+      </table>
+
+      <!-- 4. MANIPULAÇÃO DE ARRAYS -->
+      <h3 class="topic">4. Métodos Avançados de Arrays (High-Order Functions)</h3>
+      <p class="topic-desc">Iteração declarativa e manipulação imutável de listas de dados sem o uso de loops condicionais imperativos (<code>for</code>).</p>
+  <pre><code><span class="tg">const</span> produtos = [
+  { id: <span class="st">1</span>, nome: <span class="st">"Teclado"</span>, preco: <span class="st">150</span>, ativo: <span class="st">true</span> },
+  { id: <span class="st">2</span>, nome: <span class="st">"Mouse"</span>, preco: <span class="st">80</span>, ativo: <span class="st">false</span> },
+  { id: <span class="st">3</span>, nome: <span class="st">"Monitor"</span>, preco: <span class="st">900</span>, ativo: <span class="st">true</span> }
+];
+
+<span class="cm">// Encadeamento funcional de métodos</span>
+<span class="tg">const</span> totalAtivos = produtos
+  .filter(p => p.ativo)
+  .map(p => p.preco)
+  .reduce((acc, preco) => acc + preco, <span class="st">0</span>);</code></pre>
+
+      <table class="ref">
+        <tr><th>Método</th><th>Retorno</th><th>Retorna Novo Array?</th><th>Uso Principal</th></tr>
+        <tr><td><code>map()</code></td><td>Array de mesmo tamanho com itens transformados</td><td>SIM</td><td>Mapeia e altera a estrutura de cada item da lista original.</td></tr>
+        <tr><td><code>filter()</code></td><td>Array filtrado com os itens que passaram no teste lógico</td><td>SIM</td><td>Filtra a lista retornando apenas elementos onde a função callback retornar <code>true</code>.</td></tr>
+        <tr><td><code>reduce()</code></td><td>Valor único acumulado (número, objeto, array, etc.)</td><td>NÃO (Retorna o acumulador)</td><td>Reduz uma array inteira a um único valor compilado. Sintaxe: <code>reduce((acc, item) => ..., valorInicial)</code>.</td></tr>
+        <tr><td><code>find()</code></td><td>O primeiro elemento correspondente ou <code>undefined</code></td><td>NÃO (Retorna o elemento)</td><td>Busca o primeiro item que atende à condição passada. Parado assim que encontra.</td></tr>
+        <tr><td><code>findIndex()</code></td><td>O índice numérico do item ou <code>-1</code></td><td>NÃO (Retorna índice)</td><td>Retorna a posição no array do primeiro elemento que satisfaz a busca.</td></tr>
+        <tr><td><code>forEach()</code></td><td><code>undefined</code></td><td>NÃO (Apenas itera)</td><td>Executa efeitos colaterais para cada item. Não deve ser usado para transformar dados.</td></tr>
+        <tr><td><code>some()</code></td><td><code>true</code> ou <code>false</code></td><td>NÃO (Retorna boolean)</td><td>Verifica se <b>pelo menos um</b> elemento da lista atende à condição.</td></tr>
+        <tr><td><code>every()</code></td><td><code>true</code> ou <code>false</code></td><td>NÃO (Retorna boolean)</td><td>Verifica se <b>todos os elementos</b> sem exceção atendem à condição.</td></tr>
+        <tr><td><code>includes()</code></td><td><code>true</code> ou <code>false</code></td><td>NÃO (Retorna boolean)</td><td>Verifica se um elemento primitivo simples existe dentro do array.</td></tr>
+      </table>
+
+      <!-- 5. OBJETOS, DESTRUCTURING E SPREAD -->
+      <h3 class="topic">5. Objetos, Desestruturação e Espalhamento (Spread/Rest)</h3>
+      <p class="topic-desc">Sintaxes essenciais do ES6+ para manipulação e extração de estruturas de dados de forma imutável.</p>
+  <pre><code><span class="tg">const</span> usuario = { nome: <span class="st">"Carlos"</span>, email: <span class="st">"carlos@email.com"</span>, nivel: <span class="st">"admin"</span> };
+
+<span class="cm">// Desestruturação de Objeto</span>
+<span class="tg">const</span> { nome, email } = usuario;
+
+<span class="cm">// Operador Spread (Clonagem/Fusão de Objetos)</span>
+<span class="tg">const</span> usuarioAtualizado = { ...usuario, nivel: <span class="st">"superadmin"</span>, ativo: <span class="st">true</span> };
+
+<span class="cm">// Desestruturação de Array e Operador Rest</span>
+<span class="tg">const</span> [primeiro, ...resto] = [<span class="st">10</span>, <span class="st">20</span>, <span class="st">30</span>, <span class="st">40</span>];</code></pre>
+
+      <table class="ref">
+        <tr><th>Recurso</th><th>Sintaxe</th><th>Aplicações em Projetos</th></tr>
+        <tr><td>Desestruturação de Objetos</td><td><code>const { a, b } = obj;</code></td><td>Extrai propriedades diretamente em variáveis. Permite renomear: <code>const { nome: nomeUser } = obj;</code>.</td></tr>
+        <tr><td>Desestruturação de Arrays</td><td><code>const [item1, item2] = arr;</code></td><td>Extrai elementos da lista na ordem de suas posições nos índices.</td></tr>
+        <tr><td>Operador Spread (<code>...</code>)</td><td><code>[...arr1, ...arr2]</code> | <code>{ ...obj1 }</code></td><td>Clona superficialmente ou une múltiplos arrays/objetos sem alterar a fonte original.</td></tr>
+        <tr><td>Parâmetro Rest (<code>...</code>)</td><td><code>function somar(...numeros) { }</code></td><td>Agrupa múltiplos argumentos passados a uma função em uma lista/array manipulável.</td></tr>
+        <tr><td>Object Property Value Shorthand</td><td><code>const user = { nome, email };</code></td><td>Se o nome da variável for igual à chave do objeto, não é necessário repetir (<code>nome: nome</code>).</td></tr>
+      </table>
+
+      <!-- 6. DOM E EVENTOS -->
+      <h3 class="topic">6. Manipulação do DOM (Document Object Model) e Eventos</h3>
+      <p class="topic-desc">Seleção de elementos na página HTML, alteração de estilos/conteúdo e escuta de interações do usuário.</p>
+  <pre><code><span class="cm">// Seleção e Captura</span>
+<span class="tg">const</span> botao = document.querySelector(<span class="st">"#btn-salvar"</span>);
+<span class="tg">const</span> inputs = document.querySelectorAll(<span class="st">".form-input"</span>);
+
+<span class="cm">// Escutador de Evento</span>
+botao.addEventListener(<span class="st">"click"</span>, (event) => {
+  event.preventDefault(); <span class="cm">// Impede comportamento padrão (ex: reload do form)</span>
+  botao.classList.toggle(<span class="st">"ativo"</span>);
+});</code></pre>
+
+      <table class="ref">
+        <tr><th>Método / Propriedade</th><th>Tipo / Retorno</th><th>Função Operacional</th></tr>
+        <tr><td><code>querySelector("seletor")</code></td><td>Elemento único do DOM</td><td>Retorna o primeiro elemento que atende ao seletor CSS informado.</td></tr>
+        <tr><td><code>querySelectorAll("seletor")</code></td><td>NodeList (Iterável via forEach)</td><td>Retorna todos os elementos correspondentes ao seletor CSS da página.</td></tr>
+        <tr><td><code>addEventListener("evento", callback)</code></td><td>Método de escuta</td><td>Registra um manipulador de eventos no elemento (ex: <code>"click"</code>, <code>"submit"</code>, <code>"input"</code>, <code>"keyup"</code>).</td></tr>
+        <tr><td><code>event.preventDefault()</code></td><td>Método do Evento</td><td>Cancela o comportamento nativo do evento (essencial no disparo de <code>submit</code> em formulários).</td></tr>
+        <tr><td><code>textContent</code> / <code>innerHTML</code></td><td>Propriedades de Texto/HTML</td><td><code>textContent</code> altera o texto puro com segurança; <code>innerHTML</code> injeta código HTML processado.</td></tr>
+        <tr><td><code>classList.add/remove/toggle</code></td><td>Gerenciamento de Classes</td><td>Adiciona, remove ou alterna classes CSS no elemento sem sobrescrever as existentes.</td></tr>
+        <tr><td><code>setAttribute()</code> / <code>getAttribute()</code></td><td>Manipulação de Atributos</td><td>Lê ou altera o valor de qualquer atributo HTML (ex: <code>src</code>, <code>disabled</code>, <code>href</code>).</td></tr>
+        <tr><td><code>createElement("tag")</code></td><td>Novo Elemento DOM</td><td>Cria um novo nó de elemento HTML na memória para posterior inserção na tela.</td></tr>
+        <tr><td><code>appendChild()</code> / <code>append()</code></td><td>Inserção de nós no DOM</td><td>Anexa um nó de elemento como último filho de um elemento pai existente na tela.</td></tr>
+      </table>
+
+      <!-- 7. ASSINCRONISMO E FETCH -->
+      <h3 class="topic">7. Programação Assíncrona: Promises, Async/Await e Fetch API</h3>
+      <p class="topic-desc">Comunicação com APIs externas, requisições HTTP e tratamento de código não bloqueante.</p>
+  <pre><code><span class="cm">// Função assíncrona consumindo API externa</span>
+<span class="tg">async function</span> carregarDados() {
+  <span class="tg">try</span> {
+    <span class="tg">const</span> resposta = <span class="tg">await</span> fetch(<span class="st">"https://api.exemplo.com/produtos"</span>);
+    <span class="tg">if</span> (!resposta.ok) <span class="tg">throw new</span> Error(<span class="st">`HTTP Error: ${resposta.status}`</span>);
+    
+    <span class="tg">const</span> dados = <span class="tg">await</span> resposta.json();
+    console.log(dados);
+  } <span class="tg">catch</span> (erro) {
+    console.error(<span class="st">"Falha na requisição:"</span>, erro.message);
+  }
+}</code></pre>
+
+      <table class="ref">
+        <tr><th>Conceito / Método</th><th>Sintaxe</th><th>Descrição e Boas Práticas</th></tr>
+        <tr><td>Promise</td><td><code>new Promise((resolve, reject) => {})</code></td><td>Objeto representando a eventual conclusão ou falha de uma operação assíncrona.</td></tr>
+        <tr><td><code>async</code></td><td><code>async function minhaFn() {}</code></td><td>Transforma a função em assíncrona, fazendo com que ela retorne implicitamente uma Promise.</td></tr>
+        <tr><td><code>await</code></td><td><code>const res = await promise;</code></td><td>Pausa a execução da função <code>async</code> até que a Promise seja resolvida. Só funciona dentro de blocos <code>async</code>.</td></tr>
+        <tr><td><code>fetch()</code></td><td><code>fetch(url, options)</code></td><td>API nativa do navegador para requisições HTTP. Retorna uma Promise que resolve no objeto <code>Response</code>.</td></tr>
+        <tr><td><code>response.json()</code></td><td><code>await response.json()</code></td><td>Converte o corpo de uma resposta HTTP em formato JSON para objeto JavaScript manipulável.</td></tr>
+        <tr><td><code>try...catch</code></td><td><code>try { ... } catch (erro) { ... }</code></td><td>Bloco de captura de erros síncronos e assíncronos. Indispensável ao utilizar <code>async/await</code>.</td></tr>
+        <tr><td><code>JSON.stringify()</code></td><td><code>JSON.stringify(objeto)</code></td><td>Converte um objeto/array JavaScript em uma string codificada em padrão JSON para envio via HTTP.</td></tr>
+        <tr><td><code>JSON.parse()</code></td><td><code>JSON.parse(stringJson)</code></td><td>Converte uma string formatada em JSON de volta para uma estrutura nativa de dados JS.</td></tr>
+      </table>
+
+      <!-- COLA RÁPIDA -->
+      <div class="cheat">
+        <h4>Cola rápida — JavaScript de Produção</h4>
+        <ul>
+          <li><b>Regra de Ouro de Imutabilidade:</b> Declare tudo com <code>const</code> por padrão. Só troque para <code>let</code> se a variável sofrer reatribuição direta.</li>
+          <li><b>Igualdade Estrita Sempre:</b> Utilize exclusivamente <code>===</code> e <code>!==</code> para evitar coerção implícita de tipos estranha do JS.</li>
+          <li><b>Evite o erro `Cannot read property of undefined`:</b> Utilize o operador de encadeamento opcional (<code>objeto?.propriedade</code>).</li>
+          <li><b>Interrupção de Submit:</b> Em escutadores de formulário (<code>submit</code>), execute <code>event.preventDefault()</code> imediatamente no topo.</li>
+          <li><b>Manipulação Imutável de Arrays:</b> Prefira <code>map</code>, <code>filter</code> e <code>reduce</code> a loops imperativos tradicionais <code>for</code>.</li>
+          <li><b>Script Defer:</b> Insira a tag <code>&lt;script src="..." defer&gt;&lt;/script&gt;</code> no <code>&lt;head&gt;</code> para carregar o JS em paralelo sem bloquear a renderização da página HTML.</li>
+          <li><b>Tratamento de Erros em APIs:</b> O <code>fetch()</code> NÃO rejeita a Promise em status HTTP 404 ou 500. É preciso validar manualmente via <code>if (!response.ok)</code>.</li>
+        </ul>
+      </div>
+    </section>
+      
+    <!-- ================= 04 NODE.JS ================= -->
+    <section class="layer" id="nodejs" style="--accent-color: var(--l3)">
+      <div class="layer__head">
+        <span class="big-num">04</span>
+        <h2>Node.js — Runtime e Ambiente Backend</h2>
+        <span class="tag">camada de servidor</span>
+      </div>
+
+      <!-- 1. CONCEITOS E SISTEMA DE MÓDULOS -->
+      <h3 class="topic">1. Runtime, Event Loop e Módulos (CJS vs ESM)</h3>
+      <p class="topic-desc">O Node.js executa JavaScript no servidor de forma assíncrona orientada a eventos. Suporta dois sistemas de módulos.</p>
+  <pre><code><span class="cm">// Sistema 1: CommonJS (CJS) — Padrão tradicional do Node</span>
+<span class="tg">const</span> fs = require(<span class="st">"fs"</span>);
+<span class="tg">const</span> { meuModulo } = require(<span class="st">"./meuModulo"</span>);
+module.exports = { servidorConfig };
+
+<span class="cm">// Sistema 2: ES Modules (ESM) — Padrão moderno ("type": "module" no package.json)</span>
+<span class="tg">import</span> fs <span class="tg">from</span> <span class="st">"node:fs"</span>;
+<span class="tg">import</span> { meuModulo } <span class="tg">from</span> <span class="st">"./meuModulo.js"</span>;
+<span class="tg">export default</span> servidorConfig;</code></pre>
+
+      <table class="ref">
+        <tr><th>Recurso / Conceito</th><th>CommonJS (CJS)</th><th>ES Modules (ESM)</th><th>Uso / Detalhe Operacional</th></tr>
+        <tr><td>Sintaxe de Importação</td><td><code>require('modulo')</code></td><td><code>import modulo from 'modulo'</code></td><td>CJS carrega módulos de forma síncrona; ESM realiza a resolução de dependências de forma assíncrona.</td></tr>
+        <tr><td>Sintaxe de Exportação</td><td><code>module.exports = { ... }</code></td><td><code>export default</code> / <code>export { ... }</code></td><td>ESM exige a extensão do arquivo (<code>.js</code>) ao importar arquivos locais relativos.</td></tr>
+        <tr><td>Ativação do Sistema</td><td>Padrão nativo do Node.js.</td><td>Adicionar <code>"type": "module"</code> no <code>package.json</code> ou usar extensão <code>.mjs</code>.</td><td>Dica de mercado: projetos novos backend adotam ESM por padrão.</td></tr>
+        <tr><td>Variáveis Globais de Caminho</td><td><code>__dirname</code> e <code>__filename</code> disponíveis nativamente.</td><td>NÃO existem nativamente. Devem ser geradas via <code>import.meta.url</code> e <code>path</code>.</td><td>Em CJS `__dirname` aponta a pasta atual do arquivo executado.</td></tr>
+      </table>
+
+      <!-- 2. GERENCIAMENTO DE PACOTES E PACKAGE.JSON -->
+      <h3 class="topic">2. Gerenciador de Pacotes (NPM) e Estrutura de Projeto</h3>
+      <p class="topic-desc">Comandos vitais do terminal para gerenciar bibliotecas, dependências e scripts do ecossistema.</p>
+  <pre><code><span class="cm"># Inicializa o projeto e gera o arquivo package.json</span>
+npm init -y
+
+<span class="cm"># Instalação de dependências</span>
+npm install express               <span class="cm"># Dependência de Produção</span>
+npm install -D nodemon dotenv     <span class="cm"># Dependência de Desenvolvimento (-D / --save-dev)</span>
+npm install -g typescript         <span class="cm"># Instalação Global (-g)</span>
+
+<span class="cm"># Execução de Scripts customizados do package.json</span>
+npm run dev</code></pre>
+
+      <table class="ref">
+        <tr><th>Campo / Comando</th><th>Sintaxe / Exemplo</th><th>Descrição e Boas Práticas</th></tr>
+        <tr><td><code>npm init -y</code></td><td>Terminal</td><td>Cria um arquivo <code>package.json</code> com as configurações padrão iniciais sem fazer perguntas.</td></tr>
+        <tr><td><code>dependencies</code></td><td>No <code>package.json</code></td><td>Pacotes necessários para a aplicação rodar em ambiente de **produção** (ex: <code>express</code>, <code>pg</code>, <code>cors</code>).</td></tr>
+        <tr><td><code>devDependencies</code></td><td>No <code>package.json</code></td><td>Ferramentas usadas **apenas durante o desenvolvimento** (ex: <code>nodemon</code>, <code>jest</code>, <code>eslint</code>).</td></tr>
+        <tr><td><code>scripts</code></td><td><code>"scripts": { "dev": "nodemon server.js" }</code></td><td>Atalhos de comando executáveis via terminal usando <code>npm run &lt;nome&gt;</code> (exceção: <code>npm start</code> e <code>npm test</code> não precisam de 'run').</td></tr>
+        <tr><td><code>package-lock.json</code></td><td>Gerado automaticamente</td><td>Registra a árvore exata com todas as versões de sub-dependências instaladas. **Deve** ser enviado ao Git.</td></tr>
+        <tr><td><code>npx</code></td><td><code>npx prisma init</code></td><td>Executa pacotes executáveis sem a necessidade de instalá-los globalmente na máquina.</td></tr>
+      </table>
+
+      <!-- 3. OBJETO GLOBAL PROCESS E VARIAVEIS DE AMBIENTE -->
+      <h3 class="topic">3. Objeto Global <code>process</code> e Variáveis de Ambiente</h3>
+      <p class="topic-desc">Acesso a informações do processo em execução, argumentos de linha de comando e variáveis de ambiente.</p>
+  <pre><code><span class="cm">// Leitura de Variáveis de Ambiente (.env)</span>
+<span class="tg">require</span>(<span class="st">"dotenv"</span>).config(); <span class="cm">// Carrega arquivo .env no process.env</span>
+
+<span class="tg">const</span> PORTA = process.env.PORT || <span class="st">3000</span>;
+<span class="tg">const</span> AMBIENTE = process.env.NODE_ENV || <span class="st">"development"</span>;
+
+<span class="cm">// Encerrando a aplicação com código de status</span>
+<span class="tg">if</span> (!process.env.DB_HOST) {
+  console.error(<span class="st">"ERRO FATAL: Banco de dados não configurado."</span>);
+  process.exit(<span class="st">1</span>); <span class="cm">// 0 = Sucesso, 1 = Encerramento por Erro</span>
+}</code></pre>
+
+      <table class="ref">
+        <tr><th>Propriedade / Método</th><th>Retorno / Tipo</th><th>Finalidade Operacional</th></tr>
+        <tr><td><code>process.env</code></td><td>Objeto do sistema</td><td>Armazena as variáveis de ambiente. Usado para guardar segredos (senhas, chaves de API, portas de banco).</td></tr>
+        <tr><td><code>process.argv</code></td><td>Array de strings</td><td>Retorna os argumentos passados na chamada do terminal. Ex: <code>node app.js --port 8080</code>.</td></tr>
+        <tr><td><code>process.cwd()</code></td><td>String (Caminho absoluto)</td><td>Retorna o diretório de onde o comando `node` foi **disparado no terminal** (current working directory).</td></tr>
+        <tr><td><code>process.exit(code)</code></td><td>Encerramento do processo</td><td>Interrompe a execução da aplicação imediatamente. <code>process.exit(0)</code> = sucesso, <code>process.exit(1)</code> = falha.</td></tr>
+        <tr><td><code>process.nextTick(fn)</code></td><td>Agendamento de Callback</td><td>Adiciona um callback no topo da fila de execução do Event Loop, antes da próxima iteração de E/S.</td></tr>
+      </table>
+
+      <!-- 4. MODULOS NATIVOS: PATH E FS -->
+      <h3 class="topic">4. Módulos Nativos Vitalícios — <code>path</code> e <code>fs</code></h3>
+      <p class="topic-desc">Manipulação segura de rotas do sistema de arquivos e operações I/O de leitura e escrita no disco.</p>
+  <pre><code><span class="tg">const</span> path = require(<span class="st">"node:path"</span>);
+<span class="tg">const</span> fs = require(<span class="st">"node:fs/promises"</span>); <span class="cm">// Versão baseada em Promises (Async/Await)</span>
+
+<span class="tg">async function</span> gerenciarArquivos() {
+  <span class="tg">try</span> {
+    <span class="tg">const</span> caminhoAbsoluto = path.join(__dirname, <span class="st">"dados"</span>, <span class="st">"usuarios.json"</span>);
+    
+    <span class="cm">// Leitura de arquivo</span>
+    <span class="tg">const</span> conteudo = <span class="tg">await</span> fs.readFile(caminhoAbsoluto, <span class="st">"utf-8"</span>);
+    <span class="tg">const</span> lista = JSON.parse(conteudo);
+    
+    <span class="cm">// Escrita de arquivo</span>
+    <span class="tg">await</span> fs.writeFile(caminhoAbsoluto, JSON.stringify(lista, null, <span class="st">2</span>));
+  } <span class="tg">catch</span> (erro) {
+    console.error(<span class="st">"Erro no sistema de arquivos:"</span>, erro);
+  }
+}</code></pre>
+
+      <p class="topic-desc"><b>Métodos do Módulo <code>path</code>:</b></p>
+      <table class="ref">
+        <tr><th>Método</th><th>Sintaxe Exemplo</th><th>O que faz / Por que usar?</th></tr>
+        <tr><td><code>path.join()</code></td><td><code>path.join(__dirname, 'src', 'app.js')</code></td><td>Junta pedaços de caminhos usando o separador correto do Sistema Operacional (<code>/</code> no Linux/Mac, <code>\</code> no Windows).</td></tr>
+        <tr><td><code>path.resolve()</code></td><td><code>path.resolve('src', 'index.js')</code></td><td>Resolve uma sequência de caminhos em um caminho absoluto a partir do diretório de execução atual.</td></tr>
+        <tr><td><code>path.extname()</code></td><td><code>path.extname('foto.png')</code></td><td>Retorna apenas a extensão do arquivo (ex: <code>.png</code>, <code>.json</code>, <code>.html</code>).</td></tr>
+        <tr><td><code>path.basename()</code></td><td><code>path.basename('/pasta/script.js')</code></td><td>Retorna o nome final do arquivo com sua extensão (ex: <code>script.js</code>).</td></tr>
+      </table>
+
+      <p class="topic-desc"><b>Métodos do Módulo <code>fs/promises</code> (Manipulação de Arquivos Assíncrona):</b></p>
+      <table class="ref">
+        <tr><th>Método</th><th>Assinatura / Argumentos</th><th>Descrição Operacional</th></tr>
+        <tr><td><code>fs.readFile()</code></td><td><code>await fs.readFile(path, 'utf-8')</code></td><td>Lê o arquivo completo. O parâmetro <code>'utf-8'</code> é necessário para retornar string em vez de um Buffer binário.</td></tr>
+        <tr><td><code>fs.writeFile()</code></td><td><code>await fs.writeFile(path, dados)</code></td><td>Cria um novo arquivo ou **sobrescreve totalmente** o conteúdo se o arquivo já existir.</td></tr>
+        <tr><td><code>fs.appendFile()</code></td><td><code>await fs.appendFile(path, dados)</code></td><td>Adiciona conteúdo ao **final** do arquivo sem apagar o texto que já existia lá.</td></tr>
+        <tr><td><code>fs.unlink()</code></td><td><code>await fs.unlink(path)</code></td><td>Remove/Deleta um arquivo do sistema de arquivos do sistema operacional.</td></tr>
+        <tr><td><code>fs.mkdir()</code></td><td><code>await fs.mkdir(path, { recursive: true })</code></td><td>Cria uma nova pasta no disco. <code>recursive: true</code> permite criar pastas aninhadas encadeadas.</td></tr>
+      </table>
+
+      <!-- 5. EVENTOS E STREAMS -->
+      <h3 class="topic">5. Arquitetura Orientada a Eventos e Streams</h3>
+      <p class="topic-desc">Processamento de dados em partes (chunks) e criação de emissores e receptores de eventos customizados.</p>
+  <pre><code><span class="tg">const</span> EventEmitter = require(<span class="st">"node:events"</span>);
+<span class="tg">const</span> meuEmissor = <span class="tg">new</span> EventEmitter();
+
+<span class="cm">// Registrar Escutador de Evento</span>
+meuEmissor.on(<span class="st">"pedidoCriado"</span>, (idPedido) => {
+  console.log(<span class="st">`Notificando cliente sobre o pedido #${idPedido}`</span>);
+});
+
+<span class="cm">// Disparar Evento</span>
+meuEmissor.emit(<span class="st">"pedidoCriado"</span>, <span class="st">1054</span>);</code></pre>
+
+      <table class="ref">
+        <tr><th>Módulo / Conceito</th><th>Sintaxe Base</th><th>Definição e Casos de Uso</th></tr>
+        <tr><td><code>EventEmitter</code></td><td><code>const emitter = new EventEmitter();</code></td><td>Classe base para o padrão Publish/Subscribe nativo do Node.js. Servidores HTTP usam isso internamente.</td></tr>
+        <tr><td><code>emitter.on()</code></td><td><code>emitter.on('nomeEvento', callback)</code></td><td>Registra uma função ou ouvinte que será executado **todas as vezes** que o evento for disparado.</td></tr>
+        <tr><td><code>emitter.once()</code></td><td><code>emitter.once('nomeEvento', callback)</code></td><td>Registra um ouvinte que dispara apenas na **primeira ocorrência** do evento e se remove em seguida.</td></tr>
+        <tr><td><code>emitter.emit()</code></td><td><code>emitter.emit('nomeEvento', dados)</code></td><td>Emite/Dispara um evento notificando todos os ouvintes cadastrados com os dados passados.</td></tr>
+        <tr><td>Streams (Readable)</td><td><code>fs.createReadStream('video.mp4')</code></td><td>Lê dados volumosos em **pedaços pequenos (chunks)** continuamente em memória sem estourar a RAM.</td></tr>
+        <tr><td>Pipe</td><td><code>readableStream.pipe(writableStream)</code></td><td>Conecta a saída de uma Stream de Leitura diretamente na entrada de uma Stream de Escrita.</td></tr>
+        <tr><td>Buffer</td><td><code>Buffer.from("Texto")</code></td><td>Estrutura de memória temporária usada pelo Node.js para manipular dados binários puros.</td></tr>
+      </table>
+
+      <!-- 6. SERVIDOR HTTP NATIVO -->
+      <h3 class="topic">6. Servidor HTTP Nativo (Sem Frameworks)</h3>
+      <p class="topic-desc">Entendendo a fundação sobre a qual frameworks como o Express.js são construídos.</p>
+  <pre><code><span class="tg">const</span> http = require(<span class="st">"node:http"</span>);
+
+<span class="tg">const</span> server = http.createServer((req, res) => {
+  <span class="tg">const</span> { method, url } = req;
+
+  <span class="cm">// Configuração de cabeçalho de resposta</span>
+  res.setHeader(<span class="st">"Content-Type"</span>, <span class="st">"application/json"</span>);
+
+  <span class="tg">if</span> (url === <span class="st">"/api/status"</span> &amp;&amp; method === <span class="st">"GET"</span>) {
+    res.writeHead(<span class="st">200</span>);
+    <span class="tg">return</span> res.end(JSON.stringify({ status: <span class="st">"Servidor online"</span> }));
+  }
+
+  res.writeHead(<span class="st">404</span>);
+  res.end(JSON.stringify({ erro: <span class="st">"Rota não encontrada"</span> }));
+});
+
+server.listen(<span class="st">3000</span>, () => console.log(<span class="st">"Servidor rodando na porta 3000"</span>));</code></pre>
+
+      <table class="ref">
+        <tr><th>Objeto / Propriedade</th><th>Propriedade ou Método</th><th>Finalidade</th></tr>
+        <tr><td><code>req</code> (IncomingMessage)</td><td><code>req.method</code></td><td>Retorna o Método HTTP da requisição feita pelo cliente (ex: <code>"GET"</code>, <code>"POST"</code>, <code>"PUT"</code>).</td></tr>
+        <tr><td><code>req</code> (IncomingMessage)</td><td><code>req.url</code></td><td>Retorna o caminho da URL solicitada (ex: <code>"/produtos?categoria=tech"</code>).</td></tr>
+        <tr><td><code>req</code> (IncomingMessage)</td><td><code>req.headers</code></td><td>Objeto contendo todos os cabeçalhos enviados pelo navegador (ex: <code>user-agent</code>, <code>authorization</code>).</td></tr>
+        <tr><td><code>res</code> (ServerResponse)</td><td><code>res.setHeader('Chave', 'Valor')</code></td><td>Define um cabeçalho HTTP individual de resposta antes do envio dos dados.</td></tr>
+        <tr><td><code>res</code> (ServerResponse)</td><td><code>res.writeHead(status, { ... })</code></td><td>Envia o Código de Status HTTP e múltiplos cabeçalhos de uma só vez para o cliente.</td></tr>
+        <tr><td><code>res</code> (ServerResponse)</td><td><code>res.end(dados)</code></td><td>Finaliza o envio da resposta. Obrigatório para fechar o ciclo de comunicação HTTP.</td></tr>
+      </table>
+
+      <!-- COLA RÁPIDA -->
+      <div class="cheat">
+        <h4>Cola rápida — Node.js de Produção</h4>
+        <ul>
+          <li><b>Node não é Monolítico Multi-thread:</b> A execução de código JS é Single-Threaded com E/S Não-Bloqueante gerenciada via <b>Libuv Event Loop</b>.</li>
+          <li><b>Sempre use Módulos com Prefixo:</b> Prefira <code>require('node:fs')</code> ou <code>import fs from 'node:fs'</code> para indicar explicitamente módulos nativos do Node.</li>
+          <li><b>Leitura Assíncrona Sem Bloqueio:</b> Nunca use métodos com sufixo <i>Sync</i> em servidores em produção (ex: <code>fs.readFileSync</code> paralisa a execução da aplicação para todos os usuários).</li>
+          <li><b>Sempre Crie o .gitignore:</b> Adicione <code>node_modules/</code> e <code>.env</code> ao arquivo <code>.gitignore</code> antes do primeiro commit do projeto.</li>
+          <li><b>Manipulação de Caminhos:</b> NUNCA concatene caminhos de arquivos como strings manuais (ex: <code>__dirname + '/arquivo.json'</code>). Use sempre <code>path.join()</code>.</li>
+          <li><b>Tratamento de Exceções Globais:</b> Previna que erros não capturados derrubem a aplicação ouvindo <code>process.on('uncaughtException', callback)</code>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= 05 EXPRESS.JS ================= -->
+    <section class="layer" id="express" style="--accent-color: var(--l4)">
+    <div class="layer__head">
+      <span class="big-num">05</span>
+      <h2>Express.js — Framework Web e Construção de APIs</h2>
+      <span class="tag">camada de aplicação / servidor</span>
+    </div>
+
+    <!-- 1. SETUP INICIAL E SERVIDOR BÁSICO -->
+    <h3 class="topic">1. Inicialização e Servidor Básico</h3>
+    <p class="topic-desc">Estrutura fundamental de uma aplicação Express, escuta de portas HTTP e middlewares essenciais de entrada.</p>
+<pre><code><span class="tg">const</span> express = require(<span class="st">"express"</span>);
+<span class="tg">const</span> app = express();
+
+<span class="cm">// Middleware obrigatório para interpretar requisições em formato JSON</span>
+app.use(express.json());
+
+<span class="cm">// Rota inicial de teste</span>
+app.get(<span class="st">"/"</span>, (req, res) => {
+res.send({ status: <span class="st">"API Express ativa!"</span> });
+});
+
+<span class="cm">// Inicialização do servidor</span>
+<span class="tg">const</span> PORTA = process.env.PORT || <span class="st">3000</span>;
+app.listen(PORTA, () => console.log(<span class="st">`Servidor Express rodando na porta ${PORTA}`</span>));</code></pre>
+
+    <table class="ref">
+      <tr><th>Método / Recurso</th><th>Sintaxe Base</th><th>Descrição e Aplicação Operacional</th></tr>
+      <tr><td><code>express()</code></td><td><code>const app = express();</code></td><td>Instancia uma nova aplicação do Express contendo a pilha de rotas e middlewares.</td></tr>
+      <tr><td><code>app.listen()</code></td><td><code>app.listen(porta, callback)</code></td><td>Inicia o servidor escutando requisições HTTP na porta informada.</td></tr>
+      <tr><td><code>express.json()</code></td><td><code>app.use(express.json())</code></td><td>Middleware nativo do Express. Converte o corpo (body) de requisições JSON em objetos JS no <code>req.body</code>.</td></tr>
+      <tr><td><code>express.urlencoded()</code></td><td><code>app.use(express.urlencoded({ extended: true }))</code></td><td>Middleware para interpretar requisições vindas de formulários HTML (<code>application/x-www-form-urlencoded</code>).</td></tr>
+    </table>
+
+    <!-- 2. ROTEAMENTO E PARÂMETROS -->
+    <h3 class="topic">2. Roteamento HTTP, Parâmetros e Objeto de Resposta</h3>
+    <p class="topic-desc">Declaração de verbos HTTP e extração de dados da requisição cliente (Parâmetros de Rota, Query e Body).</p>
+<pre><code><span class="cm">// GET com Query Params (ex: /produtos?categoria=tech&amp;ordem=asc)</span>
+app.get(<span class="st">"/produtos"</span>, (req, res) => {
+<span class="tg">const</span> { categoria, ordem } = req.query;
+res.status(<span class="st">200</span>).json({ categoria, ordem, dados: [] });
+});
+
+<span class="cm">// POST com Body Payload</span>
+app.post(<span class="st">"/produtos"</span>, (req, res) => {
+<span class="tg">const</span> { nome, preco } = req.body;
+res.status(<span class="st">201</span>).json({ id: <span class="st">101</span>, nome, preco });
+});
+
+<span class="cm">// PUT/DELETE com Route Params (ex: /produtos/101)</span>
+app.delete(<span class="st">"/produtos/:id"</span>, (req, res) => {
+<span class="tg">const</span> { id } = req.params;
+res.status(<span class="st">204</span>).send();
+});</code></pre>
+
+    <table class="ref">
+      <tr><th>Propriedade / Método</th><th>Origem / Tipo</th><th>Finalidade e Formato</th></tr>
+      <tr><td><code>req.params</code></td><td>Objeto na URL (<code>/rota/:id</code>)</td><td>Parâmetros identificadores obrigatórios na URL. Acessado via <code>req.params.id</code>.</td></tr>
+      <tr><td><code>req.query</code></td><td>Query String (<code>?chave=valor</code>)</td><td>Parâmetros opcionais de busca, paginação e ordenação na URL. Acessado via <code>req.query.chave</code>.</td></tr>
+      <tr><td><code>req.body</code></td><td>Corpo da Requisição (Payload)</td><td>Contém os dados enviados no corpo da requisição em chamadas `POST`, `PUT` ou `PATCH`. Requere `express.json()`.</td></tr>
+      <tr><td><code>res.status(codigo)</code></td><td>Método de Resposta HTTP</td><td>Define o Status Code HTTP da resposta (ex: `200` OK, `201` Created, `400` Bad Request, `404` Not Found).</td></tr>
+      <tr><td><code>res.json(objeto)</code></td><td>Método de Resposta HTTP</td><td>Envia uma resposta formatada em JSON e configura automaticamente o cabeçalho <code>Content-Type: application/json</code>.</td></tr>
+      <tr><td><code>res.send(conteudo)</code></td><td>Método de Resposta HTTP</td><td>Envia uma resposta genérica (String, Buffer ou HTML). Configura o `Content-Type` dinamicamente.</td></tr>
+      <tr><td><code>res.redirect(url)</code></td><td>Método de Redirecionamento</td><td>Redireciona o navegador para uma nova URL com status HTTP `302` (ou o código informado).</td></tr>
+    </table>
+
+    <!-- 3. MIDDLEWARES E CICLO REQ-RES -->
+    <h3 class="topic">3. Middlewares e Encadeamento de Execução</h3>
+    <p class="topic-desc">Funções que possuem acesso aos objetos de requisição e resposta e ao próximo passo da execução via <code>next()</code>.</p>
+<pre><code><span class="cm">// Middleware de Autenticação / Validação</span>
+<span class="tg">const</span> autenticar = (req, res, next) => {
+<span class="tg">const</span> token = req.headers[<span class="st">"authorization"</span>];
+
+<span class="tg">if</span> (!token) {
+  <span class="tg">return</span> res.status(<span class="st">401</span>).json({ erro: <span class="st">"Token de acesso ausente."</span> });
+}
+
+<span class="cm">// Passa o controle para o próximo middleware ou controller da rota</span>
+next();
+};
+
+<span class="cm">// Aplicação do middleware apenas em rota específica</span>
+app.get(<span class="st">"/dashboard"</span>, autenticar, (req, res) => {
+res.json({ mensagem: <span class="st">"Bem-vindo ao painel restrito!"</span> });
+});</code></pre>
+
+    <table class="ref">
+      <tr><th>Conceito / Tipo</th><th>Escopo de Atuação</th><th>Descrição e Regras de Ouro</th></tr>
+      <tr><td>Middleware Global</td><td><code>app.use(middleware)</code></td><td>Executa em **todas** as requisições HTTP recebidas pelo servidor, na ordem em que foram declarados.</td></tr>
+      <tr><td>Middleware de Rota</td><td><code>app.get('/path', middleware, fn)</code></td><td>Executa exclusivamente antes de processar a rota onde foi injetado. Indispensável para validação e autenticação.</td></tr>
+      <tr><td>Função <code>next()</code></td><td>Dentro do middleware</td><td>Transfere o controle para o próximo middleware da fila. **Atenção:** Se não chamar <code>next()</code> ou responder à requisição, a rota trava infinitamente.</td></tr>
+      <tr><td>Pacote <code>cors</code></td><td><code>app.use(cors())</code></td><td>Middleware de terceiros essencial para liberar ou restringir requisições vindas de outros domínios/frontends.</td></tr>
+    </table>
+
+    <!-- 4. EXPRESS ROUTER -->
+    <h3 class="topic">4. Modularização com Express Router</h3>
+    <p class="topic-desc">Organização e separação da arquitetura da aplicação em arquivos de rotas independentes e desacopladas.</p>
+<pre><code><span class="cm">// Arquivo: routes/usuariosRoutes.js</span>
+<span class="tg">const</span> { Router } = require(<span class="st">"express"</span>);
+<span class="tg">const</span> router = Router();
+
+router.get(<span class="st">"/"</span>, (req, res) => res.json({ usuarios: [] }));
+router.post(<span class="st">"/"</span>, (req, res) => res.status(<span class="st">201</span>).json({ id: <span class="st">1</span> }));
+
+module.exports = router;
+
+<span class="cm">// Arquivo: server.js</span>
+<span class="tg">const</span> usuariosRoutes = require(<span class="st">"./routes/usuariosRoutes"</span>);
+app.use(<span class="st">"/api/usuarios"</span>, usuariosRoutes); <span class="cm">// Acopla com prefixo de rota</span></code></pre>
+
+    <table class="ref">
+      <tr><th>Recurso</th><th>Sintaxe</th><th>Vantagem Operacional</th></tr>
+      <tr><td><code>express.Router()</code></td><td><code>const router = Router();</code></td><td>Cria uma mini-aplicação isolada contendo um grupo exclusivo de rotas e middlewares.</td></tr>
+      <tr><td>Prefixo de Rota</td><td><code>app.use('/api/v1', router)</code></td><td>Organiza versionamentos e caminhos base centralizados sem precisar repeti-los em cada endpoint.</td></tr>
+      <tr><td><code>router.route()</code></td><td><code>router.route('/items').get().post()</code></td><td>Permite encadear múltiplos verbos HTTP na mesma URI evitando duplicação de string de caminho.</td></tr>
+    </table>
+
+    <!-- 5. TRATAMENTO CENTRALIZADO DE ERROS -->
+    <h3 class="topic">5. Tratamento Global de Erros</h3>
+    <p class="topic-desc">Captura centralizada de falhas ocorridas na aplicação utilizando o middleware especial de 4 parâmetros.</p>
+<pre><code><span class="cm">// Em qualquer rota, repasse exceções assíncronas chamando next(erro)</span>
+app.get(<span class="st">"/erro"</span>, (req, res, next) => {
+<span class="tg">try</span> {
+  <span class="tg">throw new</span> Error(<span class="st">"Falha ao conectar no banco"</span>);
+} <span class="tg">catch</span> (erro) {
+  next(erro); <span class="cm">// Repassa o erro para o middleware global</span>
+}
+});
+
+<span class="cm">// Middleware Global de Erros (DECLARAR POR ÚLTIMO, após todas as rotas)</span>
+app.use((err, req, res, next) => {
+console.error(err.stack);
+res.status(err.status || <span class="st">500</span>).json({
+  erro: <span class="st">true</span>,
+  mensagem: err.message || <span class="st">"Erro interno no servidor"</span>
+});
+});</code></pre>
+
+    <table class="ref">
+      <tr><th>Elemento</th><th>Assinatura / Posição</th><th>Função</th></tr>
+      <tr><td>Middleware de Erro</td><td><code>(err, req, res, next) => {}</code></td><td>O Express identifica como middleware de tratamento de erro **exclusivamente pela presença dos 4 parâmetros**.</td></tr>
+      <tr><td><code>next(erro)</code></td><td><code>next(err)</code></td><td>Quando o <code>next()</code> recebe um argumento, o Express pula todos os outros middlewares e vai direto ao manipulador de erro.</td></tr>
+      <tr><td><code>express-async-errors</code></td><td><code>require('express-async-errors')</code></td><td>Biblioteca utilitária que injeta automaticamente o repasse de erros rejeitados de funções `async/await` ao middleware de erro.</td></tr>
+    </table>
+
+    <!-- 6. SERVINDO ARQUIVOS ESTÁTICOS -->
+    <h3 class="topic">6. Servidor de Arquivos Estáticos</h3>
+    <p class="topic-desc">Disponibilização direta de assets como imagens, CSS, JavaScript cliente e uploads.</p>
+<pre><code><span class="tg">const</span> path = require(<span class="st">"node:path"</span>);
+
+<span class="cm">// Servindo a pasta public (acesso via http://localhost:3000/imagem.png)</span>
+app.use(express.static(path.join(__dirname, <span class="st">"public"</span>)));
+
+<span class="cm">// Servindo arquivos com prefixo na URL (http://localhost:3000/static/imagem.png)</span>
+app.use(<span class="st">"/static"</span>, express.static(path.join(__dirname, <span class="st">"uploads"</span>)));</code></pre>
+
+    <table class="ref">
+      <tr><th>Método</th><th>Sintaxe</th><th>Aplicação</th></tr>
+      <tr><td><code>express.static()</code></td><td><code>express.static(pasta)</code></td><td>Torna os arquivos de um diretório do servidor acessíveis publicamente via URL do navegador.</td></tr>
+    </table>
+
+    <!-- COLA RÁPIDA -->
+    <div class="cheat">
+      <h4>Cola rápida — Express.js de Produção</h4>
+      <ul>
+        <li><b>Middleware de JSON em 1º Lugar:</b> O <code>app.use(express.json())</code> deve ser declarado ANTES das definições de qualquer rota.</li>
+        <li><b>A Regra do `return`:</b> Ao responder dentro de um bloco condicional (ex: <code>if</code>), adicione `return res.status(...).json(...)` para evitar o erro <i>"Cannot set headers after they are sent to the client"</i>.</li>
+        <li><b>Middleware de Erro Semper por Último:</b> O middleware de 4 parâmetros `(err, req, res, next)` precisa ser a <b>última linha</b> da declaração do Express no arquivo.</li>
+        <li><b>Arquitetura Desacoplada:</b> Separe a aplicação em <code>Routes</code> (endpoints), <code>Controllers</code> (lógica de requisição) e <code>Services</code> (regras de negócio).</li>
+        <li><b>Segurança Fundamental:</b> Utilize bibliotecas essenciais como <b><code>helmet</code></b> (cabeçalhos HTTP de segurança) e <b><code>cors</code></b> (política de origem cruzada).</li>
+        <li><b>Rotas Inexistentes (404):</b> Crie um middleware de fallback após as rotas para tratar endpoints não mapeados antes do middleware de erro.</li>
+      </ul>
+    </div>
+    </section>
+
+      <!-- ================= 06 POSTGRESQL ================= -->
+      <section class="layer" id="postgresql" style="--accent-color: var(--l5)">
+        <div class="layer__head">
+          <span class="big-num">06</span>
+          <h2>PostgreSQL — Banco de Dados Relacional e SQL</h2>
+          <span class="tag">camada de dados / persistência</span>
+        </div>
+
+        <!-- 1. DDL — DEFINIÇÃO DE ESTRUTURAS -->
+        <h3 class="topic">1. DDL: Criação de Tabelas, Tipos de Dados e Constraints</h3>
+        <p class="topic-desc">Estruturação de esquemas relacionais, tipagem rigorosa e regras de integridade de dados.</p>
+  <pre><code><span class="cm">-- Criação de tabela com chave primária UUID e constraints</span>
+<span class="tg">CREATE TABLE</span> usuarios (
+  id <span class="at">UUID PRIMARY KEY DEFAULT</span> gen_random_uuid(),
+  nome <span class="at">VARCHAR(100) NOT NULL</span>,
+  email <span class="at">VARCHAR(255) UNIQUE NOT NULL</span>,
+  idade <span class="at">INT CHECK</span> (idade >= <span class="st">18</span>),
+  ativo <span class="at">BOOLEAN DEFAULT</span> <span class="st">true</span>,
+  metadados <span class="at">JSONB DEFAULT</span> <span class="st">'{}'</span>,
+  criado_em <span class="at">TIMESTAMPTZ DEFAULT</span> CURRENT_TIMESTAMP
+);</code></pre>
+
+        <p class="topic-desc"><b>Tipos de Dados Mais Utilizados no Dia a Dia:</b></p>
+        <table class="ref">
+          <tr><th>Tipo de Dado</th><th>Sintaxe SQL</th><th>Descrição e Caso de Uso Recomendado</th></tr>
+          <tr><td><code>VARCHAR(n)</code></td><td><code>VARCHAR(255)</code></td><td>Texto com limite configurável. Usado para nomes, e-mails, senhas com hash e títulos.</td></tr>
+          <tr><td><code>TEXT</code></td><td><code>TEXT</code></td><td>Texto de tamanho ilimitado. Ideal para descrições longas, artigos, corpos de e-mail e logs.</td></tr>
+          <tr><td><code>INT</code> / <code>BIGINT</code></td><td><code>INT</code> | <code>BIGINT</code></td><td>Números inteiros. <code>INT</code> vai até ~2 bilhões; <code>BIGINT</code> para volumes massivos ou IDs sequenciais.</td></tr>
+          <tr><td><code>NUMERIC</code> / <code>DECIMAL</code></td><td><code>NUMERIC(10, 2)</code></td><td>Precisão decimal exata. Obrigatório para dados financeiros e moedas. Evita erros de ponto flutuante.</td></tr>
+          <tr><td><code>BOOLEAN</code></td><td><code>BOOLEAN</code></td><td>Valores lógicos: <code>true</code>, <code>false</code> ou <code>NULL</code>. Usado para flags (ex: `ativo`, `verificado`).</td></tr>
+          <tr><td><code>UUID</code></td><td><code>UUID</code></td><td>Identificador Único Universal (128 bits). Ideal para IDs expostos em APIs por segurança e escalabilidade.</td></tr>
+          <tr><td><code>TIMESTAMPTZ</code></td><td><code>TIMESTAMP WITH TIME ZONE</code></td><td>Data e hora com fuso horário. Padrão de mercado para datas de criação/atualização (<code>created_at</code>).</td></tr>
+          <tr><td><code>JSONB</code></td><td><code>JSONB</code></td><td>JSON binário indexável. Combina a flexibilidade do NoSQL com o suporte a relacionamentos do SQL.</td></tr>
+          <tr><td><code>SERIAL</code> / <code>BIGSERIAL</code></td><td><code>SERIAL</code></td><td>Inteiro auto-incrementável nativo. Gera uma sequência automática para chaves primárias numéricas.</td></tr>
+        </table>
+
+        <p class="topic-desc"><b>Restrições de Integridade (Constraints):</b></p>
+        <table class="ref">
+          <tr><th>Constraint</th><th>Sintaxe</th><th>Definição e Comportamento</th></tr>
+          <tr><td><code>PRIMARY KEY</code></td><td><code>id UUID PRIMARY KEY</code></td><td>Garante unicidade e proíbe valores nulos. Define a chave identificadora principal do registro.</td></tr>
+          <tr><td><code>FOREIGN KEY</code></td><td><code>FOREIGN KEY (user_id) REFERENCES usuarios(id)</code></td><td>Mantém a integridade referencial ligando a chave de uma tabela à chave primária de outra.</td></tr>
+          <tr><td><code>NOT NULL</code></td><td><code>nome VARCHAR(100) NOT NULL</code></td><td>Impede que o campo seja salvo como nulo ou sem preenchimento.</td></tr>
+          <tr><td><code>UNIQUE</code></td><td><code>email VARCHAR(255) UNIQUE</code></td><td>Garante que não existam dois registros com o mesmo valor nesta coluna na tabela inteira.</td></tr>
+          <tr><td><code>CHECK</code></td><td><code>CHECK (preco > 0)</code></td><td>Valida uma condição lógica de negócio antes de permitir a inserção ou atualização do dado.</td></tr>
+          <tr><td><code>DEFAULT</code></td><td><code>status VARCHAR(20) DEFAULT 'pendente'</code></td><td>Insere um valor padrão automático caso o campo não seja explicitamente informado no `INSERT`.</td></tr>
+        </table>
+
+        <!-- 2. DML — MANIPULAÇÃO DE DADOS -->
+        <h3 class="topic">2. DML: Inserção, Consulta, Atualização, Remoção e RETURNING</h3>
+        <p class="topic-desc">Comandos de escrita e modificação de dados com suporte ao retorno imediato de registros processados.</p>
+  <pre><code><span class="cm">-- Inserindo registro e retornando o ID gerado na hora</span>
+<span class="tg">INSERT INTO</span> usuarios (nome, email)
+<span class="tg">VALUES</span> (<span class="st">'Ana Souza'</span>, <span class="st">'ana@email.com'</span>)
+<span class="tg">RETURNING</span> id, criado_em;
+
+<span class="cm">-- Atualização condicional com instrução RETURNING</span>
+<span class="tg">UPDATE</span> usuarios 
+<span class="tg">SET</span> ativo = <span class="st">false</span> 
+<span class="tg">WHERE</span> idade < <span class="st">18</span>
+<span class="tg">RETURNING</span> id, nome, ativo;</code></pre>
+
+        <table class="ref">
+          <tr><th>Comando</th><th>Sintaxe Exemplo</th><th>Descrição Operacional</th></tr>
+          <tr><td><code>INSERT INTO</code></td><td><code>INSERT INTO tab (c1) VALUES ('v1')</code></td><td>Insere um ou múltiplos registros na tabela. Pode receber múltiplos pares de parenteses em lote.</td></tr>
+          <tr><td><code>UPDATE</code></td><td><code>UPDATE tab SET c1 = 'v1' WHERE id = 1</code></td><td>Modifica valores de colunas existentes. **Atenção:** Sem a cláusula <code>WHERE</code>, altera a tabela inteira.</td></tr>
+          <tr><td><code>DELETE FROM</code></td><td><code>DELETE FROM tab WHERE id = 1</code></td><td>Remove linhas da tabela de forma definitiva com base em uma condição.</td></tr>
+          <tr><td><code>RETURNING</code></td><td><code>RETURNING id, nome</code> | <code>RETURNING *</code></td><td>Recurso exclusivo do PostgreSQL: devolve os dados dos registros inseridos, alterados ou deletados na hora.</td></tr>
+          <tr><td><code>ON CONFLICT</code> (Upsert)</td><td><code>ON CONFLICT (email) DO UPDATE SET ...</code></td><td>Trata erros de duplicidade. Atualiza o registro se ele já existir ou ignora (<code>DO NOTHING</code>).</td></tr>
+        </table>
+
+        <!-- 3. CONSULTAS E FILTROS -->
+        <h3 class="topic">3. Consultas, Operadores de Filtro e Paginação</h3>
+        <p class="topic-desc">Cláusulas de seleção, filtragem condicional refinada e busca paginada de dados.</p>
+  <pre><code><span class="cm">-- Consulta com busca insensível a maiúsculas, ordenação e paginação</span>
+<span class="tg">SELECT</span> id, nome, email 
+<span class="tg">FROM</span> usuarios
+<span class="tg">WHERE</span> nome <span class="at">ILIKE</span> <span class="st">'%ana%'</span> <span class="tg">AND</span> ativo = <span class="st">true</span>
+<span class="tg">ORDER BY</span> criado_em <span class="at">DESC</span>
+<span class="tg">LIMIT</span> <span class="st">10</span> <span class="tg">OFFSET</span> <span class="st">0</span>;</code></pre>
+
+        <table class="ref">
+          <tr><th>Cláusula / Operador</th><th>Sintaxe Exemplo</th><th>Comportamento Operacional</th></tr>
+          <tr><td><code>WHERE</code></td><td><code>WHERE status = 'ativo' AND preco > 50</code></td><td>Filtra os registros que atendem a um conjunto de condições lógicas de comparação.</td></tr>
+          <tr><td><code>LIKE</code> / <code>ILIKE</code></td><td><code>nome ILIKE 'carlos%'</code></td><td>Busca por padrão de string. <code>%</code> é coringa. <code>ILIKE</code> é exclusivo do Postgres e ignora maiúsculas/minúsculas.</td></tr>
+          <tr><td><code>IN</code> / <code>NOT IN</code></td><td><code>categoria_id IN (1, 2, 5)</code></td><td>Filtra registros cujo valor esteja (ou não) dentro de uma lista de valores fornecidos.</td></tr>
+          <tr><td><code>BETWEEN</code></td><td><code>data BETWEEN '2026-01-01' AND '2026-12-31'</code></td><td>Filtra valores que estejam dentro do intervalo (inclusive os limites fornecidos).</td></tr>
+          <tr><td><code>IS NULL</code> / <code>IS NOT NULL</code></td><td><code>WHERE deletado_em IS NULL</code></td><td>Checa a ausência ou presença de valor em uma coluna (comparações com `= NULL` falham no SQL).</td></tr>
+          <tr><td><code>ORDER BY</code></td><td><code>ORDER BY preco DESC, nome ASC</code></td><td>Ordena os resultados. <code>ASC</code> = ascendente (padrão); <code>DESC</code> = descendente.</td></tr>
+          <tr><td><code>LIMIT</code> / <code>OFFSET</code></td><td><code>LIMIT 20 OFFSET 40</code></td><td>Base da paginação: <code>LIMIT</code> define quantos registros trazer; <code>OFFSET</code> define quantos pula (página 3 = offset 40).</td></tr>
+        </table>
+
+        <!-- 4. JOINS E AGRUPAMENTOS -->
+        <h3 class="topic">4. Junções (JOINS) e Agrupamentos Agregados</h3>
+        <p class="topic-desc">Cruzamento de dados entre múltiplas tabelas e consolidação estatística de informações.</p>
+  <pre><code><span class="cm">// Agrupamento com cruzamento de tabelas e filtro pós-agregação</span>
+<span class="tg">SELECT</span> u.nome, <span class="at">COUNT</span>(p.id) <span class="tg">AS</span> total_pedidos, <span class="at">SUM</span>(p.valor) <span class="tg">AS</span> total_gasto
+<span class="tg">FROM</span> usuarios u
+<span class="tg">INNER JOIN</span> pedidos p <span class="tg">ON</span> p.usuario_id = u.id
+<span class="tg">GROUP BY</span> u.id, u.nome
+<span class="tg">HAVING</span> <span class="at">SUM</span>(p.valor) > <span class="st">1000</span>
+<span class="tg">ORDER BY</span> total_gasto <span class="at">DESC</span>;</code></pre>
+
+        <p class="topic-desc"><b>Tipos de Junção (JOINS):</b></p>
+        <table class="ref">
+          <tr><th>Tipo de JOIN</th><th>Comportamento no Resultado</th><th>Caso de Uso Típico</th></tr>
+          <tr><td><code>INNER JOIN</code></td><td>Retorna apenas os registros que possuem **correspondência exata** em ambas as tabelas.</td><td>Listar pedidos que possuem obrigatoriamente um usuário válido associado.</td></tr>
+          <tr><td><code>LEFT JOIN</code></td><td>Retorna **todos** os registros da tabela da esquerda, trazendo nulo se não houver par na direita.</td><td>Listar todos os usuários da base, inclusive aqueles que ainda **nunca** fizeram um pedido.</td></tr>
+          <tr><td><code>RIGHT JOIN</code></td><td>Retorna **todos** os registros da tabela da direita, trazendo nulo se não houver par na esquerda.</td><td>Pouco utilizado; prefere-se inverter a ordem das tabelas e utilizar `LEFT JOIN`.</td></tr>
+          <tr><td><code>FULL JOIN</code></td><td>Retorna todos os registros de ambas as tabelas, unindo dados quando coincidentes e preenchendo nulos.</td><td>Auditoria de dados e relatórios de discrepância entre tabelas.</td></tr>
+        </table>
+
+        <p class="topic-desc"><b>Funções de Agregação e Cláusulas de Agrupamento:</b></p>
+        <table class="ref">
+          <tr><th>Função / Cláusula</th><th>Sintaxe</th><th>O que faz?</th></tr>
+          <tr><td><code>GROUP BY</code></td><td><code>GROUP BY categoria_id</code></td><td>Agrupa linhas que possuem os mesmos valores em colunas especificadas para aplicar agregadores.</td></tr>
+          <tr><td><code>HAVING</code></td><td><code>HAVING COUNT(*) > 5</code></td><td>Filtra os **grupos consolidados** resultantes do `GROUP BY` (a cláusula `WHERE` não funciona em agregados).</td></tr>
+          <tr><td><code>COUNT()</code></td><td><code>COUNT(id)</code> | <code>COUNT(*)</code></td><td>Conta a quantidade total de registros ou de valores não nulos na coluna.</td></tr>
+          <tr><td><code>SUM()</code> / <code>AVG()</code></td><td><code>SUM(valor)</code> | <code>AVG(preco)</code></td><td>Calcula a soma total ou a média aritmética dos valores de uma coluna numérica.</td></tr>
+          <tr><td><code>MIN()</code> / <code>MAX()</code></td><td><code>MIN(criado_em)</code> | <code>MAX(valor)</code></td><td>Retorna o menor/primeiro ou maior/último valor encontrado no conjunto.</td></tr>
+        </table>
+
+        <!-- 5. ÍNDICES E TRANSAÇÕES -->
+        <h3 class="topic">5. Índices de Performance e Transações ACID</h3>
+        <p class="topic-desc">Otimização de velocidade de leitura e garantia de atomicidade em operações financeiras e críticas.</p>
+  <pre><code><span class="cm">-- Criando um índice na coluna de e-mail para acelerar a busca no Login</span>
+<span class="tg">CREATE INDEX</span> idx_usuarios_email <span class="tg">ON</span> usuarios(email);
+
+<span class="cm">-- Bloco de Transação ACID (Tudo ou Nada)</span>
+<span class="tg">BEGIN</span>;
+  <span class="tg">UPDATE</span> contas <span class="tg">SET</span> saldo = saldo - <span class="st">100</span> <span class="tg">WHERE</span> id = <span class="st">1</span>;
+  <span class="tg">UPDATE</span> contas <span class="tg">SET</span> saldo = saldo + <span class="st">100</span> <span class="tg">WHERE</span> id = <span class="st">2</span>;
+<span class="tg">COMMIT</span>; <span class="cm">-- Confirma as alterações definitivamente (ou ROLLBACK em caso de erro)</span></code></pre>
+
+        <table class="ref">
+          <tr><th>Recurso / Comando</th><th>Sintaxe</th><th>Descrição e Impacto de Performance</th></tr>
+          <tr><td>Índice B-Tree (Padrão)</td><td><code>CREATE INDEX idx_nome ON tab(coluna);</code></td><td>Acelera drasticamente buscas (<code>WHERE</code>), ordenações e <code>JOINs</code>. Custo: desacelera levemente <code>INSERTs</code>.</td></tr>
+          <tr><td>Índice GIN (JSONB)</td><td><code>CREATE INDEX idx_json ON tab USING gin(metadados);</code></td><td>Índice Invertido Genérico. Usado para indexar a chave/valor interna de documentos <code>JSONB</code> ou busca em texto.</td></tr>
+          <tr><td><code>BEGIN</code></td><td><code>BEGIN;</code> ou <code>START TRANSACTION;</code></td><td>Inicia um bloco de transação isolado. Nenhuma alteração fica visível para outros usuários até o commit.</td></tr>
+          <tr><td><code>COMMIT</code></td><td><code>COMMIT;</code></td><td>Grava de forma permanente e irreversível todas as alterações executadas durante a transação.</td></tr>
+          <tr><td><code>ROLLBACK</code></td><td><code>ROLLBACK;</code></td><td>Cancela todas as operações da transação e restaura o banco de dados exatamente ao estado anterior ao <code>BEGIN</code>.</td></tr>
+          <tr><td><code>EXPLAIN ANALYZE</code></td><td><code>EXPLAIN ANALYZE SELECT * FROM usuarios;</code></td><td>Ferramenta de diagnóstico. Mostra o plano de execução real da query, tempo de CPU e uso de índices.</td></tr>
+        </table>
+
+        <!-- 6. INTEGRAÇÃO COM NODE.JS (PG CLIENT E POOL) -->
+        <h3 class="topic">6. Integração Node.js com o Driver <code>pg</code> (node-postgres)</h3>
+        <p class="topic-desc">Conexão via Connection Pool e execução segura de consultas parametrizadas contra SQL Injection.</p>
+  <pre><code><span class="tg">const</span> { Pool } = require(<span class="st">"pg"</span>);
+
+<span class="cm">// Configuração do Connection Pool</span>
+<span class="tg">const</span> pool = <span class="tg">new</span> Pool({
+  connectionString: process.env.DATABASE_URL,
+  max: <span class="st">20</span>, <span class="cm">// Máximo de conexões simultâneas reutilizáveis</span>
+  idleTimeoutMillis: <span class="st">30000</span>
+});
+
+<span class="cm">// Consulta Parametrizada SEGURA (Proteção nativa contra SQL Injection)</span>
+<span class="tg">async function</span> buscarUsuario(email) {
+  <span class="tg">const</span> query = <span class="st">"SELECT id, nome, email FROM usuarios WHERE email = $1"</span>;
+  <span class="tg">const</span> { rows } = <span class="tg">await</span> pool.query(query, [email]); <span class="cm">// $1 é substituído por [email]</span>
+  <span class="tg">return</span> rows[<span class="st">0</span>];
+}</code></pre>
+
+        <table class="ref">
+          <tr><th>Elemento da Biblioteca</th><th>Sintaxe</th><th>Finalidade e Boas Práticas</th></tr>
+          <tr><td>Connection Pool</td><td><code>const pool = new Pool()</code></td><td>Gerencia uma fila de conexões reutilizáveis. Muito mais performático que abrir e fechar conexões a cada requisição HTTP.</td></tr>
+          <tr><td>Parâmetros <code>$1, $2...</code></td><td><code>pool.query('... WHERE id = $1', [id])</code></td><td><b>Regra de Ouro:</b> O driver limpa os dados antes de enviar ao banco. NUNCA concatene strings manuais no SQL.</td></tr>
+          <tr><td><code>rows</code></td><td><code>const { rows } = await pool.query()</code></td><td>Array contendo os objetos de resultado retornados pelo banco de dados.</td></tr>
+          <tr><td><code>rowCount</code></td><td><code>const { rowCount } = await pool.query()</code></td><td>Número inteiro indicando quantas linhas foram afetadas pelo `INSERT`, `UPDATE` ou `DELETE`.</td></tr>
+        </table>
+
+        <!-- COLA RÁPIDA -->
+        <div class="cheat">
+          <h4>Cola rápida — PostgreSQL em Produção</h4>
+          <ul>
+            <li><b>Proteção Contra SQL Injection:</b> JAMAIS faça <code>`SELECT * FROM users WHERE name = '${req.body.name}'`</code>. Use SEMPRE queries parametrizadas com placeholders <code>$1, $2</code>.</li>
+            <li><b>Prefira `JSONB` a `JSON`:</b> O tipo <code>JSONB</code> consome uma fração de tempo a mais na escrita, mas é vertiginosamente mais rápido na leitura e aceita índices.</li>
+            <li><b>Fusos Horários Sem Dor de Cabeça:</b> Utilize sempre o tipo <code>TIMESTAMPTZ</code> em vez de <code>TIMESTAMP</code> puro para salvar momentos exatos sem ambiguidade temporal.</li>
+            <li><b>Chaves Estrangeiras Indexadas:</b> Sempre crie um <code>INDEX</code> manual sobre as colunas que são <code>FOREIGN KEY</code> para evitar travamentos de tabela em `JOINs` e `DELETEs`.</li>
+            <li><b>Nomes de Tabelas e Colunas:</b> Prefira padrão em minúsculo e separado por underline (<i>snake_case</i>: ex: `criado_em`, `usuario_id`) para evitar ter que usar aspas duplas nas queries.</li>
+            <li><b>Diagnóstico de Lentidão:</b> Se uma consulta estiver demorando, rode um <code>EXPLAIN ANALYZE</code> na query no DBeaver/pgAdmin para identificar se o banco está varrendo a tabela inteira (<i>Seq Scan</i>).</li>
+          </ul>
+        </div>
+      </section>
+
+      </main>
+    </div>
+
+    <script>
+      // realça o item ativo da navegação lateral conforme o scroll
+      const links = Array.from(document.querySelectorAll('.stack-nav a'));
+      const targets = links.map((l) =>
+        document.querySelector(l.getAttribute('href')),
+      );
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const id = '#' + entry.target.id;
+            const link = links.find((l) => l.getAttribute('href') === id);
+            if (!link) return;
+            if (entry.isIntersecting) {
+              links.forEach((l) => l.classList.remove('active'));
+              link.classList.add('active');
+            }
+          });
+        },
+        { rootMargin: '-20% 0px -70% 0px' },
+      );
+
+      targets.forEach((t) => t && observer.observe(t));
+    </script>
+  </body>
+</html>

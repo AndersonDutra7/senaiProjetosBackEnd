@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Passo a Passo da Prova — AutoVision</title>
+    <style>
+      :root {
+        --bg: #11161c;
+        --surface: #171e26;
+        --surface-2: #1d2530;
+        --border: #2a3441;
+        --text: #e7e4da;
+        --text-muted: #8d97a3;
+        --accent: #e8a33d;
+
+        --l1: #ff6b4a; /* Setup */
+        --l2: #60a5fa; /* Banco de dados */
+        --l3: #4ade80; /* Backend */
+        --l4: #c084fc; /* HTML */
+        --l5: #f7df1e; /* CSS */
+        --l6: #f97316; /* JS */
+        --l7: #94a3b8; /* Checklist */
+
+        --font-display: 'Palatino Linotype', Palatino, 'Iowan Old Style',
+          Georgia, serif;
+        --font-body: -apple-system, 'Segoe UI', Roboto, system-ui, sans-serif;
+        --font-mono: 'SF Mono', Consolas, Menlo, 'Liberation Mono', monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: inherit;
+      }
+
+      .app {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        min-height: 100vh;
+      }
+
+      .spine {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        border-right: 1px solid var(--border);
+        background: var(--surface);
+        padding: 28px 22px;
+        overflow-y: auto;
+      }
+      .spine__brand {
+        font-family: var(--font-display);
+        font-size: 1.15rem;
+        letter-spacing: 0.02em;
+        margin: 0 0 4px;
+      }
+      .spine__sub {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin: 0 0 6px;
+      }
+      .spine__badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.7rem;
+        color: var(--l3);
+        background: rgba(111, 191, 139, 0.1);
+        border: 1px solid rgba(111, 191, 139, 0.35);
+        padding: 4px 9px;
+        border-radius: 999px;
+        margin: 10px 0 20px;
+      }
+      .spine__badge::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--l3);
+      }
+
+      .spine__timer {
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 10px 12px;
+        margin-bottom: 26px;
+        font-size: 0.76rem;
+        color: var(--text-muted);
+      }
+      .spine__timer b {
+        color: var(--accent);
+        display: block;
+        font-size: 0.9rem;
+        margin-bottom: 2px;
+      }
+
+      .stack-nav {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        position: relative;
+      }
+      .stack-nav::before {
+        content: '';
+        position: absolute;
+        left: 15px;
+        top: 8px;
+        bottom: 8px;
+        width: 1px;
+        background: var(--border);
+      }
+      .stack-nav li {
+        position: relative;
+      }
+      .stack-nav a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 6px;
+        text-decoration: none;
+        border-radius: 8px;
+        color: var(--text-muted);
+        font-size: 0.92rem;
+        transition: color 0.15s ease, background 0.15s ease;
+      }
+      .stack-nav a:hover {
+        color: var(--text);
+        background: var(--surface-2);
+      }
+      .stack-nav a.active {
+        color: var(--text);
+      }
+      .stack-nav .num {
+        position: relative;
+        z-index: 1;
+        width: 31px;
+        height: 31px;
+        flex: 0 0 31px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+      }
+      .stack-nav a.active .num,
+      .stack-nav a:hover .num {
+        border-color: var(--dot);
+        color: var(--dot);
+      }
+      .stack-nav li:nth-child(1) {
+        --dot: var(--l1);
+      }
+      .stack-nav li:nth-child(2) {
+        --dot: var(--l2);
+      }
+      .stack-nav li:nth-child(3) {
+        --dot: var(--l3);
+      }
+      .stack-nav li:nth-child(4) {
+        --dot: var(--l4);
+      }
+      .stack-nav li:nth-child(5) {
+        --dot: var(--l5);
+      }
+      .stack-nav li:nth-child(6) {
+        --dot: var(--l6);
+      }
+      .stack-nav li:nth-child(7) {
+        --dot: var(--l7);
+      }
+      .stack-nav small {
+        display: block;
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        font-weight: 400;
+      }
+
+      .spine__foot {
+        margin-top: 30px;
+        padding-top: 18px;
+        border-top: 1px solid var(--border);
+        font-size: 0.72rem;
+        color: var(--text-muted);
+      }
+
+      main {
+        padding: 56px 64px 120px;
+        max-width: 900px;
+      }
+      .intro h1 {
+        font-family: var(--font-display);
+        font-size: 2.1rem;
+        margin: 0 0 10px;
+      }
+      .intro p {
+        color: var(--text-muted);
+        max-width: 66ch;
+      }
+
+      section.layer {
+        margin-top: 100px;
+        scroll-margin-top: 30px;
+      }
+      .layer__head {
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+        padding-bottom: 18px;
+        border-bottom: 2px solid var(--accent-color, var(--border));
+        margin-bottom: 34px;
+      }
+      .layer__head .big-num {
+        font-family: var(--font-mono);
+        font-size: 2.6rem;
+        color: var(--accent-color, var(--text-muted));
+        opacity: 0.55;
+      }
+      .layer__head h2 {
+        font-family: var(--font-display);
+        font-size: 1.8rem;
+        margin: 0;
+      }
+      .layer__head .tag {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        color: var(--accent-color, var(--text-muted));
+        border: 1px solid var(--accent-color, var(--border));
+        padding: 3px 8px;
+        border-radius: 5px;
+        margin-left: auto;
+        align-self: center;
+      }
+
+      h3.topic {
+        font-size: 1.05rem;
+        margin: 40px 0 6px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      h3.topic::before {
+        content: '';
+        width: 4px;
+        height: 16px;
+        background: var(--accent-color, var(--border));
+        border-radius: 2px;
+        display: inline-block;
+      }
+      .topic-desc {
+        color: var(--text-muted);
+        margin: 0 0 14px;
+        font-size: 0.95rem;
+        max-width: 66ch;
+      }
+
+      pre {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--accent-color, var(--border));
+        border-radius: 8px;
+        padding: 16px 18px;
+        overflow-x: auto;
+        margin: 0 0 8px;
+      }
+      code {
+        font-family: var(--font-mono);
+        font-size: 0.84rem;
+        color: #cdd6de;
+      }
+      pre .cm {
+        color: #6b7684;
+        font-style: italic;
+      }
+      pre .tg {
+        color: var(--accent-color, var(--l1));
+      }
+      pre .at {
+        color: #d9b36c;
+      }
+      pre .st {
+        color: #8fc98a;
+      }
+
+      .note {
+        display: block;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        margin: 16px 0 30px;
+      }
+      .note b {
+        color: var(--text);
+      }
+      .note.warn {
+        border-color: rgba(232, 163, 61, 0.4);
+      }
+      .note.warn b {
+        color: var(--accent);
+      }
+
+      table.ref {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.87rem;
+        margin: 6px 0 30px;
+      }
+      table.ref th,
+      table.ref td {
+        text-align: left;
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+      table.ref th {
+        color: var(--text-muted);
+        font-weight: 500;
+        font-size: 0.76rem;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+      table.ref code {
+        font-size: 0.8rem;
+      }
+
+      .cheat {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 20px 22px;
+        margin-top: 30px;
+      }
+      .cheat h4 {
+        margin: 0 0 10px;
+        font-family: var(--font-display);
+        font-weight: normal;
+        font-size: 1.05rem;
+      }
+      .cheat ul {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--text-muted);
+        font-size: 0.88rem;
+      }
+      .cheat li {
+        margin-bottom: 6px;
+      }
+      .cheat code {
+        color: var(--text);
+      }
+      .cheat.ok {
+        border-color: rgba(74, 222, 128, 0.35);
+      }
+      .cheat.ok h4 {
+        color: #4ade80;
+      }
+
+      .checklist {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .checklist li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 9px 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.92rem;
+      }
+      .checklist li::before {
+        content: '☐';
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        line-height: 1;
+        flex: 0 0 auto;
+      }
+
+      ::selection {
+        background: rgba(232, 163, 61, 0.35);
+      }
+
+      @media (max-width: 860px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+        .spine {
+          position: relative;
+          height: auto;
+        }
+        main {
+          padding: 36px 22px 100px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="spine">
+        <p class="spine__brand">Passo a Passo</p>
+        <p class="spine__sub">
+          Prova AutoVision — HTML · CSS · JS · Node · Express · PostgreSQL
+        </p>
+        <span class="spine__badge">funciona 100% offline</span>
+
+        <div class="spine__timer">
+          <b>3 horas de prova</b>
+          Siga a ordem dos módulos abaixo. Não pule para o CSS antes de ter a
+          vitrine carregando dados reais do banco.
+        </div>
+
+        <ul class="stack-nav">
+          <li>
+            <a href="#setup" class="active"
+              ><span class="num">01</span
+              ><span>Setup<small>Estrutura do projeto</small></span></a
+            >
+          </li>
+          <li>
+            <a href="#banco"
+              ><span class="num">02</span
+              ><span>Banco de Dados<small>schema.sql + CSV</small></span></a
+            >
+          </li>
+          <li>
+            <a href="#backend"
+              ><span class="num">03</span
+              ><span>Backend<small>server.js / rotas</small></span></a
+            >
+          </li>
+          <li>
+            <a href="#html"
+              ><span class="num">04</span
+              ><span>HTML<small>index.html</small></span></a
+            >
+          </li>
+          <li>
+            <a href="#css"
+              ><span class="num">05</span
+              ><span>CSS<small>style.css</small></span></a
+            >
+          </li>
+          <li>
+            <a href="#js"
+              ><span class="num">06</span
+              ><span>JavaScript<small>app.js</small></span></a
+            >
+          </li>
+          <li>
+            <a href="#checklist"
+              ><span class="num">07</span
+              ><span>Checklist<small>revisão final</small></span></a
+            >
+          </li>
+        </ul>
+
+        <div class="spine__foot">
+          Documento único (.html), sem dependências externas.<br />
+          Use <kbd style="font-family: var(--font-mono)">Ctrl/Cmd+F</kbd> para
+          buscar durante a prova.
+        </div>
+      </aside>
+
+      <main>
+        <div class="intro">
+          <h1>Guia da Prova — AutoVision</h1>
+          <p>
+            Passo a passo prático para construir o módulo de anúncios de
+            veículos e registro de interesse exigido pelo enunciado, na ordem
+            que gera mais pontos por minuto investido. O objetivo é sair do
+            zero e chegar a uma aplicação funcional: banco → API → tela.
+            Deixe estilo e detalhes visuais por último.
+          </p>
+        </div>
+
+        <!-- ================= 01 SETUP ================= -->
+        <section class="layer" id="setup" style="--accent-color: var(--l1)">
+          <div class="layer__head">
+            <span class="big-num">01</span>
+            <h2>Setup do Projeto</h2>
+            <span class="tag">~10 min</span>
+          </div>
+
+          <h3 class="topic">
+            1. Extensões do VS Code para desenvolvimento offline
+          </h3>
+          <p class="topic-desc">
+            O autocomplete do Node.js (Express, pg, Multer) é nativo e funciona
+            automaticamente offline assim que a pasta com a
+            <code>node_modules</code> é aberta. Para agilizar a escrita de HTML,
+            CSS e JavaScript sem internet, instale os arquivos
+            <code>.vsix</code> das seguintes extensões:
+          </p>
+<pre><code><span class="cm"># Extensões essenciais (Instalação via arquivo .vsix local)</span>
+• christian-kohler.path-intellisense  <span class="cm">// Autocomplete de caminhos de imagens e scripts</span>
+• xabikos.javascriptsnippets          <span class="cm">// Atalhos e snippets para código JavaScript</span>
+• formulahendry.auto-rename-tag       <span class="cm">// Renomeia tags HTML de abertura e fechamento juntas</span>
+• formulahendry.auto-close-tag        <span class="cm">// Fecha automaticamente as tags HTML</span>
+• ecmel.vscode-html-css               <span class="cm">// Autocomplete de classes CSS dentro do HTML</span>
+• esbenp.prettier-vscode              <span class="cm">// Formatação e identação automática de código</span></code></pre>
+
+          <h3 class="topic">2. Arquitetura do Projeto</h3>
+          <p class="topic-desc">
+            Para uma prova offline de 3 horas, essa é a estrutura mais simples
+            possível que ainda atende 100% do enunciado. Não adicione
+            TypeScript, build tools, frameworks de frontend (React/Vue) ou ORMs
+            (Prisma/Sequelize) — cada camada extra é tempo que você não tem.
+            <code>pg</code> puro com queries SQL diretas é mais rápido de
+            escrever e de debugar sob pressão.
+          </p>
+          <pre><code><span class="cm">autovision/</span>
+├── node_modules/
+├── public/
+│   ├── assets/         <span class="cm">// ícones fornecidos: interesse.svg, lupa.svg, lixeira.svg, instagram.svg...</span>
+│   ├── uploads/         <span class="cm">// pasta vazia — onde o multer vai salvar as fotos dos veículos</span>
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+├── package.json
+├── schema.sql
+└── server.js</code></pre>
+
+          <h3 class="topic">3. Comandos iniciais (rodar em ordem)</h3>
+          <p class="topic-desc">
+            Copie e cole no terminal, dentro da pasta do projeto.
+          </p>
+          <pre><code><span class="cm"># inicializa o projeto</span>
+npm init -y
+
+<span class="cm"># dependências mínimas: servidor, banco, upload de imagem</span>
+npm install express pg multer
+
+<span class="cm"># pastas que o Express/multer vão precisar</span>
+mkdir public
+mkdir public/assets
+mkdir public/uploads
+
+<span class="cm"># executa o servidor com reinício automático ao salvar</span>
+node --watch server.js</code></pre>
+
+          <div class="note warn">
+            <b>Decisão que economiza tempo:</b> não implemente login com sessão
+            de servidor (express-session) nem hash de senha (bcrypt). Como o
+            enunciado não exige recarregar a página, guarde o usuário logado em
+            uma variável no <code>app.js</code> (memória do navegador) e envie o
+            <code>usuario_id</code>
+            junto de cada requisição que precisar dele (registrar interesse,
+            cadastrar anúncio, ver perfil). Isso ainda atende 100% da
+            especificação funcional e corta ~30 minutos de implementação.
+          </div>
+        </section>
+
+        <!-- ================= 02 BANCO ================= -->
+        <section class="layer" id="banco" style="--accent-color: var(--l2)">
+          <div class="layer__head">
+            <span class="big-num">02</span>
+            <h2>Banco de Dados</h2>
+            <span class="tag">~25 min</span>
+          </div>
+
+          <h3 class="topic">1. As três entidades do enunciado</h3>
+          <p class="topic-desc">
+            O enunciado define exatamente 3 entidades: <b>Usuários</b>
+            (clientes e vendedores, ambos fazem login), <b>Anúncios</b>
+            (criados só por vendedores) e <b>Interesses</b> (clientes e
+            vendedores podem registrar interesse em um veículo). Modele
+            exatamente isso — não crie tabelas extras.
+          </p>
+          <pre><code><span class="cm">-- schema.sql</span>
+
+<span class="cm">-- 1. Usuários: clientes ou vendedores, todos fazem login</span>
+<span class="tg">CREATE TABLE</span> usuarios (
+  id <span class="at">SERIAL PRIMARY KEY</span>,
+  nome <span class="at">VARCHAR</span>(<span class="st">100</span>) <span class="tg">NOT NULL</span>,
+  usuario <span class="at">VARCHAR</span>(<span class="st">50</span>) <span class="tg">UNIQUE NOT NULL</span>,
+  senha <span class="at">VARCHAR</span>(<span class="st">100</span>) <span class="tg">NOT NULL</span>,
+  tipo <span class="at">VARCHAR</span>(<span class="st">20</span>) <span class="tg">NOT NULL CHECK</span> (tipo <span class="tg">IN</span> (<span class="st">'cliente'</span>, <span class="st">'vendedor'</span>)),
+  telefone <span class="at">VARCHAR</span>(<span class="st">20</span>),
+  foto_perfil <span class="at">VARCHAR</span>(<span class="st">255</span>)
+);
+
+<span class="cm">-- 2. Anúncios: só vendedores criam</span>
+<span class="tg">CREATE TABLE</span> anuncios (
+  id <span class="at">SERIAL PRIMARY KEY</span>,
+  titulo <span class="at">VARCHAR</span>(<span class="st">100</span>) <span class="tg">NOT NULL</span>,
+  local <span class="at">VARCHAR</span>(<span class="st">100</span>) <span class="tg">NOT NULL</span>,
+  preco <span class="at">NUMERIC</span>(<span class="st">10</span>,<span class="st">2</span>) <span class="tg">NOT NULL</span>,
+  imagem <span class="at">VARCHAR</span>(<span class="st">255</span>) <span class="tg">NOT NULL</span>,
+  vendedor_id <span class="at">INTEGER NOT NULL REFERENCES</span> usuarios(id) <span class="tg">ON DELETE CASCADE</span>,
+  criado_em <span class="at">TIMESTAMPTZ DEFAULT NOW</span>()
+);
+
+<span class="cm">-- 3. Interesses: clientes e vendedores podem registrar; máx. 1 por anúncio/usuário</span>
+<span class="tg">CREATE TABLE</span> interesses (
+  id <span class="at">SERIAL PRIMARY KEY</span>,
+  anuncio_id <span class="at">INTEGER NOT NULL REFERENCES</span> anuncios(id) <span class="tg">ON DELETE CASCADE</span>,
+  usuario_id <span class="at">INTEGER NOT NULL REFERENCES</span> usuarios(id) <span class="tg">ON DELETE CASCADE</span>,
+  <span class="tg">UNIQUE</span> (anuncio_id, usuario_id)
+);</code></pre>
+
+          <div class="note">
+            <b>Por que <code>UNIQUE (anuncio_id, usuario_id)</code>?</b> Isso
+            faz o próprio banco recusar um segundo registro de interesse do
+            mesmo usuário no mesmo anúncio — você não precisa validar isso "na
+            mão" no backend, só tratar o toggle (ou, melhor, checar antes com
+            um <code>SELECT</code>, como no passo 03).
+          </div>
+
+          <h3 class="topic">2. Rodando o schema no pgAdmin</h3>
+          <table class="ref">
+            <tr>
+              <th>Passo</th>
+              <th>Ação</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>
+                Abra o pgAdmin, crie um banco chamado
+                <code>autovision</code> (clique direito em Databases → Create →
+                Database).
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Clique com o banco selecionado, abra a <b>Query Tool</b>.</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>
+                Cole o conteúdo de <code>schema.sql</code> inteiro e execute
+                (F5).
+              </td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>
+                Confirme que as 3 tabelas aparecem em
+                <i>Schemas → public → Tables</i>.
+              </td>
+            </tr>
+          </table>
+
+          <h3 class="topic">3. Importando o usuarios.csv do protótipo</h3>
+          <p class="topic-desc">
+            O enunciado pede continuidade dos dados do protótipo. O jeito mais
+            rápido offline é usar a ferramenta gráfica de importação do próprio
+            pgAdmin — sem escrever código de import.
+          </p>
+          <table class="ref">
+            <tr>
+              <th>Passo</th>
+              <th>Ação</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>
+                Rode primeiro o <code>CREATE TABLE usuarios</code> do schema (a
+                tabela precisa existir antes).
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>
+                Clique direito na tabela <code>usuarios</code> →
+                <b>Import/Export Data...</b>
+              </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>
+                Ative a chave "Import", selecione o arquivo
+                <code>usuarios.csv</code>.
+              </td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>
+                Na aba <b>Options</b>, marque <code>Header</code> se o CSV tiver
+                cabeçalho, e confira o delimitador (geralmente <code>,</code> ou
+                <code>;</code>).
+              </td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>
+                Na aba <b>Columns</b>, confirme se as colunas do CSV batem com
+                as colunas da tabela; se os nomes forem diferentes, mapeie
+                manualmente.
+              </td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>
+                Clique em <b>OK</b> e depois confira com
+                <code>SELECT * FROM usuarios;</code> na Query Tool.
+              </td>
+            </tr>
+          </table>
+          <div class="note warn">
+            <b>Atenção:</b> se o CSV não tiver a coluna
+            <code>tipo</code> (cliente/vendedor), você vai precisar rodar um
+            <code
+              >UPDATE usuarios SET tipo = 'vendedor' WHERE usuario IN
+              (...)</code
+            >
+            depois da importação para os vendedores citados no enunciado.
+          </div>
+        </section>
+
+        <!-- ================= 03 BACKEND ================= -->
+        <section class="layer" id="backend" style="--accent-color: var(--l3)">
+          <div class="layer__head">
+            <span class="big-num">03</span>
+            <h2>Backend — server.js</h2>
+            <span class="tag">~45 min</span>
+          </div>
+
+          <h3 class="topic">1. Setup do Express + conexão com o banco</h3>
+  <pre><code><span class="tg">const</span> express = require(<span class="st">'express'</span>);
+<span class="tg">const</span> { Pool } = require(<span class="st">'pg'</span>);
+<span class="tg">const</span> multer = require(<span class="st">'multer'</span>);
+<span class="tg">const</span> path = require(<span class="st">'path'</span>);
+
+<span class="tg">const</span> app = express();
+app.use(express.json());
+app.use(express.static(<span class="st">'public'</span>)); <span class="cm">// serve index.html, style.css, app.js, assets, uploads</span>
+
+<span class="tg">const</span> pool = <span class="tg">new</span> Pool({
+  user: <span class="st">'postgres'</span>,
+  password: <span class="st">'SUA_SENHA_AQUI'</span>,
+  host: <span class="st">'localhost'</span>,
+  port: <span class="st">5432</span>,
+  database: <span class="st">'autovision'</span>
+});</code></pre>
+
+          <h3 class="topic">2. Upload de imagem com multer</h3>
+  <pre><code><span class="tg">const</span> storage = multer.diskStorage({
+  destination: <span class="st">'public/uploads'</span>,
+  filename: (req, file, cb) => cb(<span class="tg">null</span>, Date.now() + path.extname(file.originalname))
+});
+<span class="tg">const</span> upload = multer({ storage });</code></pre>
+
+          <h3 class="topic">
+            3. Rotas — vitrine, busca por vendedor e status de interesse
+          </h3>
+  <pre><code><span class="tg">app</span>.get(<span class="st">'/api/anuncios'</span>, <span class="tg">async</span> (req, res) => {
+  <span class="tg">const</span> { vendedor, usuario_id } = req.query;
+  <span class="tg">const</span> params = [];
+
+  <span class="cm">// Subquery no PostgreSQL para checar se o usuário logado já registrou interesse</span>
+  <span class="tg">let</span> interessouSubquery = <span class="st">'FALSE AS interessou'</span>;
+  <span class="tg">if</span> (usuario_id) {
+    params.push(usuario_id);
+    interessouSubquery = <span class="st">`EXISTS(
+      SELECT 1 FROM interesses i 
+      WHERE i.anuncio_id = a.id AND i.usuario_id = $${params.length}
+    ) AS interessou`</span>;
+  }
+
+  <span class="tg">let</span> query = <span class="st">`
+    SELECT a.id, a.titulo, a.local, a.preco, a.imagem,
+            u.nome AS vendedor, u.usuario AS vendedor_usuario, u.telefone AS vendedor_telefone,
+            COUNT(i.id)::int AS interesses,
+            ${interessouSubquery}
+    FROM anuncios a
+    JOIN usuarios u ON u.id = a.vendedor_id
+    LEFT JOIN interesses i ON i.anuncio_id = a.id
+  `</span>;
+
+  <span class="tg">if</span> (vendedor) {
+    params.push(<span class="st">`%${vendedor}%`</span>);
+    query += <span class="st">` WHERE u.usuario ILIKE $${params.length}`</span>;
+  }
+
+  query += <span class="st">' GROUP BY a.id, u.nome, u.usuario, u.telefone ORDER BY a.criado_em DESC'</span>;
+
+  <span class="tg">const</span> { rows } = <span class="tg">await</span> pool.query(query, params);
+  res.json(rows);
+});</code></pre>
+          <div class="note">
+            Essa rota faz duas coisas além de listar: (1) se
+            <code>usuario_id</code> vier na query string, monta uma subquery
+            <code>EXISTS</code> que retorna <code>interessou: true/false</code>
+            para cada anúncio — é assim que o ícone de interesse já nasce
+            marcado na tela para quem já registrou interesse; (2) os índices
+            dos parâmetros (<code>$1</code>, <code>$2</code>...) são
+            calculados dinamicamente com <code>params.length</code>, porque a
+            ordem de <code>usuario_id</code> e <code>vendedor</code> no array
+            muda dependendo de quais vierem preenchidos. Sem usuário logado, o
+            app.js simplesmente não manda <code>usuario_id</code> e a subquery
+            vira <code>FALSE AS interessou</code>.
+          </div>
+
+          <h3 class="topic">4. Rota de login</h3>
+  <pre><code><span class="tg">app</span>.post(<span class="st">'/api/login'</span>, <span class="tg">async</span> (req, res) => {
+  <span class="tg">const</span> { usuario, senha } = req.body;
+  <span class="tg">const</span> { rows } = <span class="tg">await</span> pool.query(
+    <span class="st">'SELECT id, nome, usuario, tipo, telefone, foto_perfil FROM usuarios WHERE usuario = $1 AND senha = $2'</span>,
+    [usuario, senha]
+  );
+  <span class="tg">if</span> (rows.length === <span class="st">0</span>) {
+    <span class="tg">return</span> res.status(<span class="st">401</span>).json({ erro: <span class="st">'Usuário não encontrado ou senha incorreta'</span> });
+  }
+  res.json(rows[<span class="st">0</span>]);
+});</code></pre>
+
+          <h3 class="topic">
+            5. Registrar / remover interesse (toggle, máx. 1 por usuário)
+          </h3>
+  <pre><code><span class="tg">app</span>.post(<span class="st">'/api/interesses/:anuncioId'</span>, <span class="tg">async</span> (req, res) => {
+  <span class="tg">const</span> { anuncioId } = req.params;
+  <span class="tg">const</span> { usuario_id } = req.body;
+
+  <span class="tg">const</span> existe = <span class="tg">await</span> pool.query(
+    <span class="st">'SELECT id FROM interesses WHERE anuncio_id = $1 AND usuario_id = $2'</span>,
+    [anuncioId, usuario_id]
+  );
+
+  <span class="tg">if</span> (existe.rows.length > <span class="st">0</span>) {
+    <span class="tg">await</span> pool.query(<span class="st">'DELETE FROM interesses WHERE id = $1'</span>, [existe.rows[<span class="st">0</span>].id]);
+  } <span class="tg">else</span> {
+    <span class="tg">await</span> pool.query(
+      <span class="st">'INSERT INTO interesses (anuncio_id, usuario_id) VALUES ($1, $2)'</span>,
+      [anuncioId, usuario_id]
+    );
+  }
+
+  <span class="tg">const</span> { rows } = <span class="tg">await</span> pool.query(
+    <span class="st">'SELECT COUNT(*)::int AS total FROM interesses WHERE anuncio_id = $1'</span>, [anuncioId]
+  );
+  res.json({ interesses: rows[<span class="st">0</span>].total, interessou: existe.rows.length === <span class="st">0</span> });
+});</code></pre>
+
+          <h3 class="topic">6. Perfil do vendedor (menu lateral)</h3>
+  <pre><code><span class="tg">app</span>.get(<span class="st">'/api/perfil/:id'</span>, <span class="tg">async</span> (req, res) => {
+  <span class="tg">const</span> { id } = req.params;
+  <span class="tg">const</span> anuncios = <span class="tg">await</span> pool.query(<span class="st">`
+    SELECT a.id, a.titulo, a.local, a.preco, a.imagem, COUNT(i.id)::int AS interesses
+    FROM anuncios a LEFT JOIN interesses i ON i.anuncio_id = a.id
+    WHERE a.vendedor_id = $1 GROUP BY a.id ORDER BY a.criado_em DESC
+  `</span>, [id]);
+
+  <span class="tg">const</span> totalInteresses = anuncios.rows.reduce((acc, a) => acc + a.interesses, <span class="st">0</span>);
+
+  res.json({
+    totalAnuncios: anuncios.rows.length,
+    totalInteresses,
+    anuncios: anuncios.rows
+  });
+});</code></pre>
+
+          <h3 class="topic">7. Cadastrar e excluir anúncio</h3>
+  <pre><code><span class="tg">app</span>.post(<span class="st">'/api/anuncios'</span>, upload.single(<span class="st">'imagem'</span>), <span class="tg">async</span> (req, res) => {
+  <span class="tg">const</span> { titulo, local, preco, vendedor_id } = req.body;
+  <span class="tg">if</span> (!req.file) <span class="tg">return</span> res.status(<span class="st">400</span>).json({ erro: <span class="st">'Imagem obrigatória'</span> });
+
+  <span class="tg">const</span> { rows } = <span class="tg">await</span> pool.query(
+    <span class="st">'INSERT INTO anuncios (titulo, local, preco, imagem, vendedor_id) VALUES ($1, $2, $3, $4, $5) RETURNING *'</span>,
+    [titulo, local, preco, req.file.filename, vendedor_id]
+  );
+  res.json(rows[<span class="st">0</span>]);
+});
+
+<span class="tg">app</span>.delete(<span class="st">'/api/anuncios/:id'</span>, <span class="tg">async</span> (req, res) => {
+  <span class="tg">await</span> pool.query(<span class="st">'DELETE FROM anuncios WHERE id = $1'</span>, [req.params.id]);
+  res.json({ ok: <span class="tg">true</span> });
+});
+
+app.listen(<span class="st">3000</span>, () => console.log(<span class="st">'Servidor rodando em http://localhost:3000'</span>));</code></pre>
+
+          <table class="ref">
+            <tr>
+              <th>Rota</th>
+              <th>Método</th>
+              <th>Usada por</th>
+            </tr>
+            <tr>
+              <td><code>/api/anuncios</code></td>
+              <td>GET</td>
+              <td>
+                Vitrine inicial, busca por vendedor e status de interesse (via
+                <code>?vendedor=</code> e <code>?usuario_id=</code>)
+              </td>
+            </tr>
+            <tr>
+              <td><code>/api/login</code></td>
+              <td>POST</td>
+              <td>Formulário de login</td>
+            </tr>
+            <tr>
+              <td><code>/api/interesses/:id</code></td>
+              <td>POST</td>
+              <td>Clique no ícone de interesse</td>
+            </tr>
+            <tr>
+              <td><code>/api/perfil/:id</code></td>
+              <td>GET</td>
+              <td>Menu lateral "Ver Perfil"</td>
+            </tr>
+            <tr>
+              <td><code>/api/anuncios</code></td>
+              <td>POST</td>
+              <td>Formulário de cadastro de veículo</td>
+            </tr>
+            <tr>
+              <td><code>/api/anuncios/:id</code></td>
+              <td>DELETE</td>
+              <td>Ícone de lixeira em "Seus anúncios"</td>
+            </tr>
+          </table>
+        </section>
+
+        <!-- ================= 04 HTML ================= -->
+        <section class="layer" id="html" style="--accent-color: var(--l4)">
+          <div class="layer__head">
+            <span class="big-num">04</span>
+            <h2>HTML — index.html</h2>
+            <span class="tag">~25 min</span>
+          </div>
+
+          <h3 class="topic">1. Cabeçalho, busca, vitrine e rodapé</h3>
+          <p class="topic-desc">
+            Os 3 blocos principais do enunciado. O avatar padrão usa a logo
+            do sistema (<code>assets/logo.png</code>) em vez de um ícone
+            genérico de usuário.
+          </p>
+          <pre><code><span class="tg">&lt;body&gt;</span>
+  <span class="tg">&lt;header&gt;</span>
+    <span class="tg">&lt;div</span> <span class="at">class</span>=<span class="st">"user-section"</span><span class="tg">&gt;</span>
+      <span class="tg">&lt;img</span>
+        <span class="at">id</span>=<span class="st">"fotoPerfil"</span>
+        <span class="at">class</span>=<span class="st">"avatar"</span>
+        <span class="at">src</span>=<span class="st">"assets/logo.png"</span>
+        <span class="at">alt</span>=<span class="st">"Avatar"</span>
+      <span class="tg">/&gt;</span>
+      <span class="tg">&lt;span</span> <span class="at">id</span>=<span class="st">"nomeUsuario"</span><span class="tg">&gt;</span>@AutoVision<span class="tg">&lt;/span&gt;</span>
+      <span class="tg">&lt;button</span> <span class="at">id</span>=<span class="st">"btnVerPerfil"</span> <span class="at">class</span>=<span class="st">"btn-preto"</span> <span class="at">disabled</span><span class="tg">&gt;</span>Ver Perfil<span class="tg">&lt;/button&gt;</span>
+    <span class="tg">&lt;/div&gt;</span>
+    <span class="tg">&lt;h1</span> <span class="at">class</span>=<span class="st">"empresa"</span><span class="tg">&gt;</span>AutoVision<span class="tg">&lt;/h1&gt;</span>
+    <span class="tg">&lt;button</span> <span class="at">id</span>=<span class="st">"btnLogin"</span> <span class="at">class</span>=<span class="st">"btn-preto"</span><span class="tg">&gt;</span>Entrar<span class="tg">&lt;/button&gt;</span>
+  <span class="tg">&lt;/header&gt;</span>
+
+  <span class="tg">&lt;main&gt;</span>
+    <span class="tg">&lt;div</span> <span class="at">class</span>=<span class="st">"busca"</span><span class="tg">&gt;</span>
+      <span class="tg">&lt;input</span> <span class="at">id</span>=<span class="st">"inputBusca"</span> <span class="at">placeholder</span>=<span class="st">"Digite o nome do vendedor"</span> <span class="tg">/&gt;</span>
+      <span class="tg">&lt;img</span> <span class="at">src</span>=<span class="st">"assets/lupa.svg"</span> <span class="at">class</span>=<span class="st">"icone-lupa"</span> <span class="at">alt</span>=<span class="st">"Buscar"</span> <span class="tg">/&gt;</span>
+    <span class="tg">&lt;/div&gt;</span>
+    <span class="tg">&lt;div</span> <span class="at">id</span>=<span class="st">"vitrine"</span> <span class="at">class</span>=<span class="st">"vitrine"</span><span class="tg">&gt;&lt;/div&gt;</span>
+  <span class="tg">&lt;/main&gt;</span>
+
+  <span class="tg">&lt;footer&gt;</span>
+    <span class="tg">&lt;span&gt;</span>AutoVision<span class="tg">&lt;/span&gt;</span>
+    <span class="tg">&lt;div</span> <span class="at">class</span>=<span class="st">"redes"</span><span class="tg">&gt;</span>
+      <span class="tg">&lt;img</span> <span class="at">src</span>=<span class="st">"assets/instagram.svg"</span> <span class="at">alt</span>=<span class="st">"Instagram"</span> <span class="tg">/&gt;</span>
+      <span class="tg">&lt;img</span> <span class="at">src</span>=<span class="st">"assets/tiktok.svg"</span> <span class="at">alt</span>=<span class="st">"TikTok"</span> <span class="tg">/&gt;</span>
+      <span class="tg">&lt;img</span> <span class="at">src</span>=<span class="st">"assets/linkedin.svg"</span> <span class="at">alt</span>=<span class="st">"LinkedIn"</span> <span class="tg">/&gt;</span>
+      <span class="tg">&lt;img</span> <span class="at">src</span>=<span class="st">"assets/youtube.svg"</span> <span class="at">alt</span>=<span class="st">"YouTube"</span> <span class="tg">/&gt;</span>
+    <span class="tg">&lt;/div&gt;</span>
+    <span class="tg">&lt;span&gt;</span>Copyright 2026-2027<span class="tg">&lt;/span&gt;</span>
+  <span class="tg">&lt;/footer&gt;</span></code></pre>
+
+          <h3 class="topic">2. Modal de login</h3>
+          <p class="topic-desc">
+            O <code>×</code> de fechar tem a classe <code>btn-fechar</code> —
+            não esqueça de estilizar ela no CSS.
+          </p>
+          <pre><code><span class="cm">&lt;!-- Modal de login --&gt;</span>
+<span class="tg">&lt;div</span> <span class="at">id</span>=<span class="st">"modalLogin"</span> <span class="at">class</span>=<span class="st">"overlay oculto"</span><span class="tg">&gt;</span>
+  <span class="tg">&lt;div</span> <span class="at">class</span>=<span class="st">"modal"</span><span class="tg">&gt;</span>
+    <span class="tg">&lt;div</span> <span class="at">class</span>=<span class="st">"modal-topo"</span><span class="tg">&gt;</span>
+      <span class="tg">&lt;h2&gt;</span>Login<span class="tg">&lt;/h2&gt;</span>
+      <span class="tg">&lt;button</span> <span class="at">id</span>=<span class="st">"fecharModal"</span> <span class="at">class</span>=<span class="st">"btn-fechar"</span><span class="tg">&gt;</span>×<span class="tg">&lt;/button&gt;</span>
+    <span class="tg">&lt;/div&gt;</span>
+    <span class="tg">&lt;input</span> <span class="at">id</span>=<span class="st">"loginUsuario"</span> <span class="at">placeholder</span>=<span class="st">"Digite seu nome"</span> <span class="tg">/&gt;</span>
+    <span class="tg">&lt;span</span> <span class="at">id</span>=<span class="st">"erroUsuario"</span> <span class="at">class</span>=<span class="st">"erro"</span><span class="tg">&gt;&lt;/span&gt;</span>
+    <span class="tg">&lt;input</span> <span class="at">id</span>=<span class="st">"loginSenha"</span> <span class="at">type</span>=<span class="st">"password"</span> <span class="at">placeholder</span>=<span class="st">"Digite sua senha"</span> <span class="tg">/&gt;</span>
+    <span class="tg">&lt;span</span> <span class="at">id</span>=<span class="st">"erroSenha"</span> <span class="at">class</span>=<span class="st">"erro"</span><span class="tg">&gt;&lt;/span&gt;</span>
+    <span class="tg">&lt;span</span> <span class="at">id</span>=<span class="st">"erroLogin"</span> <span class="at">class</span>=<span class="st">"erro"</span><span class="tg">&gt;&lt;/span&gt;</span>
+    <span class="tg">&lt;div</span> <span class="at">class</span>=<span class="st">"modal-botoes"</span><span class="tg">&gt;</span>
+      <span class="tg">&lt;button</span> <span class="at">id</span>=<span class="st">"btnCancelar"</span> <span class="at">class</span>=<span class="st">"btn-outline"</span><span class="tg">&gt;</span>Cancelar<span class="tg">&lt;/button&gt;</span>
+      <span class="tg">&lt;button</span> <span class="at">id</span>=<span class="st">"btnConfirmarLogin"</span> <span class="at">class</span>=<span class="st">"btn-preto"</span><span class="tg">&gt;</span>Login<span class="tg">&lt;/button&gt;</span>
+    <span class="tg">&lt;/div&gt;</span>
+  <span class="tg">&lt;/div&gt;</span>
+<span class="tg">&lt;/div&gt;</span></code></pre>
+
+          <h3 class="topic">3. Painel lateral + formulário de cadastro</h3>
+          <p class="topic-desc">
+            Cada campo do formulário vive dentro de um
+            <code>.grupo-input</code> com <code>label for</code> +
+            <code>span.msg-erro</code> próprio — a validação não usa
+            <code>alert()</code> genérico, mostra o erro embaixo do campo
+            específico (título, local, preço ou imagem). O formulário tem
+            <code>enctype="multipart/form-data"</code> explícito e
+            <code>novalidate</code>, pra você controlar a validação via JS em
+            vez de depender da validação nativa do navegador.
+          </p>
+          <pre><code><span class="cm">&lt;!-- Painel lateral de perfil --&gt;</span>
+<span class="tg">&lt;aside</span> <span class="at">id</span>=<span class="st">"painelPerfil"</span> <span class="at">class</span>=<span class="st">"painel-lateral oculto"</span><span class="tg">&gt;</span>
+  <span class="tg">&lt;div</span> <span class="at">class</span>=<span class="st">"painel-topo"</span><span class="tg">&gt;</span>
+    <span class="tg">&lt;button</span> <span class="at">id</span>=<span class="st">"fecharPainel"</span> <span class="at">class</span>=<span class="st">"btn-fechar"</span><span class="tg">&gt;</span>×<span class="tg">&lt;/button&gt;</span>
+  <span class="tg">&lt;/div&gt;</span>
+
+  <span class="tg">&lt;p&gt;&lt;span</span> <span class="at">id</span>=<span class="st">"totalInteresses"</span><span class="tg">&gt;</span>0<span class="tg">&lt;/span&gt;</span> Interessados<span class="tg">&lt;/p&gt;</span>
+  <span class="tg">&lt;p&gt;&lt;span</span> <span class="at">id</span>=<span class="st">"totalAnuncios"</span><span class="tg">&gt;</span>0<span class="tg">&lt;/span&gt;</span> Anúncios<span class="tg">&lt;/p&gt;</span>
+
+  <span class="tg">&lt;button</span> <span class="at">id</span>=<span class="st">"btnSeusAnuncios"</span> <span class="at">class</span>=<span class="st">"btn-destaque"</span><span class="tg">&gt;</span>
+    Seus anúncios
+  <span class="tg">&lt;/button&gt;</span>
+
+  <span class="tg">&lt;form</span> <span class="at">id</span>=<span class="st">"formCadastro"</span> <span class="at">enctype</span>=<span class="st">"multipart/form-data"</span> <span class="at">novalidate</span><span class="tg">&gt;</span>
+    <span class="tg">&lt;div</span> <span class="at">class</span>=<span class="st">"grupo-input"</span><span class="tg">&gt;</span>
+      <span class="tg">&lt;label</span> <span class="at">for</span>=<span class="st">"campoTitulo"</span><span class="tg">&gt;</span>Título do Anúncio<span class="tg">&lt;/label&gt;</span>
+      <span class="tg">&lt;input</span>
+        <span class="at">id</span>=<span class="st">"campoTitulo"</span>
+        <span class="at">name</span>=<span class="st">"titulo"</span>
+        <span class="at">placeholder</span>=<span class="st">"ex.: Honda Civic EXL 2020"</span>
+      <span class="tg">/&gt;</span>
+      <span class="tg">&lt;span</span> <span class="at">id</span>=<span class="st">"erroTitulo"</span> <span class="at">class</span>=<span class="st">"msg-erro"</span><span class="tg">&gt;&lt;/span&gt;</span>
+    <span class="tg">&lt;/div&gt;</span>
+
+    <span class="tg">&lt;div</span> <span class="at">class</span>=<span class="st">"grupo-input"</span><span class="tg">&gt;</span>
+      <span class="tg">&lt;label</span> <span class="at">for</span>=<span class="st">"campoLocal"</span><span class="tg">&gt;</span>Localização<span class="tg">&lt;/label&gt;</span>
+      <span class="tg">&lt;input</span>
+        <span class="at">id</span>=<span class="st">"campoLocal"</span>
+        <span class="at">name</span>=<span class="st">"local"</span>
+        <span class="at">placeholder</span>=<span class="st">"ex.: Florianópolis - SC"</span>
+      <span class="tg">/&gt;</span>
+      <span class="tg">&lt;span</span> <span class="at">id</span>=<span class="st">"erroLocal"</span> <span class="at">class</span>=<span class="st">"msg-erro"</span><span class="tg">&gt;&lt;/span&gt;</span>
+    <span class="tg">&lt;/div&gt;</span>
+
+    <span class="tg">&lt;div</span> <span class="at">class</span>=<span class="st">"grupo-input"</span><span class="tg">&gt;</span>
+      <span class="tg">&lt;label</span> <span class="at">for</span>=<span class="st">"campoPreco"</span><span class="tg">&gt;</span>Preço (R$)<span class="tg">&lt;/label&gt;</span>
+      <span class="tg">&lt;input</span>
+        <span class="at">id</span>=<span class="st">"campoPreco"</span>
+        <span class="at">name</span>=<span class="st">"preco"</span>
+        <span class="at">type</span>=<span class="st">"number"</span>
+        <span class="at">step</span>=<span class="st">"0.01"</span>
+        <span class="at">placeholder</span>=<span class="st">"ex.: 79900.00"</span>
+      <span class="tg">/&gt;</span>
+      <span class="tg">&lt;span</span> <span class="at">id</span>=<span class="st">"erroPreco"</span> <span class="at">class</span>=<span class="st">"msg-erro"</span><span class="tg">&gt;&lt;/span&gt;</span>
+    <span class="tg">&lt;/div&gt;</span>
+
+    <span class="tg">&lt;div</span> <span class="at">class</span>=<span class="st">"grupo-input"</span><span class="tg">&gt;</span>
+      <span class="tg">&lt;label</span> <span class="at">for</span>=<span class="st">"campoImagem"</span><span class="tg">&gt;</span>Foto do Veículo<span class="tg">&lt;/label&gt;</span>
+      <span class="tg">&lt;input</span>
+        <span class="at">id</span>=<span class="st">"campoImagem"</span>
+        <span class="at">name</span>=<span class="st">"imagem"</span>
+        <span class="at">type</span>=<span class="st">"file"</span>
+        <span class="at">accept</span>=<span class="st">".jpg,.jpeg,.png,.gif,.webp"</span>
+      <span class="tg">/&gt;</span>
+      <span class="tg">&lt;span</span> <span class="at">id</span>=<span class="st">"erroImagem"</span> <span class="at">class</span>=<span class="st">"msg-erro"</span><span class="tg">&gt;&lt;/span&gt;</span>
+    <span class="tg">&lt;/div&gt;</span>
+
+    <span class="tg">&lt;button</span> <span class="at">type</span>=<span class="st">"submit"</span> <span class="at">class</span>=<span class="st">"btn-preto"</span><span class="tg">&gt;</span>Cadastrar<span class="tg">&lt;/button&gt;</span>
+  <span class="tg">&lt;/form&gt;</span>
+
+  <span class="tg">&lt;div</span> <span class="at">id</span>=<span class="st">"listaAnunciosPerfil"</span><span class="tg">&gt;&lt;/div&gt;</span>
+<span class="tg">&lt;/aside&gt;</span>
+
+<span class="tg">&lt;script</span> <span class="at">src</span>=<span class="st">"app.js"</span><span class="tg">&gt;&lt;/script&gt;</span></code></pre>
+          <div class="note">
+            Como o formulário tem <code>erroTitulo</code>,
+            <code>erroLocal</code>, <code>erroPreco</code> e
+            <code>erroImagem</code> separados, a seção 06 (JS) faz uma
+            validação campo a campo que escreve a mensagem certa em cada
+            <code>span.msg-erro</code> — inclusive checando se o preço é um
+            número maior que zero.
+          </div>
+        </section>
+
+        <!-- ================= 05 CSS ================= -->
+        <section class="layer" id="css" style="--accent-color: var(--l5)">
+          <div class="layer__head">
+            <span class="big-num">05</span>
+            <h2>CSS — style.css</h2>
+            <span class="tag">~30 min</span>
+          </div>
+
+          <h3 class="topic">1. Variáveis, reset e botões</h3>
+          <p class="topic-desc">
+            Além das cores fixas do enunciado, entram
+            <code>--cinza-claro</code> e <code>--cinza-borda</code> como
+            neutros de apoio, e um terceiro botão — <code>.btn-fechar</code> —
+            para os <code>×</code> do modal e do painel. O ícone de interesse
+            usa um azul (<code>--interesse-ativo</code>) em vez de vermelho,
+            pra não parecer uma curtida de rede social.
+          </p>
+          <pre><code><span class="tg">:root</span> {
+  <span class="at">--preto</span>: <span class="st">#000</span>;
+  <span class="at">--branco</span>: <span class="st">#fff</span>;
+  <span class="at">--cinza-claro</span>: <span class="st">#f4f4f9</span>;
+  <span class="at">--cinza-borda</span>: <span class="st">#ccc</span>;
+  <span class="at">--interesse-ativo</span>: <span class="st">#0a66ff</span>;
+  <span class="at">--fonte</span>: <span class="st">'Inter'</span>, sans-serif;
+}
+
+<span class="tg">*</span> { <span class="at">box-sizing</span>: <span class="st">border-box</span>; }
+
+<span class="cm">/* padrão "sticky footer": rodapé sempre no fim, mesmo com pouco conteúdo */</span>
+<span class="tg">html</span>,
+<span class="tg">body</span> { <span class="at">height</span>: <span class="st">100%</span>; }
+<span class="tg">body</span> {
+  <span class="at">font-family</span>: <span class="st">var(--fonte)</span>; <span class="at">margin</span>: <span class="st">0</span>;
+  <span class="at">background-color</span>: <span class="st">var(--branco)</span>;
+  <span class="at">display</span>: <span class="st">flex</span>; <span class="at">flex-direction</span>: <span class="st">column</span>; <span class="at">min-height</span>: <span class="st">100vh</span>;
+}
+<span class="tg">main</span> { <span class="at">flex</span>: <span class="st">1</span>; } <span class="cm">/* empurra o footer pra baixo em telas com pouco conteúdo */</span>
+
+<span class="tg">.btn-preto</span> { <span class="at">background</span>: <span class="st">var(--preto)</span>; <span class="at">color</span>: <span class="st">var(--branco)</span>; <span class="at">border</span>: <span class="st">none</span>; <span class="at">padding</span>: <span class="st">10px 18px</span>; <span class="at">border-radius</span>: <span class="st">6px</span>; <span class="at">cursor</span>: <span class="st">pointer</span>; }
+<span class="tg">.btn-preto:disabled</span> { <span class="at">opacity</span>: <span class="st">0.4</span>; <span class="at">cursor</span>: <span class="st">not-allowed</span>; }
+<span class="tg">.btn-outline</span> { <span class="at">background</span>: <span class="st">transparent</span>; <span class="at">border</span>: <span class="st">1px solid var(--preto)</span>; <span class="at">padding</span>: <span class="st">10px 18px</span>; <span class="at">border-radius</span>: <span class="st">6px</span>; <span class="at">cursor</span>: <span class="st">pointer</span>; }
+<span class="tg">.btn-fechar</span> { <span class="at">background</span>: <span class="st">transparent</span>; <span class="at">border</span>: <span class="st">none</span>; <span class="at">font-size</span>: <span class="st">1.5rem</span>; <span class="at">cursor</span>: <span class="st">pointer</span>; }</code></pre>
+
+          <h3 class="topic">2. Header, busca e footer</h3>
+          <pre><code><span class="tg">header</span> {
+  <span class="at">display</span>: <span class="st">flex</span>; <span class="at">align-items</span>: <span class="st">center</span>; <span class="at">justify-content</span>: <span class="st">space-between</span>;
+  <span class="at">padding</span>: <span class="st">16px 32px</span>; <span class="at">border-bottom</span>: <span class="st">1px solid var(--cinza-borda)</span>;
+}
+<span class="tg">.user-section</span> { <span class="at">display</span>: <span class="st">flex</span>; <span class="at">align-items</span>: <span class="st">center</span>; <span class="at">gap</span>: <span class="st">12px</span>; }
+<span class="tg">.empresa</span> { <span class="at">flex</span>: <span class="st">1</span>; <span class="at">text-align</span>: <span class="st">center</span>; <span class="at">margin</span>: <span class="st">0</span>; <span class="at">font-size</span>: <span class="st">1.8rem</span>; }
+<span class="tg">.avatar</span> { <span class="at">width</span>: <span class="st">36px</span>; <span class="at">height</span>: <span class="st">36px</span>; <span class="at">border-radius</span>: <span class="st">50%</span>; <span class="at">object-fit</span>: <span class="st">cover</span>; }
+
+<span class="tg">.busca</span> {
+  <span class="at">display</span>: <span class="st">flex</span>; <span class="at">align-items</span>: <span class="st">center</span>; <span class="at">gap</span>: <span class="st">8px</span>;
+  <span class="at">margin</span>: <span class="st">24px auto</span>; <span class="at">padding</span>: <span class="st">8px 16px</span>;
+  <span class="at">border</span>: <span class="st">1px solid var(--cinza-borda)</span>; <span class="at">border-radius</span>: <span class="st">8px</span>; <span class="at">max-width</span>: <span class="st">400px</span>;
+}
+<span class="tg">.busca input</span> { <span class="at">border</span>: <span class="st">none</span>; <span class="at">outline</span>: <span class="st">none</span>; <span class="at">width</span>: <span class="st">100%</span>; <span class="at">font-size</span>: <span class="st">0.95rem</span>; }
+<span class="tg">.icone-lupa</span> { <span class="at">width</span>: <span class="st">18px</span>; <span class="at">height</span>: <span class="st">18px</span>; <span class="at">object-fit</span>: <span class="st">contain</span>; }
+
+<span class="tg">footer</span> {
+  <span class="at">background</span>: <span class="st">var(--preto)</span>; <span class="at">color</span>: <span class="st">var(--branco)</span>;
+  <span class="at">display</span>: <span class="st">flex</span>; <span class="at">align-items</span>: <span class="st">center</span>; <span class="at">justify-content</span>: <span class="st">space-between</span>;
+  <span class="at">padding</span>: <span class="st">18px 32px</span>;
+}
+<span class="tg">.redes</span> { <span class="at">display</span>: <span class="st">flex</span>; <span class="at">gap</span>: <span class="st">16px</span>; }
+<span class="tg">.redes img</span> { <span class="at">width</span>: <span class="st">22px</span>; <span class="at">height</span>: <span class="st">22px</span>; <span class="at">object-fit</span>: <span class="st">contain</span>; }</code></pre>
+
+          <h3 class="topic">
+            3. Vitrine de 3 colunas: tooltip no topo + rodapé do card
+          </h3>
+          <p class="topic-desc">
+            O <code>.tooltip</code> cobre o <b>topo</b> da foto do carro (não
+            o rodapé), e cada card tem um <code>.rodape-card</code> fixo
+            embaixo — com título, preço e o botão de interesse sempre
+            visíveis, sem depender do hover.
+          </p>
+          <pre><code><span class="tg">.vitrine</span> {
+  <span class="at">display</span>: <span class="st">grid</span>; <span class="at">grid-template-columns</span>: <span class="st">repeat(3, 1fr)</span>; <span class="at">gap</span>: <span class="st">18px</span>;
+  <span class="at">padding</span>: <span class="st">0 32px 32px 32px</span>;
+}
+<span class="tg">.anuncio-card</span> {
+  <span class="at">position</span>: <span class="st">relative</span>; <span class="at">border-radius</span>: <span class="st">8px</span>; <span class="at">overflow</span>: <span class="st">hidden</span>;
+  <span class="at">background</span>: <span class="st">#fff</span>; <span class="at">border</span>: <span class="st">1px solid var(--cinza-borda)</span>;
+  <span class="at">display</span>: <span class="st">flex</span>; <span class="at">flex-direction</span>: <span class="st">column</span>;
+}
+<span class="tg">.anuncio-card img.foto</span> { <span class="at">width</span>: <span class="st">100%</span>; <span class="at">display</span>: <span class="st">block</span>; <span class="at">aspect-ratio</span>: <span class="st">4 / 3</span>; <span class="at">object-fit</span>: <span class="st">cover</span>; }
+
+<span class="cm">/* tooltip: vendedor + local, sobrepõe o topo da foto no hover */</span>
+<span class="tg">.anuncio-card .tooltip</span> {
+  <span class="at">position</span>: <span class="st">absolute</span>; <span class="at">top</span>: <span class="st">0</span>; <span class="at">left</span>: <span class="st">0</span>; <span class="at">right</span>: <span class="st">0</span>;
+  <span class="at">background</span>: <span class="st">rgba(0, 0, 0, 0.75)</span>; <span class="at">color</span>: <span class="st">var(--branco)</span>;
+  <span class="at">padding</span>: <span class="st">12px</span>; <span class="at">font-size</span>: <span class="st">0.85rem</span>; <span class="at">line-height</span>: <span class="st">1.4</span>;
+  <span class="at">opacity</span>: <span class="st">0</span>; <span class="at">transition</span>: <span class="st">opacity 0.15s ease-in-out</span>;
+  <span class="at">pointer-events</span>: <span class="st">none</span>; <span class="at">z-index</span>: <span class="st">2</span>;
+}
+<span class="tg">.anuncio-card:hover .tooltip</span> { <span class="at">opacity</span>: <span class="st">1</span>; }
+
+<span class="cm">/* rodapé fixo do card: título, preço e ícone de interesse, sempre visível */</span>
+<span class="tg">.rodape-card</span> {
+  <span class="at">display</span>: <span class="st">flex</span>; <span class="at">flex-direction</span>: <span class="st">column</span>; <span class="at">gap</span>: <span class="st">6px</span>;
+  <span class="at">padding</span>: <span class="st">10px 12px</span>; <span class="at">background</span>: <span class="st">var(--branco)</span>; <span class="at">z-index</span>: <span class="st">1</span>;
+}
+<span class="tg">.rodape-card .linha-preco</span> { <span class="at">display</span>: <span class="st">flex</span>; <span class="at">align-items</span>: <span class="st">center</span>; <span class="at">justify-content</span>: <span class="st">space-between</span>; }
+<span class="tg">.rodape-card .titulo</span> { <span class="at">font-size</span>: <span class="st">0.9rem</span>; <span class="at">font-weight</span>: <span class="st">500</span>; }
+<span class="tg">.rodape-card .preco</span> { <span class="at">font-weight</span>: <span class="st">bold</span>; }
+<span class="tg">.rodape-card .contador</span> { <span class="at">margin-left</span>: <span class="st">4px</span>; }
+
+<span class="tg">.interesse-icone</span> { <span class="at">width</span>: <span class="st">20px</span>; <span class="at">height</span>: <span class="st">20px</span>; <span class="at">object-fit</span>: <span class="st">contain</span>; <span class="at">cursor</span>: <span class="st">pointer</span>; <span class="at">vertical-align</span>: <span class="st">middle</span>; }
+<span class="tg">.interesse-icone.ativa</span> { <span class="at">filter</span>: <span class="st">invert(28%) sepia(94%) saturate(3200%) hue-rotate(212deg)</span>; } <span class="cm">/* deixa o interesse.svg azul */</span></code></pre>
+          <div class="note">
+            O <code>.rodape-card</code> é onde ficam o título, o preço e o
+            ícone de interesse com o contador — encaixe esse bloco dentro do
+            <code>.anuncio-card</code>, abaixo da
+            <code>&lt;img class="foto"&gt;</code>, na hora de montar o
+            template no app.js.
+          </div>
+
+          <h3 class="topic">
+            4. Modal de login e painel lateral (à esquerda)
+          </h3>
+          <p class="topic-desc">
+            Atenção: no seu CSS o <code>.painel-lateral</code> usa
+            <code>left: 0</code>, não <code>right: 0</code> — o painel de
+            perfil abre do lado esquerdo da tela.
+          </p>
+          <pre><code><span class="tg">.overlay</span> {
+  <span class="at">position</span>: <span class="st">fixed</span>; <span class="at">inset</span>: <span class="st">0</span>; <span class="at">background</span>: <span class="st">rgba(0, 0, 0, 0.5)</span>;
+  <span class="at">display</span>: <span class="st">flex</span>; <span class="at">align-items</span>: <span class="st">center</span>; <span class="at">justify-content</span>: <span class="st">center</span>; <span class="at">z-index</span>: <span class="st">1000</span>;
+}
+<span class="tg">.overlay.oculto</span> { <span class="at">display</span>: <span class="st">none</span>; }
+<span class="tg">.modal</span> { <span class="at">background</span>: <span class="st">var(--branco)</span>; <span class="at">padding</span>: <span class="st">24px</span>; <span class="at">border-radius</span>: <span class="st">10px</span>; <span class="at">width</span>: <span class="st">320px</span>; }
+<span class="tg">.modal-topo</span> { <span class="at">display</span>: <span class="st">flex</span>; <span class="at">justify-content</span>: <span class="st">space-between</span>; <span class="at">align-items</span>: <span class="st">center</span>; <span class="at">margin-bottom</span>: <span class="st">16px</span>; }
+<span class="tg">.modal input</span> { <span class="at">width</span>: <span class="st">100%</span>; <span class="at">padding</span>: <span class="st">10px</span>; <span class="at">margin-top</span>: <span class="st">4px</span>; <span class="at">border</span>: <span class="st">1px solid var(--cinza-borda)</span>; <span class="at">border-radius</span>: <span class="st">6px</span>; }
+<span class="tg">.modal-botoes</span> { <span class="at">display</span>: <span class="st">flex</span>; <span class="at">justify-content</span>: <span class="st">flex-end</span>; <span class="at">gap</span>: <span class="st">10px</span>; <span class="at">margin-top</span>: <span class="st">16px</span>; }
+<span class="tg">.erro</span> { <span class="at">color</span>: <span class="st">#f00</span>; <span class="at">font-size</span>: <span class="st">0.78rem</span>; <span class="at">display</span>: <span class="st">block</span>; <span class="at">min-height</span>: <span class="st">1.2em</span>; <span class="at">margin-top</span>: <span class="st">2px</span>; }
+
+<span class="tg">.painel-lateral</span> {
+  <span class="at">position</span>: <span class="st">fixed</span>; <span class="at">top</span>: <span class="st">0</span>; <span class="at">left</span>: <span class="st">0</span>; <span class="at">height</span>: <span class="st">100vh</span>; <span class="at">width</span>: <span class="st">360px</span>;
+  <span class="at">background</span>: <span class="st">var(--branco)</span>; <span class="at">box-shadow</span>: <span class="st">-2px 0 10px rgba(0, 0, 0, 0.15)</span>;
+  <span class="at">padding</span>: <span class="st">24px</span>; <span class="at">overflow-y</span>: <span class="st">auto</span>; <span class="at">z-index</span>: <span class="st">1001</span>;
+}
+<span class="tg">.painel-lateral.oculto</span> { <span class="at">display</span>: <span class="st">none</span>; }
+<span class="tg">.painel-topo</span> { <span class="at">display</span>: <span class="st">flex</span>; <span class="at">justify-content</span>: <span class="st">flex-end</span>; } <span class="cm">/* posiciona o btn-fechar */</span>
+<span class="tg">.btn-destaque</span> {
+  <span class="at">border-top</span>: <span class="st">2px solid var(--preto)</span>; <span class="at">border-bottom</span>: <span class="st">2px solid var(--preto)</span>;
+  <span class="at">border-left</span>: <span class="st">none</span>; <span class="at">border-right</span>: <span class="st">none</span>; <span class="at">background</span>: <span class="st">none</span>;
+  <span class="at">padding</span>: <span class="st">10px 0</span>; <span class="at">width</span>: <span class="st">100%</span>; <span class="at">font-weight</span>: <span class="st">bold</span>; <span class="at">cursor</span>: <span class="st">pointer</span>; <span class="at">margin</span>: <span class="st">16px 0</span>;
+}</code></pre>
+
+          <h3 class="topic">
+            5. Formulário de cadastro, lista de anúncios e lixeira vermelha
+          </h3>
+          <p class="topic-desc">
+            Como o formulário tem um <code>.grupo-input</code> (label + input
+            + erro) por campo, o CSS de erro se divide em dois:
+            <code>.erro</code> vale pro modal de login, e
+            <code>.msg-erro</code> é específico dos campos do cadastro.
+          </p>
+          <pre><code><span class="tg">#formCadastro</span> { <span class="at">display</span>: <span class="st">flex</span>; <span class="at">flex-direction</span>: <span class="st">column</span>; <span class="at">gap</span>: <span class="st">10px</span>; <span class="at">margin-top</span>: <span class="st">12px</span>; }
+
+<span class="tg">.grupo-input</span> { <span class="at">display</span>: <span class="st">flex</span>; <span class="at">flex-direction</span>: <span class="st">column</span>; <span class="at">gap</span>: <span class="st">4px</span>; }
+<span class="tg">.grupo-input label</span> { <span class="at">font-size</span>: <span class="st">0.85rem</span>; <span class="at">font-weight</span>: <span class="st">bold</span>; <span class="at">color</span>: <span class="st">var(--preto)</span>; }
+<span class="tg">.grupo-input input</span> { <span class="at">padding</span>: <span class="st">8px 10px</span>; <span class="at">border</span>: <span class="st">1px solid var(--cinza-borda)</span>; <span class="at">border-radius</span>: <span class="st">4px</span>; <span class="at">font-size</span>: <span class="st">0.9rem</span>; }
+
+<span class="cm">/* mensagem de erro por campo, altura reservada pra não "pular" o layout */</span>
+<span class="tg">.msg-erro</span> { <span class="at">color</span>: <span class="st">#f00</span>; <span class="at">font-size</span>: <span class="st">0.75rem</span>; <span class="at">font-weight</span>: <span class="st">500</span>; <span class="at">min-height</span>: <span class="st">16px</span>; }
+
+<span class="tg">#formCadastro button[type='submit']</span> {
+  <span class="at">margin-top</span>: <span class="st">8px</span>; <span class="at">padding</span>: <span class="st">10px</span>; <span class="at">background-color</span>: <span class="st">var(--preto)</span>; <span class="at">color</span>: <span class="st">var(--branco)</span>;
+  <span class="at">border</span>: <span class="st">none</span>; <span class="at">border-radius</span>: <span class="st">4px</span>; <span class="at">font-weight</span>: <span class="st">bold</span>; <span class="at">cursor</span>: <span class="st">pointer</span>;
+}
+
+<span class="tg">#listaAnunciosPerfil</span> { <span class="at">margin-top</span>: <span class="st">24px</span>; <span class="at">display</span>: <span class="st">flex</span>; <span class="at">flex-direction</span>: <span class="st">column</span>; <span class="at">gap</span>: <span class="st">10px</span>; }
+<span class="tg">.item-perfil</span> {
+  <span class="at">display</span>: <span class="st">flex</span>; <span class="at">align-items</span>: <span class="st">center</span>; <span class="at">justify-content</span>: <span class="st">space-between</span>;
+  <span class="at">padding</span>: <span class="st">10px 12px</span>; <span class="at">border</span>: <span class="st">1px solid var(--cinza-borda)</span>; <span class="at">border-radius</span>: <span class="st">6px</span>; <span class="at">background-color</span>: <span class="st">#fafafa</span>;
+}
+<span class="tg">.item-perfil span</span> { <span class="at">font-size</span>: <span class="st">0.9rem</span>; <span class="at">font-weight</span>: <span class="st">500</span>; }
+
+<span class="cm">/* força o svg da lixeira (mesmo que venha preto) a ficar vermelho */</span>
+<span class="tg">.item-perfil .lixeira</span> {
+  <span class="at">width</span>: <span class="st">20px</span>; <span class="at">height</span>: <span class="st">20px</span>; <span class="at">cursor</span>: <span class="st">pointer</span>; <span class="at">transition</span>: <span class="st">transform 0.2s ease</span>;
+  <span class="at">filter</span>: <span class="st">invert(16%) sepia(99%) saturate(7404%) hue-rotate(358deg) brightness(98%) contrast(118%)</span>;
+}
+<span class="tg">.item-perfil .lixeira:hover</span> { <span class="at">transform</span>: <span class="st">scale(1.1)</span>; }
+<span class="tg">.lixeira</span> { <span class="at">width</span>: <span class="st">18px</span>; <span class="at">height</span>: <span class="st">18px</span>; <span class="at">object-fit</span>: <span class="st">contain</span>; <span class="at">cursor</span>: <span class="st">pointer</span>; }</code></pre>
+          <div class="note">
+            Repare que existem <b>dois</b> filtros diferentes: um pro ícone de
+            interesse (<code>.interesse-icone.ativa</code>, tópico 3, em
+            azul) e outro pra lixeira (<code>.item-perfil .lixeira</code>, em
+            vermelho). Não são o mesmo valor de <code>filter</code> porque os
+            SVGs de origem são diferentes — copie exatamente como está, não
+            tente unificar.
+          </div>
+        </section>
+
+        <!-- ================= 06 JS ================= -->
+        <section class="layer" id="js" style="--accent-color: var(--l6)">
+          <div class="layer__head">
+            <span class="big-num">06</span>
+            <h2>JavaScript — app.js</h2>
+            <span class="tag">~40 min</span>
+          </div>
+
+          <h3 class="topic">1. Estado global e carregamento da vitrine</h3>
+          <p class="topic-desc">
+            A vitrine aceita dois filtros opcionais na query string:
+            <code>vendedor</code> (busca) e <code>usuario_id</code> (usuário
+            logado, para o backend informar em quais anúncios ele já
+            registrou interesse). O card de cada anúncio verifica
+            <code>a.interessou</code> pra decidir se o ícone nasce marcado.
+          </p>
+  <pre><code><span class="tg">let</span> usuarioAtual = <span class="tg">null</span>; <span class="cm">// guarda { id, nome, usuario, tipo, telefone, foto_perfil } após login</span>
+
+<span class="cm">// --- 1. VITRINE DE ANÚNCIOS ---</span>
+<span class="tg">async function</span> carregarVitrine(filtroVendedor = <span class="st">''</span>) {
+  <span class="tg">const</span> params = <span class="tg">new</span> URLSearchParams();
+  <span class="tg">if</span> (filtroVendedor) params.append(<span class="st">'vendedor'</span>, filtroVendedor);
+  <span class="tg">if</span> (usuarioAtual) params.append(<span class="st">'usuario_id'</span>, usuarioAtual.id);
+
+  <span class="tg">const</span> url = <span class="st">`/api/anuncios${params.toString() ? '?' + params.toString() : ''}`</span>;
+  <span class="tg">const</span> resp = <span class="tg">await</span> fetch(url);
+  <span class="tg">const</span> anuncios = <span class="tg">await</span> resp.json();
+
+  <span class="tg">if</span> (filtroVendedor && anuncios.length === <span class="st">0</span>) {
+    <span class="tg">document</span>.getElementById(<span class="st">'vitrine'</span>).innerHTML =
+      <span class="st">'&lt;p&gt;Vendedor não encontrado&lt;/p&gt;'</span>;
+    <span class="tg">return</span>;
+  }
+  renderizarVitrine(anuncios);
+}
+
+<span class="tg">function</span> formatarPreco(valor) {
+  <span class="tg">return</span> Number(valor).toLocaleString(<span class="st">'pt-BR'</span>, { style: <span class="st">'currency'</span>, currency: <span class="st">'BRL'</span> });
+}
+
+<span class="tg">function</span> renderizarVitrine(anuncios) {
+  <span class="tg">const</span> vitrine = <span class="tg">document</span>.getElementById(<span class="st">'vitrine'</span>);
+  vitrine.innerHTML = anuncios
+    .map((a) => {
+      <span class="cm">// Verifica se a API indicou que o usuário logado já registrou interesse</span>
+      <span class="tg">const</span> interessou =
+        a.interessou ||
+        (Array.isArray(a.usuarios_interessados) &&
+          usuarioAtual &&
+          a.usuarios_interessados.includes(usuarioAtual.id));
+      <span class="tg">const</span> classeAtiva = interessou ? <span class="st">'ativa'</span> : <span class="st">''</span>;
+
+      <span class="tg">return</span> <span class="st">`
+        &lt;div class="anuncio-card"&gt;
+          &lt;img class="foto" src="/uploads/${a.imagem}" /&gt;
+          &lt;div class="tooltip"&gt;Anunciado por: @${a.vendedor_usuario}&lt;br/&gt;Local: ${a.local}&lt;/div&gt;
+          &lt;div class="rodape-card"&gt;
+            &lt;span class="titulo"&gt;${a.titulo}&lt;/span&gt;
+            &lt;div class="linha-preco"&gt;
+              &lt;span class="preco"&gt;${formatarPreco(a.preco)}&lt;/span&gt;
+              &lt;span&gt;
+                &lt;img class="interesse-icone ${classeAtiva}" data-id="${a.id}" src="assets/interesse.svg" /&gt;
+                &lt;span class="contador"&gt;${a.interesses}&lt;/span&gt;
+              &lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      `</span>;
+    })
+    .join(<span class="st">''</span>);
+
+  <span class="tg">document</span>.querySelectorAll(<span class="st">'.interesse-icone'</span>).forEach((icone) => {
+    icone.addEventListener(<span class="st">'click'</span>, () => toggleInteresse(icone));
+  });
+}
+
+carregarVitrine(); <span class="cm">// primeira carga, sem reload de página</span></code></pre>
+
+          <h3 class="topic">2. Registrar interesse (com verificação de login)</h3>
+  <pre><code><span class="cm">// --- 2. INTERESSES ---</span>
+<span class="tg">async function</span> toggleInteresse(icone) {
+  <span class="tg">if</span> (!usuarioAtual) {
+    abrirModalLogin();
+    <span class="tg">return</span>;
+  }
+
+  <span class="tg">const</span> anuncioId = icone.dataset.id;
+  <span class="tg">const</span> resp = <span class="tg">await</span> fetch(<span class="st">`/api/interesses/${anuncioId}`</span>, {
+    method: <span class="st">'POST'</span>,
+    headers: { <span class="st">'Content-Type'</span>: <span class="st">'application/json'</span> },
+    body: JSON.stringify({ usuario_id: usuarioAtual.id }),
+  });
+  <span class="tg">const</span> { interesses, interessou } = <span class="tg">await</span> resp.json();
+
+  icone.classList.toggle(<span class="st">'ativa'</span>, interessou);
+  icone.closest(<span class="st">'.linha-preco'</span>).querySelector(<span class="st">'.contador'</span>).textContent = interesses;
+}</code></pre>
+
+          <h3 class="topic">3. Login / Logout</h3>
+          <p class="topic-desc">
+            O botão de login é o mesmo botão de logout: se já existe
+            <code>usuarioAtual</code>, o clique desloga (zera estado, reseta
+            header e recarrega a vitrine sem interesses marcados); senão, abre
+            o modal.
+          </p>
+  <pre><code><span class="cm">// --- 3. AUTENTICAÇÃO (LOGIN / LOGOUT) ---</span>
+<span class="tg">const</span> btnLogin = <span class="tg">document</span>.getElementById(<span class="st">'btnLogin'</span>);
+
+btnLogin.addEventListener(<span class="st">'click'</span>, () => {
+  <span class="tg">if</span> (usuarioAtual) {
+    <span class="cm">// Ação de LOGOUT</span>
+    usuarioAtual = <span class="tg">null</span>;
+    <span class="tg">document</span>.getElementById(<span class="st">'nomeUsuario'</span>).textContent = <span class="st">'@AutoVision'</span>;
+    <span class="tg">document</span>.getElementById(<span class="st">'fotoPerfil'</span>).src = <span class="st">'assets/logo.png'</span>;
+    <span class="tg">document</span>.getElementById(<span class="st">'btnVerPerfil'</span>).disabled = <span class="tg">true</span>;
+    btnLogin.textContent = <span class="st">'Entrar'</span>;
+
+    <span class="cm">// Recarrega vitrine sem estado de interesse</span>
+    carregarVitrine();
+  } <span class="tg">else</span> {
+    abrirModalLogin();
+  }
+});
+
+<span class="tg">document</span>.getElementById(<span class="st">'btnCancelar'</span>).addEventListener(<span class="st">'click'</span>, fecharModalLogin);
+<span class="tg">document</span>.getElementById(<span class="st">'fecharModal'</span>).addEventListener(<span class="st">'click'</span>, fecharModalLogin);
+
+<span class="tg">function</span> abrirModalLogin() {
+  <span class="tg">document</span>.getElementById(<span class="st">'loginUsuario'</span>).value = <span class="st">''</span>;
+  <span class="tg">document</span>.getElementById(<span class="st">'loginSenha'</span>).value = <span class="st">''</span>;
+  <span class="tg">document</span>.getElementById(<span class="st">'erroUsuario'</span>).textContent = <span class="st">''</span>;
+  <span class="tg">document</span>.getElementById(<span class="st">'erroSenha'</span>).textContent = <span class="st">''</span>;
+  <span class="tg">document</span>.getElementById(<span class="st">'erroLogin'</span>).textContent = <span class="st">''</span>;
+
+  <span class="tg">document</span>.getElementById(<span class="st">'modalLogin'</span>).classList.remove(<span class="st">'oculto'</span>);
+}
+
+<span class="tg">function</span> fecharModalLogin() {
+  <span class="tg">document</span>.getElementById(<span class="st">'modalLogin'</span>).classList.add(<span class="st">'oculto'</span>);
+}
+
+<span class="tg">document</span>.getElementById(<span class="st">'btnConfirmarLogin'</span>).addEventListener(<span class="st">'click'</span>, <span class="tg">async</span> () => {
+  <span class="tg">const</span> usuario = <span class="tg">document</span>.getElementById(<span class="st">'loginUsuario'</span>).value.trim();
+  <span class="tg">const</span> senha = <span class="tg">document</span>.getElementById(<span class="st">'loginSenha'</span>).value;
+
+  <span class="tg">document</span>.getElementById(<span class="st">'erroUsuario'</span>).textContent = <span class="st">''</span>;
+  <span class="tg">document</span>.getElementById(<span class="st">'erroSenha'</span>).textContent = <span class="st">''</span>;
+  <span class="tg">document</span>.getElementById(<span class="st">'erroLogin'</span>).textContent = <span class="st">''</span>;
+
+  <span class="tg">let</span> temErro = <span class="tg">false</span>;
+
+  <span class="cm">// Validação estrita conforme especificação</span>
+  <span class="tg">if</span> (!usuario || usuario.length < <span class="st">3</span>) {
+    <span class="tg">document</span>.getElementById(<span class="st">'erroUsuario'</span>).textContent =
+      <span class="st">'nome_usuario menor que 3 caracteres ou vazio'</span>;
+    temErro = <span class="tg">true</span>;
+  }
+
+  <span class="tg">if</span> (!senha) {
+    <span class="tg">document</span>.getElementById(<span class="st">'erroSenha'</span>).textContent = <span class="st">'Senha obrigatória'</span>;
+    temErro = <span class="tg">true</span>;
+  }
+
+  <span class="tg">if</span> (temErro) <span class="tg">return</span>;
+
+  <span class="tg">const</span> resp = <span class="tg">await</span> fetch(<span class="st">'/api/login'</span>, {
+    method: <span class="st">'POST'</span>,
+    headers: { <span class="st">'Content-Type'</span>: <span class="st">'application/json'</span> },
+    body: JSON.stringify({ usuario, senha }),
+  });
+
+  <span class="tg">if</span> (!resp.ok) {
+    <span class="tg">document</span>.getElementById(<span class="st">'erroLogin'</span>).textContent =
+      <span class="st">'Usuário não encontrado ou senha incorreta'</span>;
+    <span class="tg">return</span>;
+  }
+
+  usuarioAtual = <span class="tg">await</span> resp.json();
+  fecharModalLogin();
+  atualizarHeaderLogado();
+});
+
+<span class="tg">function</span> atualizarHeaderLogado() {
+  <span class="tg">document</span>.getElementById(<span class="st">'nomeUsuario'</span>).textContent =
+    <span class="st">'@'</span> + usuarioAtual.usuario;
+
+  <span class="tg">if</span> (usuarioAtual.foto_perfil) {
+    <span class="tg">document</span>.getElementById(
+      <span class="st">'fotoPerfil'</span>,
+    ).src = <span class="st">`/uploads/${usuarioAtual.foto_perfil}`</span>;
+  }
+
+  <span class="tg">const</span> btnPerfil = <span class="tg">document</span>.getElementById(<span class="st">'btnVerPerfil'</span>);
+  btnPerfil.disabled = usuarioAtual.tipo !== <span class="st">'vendedor'</span>;
+  <span class="tg">document</span>.getElementById(<span class="st">'btnLogin'</span>).textContent = <span class="st">'Logout'</span>;
+
+  <span class="cm">// Recarrega vitrine exibindo os anúncios com interesse marcado pelo usuário logado</span>
+  carregarVitrine();
+}</code></pre>
+
+          <h3 class="topic">4. Busca de vendedor</h3>
+          <p class="topic-desc">
+            A busca sai como função própria (<code>executarBusca</code>) para
+            ser disparada tanto pelo <kbd>Enter</kbd> no campo quanto por um
+            clique no ícone de lupa, se ele existir no HTML.
+          </p>
+  <pre><code><span class="cm">// --- 4. BUSCA ---</span>
+<span class="tg">function</span> executarBusca() {
+  <span class="tg">const</span> termo = <span class="tg">document</span>
+    .getElementById(<span class="st">'inputBusca'</span>)
+    .value.trim()
+    .replace(<span class="st">'@'</span>, <span class="st">''</span>);
+  carregarVitrine(termo);
+}
+
+<span class="tg">document</span>.getElementById(<span class="st">'inputBusca'</span>).addEventListener(<span class="st">'keydown'</span>, (e) => {
+  <span class="tg">if</span> (e.key === <span class="st">'Enter'</span>) {
+    executarBusca();
+  }
+});
+
+<span class="tg">const</span> iconeLupa = <span class="tg">document</span>.querySelector(<span class="st">'.icone-lupa'</span>);
+<span class="tg">if</span> (iconeLupa) {
+  iconeLupa.addEventListener(<span class="st">'click'</span>, executarBusca);
+}</code></pre>
+
+          <h3 class="topic">5. Painel de perfil</h3>
+  <pre><code><span class="cm">// --- 5. PAINEL DE PERFIL ---</span>
+<span class="tg">document</span>.getElementById(<span class="st">'btnVerPerfil'</span>).addEventListener(<span class="st">'click'</span>, <span class="tg">async</span> () => {
+  <span class="tg">const</span> resp = <span class="tg">await</span> fetch(<span class="st">`/api/perfil/${usuarioAtual.id}`</span>);
+  <span class="tg">const</span> dados = <span class="tg">await</span> resp.json();
+
+  <span class="tg">document</span>.getElementById(<span class="st">'totalInteresses'</span>).textContent = dados.totalInteresses;
+  <span class="tg">document</span>.getElementById(<span class="st">'totalAnuncios'</span>).textContent =
+    dados.totalAnuncios;
+  <span class="tg">document</span>.getElementById(<span class="st">'listaAnunciosPerfil'</span>).innerHTML =
+    dados.anuncios
+      .map(
+        (a) => <span class="st">`
+    &lt;div class="item-perfil"&gt;
+      &lt;span&gt;${a.titulo} — ${formatarPreco(a.preco)}&lt;/span&gt;
+      &lt;img class="lixeira" data-id="${a.id}" src="assets/lixeira.svg" /&gt;
+    &lt;/div&gt;
+  `</span>,
+      )
+      .join(<span class="st">''</span>);
+
+  <span class="tg">document</span>.querySelectorAll(<span class="st">'.lixeira'</span>).forEach((icone) => {
+    icone.addEventListener(<span class="st">'click'</span>, <span class="tg">async</span> () => {
+      <span class="tg">await</span> fetch(<span class="st">`/api/anuncios/${icone.dataset.id}`</span>, { method: <span class="st">'DELETE'</span> });
+      <span class="tg">document</span>.getElementById(<span class="st">'btnVerPerfil'</span>).click(); <span class="cm">// recarrega o painel</span>
+      carregarVitrine();
+    });
+  });
+
+  <span class="tg">document</span>.getElementById(<span class="st">'painelPerfil'</span>).classList.remove(<span class="st">'oculto'</span>);
+});
+
+<span class="tg">document</span>.getElementById(<span class="st">'fecharPainel'</span>).addEventListener(<span class="st">'click'</span>, () => {
+  <span class="tg">document</span>.getElementById(<span class="st">'painelPerfil'</span>).classList.add(<span class="st">'oculto'</span>);
+});</code></pre>
+
+          <h3 class="topic">6. Cadastro de anúncio (validação campo a campo)</h3>
+          <p class="topic-desc">
+            Substitui o <code>alert('Preencha todos os campos')</code> único
+            por validação individual, escrevendo a mensagem certa em cada
+            <code>span.msg-erro</code> (<code>erroTitulo</code>,
+            <code>erroLocal</code>, <code>erroPreco</code>,
+            <code>erroImagem</code>), incluindo checagem de preço numérico e
+            de extensão do arquivo.
+          </p>
+<pre><code><span class="cm">// --- 6. CADASTRO DE NOVO ANÚNCIO (Com validações individuais) ---</span>
+<span class="tg">document</span>
+.getElementById(<span class="st">'formCadastro'</span>)
+.addEventListener(<span class="st">'submit'</span>, <span class="tg">async</span> (e) => {
+  e.preventDefault();
+
+  <span class="tg">const</span> campoTitulo = <span class="tg">document</span>.getElementById(<span class="st">'campoTitulo'</span>);
+  <span class="tg">const</span> campoLocal = <span class="tg">document</span>.getElementById(<span class="st">'campoLocal'</span>);
+  <span class="tg">const</span> campoPreco = <span class="tg">document</span>.getElementById(<span class="st">'campoPreco'</span>);
+  <span class="tg">const</span> campoImagem = <span class="tg">document</span>.getElementById(<span class="st">'campoImagem'</span>);
+
+  <span class="tg">const</span> erroTitulo = <span class="tg">document</span>.getElementById(<span class="st">'erroTitulo'</span>);
+  <span class="tg">const</span> erroLocal = <span class="tg">document</span>.getElementById(<span class="st">'erroLocal'</span>);
+  <span class="tg">const</span> erroPreco = <span class="tg">document</span>.getElementById(<span class="st">'erroPreco'</span>);
+  <span class="tg">const</span> erroImagem = <span class="tg">document</span>.getElementById(<span class="st">'erroImagem'</span>);
+
+  <span class="cm">// Limpa erros anteriores</span>
+  erroTitulo.textContent = <span class="st">''</span>;
+  erroLocal.textContent = <span class="st">''</span>;
+  erroPreco.textContent = <span class="st">''</span>;
+  erroImagem.textContent = <span class="st">''</span>;
+
+  <span class="tg">let</span> temErro = <span class="tg">false</span>;
+
+  <span class="cm">// Validação do Título</span>
+  <span class="tg">if</span> (!campoTitulo.value.trim()) {
+    erroTitulo.textContent = <span class="st">'O título do anúncio é obrigatório.'</span>;
+    temErro = <span class="tg">true</span>;
+  }
+
+  <span class="cm">// Validação da Localização</span>
+  <span class="tg">if</span> (!campoLocal.value.trim()) {
+    erroLocal.textContent = <span class="st">'A localização é obrigatória.'</span>;
+    temErro = <span class="tg">true</span>;
+  }
+
+  <span class="cm">// Validação do Preço</span>
+  <span class="tg">const</span> precoNumero = <span class="tg">parseFloat</span>(campoPreco.value);
+  <span class="tg">if</span> (!campoPreco.value || isNaN(precoNumero) || precoNumero <= <span class="st">0</span>) {
+    erroPreco.textContent = <span class="st">'Informe um preço válido maior que zero.'</span>;
+    temErro = <span class="tg">true</span>;
+  }
+
+  <span class="cm">// Validação da Imagem</span>
+  <span class="tg">const</span> arquivo = campoImagem.files[<span class="st">0</span>];
+  <span class="tg">if</span> (!arquivo) {
+    erroImagem.textContent = <span class="st">'Nenhum arquivo escolhido.'</span>;
+    temErro = <span class="tg">true</span>;
+  } <span class="tg">else</span> {
+    <span class="tg">const</span> extensoesValidas = [<span class="st">'jpg'</span>, <span class="st">'jpeg'</span>, <span class="st">'png'</span>, <span class="st">'gif'</span>, <span class="st">'webp'</span>];
+    <span class="tg">const</span> extensao = arquivo.name.split(<span class="st">'.'</span>).pop().toLowerCase();
+    <span class="tg">if</span> (!extensoesValidas.includes(extensao)) {
+      erroImagem.textContent =
+        <span class="st">'Formato inválido (use JPG, JPEG, PNG, GIF ou WEBP).'</span>;
+      temErro = <span class="tg">true</span>;
+    }
+  }
+
+  <span class="tg">if</span> (temErro) <span class="tg">return</span>;
+
+  <span class="cm">// Envio para a API</span>
+  <span class="tg">const</span> formData = <span class="tg">new</span> FormData();
+  formData.append(<span class="st">'titulo'</span>, campoTitulo.value.trim());
+  formData.append(<span class="st">'local'</span>, campoLocal.value.trim());
+  formData.append(<span class="st">'preco'</span>, precoNumero);
+  formData.append(<span class="st">'vendedor_id'</span>, usuarioAtual.id);
+  formData.append(<span class="st">'imagem'</span>, arquivo);
+
+  <span class="tg">const</span> resp = <span class="tg">await</span> fetch(<span class="st">'/api/anuncios'</span>, {
+    method: <span class="st">'POST'</span>,
+    body: formData,
+  });
+
+  <span class="tg">if</span> (resp.ok) {
+    e.target.reset();
+    carregarVitrine();
+    <span class="tg">document</span>.getElementById(<span class="st">'btnVerPerfil'</span>).click(); <span class="cm">// Recarrega os dados do perfil</span>
+  }
+});</code></pre>
+          <div class="note">
+            Note que o cadastro só chama <code>e.target.reset()</code> e
+            recarrega a vitrine/perfil <b>dentro do <code>if (resp.ok)</code></b>
+            — se o backend recusar (ex.: erro no upload), o formulário
+            permanece preenchido para o aluno tentar de novo, em vez de
+            limpar silenciosamente.
+          </div>
+        </section>
+
+        <!-- ================= 07 CHECKLIST ================= -->
+        <section class="layer" id="checklist" style="--accent-color: var(--l7)">
+          <div class="layer__head">
+            <span class="big-num">07</span>
+            <h2>Checklist Final</h2>
+            <span class="tag">últimos 15 min</span>
+          </div>
+
+          <h3 class="topic">1. Ordem de execução recomendada nas 3 horas</h3>
+          <table class="ref">
+            <tr>
+              <th>Tempo</th>
+              <th>Etapa</th>
+              <th>Por quê primeiro</th>
+            </tr>
+            <tr>
+              <td>0:00 – 0:35</td>
+              <td>Setup + schema.sql + import do CSV</td>
+              <td>Sem banco, nada mais funciona — é a base de tudo.</td>
+            </tr>
+            <tr>
+              <td>0:35 – 1:20</td>
+              <td>server.js: rota de listagem, login, interesses</td>
+              <td>
+                São as rotas que a vitrine e o login dependem diretamente.
+              </td>
+            </tr>
+            <tr>
+              <td>1:20 – 1:45</td>
+              <td>index.html + app.js: vitrine carregando dados reais</td>
+              <td>
+                Ter algo na tela cedo ajuda a validar o backend rapidamente.
+              </td>
+            </tr>
+            <tr>
+              <td>1:45 – 2:15</td>
+              <td>Login funcional + marcar/desmarcar interesse na tela</td>
+              <td>Funcionalidades centrais do enunciado.</td>
+            </tr>
+            <tr>
+              <td>2:15 – 2:45</td>
+              <td>Painel de perfil, cadastro e exclusão de anúncio</td>
+              <td>Depende de tudo anterior já estar de pé.</td>
+            </tr>
+            <tr>
+              <td>2:45 – 3:00</td>
+              <td>
+                CSS final (cores, tooltip, responsividade) + revisão do
+                checklist
+              </td>
+              <td>
+                Estilo por último: pontua, mas não é a maior parte da nota
+                funcional.
+              </td>
+            </tr>
+          </table>
+
+          <h3 class="topic">2. Requisitos do enunciado fáceis de esquecer</h3>
+          <ul class="checklist">
+            <li>
+              Botão "Ver Perfil" desabilitado para usuário tipo <b>cliente</b>,
+              habilitado só para <b>vendedor</b>.
+            </li>
+            <li>
+              Botão "Ver Perfil" fica <b>desabilitado</b> também para
+              visitante não logado.
+            </li>
+            <li>
+              Interesse: máximo 1 por anúncio por usuário — trate no banco
+              (<code>UNIQUE</code>) e reflita no ícone (cor muda para azul).
+            </li>
+            <li>
+              Campo de busca, botão "Ver Perfil" e botão de interesse abrem o
+              modal de login se o usuário não estiver autenticado.
+            </li>
+            <li>
+              Mensagens de erro exatas: "Usuário não encontrado ou senha
+              incorreta" e "Vendedor não encontrado".
+            </li>
+            <li>
+              Upload de imagem: valida extensão (JPG, JPEG, PNG, GIF, WEBP) e
+              mostra o nome do arquivo escolhido no botão.
+            </li>
+            <li>
+              Preço: sempre exibido formatado em Real (<code>R$</code>), nunca
+              o número cru vindo do banco.
+            </li>
+            <li>
+              Tooltip no hover do anúncio: nome do vendedor <b>e</b>
+              localização, não só um dos dois.
+            </li>
+            <li>
+              Rodapé com nome da empresa à esquerda, ícones sociais ao
+              centro, copyright à direita — layout, não conteúdo, é o que
+              costuma pesar aqui.
+            </li>
+            <li>
+              Todos os dados exibidos vêm do banco — nada de conteúdo
+              fixo/hardcoded no HTML além dos placeholders e textos estáticos
+              do enunciado.
+            </li>
+          </ul>
+
+          <div class="cheat ok">
+            <h4>Se o tempo apertar, priorize nesta ordem</h4>
+            <ul>
+              <li>
+                1. Vitrine carregando anúncios reais do banco (é a prova de
+                que a arquitetura toda funciona).
+              </li>
+              <li>
+                2. Login funcional com as duas mensagens de erro corretas.
+              </li>
+              <li>
+                3. Registrar/remover interesse com contador atualizando em
+                tempo real.
+              </li>
+              <li>4. Cadastro de anúncio com upload de foto.</li>
+              <li>5. Painel de perfil com contadores e exclusão.</li>
+              <li>
+                6. Estilo visual (cores, tooltip, ícones sociais) — deixe por
+                último, é o que menos quebra a funcionalidade se ficar
+                incompleto.
+              </li>
+            </ul>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const links = Array.from(document.querySelectorAll('.stack-nav a'));
+      const targets = links.map((l) =>
+        document.querySelector(l.getAttribute('href')),
+      );
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const id = '#' + entry.target.id;
+            const link = links.find((l) => l.getAttribute('href') === id);
+            if (!link) return;
+            if (entry.isIntersecting) {
+              links.forEach((l) => l.classList.remove('active'));
+              link.classList.add('active');
+            }
+          });
+        },
+        { rootMargin: '-20% 0px -70% 0px' },
+      );
+
+      targets.forEach((t) => t && observer.observe(t));
+    </script>
+  </body>
+</html>

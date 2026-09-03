@@ -1,0 +1,9 @@
+id,titulo,local,preco,imagem,vendedor_id,criado_em
+1,Honda Civic EXL 2020,Florianópolis - SC,98900.00,civic-exl-2020.png,1,2026-08-10 09:15:00
+2,Volkswagen Golf GTI 2019,São José - SC,89500.00,golf-gti-2019.png,1,2026-08-12 14:30:00
+3,Toyota Corolla Altis 2021,Palhoça - SC,112000.00,corolla-altis-2021.png,2,2026-08-14 11:00:00
+4,Jeep Compass Longitude 2020,Balneário Camboriú - SC,109900.00,compass-longitude-2020.png,2,2026-08-16 16:45:00
+5,Chevrolet Onix Plus 2022,Itajaí - SC,79900.00,onix-plus-2022.png,3,2026-08-18 10:20:00
+6,Hyundai HB20S 2021,Blumenau - SC,72500.00,hb20s-2021.png,3,2026-08-20 08:50:00
+7,Fiat Toro Freedom 2020,Joinville - SC,124900.00,toro-freedom-2020.png,1,2026-08-22 13:10:00
+8,Renault Duster Iconic 2021,São Francisco do Sul - SC,94500.00,duster-iconic-2021.png,2,2026-08-24 17:05:00

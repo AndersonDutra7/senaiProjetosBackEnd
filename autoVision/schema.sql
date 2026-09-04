@@ -1,15 +1,16 @@
--- 1. Usuários: clientes ou vendedores, todos fazem login
+-- schema.sql
+
+-- 1. Usuários: somente vendedores fazem login e anunciam carros
 CREATE TABLE usuarios (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
   usuario VARCHAR(50) UNIQUE NOT NULL,
   senha VARCHAR(100) NOT NULL,
-  tipo VARCHAR(20) NOT NULL CHECK (tipo IN ('cliente', 'vendedor')),
   telefone VARCHAR(20),
   foto_perfil VARCHAR(255)
 );
 
--- 2. Anúncios: só vendedores criam
+-- 2. Anúncios: criados pelo vendedor logado
 CREATE TABLE anuncios (
   id SERIAL PRIMARY KEY,
   titulo VARCHAR(100) NOT NULL,
@@ -20,10 +21,21 @@ CREATE TABLE anuncios (
   criado_em TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 3. Interesses: clientes e vendedores podem registrar; máx. 1 por anúncio/usuário
+-- 3. Interesses: cliente não tem conta, então nome/contato vão direto no registro
 CREATE TABLE interesses (
   id SERIAL PRIMARY KEY,
   anuncio_id INTEGER NOT NULL REFERENCES anuncios(id) ON DELETE CASCADE,
-  usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
-  UNIQUE (anuncio_id, usuario_id)
+  cliente_nome VARCHAR(100) NOT NULL,
+  cliente_contato VARCHAR(100) NOT NULL,
+  criado_em TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 4. Mensagens: cliente entra em contato com o vendedor sobre um anúncio
+CREATE TABLE mensagens (
+  id SERIAL PRIMARY KEY,
+  anuncio_id INTEGER NOT NULL REFERENCES anuncios(id) ON DELETE CASCADE,
+  cliente_nome VARCHAR(100) NOT NULL,
+  cliente_contato VARCHAR(100) NOT NULL,
+  mensagem TEXT NOT NULL,
+  criado_em TIMESTAMPTZ DEFAULT NOW()
 );

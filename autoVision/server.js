@@ -23,32 +23,21 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 app.get('/api/anuncios', async (req, res) => {
-  const { vendedor, usuario_id } = req.query;
+  const { modelo } = req.query;
   const params = [];
-
-  // Subquery no PostgreSQL para checar se o usuário logado já registrou interesse
-  let interessouSubquery = 'FALSE AS interessou';
-  if (usuario_id) {
-    params.push(usuario_id);
-    interessouSubquery = `EXISTS(
-      SELECT 1 FROM interesses i 
-      WHERE i.anuncio_id = a.id AND i.usuario_id = $${params.length}
-    ) AS interessou`;
-  }
 
   let query = `
     SELECT a.id, a.titulo, a.local, a.preco, a.imagem,
-            u.nome AS vendedor, u.usuario AS vendedor_usuario, u.telefone AS vendedor_telefone,
-            COUNT(i.id)::int AS interesses,
-            ${interessouSubquery}
+           u.nome AS vendedor, u.usuario AS vendedor_usuario, u.telefone AS vendedor_telefone,
+           COUNT(i.id)::int AS interesses
     FROM anuncios a
     JOIN usuarios u ON u.id = a.vendedor_id
     LEFT JOIN interesses i ON i.anuncio_id = a.id
   `;
 
-  if (vendedor) {
-    params.push(`%${vendedor}%`);
-    query += ` WHERE u.usuario ILIKE $${params.length}`;
+  if (modelo) {
+    params.push(`%${modelo}%`);
+    query += ` WHERE a.titulo ILIKE $${params.length}`;
   }
 
   query +=
@@ -61,7 +50,7 @@ app.get('/api/anuncios', async (req, res) => {
 app.post('/api/login', async (req, res) => {
   const { usuario, senha } = req.body;
   const { rows } = await pool.query(
-    'SELECT id, nome, usuario, tipo, telefone, foto_perfil FROM usuarios WHERE usuario = $1 AND senha = $2',
+    'SELECT id, nome, usuario, telefone, foto_perfil FROM usuarios WHERE usuario = $1 AND senha = $2',
     [usuario, senha],
   );
   if (rows.length === 0) {
@@ -74,29 +63,22 @@ app.post('/api/login', async (req, res) => {
 
 app.post('/api/interesses/:anuncioId', async (req, res) => {
   const { anuncioId } = req.params;
-  const { usuario_id } = req.body;
+  const { cliente_nome, cliente_contato } = req.body;
 
-  const existe = await pool.query(
-    'SELECT id FROM interesses WHERE anuncio_id = $1 AND usuario_id = $2',
-    [anuncioId, usuario_id],
-  );
-
-  if (existe.rows.length > 0) {
-    await pool.query('DELETE FROM interesses WHERE id = $1', [
-      existe.rows[0].id,
-    ]);
-  } else {
-    await pool.query(
-      'INSERT INTO interesses (anuncio_id, usuario_id) VALUES ($1, $2)',
-      [anuncioId, usuario_id],
-    );
+  if (!cliente_nome || !cliente_contato) {
+    return res.status(400).json({ erro: 'Nome e contato são obrigatórios' });
   }
+
+  await pool.query(
+    'INSERT INTO interesses (anuncio_id, cliente_nome, cliente_contato) VALUES ($1, $2, $3)',
+    [anuncioId, cliente_nome, cliente_contato],
+  );
 
   const { rows } = await pool.query(
     'SELECT COUNT(*)::int AS total FROM interesses WHERE anuncio_id = $1',
     [anuncioId],
   );
-  res.json({ interesses: rows[0].total, interessou: existe.rows.length === 0 });
+  res.json({ interesses: rows[0].total });
 });
 
 app.get('/api/perfil/:id', async (req, res) => {
@@ -135,6 +117,24 @@ app.post('/api/anuncios', upload.single('imagem'), async (req, res) => {
 
 app.delete('/api/anuncios/:id', async (req, res) => {
   await pool.query('DELETE FROM anuncios WHERE id = $1', [req.params.id]);
+  res.json({ ok: true });
+});
+
+app.post('/api/mensagens/:anuncioId', async (req, res) => {
+  const { anuncioId } = req.params;
+  const { cliente_nome, cliente_contato, mensagem } = req.body;
+
+  if (!cliente_nome || !cliente_contato || !mensagem) {
+    return res
+      .status(400)
+      .json({ erro: 'Nome, contato e mensagem são obrigatórios' });
+  }
+
+  await pool.query(
+    'INSERT INTO mensagens (anuncio_id, cliente_nome, cliente_contato, mensagem) VALUES ($1, $2, $3, $4)',
+    [anuncioId, cliente_nome, cliente_contato, mensagem],
+  );
+
   res.json({ ok: true });
 });
 

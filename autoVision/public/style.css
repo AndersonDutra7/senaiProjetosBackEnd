@@ -1,0 +1,384 @@
+:root {
+  --azul-principal: #0b3d91; /* base — mesmo tom do azul do SENAI */
+  --azul-escuro: #072a66; /* usado no tooltip, mais contraste */
+  --branco: #fff;
+  --cinza-claro: #f4f4f9;
+  --cinza-borda: #c7d3e0; /* borda com leve tom azulado, no lugar do cinza puro */
+  --interesse-ativo: #1e88e5; /* azul mais vibrante, se destaca do azul principal */
+  --fonte: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* padrão "sticky footer": rodapé sempre no fim, mesmo com pouco conteúdo */
+html,
+body {
+  height: 100%;
+}
+body {
+  font-family: var(--fonte);
+  margin: 0;
+  background-color: var(--branco);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main {
+  flex: 1;
+} /* empurra o footer pra baixo em telas com pouco conteúdo */
+
+.btn-preto {
+  background: var(--azul-principal);
+  color: var(--branco);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn-preto:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--azul-principal);
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn-fechar {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  border-bottom: 1px solid var(--cinza-borda);
+}
+
+.empresa {
+  flex: 1;
+  text-align: center;
+  margin: 0;
+  font-size: 1.8rem;
+}
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 0.5%;
+}
+
+.user-section.oculto {
+  display: none;
+}
+
+.busca {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 24px auto;
+  padding: 8px 16px;
+  border: 1px solid var(--cinza-borda);
+  border-radius: 8px;
+  max-width: 400px;
+}
+.busca input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 0.95rem;
+}
+.icone-lupa {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+footer {
+  background: var(--azul-principal);
+  color: var(--branco);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 32px;
+}
+.redes {
+  display: flex;
+  gap: 16px;
+}
+.redes img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.vitrine {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  padding: 0 32px 32px 32px;
+}
+.anuncio-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--cinza-borda);
+  display: flex;
+  flex-direction: column;
+}
+.anuncio-card img.foto {
+  width: 100%;
+  display: block;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+/* tooltip: vendedor + local, sobrepõe o topo da foto no hover */
+.anuncio-card .tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(7, 42, 102, 0.85);
+  color: var(--branco);
+  padding: 12px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+  pointer-events: none;
+  z-index: 2;
+}
+.anuncio-card:hover .tooltip {
+  opacity: 1;
+}
+
+/* rodapé fixo do card: título, preço e ícone de interesse, sempre visível */
+.rodape-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  background: var(--branco);
+  z-index: 1;
+}
+.rodape-card .linha-preco {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.rodape-card .titulo {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.rodape-card .preco {
+  font-weight: bold;
+}
+.rodape-card .contador {
+  margin-left: 4px;
+}
+
+.interesse-icone {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.interesse-icone.ativa {
+  filter: invert(28%) sepia(94%) saturate(3200%) hue-rotate(212deg);
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.overlay.oculto {
+  display: none;
+}
+.modal {
+  background: var(--branco);
+  padding: 24px;
+  border-radius: 10px;
+  width: 320px;
+}
+.modal-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.modal input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  border: 1px solid var(--cinza-borda);
+  border-radius: 6px;
+}
+.modal-botoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+.erro {
+  color: #f00;
+  font-size: 0.78rem;
+  display: block;
+  min-height: 1.2em;
+  margin-top: 2px;
+}
+
+.painel-lateral {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 360px;
+  background: var(--branco);
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.15);
+  padding: 24px;
+  overflow-y: auto;
+  z-index: 1001;
+}
+.painel-lateral.oculto {
+  display: none;
+}
+.painel-topo {
+  display: flex;
+  justify-content: flex-end;
+} /* posiciona o btn-fechar */
+.btn-destaque {
+  border-top: 2px solid var(--azul-principal);
+  border-bottom: 2px solid var(--azul-principal);
+  border-left: none;
+  border-right: none;
+  background: none;
+  padding: 10px 0;
+  width: 100%;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 16px 0;
+}
+
+#formCadastro {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.grupo-input {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.grupo-input label {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: var(--azul-principal);
+}
+.grupo-input input {
+  padding: 8px 10px;
+  border: 1px solid var(--cinza-borda);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+/* mensagem de erro por campo, altura reservada pra não "pular" o layout */
+.msg-erro {
+  color: #f00;
+  font-size: 0.75rem;
+  font-weight: 500;
+  min-height: 16px;
+}
+
+#formCadastro button[type='submit'] {
+  margin-top: 8px;
+  padding: 10px;
+  background-color: var(--azul-principal);
+  color: var(--branco);
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#listaAnunciosPerfil {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.item-perfil {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border: 1px solid var(--cinza-borda);
+  border-radius: 6px;
+  background-color: #fafafa;
+}
+.item-perfil span {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* força o svg da lixeira (mesmo que venha preto) a ficar vermelho */
+.item-perfil .lixeira {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  filter: invert(16%) sepia(99%) saturate(7404%) hue-rotate(358deg)
+    brightness(98%) contrast(118%);
+}
+.item-perfil .lixeira:hover {
+  transform: scale(1.1);
+}
+.lixeira {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.modal textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  min-height: 80px;
+  border: 1px solid var(--cinza-borda);
+  border-radius: 6px;
+  font-family: var(--fonte);
+  resize: vertical;
+}
+
+.rodape-card .acoes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-mensagem {
+  background: transparent;
+  border: 1px solid var(--azul-principal);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  cursor: pointer;
+}

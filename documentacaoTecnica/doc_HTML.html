@@ -1,0 +1,4035 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documentação Técnica — HTML</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --paper: #fdfdfc;
+        --border: #d9d8d3;
+        --rule: #1a1a1a;
+        --text: #1a1a1a;
+        --text-muted: #63625d;
+        --code-bg: #f1f0ec;
+        --code-border: #dedcd4;
+
+        --font-display: 'Iowan Old Style', Charter, Georgia, serif;
+        --font-body: Charter, 'Iowan Old Style', Georgia, serif;
+        --font-mono: 'SF Mono', 'IBM Plex Mono', Consolas, Menlo, monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        font-size: 17px;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .app {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        max-width: 1180px;
+        margin: 0 auto;
+      }
+
+      /* ---------- índice lateral ---------- */
+      .index {
+        position: sticky;
+        top: 0;
+        align-self: start;
+        height: 100vh;
+        overflow-y: auto;
+        padding: 48px 28px 40px;
+        border-right: 1px solid var(--border);
+      }
+      .index__title {
+        font-family: var(--font-display);
+        font-size: 1.05rem;
+        margin: 0 0 2px;
+      }
+      .index__sub {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin: 0 0 28px;
+      }
+      .index__group-label {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin: 0 0 10px;
+        letter-spacing: 0.02em;
+      }
+      .index ul {
+        list-style: none;
+        margin: 0 0 26px;
+        padding: 0;
+      }
+      .index li + li {
+        margin-top: 2px;
+      }
+      .index a {
+        display: block;
+        padding: 6px 8px;
+        margin-left: -8px;
+        border-radius: 3px;
+        color: var(--text);
+        text-decoration: none;
+        font-size: 0.94rem;
+        border-left: 2px solid transparent;
+      }
+      .index a code {
+        font-family: var(--font-mono);
+        font-size: 0.86rem;
+      }
+      .index a:hover,
+      .index a.active {
+        background: var(--code-bg);
+        border-left-color: var(--rule);
+      }
+
+      /* ---------- conteúdo ---------- */
+      main {
+        padding: 56px 64px 120px;
+        max-width: 760px;
+      }
+      .doc-head {
+        margin-bottom: 56px;
+        padding-bottom: 28px;
+        border-bottom: 1px solid var(--border);
+      }
+      .doc-head h1 {
+        font-family: var(--font-display);
+        font-size: 2rem;
+        margin: 0 0 10px;
+      }
+      .doc-head p {
+        color: var(--text-muted);
+        margin: 0;
+        max-width: 58ch;
+      }
+
+      .entry {
+        padding-top: 52px;
+        margin-top: 52px;
+        border-top: 1px solid var(--border);
+      }
+      .entry:first-of-type {
+        padding-top: 0;
+        margin-top: 0;
+        border-top: none;
+      }
+      .entry__head {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        margin-bottom: 6px;
+        flex-wrap: wrap;
+      }
+      .entry__name {
+        font-family: var(--font-mono);
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+      .entry__category {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        border: 1px solid var(--border);
+        padding: 2px 9px;
+        border-radius: 999px;
+      }
+      .entry__lead {
+        color: var(--text-muted);
+        margin: 14px 0 0;
+        max-width: 62ch;
+      }
+
+      .entry h3 {
+        font-family: var(--font-display);
+        font-size: 1.05rem;
+        margin: 34px 0 10px;
+      }
+      .entry p {
+        margin: 0 0 12px;
+      }
+      .entry ul,
+      .entry ol {
+        margin: 0 0 12px;
+        padding-left: 22px;
+      }
+      .entry li {
+        margin-bottom: 6px;
+      }
+
+      pre {
+        margin: 0;
+        background: var(--code-bg);
+        border: 1px solid var(--code-border);
+        border-radius: 4px;
+        padding: 16px 18px;
+        overflow-x: auto;
+        font-family: var(--font-mono);
+        font-size: 0.86rem;
+        line-height: 1.55;
+      }
+      code {
+        font-family: var(--font-mono);
+        font-size: 0.88em;
+        background: var(--code-bg);
+        padding: 0.1em 0.35em;
+        border-radius: 3px;
+      }
+      pre code {
+        background: none;
+        padding: 0;
+        border-radius: 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.92rem;
+        margin: 4px 0 12px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 9px 12px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+      th {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.86rem;
+        color: var(--text-muted);
+        border-bottom: 1px solid var(--rule);
+      }
+      td code {
+        white-space: nowrap;
+      }
+
+      .practice {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+        margin: 4px 0 12px;
+      }
+      .practice > div {
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 14px 16px;
+      }
+      .practice h4 {
+        font-size: 0.82rem;
+        margin: 0 0 8px;
+        color: var(--text-muted);
+        font-weight: 600;
+      }
+      .practice ul {
+        margin: 0;
+        padding-left: 18px;
+        font-size: 0.92rem;
+      }
+      .practice li {
+        margin-bottom: 6px;
+      }
+      @media (max-width: 640px) {
+        .practice {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .note {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        border-left: 2px solid var(--rule);
+        padding: 4px 0 4px 16px;
+        margin: 4px 0 12px;
+      }
+
+      @media (max-width: 880px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+        .index {
+          position: static;
+          height: auto;
+          border-right: none;
+          border-bottom: 1px solid var(--border);
+        }
+        main {
+          padding: 40px 24px 100px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <!-- INDICE LATERAL -->
+      <nav class="index">
+        <p class="index__title">Documentação Técnica</p>
+        <p class="index__sub">HTML — Referência de elementos</p>
+
+        <p class="index__group-label">Estrutura do documento</p>
+        <ul>
+          <li>
+            <a href="#html-tag"><code>&lt;html&gt;</code> Raiz do documento</a>
+          </li>
+          <li>
+            <a href="#head"><code>&lt;head&gt;</code> Metadados</a>
+          </li>
+          <li>
+            <a href="#body"><code>&lt;body&gt;</code> Conteúdo visível</a>
+          </li>
+        </ul>
+
+        <p class="index__group-label">Estrutura & texto</p>
+        <ul>
+          <li>
+            <a href="#headings"
+              ><code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code> Cabeçalhos</a
+            >
+          </li>
+          <li>
+            <a href="#paragraph"><code>&lt;p&gt;</code> Parágrafo</a>
+          </li>
+          <li>
+            <a href="#lists"
+              ><code>&lt;ul&gt;/&lt;ol&gt;/&lt;li&gt;</code> Listas</a
+            >
+          </li>
+          <li>
+            <a href="#link"><code>&lt;a&gt;</code> Links</a>
+          </li>
+        </ul>
+
+        <p class="index__group-label">Contêineres genéricos</p>
+        <ul>
+          <li>
+            <a href="#div"><code>&lt;div&gt;</code> Bloco genérico</a>
+          </li>
+          <li>
+            <a href="#span"><code>&lt;span&gt;</code> Contêiner inline</a>
+          </li>
+        </ul>
+
+        <p class="index__group-label">Estrutura semântica</p>
+        <ul>
+          <li>
+            <a href="#header"><code>&lt;header&gt;</code> Cabeçalho</a>
+          </li>
+          <li>
+            <a href="#nav"><code>&lt;nav&gt;</code> Navegação</a>
+          </li>
+          <li>
+            <a href="#main"><code>&lt;main&gt;</code> Conteúdo principal</a>
+          </li>
+          <li>
+            <a href="#section"><code>&lt;section&gt;</code> Seção temática</a>
+          </li>
+          <li>
+            <a href="#article"
+              ><code>&lt;article&gt;</code> Conteúdo autônomo</a
+            >
+          </li>
+          <li>
+            <a href="#aside"><code>&lt;aside&gt;</code> Conteúdo relacionado</a>
+          </li>
+          <li>
+            <a href="#footer"><code>&lt;footer&gt;</code> Rodapé</a>
+          </li>
+        </ul>
+        <p class="index__group-label">Texto em linha</p>
+        <ul>
+          <li><a href="#strong"><code>&lt;strong&gt;</code> Ênfase forte</a></li>
+          <li><a href="#em"><code>&lt;em&gt;</code> Ênfase</a></li>
+          <li><a href="#small"><code>&lt;small&gt;</code> Texto secundário</a></li>
+          <li><a href="#br"><code>&lt;br&gt;</code> Quebra de linha</a></li>
+          <li><a href="#hr"><code>&lt;hr&gt;</code> Linha divisória</a></li>
+        </ul>
+    
+        <p class="index__group-label">Imagens & mídia</p>
+        <ul>
+          <li><a href="#img"><code>&lt;img&gt;</code> Imagem</a></li>
+          <li><a href="#figure"><code>&lt;figure&gt;/&lt;figcaption&gt;</code> Imagem com legenda</a></li>
+          <li><a href="#audio"><code>&lt;audio&gt;</code> Áudio</a></li>
+          <li><a href="#video"><code>&lt;video&gt;</code> Vídeo</a></li>
+          <li><a href="#iframe"><code>&lt;iframe&gt;</code> Conteúdo embutido</a></li>
+        </ul>
+        <p class="index__group-label">Formulários</p>
+        <ul>
+          <li><a href="#form"><code>&lt;form&gt;</code> Formulário</a></li>
+          <li><a href="#label"><code>&lt;label&gt;</code> Rótulo de campo</a></li>
+          <li><a href="#input"><code>&lt;input&gt;</code> Campo de entrada</a></li>
+          <li><a href="#select"><code>&lt;select&gt;/&lt;option&gt;</code> Lista suspensa</a></li>
+          <li><a href="#textarea"><code>&lt;textarea&gt;</code> Texto longo</a></li>
+          <li><a href="#button"><code>&lt;button&gt;</code> Botão</a></li>
+        </ul>
+        <p class="index__group-label">Tabelas</p>
+        <ul>
+          <li><a href="#table"><code>&lt;table&gt;</code> Tabela</a></li>
+          <li><a href="#thead-tbody"><code>&lt;thead&gt;/&lt;tbody&gt;/&lt;tfoot&gt;</code> Seções da tabela</a></li>
+          <li><a href="#tr-th-td"><code>&lt;tr&gt;/&lt;th&gt;/&lt;td&gt;</code> Linhas e células</a></li>
+        </ul>
+        <p class="index__group-label">Citação & código</p>
+        <ul>
+          <li><a href="#blockquote"><code>&lt;blockquote&gt;</code> Citação em bloco</a></li>
+          <li><a href="#q"><code>&lt;q&gt;</code> Citação em linha</a></li>
+          <li><a href="#cite"><code>&lt;cite&gt;</code> Referência de fonte</a></li>
+          <li><a href="#code-pre"><code>&lt;code&gt;/&lt;pre&gt;</code> Código</a></li>
+          <li><a href="#abbr"><code>&lt;abbr&gt;</code> Abreviação</a></li>
+        </ul>
+        <p class="index__group-label">Elementos adicionais</p>
+        <ul>
+          <li><a href="#details"><code>&lt;details&gt;/&lt;summary&gt;</code> Bloco expansível</a></li>
+          <li><a href="#dl"><code>&lt;dl&gt;/&lt;dt&gt;/&lt;dd&gt;</code> Lista de definição</a></li>
+          <li><a href="#address"><code>&lt;address&gt;</code> Informações de contato</a></li>
+          <li><a href="#time"><code>&lt;time&gt;</code> Data e hora</a></li>
+          <li><a href="#mark"><code>&lt;mark&gt;</code> Texto marcado</a></li>
+        </ul>
+        <p class="index__group-label">Atributos globais</p>
+        <ul>
+          <li><a href="#class-id"><code>class</code> / <code>id</code></a></li>
+          <li><a href="#data-attr"><code>data-*</code> Dados customizados</a></li>
+          <li><a href="#aria-attr"><code>aria-*</code> Acessibilidade</a></li>
+          <li><a href="#tabindex"><code>tabindex</code> Ordem de foco</a></li>
+        </ul>
+        <p class="index__group-label">Elementos avançados</p>
+        <ul>
+          <li><a href="#picture"><code>&lt;picture&gt;/&lt;source&gt;</code> Imagem responsiva</a></li>
+          <li><a href="#canvas"><code>&lt;canvas&gt;</code> Desenho via script</a></li>
+          <li><a href="#map"><code>&lt;map&gt;/&lt;area&gt;</code> Mapa de imagem</a></li>
+          <li><a href="#template"><code>&lt;template&gt;</code> Modelo reutilizável</a></li>
+        </ul>
+      </nav>
+
+      <main>
+        <div class="doc-head">
+          <h1>HTML — Referência de Elementos</h1>
+          <p>
+            Documentação de consulta rápida para uso dos elementos HTML em
+            qualquer projeto — independente do sistema que você estiver
+            construindo.
+          </p>
+        </div>
+
+        <!-- ================= HTML ================= -->
+        <section class="entry" id="html-tag">
+          <div class="entry__head">
+            <span class="entry__name">&lt;html&gt;</span>
+            <span class="entry__category">Estrutura do documento</span>
+          </div>
+          <p class="entry__lead">
+            Elemento raiz que envolve todo o conteúdo de uma página HTML. Todo o
+            resto do documento fica dentro dele.
+          </p>
+
+          <h3>O que é</h3>
+          <p>
+            É o elemento pai de todos os outros elementos da página —
+            <code>head</code> e <code>body</code> ficam sempre dentro dele. Sem
+            ele, o navegador não sabe onde o documento HTML começa e termina.
+          </p>
+
+          <h3>Sintaxe genérica</h3>
+          <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+  ...
+&lt;/html&gt;</code></pre>
+
+          <h3>Atributos principais</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Atributo</th>
+                <th>Para que serve</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>lang</code></td>
+                <td>
+                  Declara o idioma principal do conteúdo. Usado por leitores de
+                  tela e navegadores (ex.: sugestão de tradução)
+                </td>
+                <td><code>lang="pt-BR"</code></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Quando usar</h3>
+          <ul>
+            <li>
+              Sempre presente, um único por página, logo após a declaração
+              <code>&lt;!DOCTYPE html&gt;</code>.
+            </li>
+            <li>
+              Defina o <code>lang</code> corretamente — é um requisito básico de
+              acessibilidade.
+            </li>
+          </ul>
+
+          <h3>Exemplo</h3>
+          <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;title&gt;Minha Página&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Olá, mundo&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>
+                  Sempre declarar o <code>&lt;!DOCTYPE html&gt;</code> antes do
+                  <code>&lt;html&gt;</code>
+                </li>
+                <li>
+                  Usar o <code>lang</code> correspondente ao idioma real do
+                  conteúdo
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>
+                  Esquecer o <code>&lt;!DOCTYPE html&gt;</code> — o navegador
+                  entra em "modo de compatibilidade" e o layout pode quebrar
+                </li>
+                <li>
+                  Ter mais de um <code>&lt;html&gt;</code> no mesmo documento
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= HEAD ================= -->
+        <section class="entry" id="head">
+          <div class="entry__head">
+            <span class="entry__name">&lt;head&gt;</span>
+            <span class="entry__category">Estrutura do documento</span>
+          </div>
+          <p class="entry__lead">
+            Contém os metadados da página — informações que o navegador e os
+            mecanismos de busca usam, mas que não aparecem diretamente na tela.
+          </p>
+
+          <h3>O que é</h3>
+          <p>
+            É a seção "de configuração" do documento: define a codificação de
+            caracteres, o título exibido na aba do navegador, o comportamento em
+            telas de celular (viewport) e os arquivos de CSS que a página vai
+            usar. Nada dentro do <code>head</code> aparece visualmente na
+            página.
+          </p>
+
+          <h3>Sintaxe genérica</h3>
+          <pre><code>&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;title&gt;Título da página&lt;/title&gt;
+&lt;/head&gt;</code></pre>
+
+          <h3>Atributos principais</h3>
+          <p>
+            O <code>head</code> em si não tem atributos de uso comum — o que
+            importa é o que colocamos dentro dele. Os elementos mais usados são:
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Elemento</th>
+                <th>Para que serve</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>&lt;meta charset&gt;</code></td>
+                <td>
+                  Define a codificação de caracteres (evita bug de acentuação)
+                </td>
+                <td><code>&lt;meta charset="UTF-8" /&gt;</code></td>
+              </tr>
+              <tr>
+                <td><code>&lt;meta viewport&gt;</code></td>
+                <td>Controla a exibição em telas de celular</td>
+                <td>
+                  <code
+                    >&lt;meta name="viewport" content="width=device-width,
+                    initial-scale=1.0" /&gt;</code
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td><code>&lt;title&gt;</code></td>
+                <td>Texto exibido na aba do navegador</td>
+                <td><code>&lt;title&gt;Minha Loja&lt;/title&gt;</code></td>
+              </tr>
+              <tr>
+                <td><code>&lt;link&gt;</code></td>
+                <td>Conecta arquivos externos, como CSS ou ícone da aba</td>
+                <td>
+                  <code>&lt;link rel="stylesheet" href="style.css" /&gt;</code>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Quando usar</h3>
+          <ul>
+            <li>
+              Um único <code>head</code> por página, sempre logo após a abertura
+              do <code>&lt;html&gt;</code>.
+            </li>
+            <li>
+              Todo projeto deve ter, no mínimo, <code>charset</code>,
+              <code>viewport</code> e <code>title</code>.
+            </li>
+          </ul>
+
+          <h3>Exemplo</h3>
+          <pre><code>&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+  &lt;title&gt;AutoVision — Revenda de Carros&lt;/title&gt;
+  &lt;link rel="stylesheet" href="estilo.css" /&gt;
+&lt;/head&gt;</code></pre>
+
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>
+                  Colocar o <code>meta charset</code> como primeira linha dentro
+                  do <code>head</code>
+                </li>
+                <li>
+                  Escolher um <code>title</code> que descreva a página, não
+                  genérico ("Documento sem título")
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>
+                  Colocar conteúdo visível (texto, imagens) dentro do
+                  <code>head</code> — ele não aparece e pode gerar comportamento
+                  inesperado
+                </li>
+                <li>
+                  Esquecer o <code>viewport</code> — a página fica quebrada em
+                  celulares
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= BODY ================= -->
+        <section class="entry" id="body">
+          <div class="entry__head">
+            <span class="entry__name">&lt;body&gt;</span>
+            <span class="entry__category">Estrutura do documento</span>
+          </div>
+          <p class="entry__lead">
+            Contém todo o conteúdo visível da página — textos, imagens, botões,
+            formulários, tudo que o usuário efetivamente vê e interage.
+          </p>
+
+          <h3>O que é</h3>
+          <p>
+            É onde a interface da página é construída. Praticamente todos os
+            outros elementos que você usa no dia a dia (<code>h1</code>,
+            <code>p</code>, <code>div</code>, <code>form</code>, etc.) ficam
+            dentro do <code>body</code>.
+          </p>
+
+          <h3>Sintaxe genérica</h3>
+          <pre><code>&lt;body&gt;
+  ... todo o conteúdo visível da página ...
+&lt;/body&gt;</code></pre>
+
+          <h3>Atributos principais</h3>
+          <p>
+            O <code>body</code> aceita os atributos globais (como
+            <code>id</code> e <code>class</code>), usados normalmente para
+            estilizar a página inteira a partir do CSS.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Atributo</th>
+                <th>Para que serve</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>class</code></td>
+                <td>Aplica um estilo CSS global à página (ex.: tema escuro)</td>
+                <td><code>class="tema-escuro"</code></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Quando usar</h3>
+          <ul>
+            <li>
+              Um único <code>body</code> por página, logo depois do
+              <code>&lt;/head&gt;</code>.
+            </li>
+            <li>
+              Todo conteúdo que o usuário deve ver ou com o qual deve interagir
+              vai aqui dentro — nunca no <code>head</code>.
+            </li>
+          </ul>
+
+          <h3>Exemplo</h3>
+          <pre><code>&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;AutoVision&lt;/h1&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;p&gt;Encontre o carro ideal para você.&lt;/p&gt;
+  &lt;/main&gt;
+&lt;/body&gt;</code></pre>
+
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>
+                  Organizar o conteúdo com elementos semânticos
+                  (<code>header</code>, <code>main</code>, <code>footer</code>)
+                  quando fizer sentido
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>
+                  Ter conteúdo de texto ou tags soltas fora do
+                  <code>body</code> (fora de
+                  <code>head</code>/<code>body</code>) — o navegador tenta
+                  corrigir sozinho, mas o resultado é imprevisível
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= CABEÇALHOS ================= -->
+        <section class="entry" id="headings">
+          <div class="entry__head">
+            <span class="entry__name">&lt;h1&gt;–&lt;h6&gt;</span>
+            <span class="entry__category">Estrutura & texto</span>
+          </div>
+          <p class="entry__lead">
+            Definem os títulos e subtítulos de uma página, organizando o
+            conteúdo em uma hierarquia — do mais importante (<code>h1</code>) ao
+            menos importante (<code>h6</code>).
+          </p>
+
+          <h3>O que é</h3>
+          <p>
+            Os elementos <code>h1</code> a <code>h6</code> representam níveis de
+            título dentro do documento. Eles não servem apenas para deixar o
+            texto grande — são usados por leitores de tela e mecanismos de busca
+            para entender a estrutura da página, então a hierarquia precisa
+            fazer sentido.
+          </p>
+
+          <h3>Sintaxe genérica</h3>
+          <pre><code>&lt;h1&gt;Título principal da página&lt;/h1&gt;
+&lt;h2&gt;Título de uma seção&lt;/h2&gt;
+&lt;h3&gt;Título de uma subseção&lt;/h3&gt;</code></pre>
+
+          <h3>Atributos principais</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Atributo</th>
+                <th>Para que serve</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>id</code></td>
+                <td>
+                  Cria um ponto de âncora para navegação interna (ex.: menu que
+                  rola até a seção)
+                </td>
+                <td><code>id="sobre"</code></td>
+              </tr>
+              <tr>
+                <td><code>class</code></td>
+                <td>Aplica estilos CSS reutilizáveis ao título</td>
+                <td><code>class="titulo-destaque"</code></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Quando usar</h3>
+          <ul>
+            <li>
+              Use <strong>apenas um <code>h1</code> por página</strong> — ele
+              representa o assunto principal daquela tela.
+            </li>
+            <li>
+              Não pule níveis (de <code>h2</code> direto para <code>h4</code>)
+              só para deixar o texto menor — isso quebra a hierarquia. Para
+              diminuir o tamanho da fonte, use CSS.
+            </li>
+            <li>
+              Use <code>h2</code> para os títulos das grandes seções da página,
+              e <code>h3</code>/<code>h4</code> para as subdivisões dentro
+              delas.
+            </li>
+          </ul>
+
+          <h3>Exemplo</h3>
+          <pre><code>&lt;h1&gt;Painel de Vendas&lt;/h1&gt;
+
+&lt;h2&gt;Resumo do mês&lt;/h2&gt;
+&lt;h3&gt;Produtos mais vendidos&lt;/h3&gt;
+
+&lt;h2&gt;Histórico de pedidos&lt;/h2&gt;</code></pre>
+
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>
+                  Escolher o nível pelo lugar na hierarquia, não pelo tamanho
+                  visual desejado
+                </li>
+                <li>Manter a ordem lógica (h1 → h2 → h3...)</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>
+                  Usar <code>h1</code>, <code>h2</code>... só porque "fica
+                  maior"
+                </li>
+                <li>Ter mais de um <code>h1</code> na mesma página</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= PARÁGRAFO ================= -->
+        <section class="entry" id="paragraph">
+          <div class="entry__head">
+            <span class="entry__name">&lt;p&gt;</span>
+            <span class="entry__category">Estrutura & texto</span>
+          </div>
+          <p class="entry__lead">
+            Define um parágrafo de texto — o elemento mais comum para blocos de
+            texto corrido em uma página.
+          </p>
+
+          <h3>O que é</h3>
+          <p>
+            Representa um bloco de texto independente. Navegadores adicionam
+            automaticamente um espaçamento vertical antes e depois de cada
+            <code>p</code>, o que o diferencia de um texto solto sem tag.
+          </p>
+
+          <h3>Sintaxe genérica</h3>
+          <pre><code>&lt;p&gt;Texto do parágrafo aqui.&lt;/p&gt;</code></pre>
+
+          <h3>Atributos principais</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Atributo</th>
+                <th>Para que serve</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>id</code></td>
+                <td>
+                  Identifica o parágrafo de forma única, para navegação ou
+                  manipulação via JS
+                </td>
+                <td><code>id="descricao-produto"</code></td>
+              </tr>
+              <tr>
+                <td><code>class</code></td>
+                <td>Aplica um estilo CSS reutilizável</td>
+                <td><code>class="texto-secundario"</code></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Quando usar</h3>
+          <ul>
+            <li>
+              Use para blocos de texto corridos (descrições, parágrafos de
+              conteúdo).
+            </li>
+            <li>
+              Não use <code>p</code> para textos curtos que não são parágrafos
+              de fato, como o rótulo de um campo de formulário — nesses casos
+              use <code>label</code> ou <code>span</code>.
+            </li>
+            <li>
+              Não coloque outro elemento de bloco (como uma <code>div</code> ou
+              outro <code>p</code>) dentro de um <code>p</code> — o HTML não
+              permite e o navegador corrige de forma imprevisível.
+            </li>
+          </ul>
+
+          <h3>Exemplo</h3>
+          <pre><code>&lt;h2&gt;Sobre o carro&lt;/h2&gt;
+&lt;p&gt;
+  Este veículo está com revisão em dia e pneus novos,
+  pronto para rodar.
+&lt;/p&gt;</code></pre>
+
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>
+                  Usar um <code>p</code> por ideia/parágrafo, em vez de um só
+                  <code>p</code> gigante com <code>&lt;br&gt;</code> no meio
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>
+                  Usar <code>&lt;br&gt;&lt;br&gt;</code> para simular
+                  espaçamento entre parágrafos em vez de abrir um novo
+                  <code>p</code>
+                </li>
+                <li>
+                  Usar <code>p</code> só para "empurrar" o layout com espaço em
+                  branco
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= LISTAS ================= -->
+        <section class="entry" id="lists">
+          <div class="entry__head">
+            <span class="entry__name">&lt;ul&gt;/&lt;ol&gt;/&lt;li&gt;</span>
+            <span class="entry__category">Estrutura & texto</span>
+          </div>
+          <p class="entry__lead">
+            Criam listas de itens: <code>ul</code> para listas sem ordem
+            definida, <code>ol</code> para listas em que a ordem importa, e
+            <code>li</code> para cada item dentro delas.
+          </p>
+
+          <h3>O que é</h3>
+          <p>
+            <code>ul</code> ("unordered list") e <code>ol</code> ("ordered
+            list") são os elementos que envolvem a lista. <code>li</code> ("list
+            item") representa cada item e só faz sentido como filho direto de um
+            <code>ul</code> ou <code>ol</code>.
+          </p>
+
+          <h3>Sintaxe genérica</h3>
+          <pre><code>&lt;ul&gt;
+  &lt;li&gt;Item&lt;/li&gt;
+  &lt;li&gt;Item&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Primeiro passo&lt;/li&gt;
+  &lt;li&gt;Segundo passo&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+
+          <h3>Atributos principais</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Atributo</th>
+                <th>Para que serve</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <code>start</code>
+                  <span style="color: var(--text-muted)">(em ol)</span>
+                </td>
+                <td>Define em qual número a contagem começa</td>
+                <td><code>start="5"</code></td>
+              </tr>
+              <tr>
+                <td>
+                  <code>reversed</code>
+                  <span style="color: var(--text-muted)">(em ol)</span>
+                </td>
+                <td>Inverte a ordem da numeração (decrescente)</td>
+                <td><code>reversed</code></td>
+              </tr>
+              <tr>
+                <td>
+                  <code>type</code>
+                  <span style="color: var(--text-muted)">(em ol)</span>
+                </td>
+                <td>
+                  Define o estilo da numeração: números, letras ou romanos
+                </td>
+                <td><code>type="A"</code></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Quando usar</h3>
+          <ul>
+            <li>
+              Use <code>ul</code> quando a ordem dos itens não muda o
+              significado da lista (ex.: lista de recursos, ingredientes).
+            </li>
+            <li>
+              Use <code>ol</code> quando a ordem importa (ex.: passo a passo,
+              ranking, instruções sequenciais).
+            </li>
+            <li>
+              <code>li</code> deve ficar sempre diretamente dentro de
+              <code>ul</code> ou <code>ol</code> — nunca solto ou dentro de
+              outra tag.
+            </li>
+          </ul>
+
+          <h3>Exemplo</h3>
+          <pre><code>&lt;h3&gt;Documentos necessários&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;RG&lt;/li&gt;
+  &lt;li&gt;CPF&lt;/li&gt;
+  &lt;li&gt;Comprovante de residência&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Como finalizar a compra&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;Escolha o veículo&lt;/li&gt;
+  &lt;li&gt;Registre interesse&lt;/li&gt;
+  &lt;li&gt;Aguarde contato do vendedor&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>
+                  Escolher entre <code>ul</code> e <code>ol</code> pelo
+                  significado da lista, não pela aparência
+                </li>
+                <li>
+                  Usar CSS para remover as marcações visuais (bolinhas/números)
+                  quando necessário, mantendo a tag semanticamente correta
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>
+                  Simular listas com <code>&lt;p&gt;- item&lt;/p&gt;</code> ou
+                  <code>&lt;div&gt;</code> soltas
+                </li>
+                <li>
+                  Colocar texto direto dentro de <code>ul</code>/<code>ol</code>
+                  sem envolver em <code>li</code>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= LINKS ================= -->
+        <section class="entry" id="link">
+          <div class="entry__head">
+            <span class="entry__name">&lt;a&gt;</span>
+            <span class="entry__category">Estrutura & texto</span>
+          </div>
+          <p class="entry__lead">
+            Cria um link (hyperlink), levando o usuário a outra página, outra
+            parte da mesma página, um e-mail, ou qualquer outro recurso.
+          </p>
+
+          <h3>O que é</h3>
+          <p>
+            O elemento <code>a</code> ("anchor") transforma um texto, imagem ou
+            outro elemento em algo clicável que navega para um destino definido
+            pelo atributo <code>href</code>.
+          </p>
+
+          <h3>Sintaxe genérica</h3>
+          <pre><code>&lt;a href="destino"&gt;Texto do link&lt;/a&gt;</code></pre>
+
+          <h3>Atributos principais</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Atributo</th>
+                <th>Para que serve</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>href</code></td>
+                <td>
+                  Define o destino do link (obrigatório para o link funcionar)
+                </td>
+                <td><code>href="/sobre.html"</code></td>
+              </tr>
+              <tr>
+                <td><code>target</code></td>
+                <td>Define onde o destino será aberto</td>
+                <td><code>target="_blank"</code> (nova aba)</td>
+              </tr>
+              <tr>
+                <td><code>rel</code></td>
+                <td>
+                  Define a relação com o destino; use
+                  <code>noopener noreferrer</code> junto de
+                  <code>target="_blank"</code> por segurança
+                </td>
+                <td><code>rel="noopener noreferrer"</code></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Quando usar</h3>
+          <ul>
+            <li>
+              Para navegação entre páginas, âncoras internas
+              (<code>href="#secao"</code>), e-mail
+              (<code>href="mailto:..."</code>) ou telefone
+              (<code>href="tel:..."</code>).
+            </li>
+            <li>
+              Se a ação não leva a lugar nenhum e só dispara uma função (ex.:
+              abrir um modal), use um <code>&lt;button&gt;</code> em vez de
+              <code>&lt;a href="#"&gt;</code>.
+            </li>
+          </ul>
+
+          <h3>Exemplo</h3>
+          <pre><code>&lt;a href="https://exemplo.com"&gt;Visitar site&lt;/a&gt;
+&lt;a href="#contato"&gt;Ir para contato&lt;/a&gt;
+&lt;a href="mailto:contato@exemplo.com"&gt;Enviar e-mail&lt;/a&gt;</code></pre>
+
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>
+                  Usar um texto de link que descreva o destino ("Ver relatório
+                  completo")
+                </li>
+                <li>
+                  Adicionar <code>rel="noopener noreferrer"</code> em links com
+                  <code>target="_blank"</code>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>
+                  Usar <code>&lt;a href="#"&gt;</code> como substituto de botão
+                  para ações via JavaScript
+                </li>
+                <li>Textos genéricos como "clique aqui"</li>
+              </ul>
+            </div>
+          </div>
+
+          <p class="note">
+            Nota: para ações que não navegam (abrir modal, enviar formulário,
+            alternar um menu), o elemento correto é <code>&lt;button&gt;</code>,
+            não <code>&lt;a&gt;</code>.
+          </p>
+        </section>
+
+        <!-- ================= DIV ================= -->
+        <section class="entry" id="div">
+          <div class="entry__head">
+            <span class="entry__name">&lt;div&gt;</span>
+            <span class="entry__category">Contêineres genéricos</span>
+          </div>
+          <p class="entry__lead">
+            Contêiner genérico de bloco, sem significado semântico próprio —
+            usado para agrupar elementos e aplicar estilo ou comportamento via
+            CSS/JS.
+          </p>
+
+          <h3>O que é</h3>
+          <p>
+            O <code>div</code> ("division") não comunica nada sobre o conteúdo
+            que envolve — ao contrário de <code>header</code>,
+            <code>section</code> ou <code>article</code>, que têm significado.
+            Ele existe puramente para fins estruturais: agrupar elementos que
+            devem ser estilizados ou manipulados juntos.
+          </p>
+
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;div class="cartao"&gt;
+  ... conteúdo agrupado ...
+&lt;/div&gt;</code></pre>
+
+          <h3>Atributos principais</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Atributo</th>
+                <th>Para que serve</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>class</code></td>
+                <td>Aplica um estilo CSS reutilizável ao bloco</td>
+                <td><code>class="cartao-produto"</code></td>
+              </tr>
+              <tr>
+                <td><code>id</code></td>
+                <td>
+                  Identifica o bloco de forma única, para navegação ou
+                  manipulação via JS
+                </td>
+                <td><code>id="modal-login"</code></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Quando usar</h3>
+          <ul>
+            <li>
+              Use quando precisar agrupar elementos apenas para fins de
+              layout/estilo, e nenhum elemento semântico (<code>section</code>,
+              <code>article</code>, <code>aside</code> etc.) descreve o papel
+              daquele bloco.
+            </li>
+            <li>
+              Antes de usar <code>div</code>, pergunte-se: "esse bloco
+              representa um cabeçalho, uma navegação, uma seção de conteúdo?" —
+              se sim, prefira o elemento semântico correspondente.
+            </li>
+          </ul>
+
+          <h3>Exemplo</h3>
+      <pre><code>&lt;div class="grade-produtos"&gt;
+  &lt;div class="cartao-produto"&gt;
+    &lt;h3&gt;Sedan XT&lt;/h3&gt;
+    &lt;p&gt;R$ 89.000&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>
+                  Usar nomes de classe descritivos para o que o bloco representa
+                  (<code>cartao-produto</code>, não <code>bloco1</code>)
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>
+                  "Divitis": encher a página de <code>div</code> aninhadas
+                  quando um elemento semântico resolveria melhor
+                </li>
+                <li>
+                  Usar <code>div</code> como botão ou link clicável em vez de
+                  <code>button</code>/<code>a</code>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= SPAN ================= -->
+        <section class="entry" id="span">
+          <div class="entry__head">
+            <span class="entry__name">&lt;span&gt;</span>
+            <span class="entry__category">Contêineres genéricos</span>
+          </div>
+          <p class="entry__lead">
+            Contêiner genérico em linha (inline), sem significado semântico — o
+            equivalente ao <code>div</code>, mas para trechos de texto dentro de
+            um bloco maior.
+          </p>
+
+          <h3>O que é</h3>
+          <p>
+            Diferente do <code>div</code>, que quebra linha (elemento de bloco),
+            o <code>span</code> não interrompe o fluxo do texto — ele serve para
+            marcar um trecho específico dentro de um parágrafo, título ou outro
+            elemento, geralmente para aplicar um estilo ou comportamento
+            pontual.
+          </p>
+
+          <h3>Sintaxe genérica</h3>
+          <pre><code>&lt;p&gt;Texto normal e &lt;span class="destaque"&gt;um trecho destacado&lt;/span&gt; continuando.&lt;/p&gt;</code></pre>
+
+          <h3>Atributos principais</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Atributo</th>
+                <th>Para que serve</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>class</code></td>
+                <td>Aplica um estilo CSS a um trecho específico de texto</td>
+                <td><code>class="preco"</code></td>
+              </tr>
+              <tr>
+                <td><code>id</code></td>
+                <td>
+                  Identifica o trecho de forma única, geralmente para
+                  manipulação via JS
+                </td>
+                <td><code>id="contador"</code></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Quando usar</h3>
+          <ul>
+            <li>
+              Use para estilizar ou selecionar via JS uma parte de um texto, sem
+              afetar o fluxo do restante.
+            </li>
+            <li>
+              Se o trecho tem significado próprio (ênfase, texto de menor
+              importância), prefira um elemento de texto semântico como
+              <code>strong</code>, <code>em</code> ou <code>small</code> em vez
+              de <code>span</code>.
+            </li>
+          </ul>
+
+          <h3>Exemplo</h3>
+      <pre><code>&lt;p&gt;
+  Valor: &lt;span class="preco"&gt;R$ 45.900&lt;/span&gt;
+  &lt;span class="badge-novo"&gt;Novo&lt;/span&gt;
+&lt;/p&gt;</code></pre>
+
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>
+                  Usar <code>span</code> apenas quando nenhum elemento inline
+                  semântico se aplica
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>
+                  Usar <code>span</code> para textos que deveriam ser um bloco
+                  (<code>p</code>, <code>div</code>) — isso quebra o fluxo
+                  visual esperado
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= HEADER ================= -->
+        <section class="entry" id="header">
+          <div class="entry__head">
+            <span class="entry__name">&lt;header&gt;</span>
+            <span class="entry__category">Estrutura semântica</span>
+          </div>
+          <p class="entry__lead">
+            Representa o cabeçalho de uma página ou de uma seção — geralmente
+            contém logotipo, título e navegação introdutória.
+          </p>
+
+          <h3>O que é</h3>
+          <p>
+            É um elemento semântico: comunica ao navegador, leitores de tela e
+            mecanismos de busca que aquele bloco é o cabeçalho do conteúdo que o
+            envolve. Pode existir mais de um <code>header</code> na mesma página
+            — um para o site inteiro e outros dentro de
+            <code>article</code>/<code>section</code>.
+          </p>
+
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;header&gt;
+  &lt;h1&gt;Nome do site&lt;/h1&gt;
+  &lt;nav&gt;...&lt;/nav&gt;
+&lt;/header&gt;</code></pre>
+
+          <h3>Atributos principais</h3>
+          <p>
+            O <code>header</code> não tem atributos próprios de destaque —
+            aceita apenas os atributos globais (<code>id</code>,
+            <code>class</code>), usados para estilização.
+          </p>
+
+          <h3>Quando usar</h3>
+          <ul>
+            <li>
+              Use um <code>header</code> no topo da página para o cabeçalho
+              geral do site (logo, título, navegação principal).
+            </li>
+            <li>
+              Use também dentro de um <code>article</code> ou
+              <code>section</code> quando aquele bloco específico precisar de
+              seu próprio cabeçalho (ex.: título e data de um post).
+            </li>
+            <li>
+              Não confunda com o elemento <code>&lt;head&gt;</code> — são coisas
+              completamente diferentes: <code>head</code> guarda metadados
+              invisíveis, <code>header</code> é conteúdo visível dentro do
+              <code>body</code>.
+            </li>
+          </ul>
+
+          <h3>Exemplo</h3>
+      <pre><code>&lt;header&gt;
+  &lt;h1&gt;AutoVision&lt;/h1&gt;
+  &lt;nav&gt;
+    &lt;a href="#estoque"&gt;Estoque&lt;/a&gt;
+    &lt;a href="#contato"&gt;Contato&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;</code></pre>
+
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>
+                  Colocar o <code>header</code> como o primeiro elemento visível
+                  dentro do <code>body</code> (ou do <code>article</code>/<code
+                    >section</code
+                  >
+                  a que pertence)
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>
+                  Confundir <code>header</code> (visível) com
+                  <code>head</code> (metadados)
+                </li>
+                <li>
+                  Colocar um <code>header</code> dentro de outro
+                  <code>header</code> ou de um <code>footer</code>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= NAV ================= -->
+        <section class="entry" id="nav">
+          <div class="entry__head">
+            <span class="entry__name">&lt;nav&gt;</span>
+            <span class="entry__category">Estrutura semântica</span>
+          </div>
+          <p class="entry__lead">
+            Agrupa os principais links de navegação de uma página — menu
+            principal, menu de rodapé, sumário, paginação.
+          </p>
+
+          <h3>O que é</h3>
+          <p>
+            Marca um bloco de links como sendo de navegação, o que ajuda
+            leitores de tela a pular diretamente para o menu (ou a ignorá-lo, se
+            o usuário já conhece a página). Nem todo grupo de links precisa de
+            um <code>nav</code> — apenas os blocos de navegação principais.
+          </p>
+
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;nav&gt;
+  &lt;a href="#secao-1"&gt;Seção 1&lt;/a&gt;
+  &lt;a href="#secao-2"&gt;Seção 2&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+
+          <h3>Atributos principais</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Atributo</th>
+                <th>Para que serve</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>aria-label</code></td>
+                <td>
+                  Descreve o propósito do menu quando há mais de um
+                  <code>nav</code> na página
+                </td>
+                <td><code>aria-label="Navegação principal"</code></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Quando usar</h3>
+          <ul>
+            <li>
+              Use para o menu principal do site, menu de rodapé, breadcrumbs
+              (trilha de navegação) ou paginação.
+            </li>
+            <li>
+              Não use para todo e qualquer grupo de links da página — links
+              soltos dentro do texto de um <code>article</code>, por exemplo,
+              não precisam de <code>nav</code>.
+            </li>
+          </ul>
+
+          <h3>Exemplo</h3>
+      <pre><code>&lt;nav aria-label="Navegação principal"&gt;
+  &lt;a href="#estoque"&gt;Estoque&lt;/a&gt;
+  &lt;a href="#financiamento"&gt;Financiamento&lt;/a&gt;
+  &lt;a href="#contato"&gt;Contato&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>
+                  Usar <code>aria-label</code> quando a página tiver mais de um
+                  <code>nav</code>, para diferenciá-los
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>
+                  Envolver todo grupo de links da página em <code>nav</code>,
+                  mesmo os que não são de navegação estrutural
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= MAIN ================= -->
+        <section class="entry" id="main">
+          <div class="entry__head">
+            <span class="entry__name">&lt;main&gt;</span>
+            <span class="entry__category">Estrutura semântica</span>
+          </div>
+          <p class="entry__lead">
+            Envolve o conteúdo principal e único da página — aquilo que não se
+            repete em outras páginas do site, como cabeçalho e rodapé.
+          </p>
+
+          <h3>O que é</h3>
+          <p>
+            Indica, tanto para o navegador quanto para tecnologias assistivas,
+            onde começa o conteúdo central da página. Leitores de tela costumam
+            oferecer um atalho para "pular direto para o conteúdo principal",
+            que depende da existência de um <code>main</code>.
+          </p>
+
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;main&gt;
+  ... conteúdo central e único da página ...
+&lt;/main&gt;</code></pre>
+
+          <h3>Atributos principais</h3>
+          <p>
+            Aceita apenas os atributos globais (<code>id</code>,
+            <code>class</code>) — não possui atributos próprios.
+          </p>
+
+          <h3>Quando usar</h3>
+          <ul>
+            <li>
+              Use <strong>apenas um <code>main</code> por página</strong>,
+              envolvendo o conteúdo que muda de página para página.
+            </li>
+            <li>
+              Nunca coloque <code>header</code>, <code>nav</code> ou
+              <code>footer</code> globais do site dentro do <code>main</code> —
+              eles ficam fora, pois se repetem em todas as páginas.
+            </li>
+          </ul>
+
+          <h3>Exemplo</h3>
+      <pre><code>&lt;body&gt;
+  &lt;header&gt;...&lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;h1&gt;Carros disponíveis&lt;/h1&gt;
+    &lt;p&gt;Confira nosso estoque atualizado.&lt;/p&gt;
+  &lt;/main&gt;
+
+  &lt;footer&gt;...&lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>
+                  Garantir que só existe um <code>main</code> visível por vez na
+                  página
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>Usar mais de um <code>main</code> na mesma página</li>
+                <li>
+                  Colocar o <code>main</code> dentro de <code>article</code>,
+                  <code>aside</code>, <code>header</code> ou <code>footer</code>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= SECTION ================= -->
+        <section class="entry" id="section">
+          <div class="entry__head">
+            <span class="entry__name">&lt;section&gt;</span>
+            <span class="entry__category">Estrutura semântica</span>
+          </div>
+          <p class="entry__lead">
+            Agrupa um bloco temático de conteúdo, geralmente com seu próprio
+            título — usado para dividir a página em partes com assunto próprio.
+          </p>
+
+          <h3>O que é</h3>
+          <p>
+            Representa uma seção genérica de conteúdo relacionado por tema. A
+            regra prática mais usada: se o bloco tem (ou poderia ter) um título
+            (<code>h2</code>, <code>h3</code>...) que resume seu conteúdo,
+            provavelmente é uma <code>section</code>.
+          </p>
+
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;section&gt;
+  &lt;h2&gt;Título da seção&lt;/h2&gt;
+  ... conteúdo relacionado a esse título ...
+&lt;/section&gt;</code></pre>
+
+          <h3>Atributos principais</h3>
+          <p>
+            Aceita apenas os atributos globais (<code>id</code>,
+            <code>class</code>) — o <code>id</code> é útil aqui para criar
+            âncoras de navegação (<code>href="#secao"</code>).
+          </p>
+
+          <h3>Quando usar</h3>
+          <ul>
+            <li>
+              Use para dividir a página em blocos temáticos: "Sobre nós",
+              "Depoimentos", "Estoque em destaque".
+            </li>
+            <li>
+              Se o bloco não tem um tema/título próprio e existe só para fins de
+              estilo/layout, use <code>div</code> em vez de
+              <code>section</code>.
+            </li>
+          </ul>
+
+          <h3>Exemplo</h3>
+      <pre><code>&lt;section id="depoimentos"&gt;
+  &lt;h2&gt;O que nossos clientes dizem&lt;/h2&gt;
+  &lt;p&gt;"Atendimento excelente, recomendo!"&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>
+                  Dar a cada <code>section</code> um título
+                  (<code>h2</code>–<code>h6</code>) que resuma seu conteúdo
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>
+                  Usar <code>section</code> apenas como substituto estilístico
+                  de <code>div</code>, sem um tema real
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= ARTICLE ================= -->
+        <section class="entry" id="article">
+          <div class="entry__head">
+            <span class="entry__name">&lt;article&gt;</span>
+            <span class="entry__category">Estrutura semântica</span>
+          </div>
+          <p class="entry__lead">
+            Representa um conteúdo autônomo e completo em si mesmo — que faria
+            sentido mesmo se distribuído isoladamente, fora do contexto da
+            página.
+          </p>
+
+          <h3>O que é</h3>
+          <p>
+            A diferença central em relação ao <code>section</code>: um
+            <code>article</code> precisa fazer sentido sozinho — um post de
+            blog, uma notícia, um card de produto, um comentário. Um
+            <code>article</code> pode conter <code>section</code>s dentro dele,
+            e vice-versa.
+          </p>
+
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;article&gt;
+  &lt;h2&gt;Título do conteúdo&lt;/h2&gt;
+  &lt;p&gt;Conteúdo completo e independente.&lt;/p&gt;
+&lt;/article&gt;</code></pre>
+
+<p>
+            <h3>Atributos principais</h3>
+            Aceita apenas os atributos globais (<code>id</code>,
+            <code>class</code>).
+          </p>
+
+          <h3>Quando usar</h3>
+          <ul>
+            <li>
+              Use para posts de blog, notícias, cards de produto individuais,
+              comentários de usuários — qualquer bloco que "se bastasse sozinho"
+              se fosse copiado para outro lugar.
+            </li>
+            <li>
+              Pergunta prática: "isso faria sentido em um feed de RSS, isolado
+              do resto da página?" Se sim, é um <code>article</code>.
+            </li>
+          </ul>
+
+          <h3>Exemplo</h3>
+      <pre><code>&lt;article&gt;
+  &lt;h2&gt;Sedan XT 2022&lt;/h2&gt;
+  &lt;p&gt;Único dono, revisões em dia, 42.000 km rodados.&lt;/p&gt;
+  &lt;p&gt;R$ 89.000&lt;/p&gt;
+&lt;/article&gt;</code></pre>
+
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>
+                  Repetir um <code>article</code> para cada item de uma listagem
+                  (ex.: cada card de carro no estoque)
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>
+                  Usar <code>article</code> para blocos que só fazem sentido
+                  dentro do contexto da página (ex.: o menu de navegação)
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= ASIDE ================= -->
+        <section class="entry" id="aside">
+          <div class="entry__head">
+            <span class="entry__name">&lt;aside&gt;</span>
+            <span class="entry__category">Estrutura semântica</span>
+          </div>
+          <p class="entry__lead">
+            Representa conteúdo relacionado, mas separado do fluxo principal —
+            barras laterais, caixas de destaque, anúncios, links relacionados.
+          </p>
+
+          <h3>O que é</h3>
+          <p>
+            Marca um trecho como complementar: algo que enriquece o conteúdo
+            principal, mas que poderia ser removido sem comprometer o
+            entendimento do restante da página.
+          </p>
+
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;aside&gt;
+  &lt;h3&gt;Você também pode gostar&lt;/h3&gt;
+  ...
+&lt;/aside&gt;</code></pre>
+
+          <h3>Atributos principais</h3>
+          <p>
+            Aceita apenas os atributos globais (<code>id</code>,
+            <code>class</code>).
+          </p>
+
+          <h3>Quando usar</h3>
+          <ul>
+            <li>
+              Use para barras laterais, boxes de "artigos relacionados",
+              biografia do autor ao lado de um post, anúncios.
+            </li>
+            <li>
+              Pode ser usado tanto como barra lateral da página inteira quanto
+              dentro de um <code>article</code> específico (ex.: uma nota
+              lateral dentro de um post).
+            </li>
+          </ul>
+
+          <h3>Exemplo</h3>
+      <pre><code>&lt;aside&gt;
+  &lt;h3&gt;Carros semelhantes&lt;/h3&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Sedan XT 2021&lt;/li&gt;
+    &lt;li&gt;Sedan GT 2022&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/aside&gt;</code></pre>
+
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>
+                  Usar para conteúdo que complementa, mas não é indispensável ao
+                  entendimento da página
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>
+                  Usar <code>aside</code> para conteúdo essencial que deveria
+                  estar no fluxo principal
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= FOOTER ================= -->
+        <section class="entry" id="footer">
+          <div class="entry__head">
+            <span class="entry__name">&lt;footer&gt;</span>
+            <span class="entry__category">Estrutura semântica</span>
+          </div>
+          <p class="entry__lead">
+            Representa o rodapé de uma página ou de uma seção — geralmente
+            contém informações de contato, direitos autorais, links secundários.
+          </p>
+
+          <h3>O que é</h3>
+          <p>
+            Assim como o <code>header</code>, o <code>footer</code> pode existir
+            mais de uma vez na página: um para o rodapé geral do site, e outros
+            dentro de <code>article</code>s específicos (ex.: data e autor ao
+            final de um post).
+          </p>
+
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;footer&gt;
+  &lt;p&gt;© 2026 Minha Empresa&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+
+          <h3>Atributos principais</h3>
+          <p>
+            Aceita apenas os atributos globais (<code>id</code>,
+            <code>class</code>).
+          </p>
+
+          <h3>Quando usar</h3>
+          <ul>
+            <li>
+              Use no final da página para direitos autorais, links de contato,
+              redes sociais, mapa do site.
+            </li>
+            <li>
+              Use dentro de um <code>article</code> para metadados do próprio
+              conteúdo (autor, data de publicação, tags).
+            </li>
+          </ul>
+
+          <h3>Exemplo</h3>
+      <pre><code>&lt;footer&gt;
+  &lt;p&gt;© 2026 AutoVision. Todos os direitos reservados.&lt;/p&gt;
+  &lt;nav aria-label="Links do rodapé"&gt;
+    &lt;a href="#privacidade"&gt;Política de Privacidade&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/footer&gt;</code></pre>
+
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>
+                  Colocar o <code>footer</code> como último elemento visível da
+                  página (ou do <code>article</code>/<code>section</code> a que
+                  pertence)
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>
+                  Colocar um <code>footer</code> dentro de outro
+                  <code>footer</code> ou de um <code>header</code>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+            <!-- ================= STRONG ================= -->
+    <section class="entry" id="strong">
+      <div class="entry__head">
+        <span class="entry__name">&lt;strong&gt;</span>
+        <span class="entry__category">Texto em linha</span>
+      </div>
+      <p class="entry__lead">Dá ênfase forte a um trecho de texto — indica que aquele conteúdo tem importância séria, não apenas destaque visual.</p>
+
+      <h3>O que é</h3>
+      <p>Semanticamente, <code>strong</code> comunica que o trecho é importante (um aviso, uma palavra-chave crítica). Por padrão os navegadores o exibem em negrito, mas o significado é o que importa — leitores de tela costumam mudar o tom de voz ao ler um <code>strong</code>.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;p&gt;Atenção: &lt;strong&gt;o prazo termina hoje&lt;/strong&gt;.&lt;/p&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <p>Aceita apenas os atributos globais (<code>id</code>, <code>class</code>) — não possui atributos próprios.</p>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use quando o trecho realmente tiver importância de conteúdo (avisos, erros, palavras-chave essenciais).</li>
+        <li>Se você só quer texto em negrito por estilo visual, sem significado adicional, use CSS (<code>font-weight: bold</code>) em vez de <code>strong</code>.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;p&gt;
+  &lt;strong&gt;Importante:&lt;/strong&gt; revise o contrato antes de assinar.
+&lt;/p&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Reservar o <code>strong</code> para conteúdo genuinamente importante</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Usar <code>strong</code> só para deixar o texto visualmente mais grosso, sem relevância de conteúdo</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EM ================= -->
+    <section class="entry" id="em">
+      <div class="entry__head">
+        <span class="entry__name">&lt;em&gt;</span>
+        <span class="entry__category">Texto em linha</span>
+      </div>
+      <p class="entry__lead">Dá ênfase (tônica) a um trecho de texto — como se o leitor mudasse a entonação da voz naquela palavra ou frase.</p>
+
+      <h3>O que é</h3>
+      <p>Diferente do <code>strong</code> (importância), o <code>em</code> ("emphasis") marca ênfase de entonação — o tipo de destaque que mudaria o significado da frase se lida em voz alta. Por padrão os navegadores o exibem em itálico.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;p&gt;Eu &lt;em&gt;realmente&lt;/em&gt; preciso terminar isso hoje.&lt;/p&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <p>Aceita apenas os atributos globais (<code>id</code>, <code>class</code>).</p>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use para dar ênfase de entonação a uma palavra ou trecho dentro de uma frase.</li>
+        <li>Se o objetivo é apenas itálico por estilo (ex.: título de uma obra, termo estrangeiro), sem ênfase de fala, considere <code>&lt;i&gt;</code> ou CSS em vez de <code>em</code>.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;p&gt;Este &lt;em&gt;é&lt;/em&gt; o carro que você estava procurando.&lt;/p&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Usar <code>em</code> onde a ênfase mudaria a leitura em voz alta da frase</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Aninhar múltiplos <code>em</code> só para intensificar visualmente ("mais itálico") — isso não tem efeito semântico extra</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SMALL ================= -->
+    <section class="entry" id="small">
+      <div class="entry__head">
+        <span class="entry__name">&lt;small&gt;</span>
+        <span class="entry__category">Texto em linha</span>
+      </div>
+      <p class="entry__lead">Marca texto de "letras miúdas" — avisos legais, ressalvas, créditos, termos e condições, geralmente exibido em fonte menor.</p>
+
+      <h3>O que é</h3>
+      <p>Representa comentários secundários ao conteúdo principal — o tipo de texto que, em um documento impresso, apareceria em letra pequena no rodapé de um anúncio ou contrato.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;p&gt;R$ 899/mês &lt;small&gt;sujeito a análise de crédito&lt;/small&gt;&lt;/p&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <p>Aceita apenas os atributos globais (<code>id</code>, <code>class</code>).</p>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use para ressalvas legais, direitos autorais, condições de uma oferta, créditos de imagem.</li>
+        <li>Não use apenas para deixar um texto visualmente menor sem esse significado de "letra miúda" — nesse caso use CSS.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;p&gt;
+  A partir de R$ 1.200/mês.
+  &lt;small&gt;Valores sujeitos a alteração sem aviso prévio.&lt;/small&gt;
+&lt;/p&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Reservar o <code>small</code> para ressalvas, avisos legais e créditos</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Usar <code>small</code> apenas para reduzir o tamanho da fonte de qualquer texto, sem relação com "letra miúda"</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BR ================= -->
+    <section class="entry" id="br">
+      <div class="entry__head">
+        <span class="entry__name">&lt;br&gt;</span>
+        <span class="entry__category">Texto em linha</span>
+      </div>
+      <p class="entry__lead">Insere uma quebra de linha dentro de um bloco de texto — sem abrir um novo parágrafo.</p>
+
+      <h3>O que é</h3>
+      <p>É um elemento vazio (não tem conteúdo nem tag de fechamento) que força o texto a continuar na linha seguinte. Deve ser usado apenas quando a quebra de linha faz parte do próprio conteúdo — não para criar espaçamento visual.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;p&gt;Linha 1&lt;br /&gt;Linha 2&lt;/p&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <p>O <code>br</code> não possui atributos de uso comum além dos globais.</p>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use quando a quebra de linha for parte do significado do conteúdo — um endereço, os versos de um poema, o texto de uma placa.</li>
+        <li>Não use <code>&lt;br&gt;&lt;br&gt;</code> para simular espaçamento entre parágrafos — abra um novo <code>p</code> e controle o espaçamento via CSS.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;p&gt;
+  Rua das Flores, 123&lt;br /&gt;
+  Bairro Centro&lt;br /&gt;
+  Palhoça — SC
+&lt;/p&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Usar <code>br</code> apenas quando a quebra faz parte do conteúdo (endereços, versos)</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Empilhar vários <code>br</code> para "empurrar" o layout com espaço em branco</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= HR ================= -->
+    <section class="entry" id="hr">
+      <div class="entry__head">
+        <span class="entry__name">&lt;hr&gt;</span>
+        <span class="entry__category">Texto em linha</span>
+      </div>
+      <p class="entry__lead">Insere uma quebra temática — uma mudança de assunto dentro do conteúdo, geralmente exibida como uma linha horizontal.</p>
+
+      <h3>O que é</h3>
+      <p>Assim como o <code>br</code>, é um elemento vazio. Mas seu significado é diferente: <code>hr</code> ("horizontal rule") indica uma transição temática — como a separação entre capítulos de um livro, ou entre cenas de uma história.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;p&gt;Fim do capítulo 1.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Início do capítulo 2.&lt;/p&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <p>O <code>hr</code> não possui atributos de uso comum além dos globais.</p>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use para marcar uma mudança de assunto ou de cena dentro de um mesmo bloco de conteúdo.</li>
+        <li>Se você só quer uma linha visual separando seções de layout, sem significar mudança de assunto, prefira <code>border</code> via CSS.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;article&gt;
+  &lt;p&gt;Primeira parte da notícia...&lt;/p&gt;
+  &lt;hr /&gt;
+  &lt;p&gt;Atualização: novas informações chegaram...&lt;/p&gt;
+&lt;/article&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Usar <code>hr</code> para indicar mudança de assunto dentro de um mesmo conteúdo</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Usar <code>hr</code> apenas como recurso decorativo de separação visual entre seções não relacionadas por tema</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= IMG ================= -->
+    <section class="entry" id="img">
+      <div class="entry__head">
+        <span class="entry__name">&lt;img&gt;</span>
+        <span class="entry__category">Imagens & mídia</span>
+      </div>
+      <p class="entry__lead">Insere uma imagem na página — fotos, ilustrações, ícones, banners.</p>
+
+      <h3>O que é</h3>
+      <p>É um elemento vazio (sem conteúdo nem tag de fechamento) que embute uma imagem externa através do atributo <code>src</code>. O texto alternativo (<code>alt</code>) é o que descreve a imagem para quem não pode vê-la — leitores de tela, buscadores, ou quando a imagem falha ao carregar.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;img src="caminho/imagem.jpg" alt="Descrição da imagem" /&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <table>
+        <thead>
+          <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>src</code></td><td>Caminho do arquivo de imagem (obrigatório)</td><td><code>src="carros/sedan-xt.jpg"</code></td></tr>
+          <tr><td><code>alt</code></td><td>Texto alternativo que descreve a imagem (obrigatório por acessibilidade)</td><td><code>alt="Sedan XT prata visto de frente"</code></td></tr>
+          <tr><td><code>width</code> / <code>height</code></td><td>Dimensões da imagem — ajudam o navegador a reservar espaço antes de carregar, evitando "pulos" de layout</td><td><code>width="600" height="400"</code></td></tr>
+          <tr><td><code>loading</code></td><td>Controla o carregamento adiado (lazy) de imagens fora da tela inicial</td><td><code>loading="lazy"</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Sempre forneça um <code>alt</code> descritivo — se a imagem for puramente decorativa (sem informação), use <code>alt=""</code> (vazio, mas presente).</li>
+        <li>Declare <code>width</code> e <code>height</code> sempre que souber as dimensões, para evitar que o layout "pule" enquanto a imagem carrega.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;img
+  src="carros/sedan-xt.jpg"
+  alt="Sedan XT prata, visto de frente, estacionado na loja"
+  width="600"
+  height="400"
+  loading="lazy"
+/&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Escrever um <code>alt</code> que descreva o conteúdo/função da imagem, não o nome do arquivo</li>
+            <li>Usar <code>loading="lazy"</code> em imagens que ficam fora da primeira tela visível</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Deixar o <code>alt</code> vazio em imagens que carregam informação (isso torna a imagem invisível para leitores de tela)</li>
+            <li>Repetir no <code>alt</code> o texto que já aparece do lado da imagem — gera repetição desnecessária</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FIGURE / FIGCAPTION ================= -->
+    <section class="entry" id="figure">
+      <div class="entry__head">
+        <span class="entry__name">&lt;figure&gt;/&lt;figcaption&gt;</span>
+        <span class="entry__category">Imagens & mídia</span>
+      </div>
+      <p class="entry__lead">Agrupa uma imagem (ou outro conteúdo autocontido, como um gráfico) junto de sua legenda — mantendo os dois associados semanticamente.</p>
+
+      <h3>O que é</h3>
+      <p><code>figure</code> envolve o conteúdo ilustrativo e sua legenda; <code>figcaption</code> é a própria legenda, e pode vir antes ou depois da imagem dentro do <code>figure</code>. O conjunto pode ser referenciado no texto principal, mas continua fazendo sentido mesmo se movido para outro lugar da página (como uma figura de artigo).</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;figure&gt;
+  &lt;img src="imagem.jpg" alt="Descrição" /&gt;
+  &lt;figcaption&gt;Legenda da imagem&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <p>Nenhum dos dois elementos possui atributos próprios além dos globais (<code>id</code>, <code>class</code>).</p>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use sempre que uma imagem precisar de uma legenda visível associada a ela.</li>
+        <li>Se a imagem não tem legenda, um <code>img</code> sozinho (sem <code>figure</code>) já é suficiente.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;figure&gt;
+  &lt;img src="carros/sedan-xt.jpg" alt="Sedan XT prata visto de frente" /&gt;
+  &lt;figcaption&gt;Sedan XT 2022, único dono, 42.000 km&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Usar <code>figcaption</code> para o texto de legenda visível, mantendo o <code>alt</code> da imagem como descrição para acessibilidade — os dois têm papéis diferentes</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Usar <code>figure</code> sem nenhuma legenda — nesse caso, um <code>img</code> ou <code>div</code> simples já resolve</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+        <!-- ================= AUDIO ================= -->
+        <section class="entry" id="audio">
+          <div class="entry__head">
+            <span class="entry__name">&lt;audio&gt;</span>
+            <span class="entry__category">Imagens & mídia</span>
+          </div>
+          <p class="entry__lead">Incorpora um player de áudio na página — músicas, podcasts, efeitos sonoros, narrações.</p>
+    
+          <h3>O que é</h3>
+          <p>Cria um player nativo do navegador para reproduzir arquivos de áudio, sem precisar de plugins externos. O conteúdo entre a tag de abertura e fechamento (geralmente uma ou mais tags <code>source</code>) só é exibido caso o navegador não suporte o elemento — serve como mensagem de fallback.</p>
+    
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;audio controls&gt;
+  &lt;source src="audio.mp3" type="audio/mpeg" /&gt;
+  Seu navegador não suporta áudio.
+&lt;/audio&gt;</code></pre>
+    
+          <h3>Atributos principais</h3>
+          <table>
+            <thead>
+              <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>src</code></td><td>Caminho do arquivo (alternativa a usar <code>source</code> interno, quando há apenas um formato)</td><td><code>src="podcast-ep1.mp3"</code></td></tr>
+              <tr><td><code>controls</code></td><td>Exibe os controles padrão do navegador (play, pausa, volume)</td><td><code>controls</code></td></tr>
+              <tr><td><code>autoplay</code></td><td>Inicia a reprodução automaticamente ao carregar a página</td><td><code>autoplay</code></td></tr>
+              <tr><td><code>loop</code></td><td>Repete o áudio ao terminar</td><td><code>loop</code></td></tr>
+              <tr><td><code>muted</code></td><td>Inicia sem som</td><td><code>muted</code></td></tr>
+            </tbody>
+          </table>
+    
+          <h3>Quando usar</h3>
+          <ul>
+            <li>Sempre inclua <code>controls</code>, para que o usuário tenha como pausar, ajustar volume e controlar a reprodução.</li>
+            <li>Use múltiplas tags <code>source</code> com formatos diferentes (ex.: <code>.mp3</code> e <code>.ogg</code>) quando precisar de compatibilidade ampla entre navegadores.</li>
+            <li>Evite <code>autoplay</code> — a maioria dos navegadores bloqueia áudio automático com som, e é uma experiência ruim para o usuário.</li>
+          </ul>
+    
+          <h3>Exemplo</h3>
+      <pre><code>&lt;audio controls&gt;
+  &lt;source src="depoimento-cliente.mp3" type="audio/mpeg" /&gt;
+  &lt;source src="depoimento-cliente.ogg" type="audio/ogg" /&gt;
+  Seu navegador não suporta reprodução de áudio.
+&lt;/audio&gt;</code></pre>
+    
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>Sempre exibir <code>controls</code>, dando autonomia ao usuário sobre a reprodução</li>
+                <li>Fornecer um texto de fallback para navegadores muito antigos</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>Usar <code>autoplay</code> com som — costuma ser bloqueado pelo navegador e incomoda o usuário</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+    
+        <!-- ================= VIDEO ================= -->
+        <section class="entry" id="video">
+          <div class="entry__head">
+            <span class="entry__name">&lt;video&gt;</span>
+            <span class="entry__category">Imagens & mídia</span>
+          </div>
+          <p class="entry__lead">Incorpora um player de vídeo nativo na página — demonstrações de produto, tutoriais, vídeos institucionais.</p>
+    
+          <h3>O que é</h3>
+          <p>Funciona de forma parecida com o <code>audio</code>, mas para conteúdo de vídeo. Também aceita tags <code>source</code> internas para oferecer múltiplos formatos, e um atributo <code>poster</code> para definir a imagem exibida antes do vídeo começar a tocar.</p>
+    
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;video controls width="640"&gt;
+  &lt;source src="video.mp4" type="video/mp4" /&gt;
+  Seu navegador não suporta vídeo.
+&lt;/video&gt;</code></pre>
+    
+          <h3>Atributos principais</h3>
+          <table>
+            <thead>
+              <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>src</code></td><td>Caminho do arquivo (alternativa a <code>source</code> interno)</td><td><code>src="tour-veiculo.mp4"</code></td></tr>
+              <tr><td><code>controls</code></td><td>Exibe os controles padrão (play, pausa, volume, tela cheia)</td><td><code>controls</code></td></tr>
+              <tr><td><code>poster</code></td><td>Imagem exibida antes do vídeo começar a tocar</td><td><code>poster="capa-video.jpg"</code></td></tr>
+              <tr><td><code>width</code> / <code>height</code></td><td>Dimensões do player, evitando "pulos" de layout</td><td><code>width="640" height="360"</code></td></tr>
+              <tr><td><code>muted</code></td><td>Inicia sem som — geralmente combinado com <code>autoplay</code></td><td><code>muted</code></td></tr>
+              <tr><td><code>autoplay</code></td><td>Inicia a reprodução automaticamente (navegadores só permitem sem som, em geral com <code>muted</code>)</td><td><code>autoplay muted</code></td></tr>
+              <tr><td><code>loop</code></td><td>Repete o vídeo ao terminar</td><td><code>loop</code></td></tr>
+            </tbody>
+          </table>
+    
+          <h3>Quando usar</h3>
+          <ul>
+            <li>Sempre inclua <code>controls</code>, a menos que o vídeo seja puramente decorativo (ex.: fundo animado em loop, sem som).</li>
+            <li>Defina um <code>poster</code> para evitar que a tela fique preta antes do carregamento.</li>
+            <li>Só use <code>autoplay</code> combinado com <code>muted</code> — a maioria dos navegadores bloqueia autoplay com som.</li>
+          </ul>
+    
+          <h3>Exemplo</h3>
+      <pre><code>&lt;video controls width="640" height="360" poster="capa-tour.jpg"&gt;
+  &lt;source src="tour-sedan-xt.mp4" type="video/mp4" /&gt;
+  &lt;source src="tour-sedan-xt.webm" type="video/webm" /&gt;
+  Seu navegador não suporta vídeo. Assista &lt;a href="tour-sedan-xt.mp4"&gt;aqui&lt;/a&gt;.
+&lt;/video&gt;</code></pre>
+    
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>Definir <code>width</code>/<code>height</code> ou <code>poster</code> para evitar saltos de layout durante o carregamento</li>
+                <li>Combinar <code>autoplay</code> sempre com <code>muted</code></li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>Usar <code>autoplay</code> com som — a reprodução é bloqueada pela maioria dos navegadores</li>
+                <li>Esquecer o texto/link de fallback para quando o formato não é suportado</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+    
+        <!-- ================= IFRAME ================= -->
+        <section class="entry" id="iframe">
+          <div class="entry__head">
+            <span class="entry__name">&lt;iframe&gt;</span>
+            <span class="entry__category">Imagens & mídia</span>
+          </div>
+          <p class="entry__lead">Embute outra página HTML dentro da página atual — usado para incorporar mapas, vídeos do YouTube, formulários externos e outros conteúdos de terceiros.</p>
+    
+          <h3>O que é</h3>
+          <p>Cria uma "janela" dentro da página que carrega, de forma independente, o conteúdo de outra URL. É a forma padrão de incorporar conteúdo de serviços externos (Google Maps, YouTube, players de terceiros) sem sair da página atual.</p>
+    
+          <h3>Sintaxe genérica</h3>
+          <pre><code>&lt;iframe src="https://exemplo.com/embed" title="Descrição do conteúdo"&gt;&lt;/iframe&gt;</code></pre>
+    
+          <h3>Atributos principais</h3>
+          <table>
+            <thead>
+              <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>src</code></td><td>URL do conteúdo a ser embutido (obrigatório)</td><td><code>src="https://www.youtube.com/embed/ID"</code></td></tr>
+              <tr><td><code>title</code></td><td>Descreve o conteúdo do iframe para leitores de tela (obrigatório por acessibilidade)</td><td><code>title="Vídeo institucional AutoVision"</code></td></tr>
+              <tr><td><code>width</code> / <code>height</code></td><td>Dimensões do iframe</td><td><code>width="560" height="315"</code></td></tr>
+              <tr><td><code>allowfullscreen</code></td><td>Permite que o conteúdo embutido entre em modo tela cheia</td><td><code>allowfullscreen</code></td></tr>
+              <tr><td><code>loading</code></td><td>Controla carregamento adiado (lazy) do iframe</td><td><code>loading="lazy"</code></td></tr>
+            </tbody>
+          </table>
+    
+          <h3>Quando usar</h3>
+          <ul>
+            <li>Use para incorporar mapas, vídeos de plataformas externas (YouTube, Vimeo) ou qualquer widget de terceiros que forneça um código de "embed".</li>
+            <li>Sempre inclua um <code>title</code> descritivo — sem ele, leitores de tela anunciam apenas "iframe sem título", o que não ajuda o usuário.</li>
+            <li>Evite usar <code>iframe</code> para incorporar suas próprias páginas internas — nesse caso normalmente é melhor reestruturar o conteúdo diretamente na página.</li>
+          </ul>
+    
+          <h3>Exemplo</h3>
+      <pre><code>&lt;iframe
+  src="https://www.google.com/maps/embed?..."
+  title="Localização da loja AutoVision no mapa"
+  width="600"
+  height="400"
+  loading="lazy"
+&gt;&lt;/iframe&gt;</code></pre>
+    
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>Sempre definir um <code>title</code> descritivo</li>
+                <li>Usar <code>loading="lazy"</code> em iframes fora da primeira tela visível</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>Embutir conteúdo de fontes não confiáveis — o <code>iframe</code> carrega código de outro domínio, o que tem implicações de segurança</li>
+                <li>Deixar o <code>iframe</code> sem <code>title</code></li>
+              </ul>
+            </div>
+          </div>
+    
+          <p class="note">Nota: por segurança, evite embutir sites de terceiros não confiáveis via <code>iframe</code> — o conteúdo carregado roda em um contexto separado, mas ainda pode expor o usuário a riscos dependendo da origem.</p>
+        </section>
+            <!-- ================= FORM ================= -->
+    <section class="entry" id="form">
+      <div class="entry__head">
+        <span class="entry__name">&lt;form&gt;</span>
+        <span class="entry__category">Formulários</span>
+      </div>
+      <p class="entry__lead">Agrupa os campos que o usuário preenche e define o que acontece quando esses dados são enviados.</p>
+
+      <h3>O que é</h3>
+      <p>É o elemento que envolve todos os campos relacionados a um envio de dados (<code>input</code>, <code>select</code>, <code>textarea</code>, <code>button</code>). Ele controla para onde os dados vão (<code>action</code>) e como são enviados (<code>method</code>) quando o formulário é submetido.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;form action="/enviar" method="post"&gt;
+  ... campos do formulário ...
+&lt;/form&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <table>
+        <thead>
+          <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>action</code></td><td>URL para onde os dados são enviados ao submeter</td><td><code>action="/cadastro"</code></td></tr>
+          <tr><td><code>method</code></td><td>Como os dados são enviados: <code>get</code> (na URL, para buscas/filtros) ou <code>post</code> (no corpo da requisição, para criar/alterar dados)</td><td><code>method="post"</code></td></tr>
+          <tr><td><code>novalidate</code></td><td>Desativa a validação automática do navegador (útil quando a validação é feita por JS)</td><td><code>novalidate</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Sempre que precisar coletar dados do usuário (cadastro, login, contato, filtros de busca).</li>
+        <li>Use <code>method="get"</code> para buscas/filtros que não alteram dados no servidor (o resultado pode ser compartilhado por URL); use <code>method="post"</code> para envio de dados sensíveis ou que criam/alteram algo.</li>
+        <li>Não aninhe um <code>form</code> dentro de outro <code>form</code> — o HTML não permite.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;form action="/contato" method="post"&gt;
+  &lt;label for="nome"&gt;Nome&lt;/label&gt;
+  &lt;input type="text" id="nome" name="nome" /&gt;
+
+  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Escolher <code>get</code>/<code>post</code> pelo que a ação faz, não por hábito</li>
+            <li>Garantir que todo campo dentro do formulário tenha um <code>name</code>, para que o valor seja enviado</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Enviar dados sensíveis (senha, dados pessoais) usando <code>method="get"</code> — eles ficam visíveis na URL</li>
+            <li>Aninhar um <code>form</code> dentro de outro</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LABEL ================= -->
+    <section class="entry" id="label">
+      <div class="entry__head">
+        <span class="entry__name">&lt;label&gt;</span>
+        <span class="entry__category">Formulários</span>
+      </div>
+      <p class="entry__lead">Associa um texto descritivo a um campo de formulário — essencial para acessibilidade e usabilidade.</p>
+
+      <h3>O que é</h3>
+      <p>Conecta um texto ao campo que ele descreve, através do atributo <code>for</code> (que deve corresponder ao <code>id</code> do campo). Isso permite que clicar no texto do rótulo foque/ative o campo, e que leitores de tela anunciem corretamente o que cada campo representa.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;label for="email"&gt;E-mail&lt;/label&gt;
+&lt;input type="email" id="email" name="email" /&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <table>
+        <thead>
+          <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>for</code></td><td>Aponta para o <code>id</code> do campo que este rótulo descreve</td><td><code>for="email"</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use um <code>label</code> para <strong>todo</strong> campo de formulário — mesmo quando o campo tem um placeholder, o placeholder não substitui o rótulo (ele some ao digitar e não é lido de forma confiável por leitores de tela).</li>
+        <li>Alternativa: envolver o próprio campo dentro do <code>label</code>, o que dispensa o atributo <code>for</code>/<code>id</code> combinado, mas é menos flexível para estilização.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;label for="telefone"&gt;Telefone&lt;/label&gt;
+&lt;input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" /&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Garantir que o valor de <code>for</code> seja idêntico ao <code>id</code> do campo correspondente</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Usar apenas <code>placeholder</code> no lugar de um <code>label</code> de verdade</li>
+            <li>Reutilizar o mesmo <code>id</code> em mais de um campo na página (quebra a associação do <code>for</code>)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= INPUT ================= -->
+    <section class="entry" id="input">
+      <div class="entry__head">
+        <span class="entry__name">&lt;input&gt;</span>
+        <span class="entry__category">Formulários</span>
+      </div>
+      <p class="entry__lead">Campo de entrada de dados — o elemento mais versátil de formulário, cujo comportamento muda de acordo com o atributo <code>type</code>.</p>
+
+      <h3>O que é</h3>
+      <p>É um elemento vazio (sem tag de fechamento) que representa um campo editável pelo usuário. O atributo <code>type</code> é o que define se ele vira uma caixa de texto, um campo de e-mail, um checkbox, um seletor de data, e assim por diante — cada tipo já vem com validação e teclado apropriados no celular.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;input type="text" id="campo" name="campo" /&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <table>
+        <thead>
+          <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>type</code></td><td>Define o tipo de campo</td><td><code>type="email"</code></td></tr>
+          <tr><td><code>name</code></td><td>Nome usado para identificar o valor enviado ao servidor (obrigatório para o dado ser enviado)</td><td><code>name="email"</code></td></tr>
+          <tr><td><code>id</code></td><td>Identificador único, usado pelo <code>label</code> (<code>for</code>) para associação</td><td><code>id="email"</code></td></tr>
+          <tr><td><code>placeholder</code></td><td>Texto de exemplo exibido dentro do campo vazio (não substitui o <code>label</code>)</td><td><code>placeholder="seu@email.com"</code></td></tr>
+          <tr><td><code>required</code></td><td>Torna o campo obrigatório para enviar o formulário</td><td><code>required</code></td></tr>
+          <tr><td><code>value</code></td><td>Valor inicial/pré-preenchido do campo</td><td><code>value="0"</code></td></tr>
+          <tr><td><code>disabled</code></td><td>Desativa o campo (não editável e não enviado)</td><td><code>disabled</code></td></tr>
+        </tbody>
+      </table>
+
+      <p>Principais valores de <code>type</code>:</p>
+      <table>
+        <thead>
+          <tr><th>Valor</th><th>Uso</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>text</code></td><td>Texto genérico de uma linha</td></tr>
+          <tr><td><code>email</code></td><td>E-mail, com validação básica de formato</td></tr>
+          <tr><td><code>password</code></td><td>Senha — o texto digitado é ocultado</td></tr>
+          <tr><td><code>number</code></td><td>Valores numéricos, com setas de incremento</td></tr>
+          <tr><td><code>tel</code></td><td>Telefone — no celular, exibe teclado numérico</td></tr>
+          <tr><td><code>date</code></td><td>Data, com seletor de calendário nativo</td></tr>
+          <tr><td><code>checkbox</code></td><td>Caixa de marcação (sim/não, múltipla escolha independente)</td></tr>
+          <tr><td><code>radio</code></td><td>Opção única dentro de um grupo (mesmo <code>name</code> em todas as opções do grupo)</td></tr>
+          <tr><td><code>file</code></td><td>Envio de arquivos do dispositivo do usuário</td></tr>
+          <tr><td><code>submit</code></td><td>Botão que envia o formulário (alternativa ao <code>button type="submit"</code>)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Escolha o <code>type</code> mais específico possível para o dado — isso melhora a validação automática e o teclado exibido em dispositivos móveis (ex.: <code>email</code> em vez de <code>text</code> para e-mails).</li>
+        <li>Para <code>radio</code>, use o mesmo <code>name</code> em todas as opções do grupo, para que apenas uma seja selecionável por vez.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;label for="email"&gt;E-mail&lt;/label&gt;
+&lt;input type="email" id="email" name="email" required /&gt;
+
+&lt;label for="km"&gt;Quilometragem&lt;/label&gt;
+&lt;input type="number" id="km" name="km" min="0" /&gt;
+
+&lt;label&gt;
+  &lt;input type="checkbox" name="aceite" /&gt; Aceito os termos
+&lt;/label&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Usar o <code>type</code> semanticamente correto para cada dado (email, tel, date, number...)</li>
+            <li>Sempre incluir <code>name</code>, ou o valor não será enviado ao servidor</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Usar <code>type="text"</code> para tudo, ignorando tipos mais específicos e sua validação nativa</li>
+            <li>Esquecer o <code>label</code> associado a cada <code>input</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SELECT ================= -->
+    <section class="entry" id="select">
+      <div class="entry__head">
+        <span class="entry__name">&lt;select&gt;/&lt;option&gt;</span>
+        <span class="entry__category">Formulários</span>
+      </div>
+      <p class="entry__lead">Cria uma lista suspensa de opções, das quais o usuário escolhe uma (ou várias, se configurado).</p>
+
+      <h3>O que é</h3>
+      <p><code>select</code> é o contêiner da lista; cada <code>option</code> representa uma alternativa selecionável dentro dele. É a alternativa nativa a um grupo de <code>radio</code> quando há muitas opções — economiza espaço na tela.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;select id="campo" name="campo"&gt;
+  &lt;option value="a"&gt;Opção A&lt;/option&gt;
+  &lt;option value="b"&gt;Opção B&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <table>
+        <thead>
+          <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>name</code></td><td>Nome usado para identificar o valor enviado ao servidor</td><td><code>name="estado"</code></td></tr>
+          <tr><td><code>multiple</code></td><td>Permite selecionar mais de uma opção</td><td><code>multiple</code></td></tr>
+          <tr><td><code>required</code></td><td>Torna a seleção obrigatória</td><td><code>required</code></td></tr>
+          <tr><td><code>value</code> <span style="color:var(--text-muted)">(em option)</span></td><td>Valor enviado ao servidor quando essa opção é escolhida</td><td><code>value="sc"</code></td></tr>
+          <tr><td><code>selected</code> <span style="color:var(--text-muted)">(em option)</span></td><td>Marca essa opção como selecionada por padrão</td><td><code>selected</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use quando houver muitas opções (mais de 4-5) e apenas uma (ou poucas) precisar ser selecionada — para poucas opções visíveis, um grupo de <code>radio</code> costuma ser mais claro.</li>
+        <li>Sempre associe um <code>label</code> ao <code>select</code>, assim como faria com um <code>input</code>.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;label for="estado"&gt;Estado&lt;/label&gt;
+&lt;select id="estado" name="estado"&gt;
+  &lt;option value=""&gt;Selecione...&lt;/option&gt;
+  &lt;option value="sc"&gt;Santa Catarina&lt;/option&gt;
+  &lt;option value="sp"&gt;São Paulo&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Incluir uma opção inicial neutra ("Selecione...") quando nenhum valor deve vir pré-selecionado de forma enganosa</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Usar <code>select</code> para 2-3 opções apenas — nesse caso <code>radio</code> costuma ser mais rápido de usar</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TEXTAREA ================= -->
+    <section class="entry" id="textarea">
+      <div class="entry__head">
+        <span class="entry__name">&lt;textarea&gt;</span>
+        <span class="entry__category">Formulários</span>
+      </div>
+      <p class="entry__lead">Campo de texto de múltiplas linhas — usado para mensagens, comentários, descrições longas.</p>
+
+      <h3>O que é</h3>
+      <p>Diferente do <code>input type="text"</code> (uma linha só), o <code>textarea</code> permite texto com quebras de linha e normalmente é redimensionável pelo usuário. O conteúdo inicial vai entre as tags de abertura e fechamento, não em um atributo <code>value</code>.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;textarea id="mensagem" name="mensagem" rows="4"&gt;&lt;/textarea&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <table>
+        <thead>
+          <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>name</code></td><td>Nome usado para identificar o valor enviado ao servidor</td><td><code>name="mensagem"</code></td></tr>
+          <tr><td><code>rows</code></td><td>Altura inicial, em número de linhas visíveis</td><td><code>rows="4"</code></td></tr>
+          <tr><td><code>placeholder</code></td><td>Texto de exemplo exibido quando o campo está vazio</td><td><code>placeholder="Escreva sua mensagem..."</code></td></tr>
+          <tr><td><code>maxlength</code></td><td>Número máximo de caracteres aceitos</td><td><code>maxlength="500"</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use para qualquer texto que possa precisar de mais de uma linha — mensagens de contato, comentários, observações.</li>
+        <li>Não use <code>input type="text"</code> tentando simular múltiplas linhas com quebras manuais.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;label for="mensagem"&gt;Mensagem&lt;/label&gt;
+&lt;textarea
+  id="mensagem"
+  name="mensagem"
+  rows="5"
+  placeholder="Conte-nos o que você procura..."
+&gt;&lt;/textarea&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Definir um <code>rows</code> que já mostre um espaço razoável de escrita, evitando um campo minúsculo</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Colocar o texto inicial em um atributo <code>value</code> — no <code>textarea</code>, o conteúdo vai entre as tags</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BUTTON ================= -->
+    <section class="entry" id="button">
+      <div class="entry__head">
+        <span class="entry__name">&lt;button&gt;</span>
+        <span class="entry__category">Formulários</span>
+      </div>
+      <p class="entry__lead">Cria um botão clicável — para enviar formulários, disparar ações em JavaScript, ou resetar campos.</p>
+
+      <h3>O que é</h3>
+      <p>É o elemento correto para qualquer ação que não seja navegação (para isso, existe o <code>a</code>). Seu comportamento dentro de um <code>form</code> depende do atributo <code>type</code>.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;button type="submit"&gt;Enviar&lt;/button&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <table>
+        <thead>
+          <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>type</code></td><td>Define o comportamento: <code>submit</code> (envia o formulário), <code>reset</code> (limpa os campos), <code>button</code> (nenhuma ação automática, usado com JS)</td><td><code>type="submit"</code></td></tr>
+          <tr><td><code>disabled</code></td><td>Desativa o botão, impedindo o clique</td><td><code>disabled</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use <code>type="submit"</code> para o botão principal de envio de um formulário.</li>
+        <li>Use <code>type="button"</code> para ações controladas por JavaScript que não enviam o formulário (ex.: abrir um modal, alternar um menu).</li>
+        <li>Dentro de um <code>form</code>, se o <code>type</code> não for especificado, o padrão é <code>submit</code> — por isso é importante declarar explicitamente quando não for essa a intenção.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;form action="/contato" method="post"&gt;
+  ...
+  &lt;button type="submit"&gt;Enviar mensagem&lt;/button&gt;
+  &lt;button type="reset"&gt;Limpar campos&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;button type="button" onclick="abrirModal()"&gt;Ver detalhes&lt;/button&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Declarar sempre o <code>type</code> explicitamente, para evitar envios acidentais de formulário</li>
+            <li>Usar <code>button</code> (em vez de <code>div</code>/<code>span</code> clicáveis) para qualquer ação — já vem com foco por teclado e leitura correta por leitores de tela</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Esquecer o <code>type="button"</code> em botões de ação via JS dentro de um <code>form</code> — sem isso, o clique pode acabar enviando o formulário sem querer</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="note">Nota: assim como no <code>a</code>, nunca use um <code>div</code> ou <code>span</code> estilizado como se fosse um botão — o <code>button</code> já vem com acessibilidade e navegação por teclado nativas.</p>
+    </section>
+        <!-- ================= TABLE ================= -->
+        <section class="entry" id="table">
+          <div class="entry__head">
+            <span class="entry__name">&lt;table&gt;</span>
+            <span class="entry__category">Tabelas</span>
+          </div>
+          <p class="entry__lead">Elemento raiz que envolve uma tabela de dados — organiza informações em linhas e colunas.</p>
+    
+          <h3>O que é</h3>
+          <p>É o contêiner de toda a estrutura tabular: cabeçalho, corpo e, opcionalmente, rodapé. Uma tabela existe para apresentar dados que têm relação entre linhas e colunas — não deve ser usada para controlar o layout visual da página (isso é papel do CSS).</p>
+    
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;table&gt;
+  &lt;thead&gt;...&lt;/thead&gt;
+  &lt;tbody&gt;...&lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+    
+          <h3>Atributos principais</h3>
+          <p>O <code>table</code> aceita apenas os atributos globais (<code>id</code>, <code>class</code>) — a estilização (bordas, espaçamento) deve ser feita via CSS, não por atributos antigos como <code>border</code> ou <code>cellpadding</code>.</p>
+    
+          <h3>Quando usar</h3>
+          <ul>
+            <li>Use apenas para dados genuinamente tabulares — comparações, listas de preços, resultados, históricos.</li>
+            <li>Não use <code>table</code> para organizar o layout geral da página (menus, colunas de conteúdo) — para isso, use CSS (grid, flexbox) com <code>div</code>/elementos semânticos.</li>
+          </ul>
+    
+          <h3>Exemplo</h3>
+      <pre><code>&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;Modelo&lt;/th&gt;&lt;th&gt;Ano&lt;/th&gt;&lt;th&gt;Preço&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;Sedan XT&lt;/td&gt;&lt;td&gt;2022&lt;/td&gt;&lt;td&gt;R$ 89.000&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+    
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>Reservar tabelas para dados que realmente têm estrutura de linhas/colunas</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>Usar tabelas para posicionar elementos de layout na página — prática antiga e problemática para acessibilidade e responsividade</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+    
+        <!-- ================= THEAD/TBODY/TFOOT ================= -->
+        <section class="entry" id="thead-tbody">
+          <div class="entry__head">
+            <span class="entry__name">&lt;thead&gt;/&lt;tbody&gt;/&lt;tfoot&gt;</span>
+            <span class="entry__category">Tabelas</span>
+          </div>
+          <p class="entry__lead">Dividem a tabela em cabeçalho, corpo e rodapé — dando estrutura semântica clara a cada parte dos dados.</p>
+    
+          <h3>O que é</h3>
+          <p><code>thead</code> agrupa a(s) linha(s) de cabeçalho (títulos das colunas); <code>tbody</code> agrupa as linhas de dados propriamente ditas; <code>tfoot</code> agrupa uma linha de rodapé, geralmente usada para totais ou resumos. Uma tabela pode ter várias <code>tbody</code>, mas apenas um <code>thead</code> e um <code>tfoot</code>.</p>
+    
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;Coluna 1&lt;/th&gt;&lt;th&gt;Coluna 2&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;Dado 1&lt;/td&gt;&lt;td&gt;Dado 2&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;&lt;td&gt;Total&lt;/td&gt;&lt;td&gt;100&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</code></pre>
+    
+          <h3>Atributos principais</h3>
+          <p>Nenhum dos três possui atributos próprios além dos globais (<code>id</code>, <code>class</code>).</p>
+    
+          <h3>Quando usar</h3>
+          <ul>
+            <li>Use <code>thead</code> sempre que a tabela tiver uma linha de títulos de coluna — isso ajuda leitores de tela a anunciar o cabeçalho ao navegar pelas células.</li>
+            <li>Use <code>tfoot</code> apenas quando houver uma linha de resumo/total real — não é obrigatório em toda tabela.</li>
+          </ul>
+    
+          <h3>Exemplo</h3>
+      <pre><code>&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;Mês&lt;/th&gt;&lt;th&gt;Vendas&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;Janeiro&lt;/td&gt;&lt;td&gt;12&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Fevereiro&lt;/td&gt;&lt;td&gt;15&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;&lt;td&gt;Total&lt;/td&gt;&lt;td&gt;27&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</code></pre>
+    
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>Sempre envolver as linhas de dados em <code>tbody</code>, mesmo em tabelas simples</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>Colocar linhas de dados soltas, direto dentro de <code>table</code>, sem <code>tbody</code></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+    
+        <!-- ================= TR/TH/TD ================= -->
+        <section class="entry" id="tr-th-td">
+          <div class="entry__head">
+            <span class="entry__name">&lt;tr&gt;/&lt;th&gt;/&lt;td&gt;</span>
+            <span class="entry__category">Tabelas</span>
+          </div>
+          <p class="entry__lead">Representam, respectivamente, uma linha da tabela, uma célula de cabeçalho e uma célula de dado comum.</p>
+    
+          <h3>O que é</h3>
+          <p><code>tr</code> ("table row") é cada linha da tabela. Dentro dela, <code>th</code> ("table header") marca uma célula como título de coluna ou linha, e <code>td</code> ("table data") marca uma célula de dado comum. A diferença não é só visual: <code>th</code> tem significado semântico de cabeçalho, associando aquela célula às demais da coluna/linha para leitores de tela.</p>
+    
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;tr&gt;
+  &lt;th&gt;Título da coluna&lt;/th&gt;
+  &lt;td&gt;Valor da célula&lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+    
+          <h3>Atributos principais</h3>
+          <table>
+            <thead>
+              <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>colspan</code> <span style="color:var(--text-muted)">(em th/td)</span></td><td>Faz a célula ocupar mais de uma coluna</td><td><code>colspan="2"</code></td></tr>
+              <tr><td><code>rowspan</code> <span style="color:var(--text-muted)">(em th/td)</span></td><td>Faz a célula ocupar mais de uma linha</td><td><code>rowspan="2"</code></td></tr>
+              <tr><td><code>scope</code> <span style="color:var(--text-muted)">(em th)</span></td><td>Indica se o cabeçalho se refere à coluna (<code>col</code>) ou à linha (<code>row</code>) — importante para acessibilidade</td><td><code>scope="col"</code></td></tr>
+            </tbody>
+          </table>
+    
+          <h3>Quando usar</h3>
+          <ul>
+            <li>Use <code>th</code> para toda célula que funciona como título de uma coluna ou linha, e <code>td</code> para os dados em si.</li>
+            <li>Use <code>colspan</code>/<code>rowspan</code> apenas quando a célula realmente representa a fusão de múltiplas colunas/linhas (ex.: um título que abrange duas colunas) — não como truque de alinhamento visual.</li>
+          </ul>
+    
+          <h3>Exemplo</h3>
+      <pre><code>&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th scope="col"&gt;Modelo&lt;/th&gt;
+      &lt;th scope="col"&gt;Ano&lt;/th&gt;
+      &lt;th scope="col"&gt;Preço&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Sedan XT&lt;/td&gt;
+      &lt;td&gt;2022&lt;/td&gt;
+      &lt;td&gt;R$ 89.000&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+    
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>Usar <code>scope="col"</code>/<code>scope="row"</code> em <code>th</code>, especialmente em tabelas com cabeçalhos em ambas as direções</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>Usar <code>td</code> em negrito via CSS só para "parecer" um cabeçalho, em vez de usar <code>th</code> de verdade</li>
+                <li>Deixar uma linha com número de células diferente das demais, sem usar <code>colspan</code> para justificar a diferença</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+            <!-- ================= BLOCKQUOTE ================= -->
+    <section class="entry" id="blockquote">
+      <div class="entry__head">
+        <span class="entry__name">&lt;blockquote&gt;</span>
+        <span class="entry__category">Citação & código</span>
+      </div>
+      <p class="entry__lead">Marca uma citação longa, retirada de outra fonte — geralmente exibida com recuo em relação ao texto normal.</p>
+
+      <h3>O que é</h3>
+      <p>Representa um trecho de texto citado de outro documento ou pessoa, quando a citação ocupa um bloco inteiro (um ou mais parágrafos), e não apenas uma frase em meio ao texto corrido — nesse caso o elemento correto é o <code>q</code>.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;blockquote&gt;
+  &lt;p&gt;Texto citado aqui.&lt;/p&gt;
+&lt;/blockquote&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <table>
+        <thead>
+          <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>cite</code></td><td>URL da fonte original da citação (não exibida visualmente, é metadado)</td><td><code>cite="https://exemplo.com/artigo"</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use para reproduzir um trecho de texto de outra fonte, com ou sem indicação visual de aspas.</li>
+        <li>Para indicar quem disse a frase, combine com o elemento <code>cite</code>, geralmente logo após o <code>blockquote</code>.</li>
+        <li>Não use <code>blockquote</code> apenas para recuar um parágrafo visualmente sem que o conteúdo seja de fato uma citação — para isso, use CSS.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;blockquote cite="https://exemplo.com/depoimentos"&gt;
+  &lt;p&gt;O atendimento foi excelente do início ao fim.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;— &lt;cite&gt;Depoimento de cliente&lt;/cite&gt;&lt;/p&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Usar <code>blockquote</code> apenas para conteúdo genuinamente citado de outra fonte</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Usar <code>blockquote</code> só pelo efeito visual de recuo, sem que o texto seja uma citação real</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Q ================= -->
+    <section class="entry" id="q">
+      <div class="entry__head">
+        <span class="entry__name">&lt;q&gt;</span>
+        <span class="entry__category">Citação & código</span>
+      </div>
+      <p class="entry__lead">Marca uma citação curta, em linha, dentro do texto corrido — o navegador adiciona aspas automaticamente ao redor dela.</p>
+
+      <h3>O que é</h3>
+      <p>É a versão "em linha" do <code>blockquote</code>: usada quando a citação é curta o suficiente para ficar no meio de uma frase, sem quebrar o parágrafo. O navegador insere as aspas visualmente — você não precisa digitá-las no HTML.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;p&gt;Como diz o ditado, &lt;q&gt;devagar se vai ao longe&lt;/q&gt;.&lt;/p&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <table>
+        <thead>
+          <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>cite</code></td><td>URL da fonte original da citação (metadado, não exibido)</td><td><code>cite="https://exemplo.com"</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use para citações curtas dentro de uma frase — não digite as aspas manualmente, deixe o navegador inseri-las.</li>
+        <li>Para citações longas (parágrafos inteiros), use <code>blockquote</code> em vez de <code>q</code>.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;p&gt;O vendedor afirmou que o carro &lt;q&gt;está em perfeito estado&lt;/q&gt;.&lt;/p&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Deixar o navegador inserir as aspas — não digitá-las manualmente dentro do <code>q</code></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Usar <code>q</code> para uma citação longa demais para caber em linha — nesse caso é melhor um <code>blockquote</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CITE ================= -->
+    <section class="entry" id="cite">
+      <div class="entry__head">
+        <span class="entry__name">&lt;cite&gt;</span>
+        <span class="entry__category">Citação & código</span>
+      </div>
+      <p class="entry__lead">Marca o título de uma obra ou o nome de uma fonte referenciada — um livro, um artigo, uma peça, um autor citado.</p>
+
+      <h3>O que é</h3>
+      <p>Representa a referência à fonte de uma citação ou obra — geralmente exibido em itálico por padrão. É comum aparecer ao lado de um <code>blockquote</code> ou <code>q</code>, indicando de onde veio o trecho citado.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;p&gt;Como descrito em &lt;cite&gt;Manual do Proprietário&lt;/cite&gt;.&lt;/p&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <p>Aceita apenas os atributos globais (<code>id</code>, <code>class</code>).</p>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use para o título de uma obra (livro, filme, artigo, música) ou o nome de quem está sendo citado.</li>
+        <li>Não use <code>cite</code> para o texto da citação em si — isso é papel do <code>blockquote</code>/<code>q</code>; o <code>cite</code> é só a referência à fonte.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;blockquote&gt;
+  &lt;p&gt;A simplicidade é o último grau de sofisticação.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;— &lt;cite&gt;Leonardo da Vinci&lt;/cite&gt;&lt;/p&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Usar <code>cite</code> apenas para o nome da fonte/obra, não para o texto citado inteiro</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Confundir <code>cite</code> (referência) com o atributo <code>cite</code> do <code>blockquote</code>/<code>q</code> (URL da fonte) — são coisas diferentes com o mesmo nome</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CODE/PRE ================= -->
+    <section class="entry" id="code-pre">
+      <div class="entry__head">
+        <span class="entry__name">&lt;code&gt;/&lt;pre&gt;</span>
+        <span class="entry__category">Citação & código</span>
+      </div>
+      <p class="entry__lead">Marcam trechos de código-fonte — <code>code</code> para um trecho em linha, <code>pre</code> para preservar a formatação (espaços e quebras de linha) de um bloco inteiro.</p>
+
+      <h3>O que é</h3>
+      <p><code>code</code> sozinho exibe um trecho curto de código no meio do texto, com fonte monoespaçada. <code>pre</code> ("preformatted") preserva exatamente os espaços, tabulações e quebras de linha do conteúdo — por padrão, o navegador ignora espaços extras e quebras de linha em qualquer outro elemento. Juntos (<code>pre&gt;code</code>), formam a forma padrão de exibir um bloco de código.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>Em linha: &lt;code&gt;const x = 1;&lt;/code&gt;
+
+Em bloco:
+&lt;pre&gt;&lt;code&gt;function soma(a, b) {
+  return a + b;
+}&lt;/code&gt;&lt;/pre&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <p>Nenhum dos dois possui atributos próprios além dos globais (<code>id</code>, <code>class</code>) — a linguagem do código, quando indicada, costuma ir em uma <code>class</code> convencionada por alguma ferramenta de destaque de sintaxe (ex.: <code>class="language-js"</code>).</p>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use <code>code</code> sozinho para nomes de variáveis, comandos ou trechos curtos mencionados no meio do texto.</li>
+        <li>Use <code>pre&gt;code</code> juntos para blocos de código completos, preservando indentação e quebras de linha.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;p&gt;Use a variável &lt;code&gt;precoTotal&lt;/code&gt; para calcular o valor final.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;let precoTotal = precoBase + taxa;
+console.log(precoTotal);&lt;/code&gt;&lt;/pre&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Usar <code>pre&gt;code</code> juntos para blocos de código, e <code>code</code> sozinho para menções pontuais</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Usar <code>pre</code> sem <code>code</code> dentro (o significado semântico de "isto é código" se perde)</li>
+            <li>Tentar formatar código com múltiplos <code>&lt;br&gt;</code> e espaços em branco (<code>&amp;nbsp;</code>) em vez de <code>pre</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ABBR ================= -->
+    <section class="entry" id="abbr">
+      <div class="entry__head">
+        <span class="entry__name">&lt;abbr&gt;</span>
+        <span class="entry__category">Citação & código</span>
+      </div>
+      <p class="entry__lead">Marca uma abreviação ou sigla, associando a ela o significado completo — exibido geralmente ao passar o mouse por cima.</p>
+
+      <h3>O que é</h3>
+      <p>Ajuda tanto usuários quanto leitores de tela a entenderem o que uma sigla significa, através do atributo <code>title</code>, sem precisar escrever o texto completo toda vez que a sigla aparece.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;abbr title="Significado completo"&gt;Sigla&lt;/abbr&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <table>
+        <thead>
+          <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>title</code></td><td>Texto completo que a abreviação representa (aparece como tooltip ao passar o mouse)</td><td><code>title="HyperText Markup Language"</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use na primeira aparição de uma sigla pouco conhecida em um texto, para explicar seu significado.</li>
+        <li>Evite usar em siglas extremamente comuns e já conhecidas do público-alvo, onde a explicação seria redundante.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;p&gt;
+  O documento segue o padrão
+  &lt;abbr title="Hypertext Markup Language"&gt;HTML&lt;/abbr&gt;.
+&lt;/p&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Sempre incluir o <code>title</code> com o significado completo por extenso</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Usar <code>abbr</code> em toda sigla do texto, mesmo as óbvias para o público — isso gera ruído desnecessário</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+        <!-- ================= DETAILS/SUMMARY ================= -->
+        <section class="entry" id="details">
+          <div class="entry__head">
+            <span class="entry__name">&lt;details&gt;/&lt;summary&gt;</span>
+            <span class="entry__category">Elementos adicionais</span>
+          </div>
+          <p class="entry__lead">Cria um bloco expansível/recolhível nativo do navegador — sem precisar de JavaScript. <code>summary</code> é o título sempre visível; o restante só aparece ao expandir.</p>
+    
+          <h3>O que é</h3>
+          <p><code>details</code> envolve todo o bloco; <code>summary</code>, quando presente como primeiro filho, define o texto clicável que alterna entre expandido e recolhido. Sem <code>summary</code>, o navegador exibe um texto padrão ("Details").</p>
+    
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;details&gt;
+  &lt;summary&gt;Título clicável&lt;/summary&gt;
+  &lt;p&gt;Conteúdo que aparece ao expandir.&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+    
+          <h3>Atributos principais</h3>
+          <table>
+            <thead>
+              <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>open</code> <span style="color:var(--text-muted)">(em details)</span></td><td>Faz o bloco já iniciar expandido</td><td><code>open</code></td></tr>
+            </tbody>
+          </table>
+    
+          <h3>Quando usar</h3>
+          <ul>
+            <li>Use para perguntas frequentes (FAQ), detalhes técnicos opcionais, ou qualquer conteúdo secundário que o usuário só precisa ver sob demanda.</li>
+            <li>É uma alternativa nativa e acessível a implementar um "accordion" (sanfona) manualmente com JavaScript.</li>
+          </ul>
+    
+          <h3>Exemplo</h3>
+      <pre><code>&lt;details&gt;
+  &lt;summary&gt;Quais documentos preciso levar?&lt;/summary&gt;
+  &lt;p&gt;RG, CPF e comprovante de residência atualizado.&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+    
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>Sempre incluir um <code>summary</code> com texto descritivo, em vez de deixar o padrão do navegador</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>Reimplementar esse comportamento com <code>div</code> + JavaScript quando o navegador já resolve nativamente</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+    
+        <!-- ================= DL/DT/DD ================= -->
+        <section class="entry" id="dl">
+          <div class="entry__head">
+            <span class="entry__name">&lt;dl&gt;/&lt;dt&gt;/&lt;dd&gt;</span>
+            <span class="entry__category">Elementos adicionais</span>
+          </div>
+          <p class="entry__lead">Cria uma lista de definição — pares de termo e descrição, como um glossário ou uma ficha técnica.</p>
+    
+          <h3>O que é</h3>
+          <p><code>dl</code> ("description list") é o contêiner; <code>dt</code> ("description term") é o termo sendo definido; <code>dd</code> ("description details") é a definição/descrição correspondente. Um <code>dt</code> pode ter mais de um <code>dd</code> associado.</p>
+    
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;dl&gt;
+  &lt;dt&gt;Termo&lt;/dt&gt;
+  &lt;dd&gt;Definição do termo&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+    
+          <h3>Atributos principais</h3>
+          <p>Nenhum dos três possui atributos próprios além dos globais (<code>id</code>, <code>class</code>).</p>
+    
+          <h3>Quando usar</h3>
+          <ul>
+            <li>Use para glossários, perguntas e respostas, ou fichas técnicas de produto (ex.: "Motor: 2.0", "Câmbio: automático").</li>
+            <li>Não use apenas como alternativa estilística a <code>ul</code>/<code>li</code> quando não há de fato uma relação termo→definição.</li>
+          </ul>
+    
+          <h3>Exemplo</h3>
+      <pre><code>&lt;dl&gt;
+  &lt;dt&gt;Motor&lt;/dt&gt;
+  &lt;dd&gt;2.0 Flex, 170 cv&lt;/dd&gt;
+
+  &lt;dt&gt;Câmbio&lt;/dt&gt;
+  &lt;dd&gt;Automático, 6 marchas&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+    
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>Usar <code>dl</code> para fichas técnicas e pares chave-valor com significado real de termo/definição</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>Usar <code>dl</code>/<code>dt</code>/<code>dd</code> apenas pelo estilo visual, sem relação semântica de termo→definição</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+    
+        <!-- ================= ADDRESS ================= -->
+        <section class="entry" id="address">
+          <div class="entry__head">
+            <span class="entry__name">&lt;address&gt;</span>
+            <span class="entry__category">Elementos adicionais</span>
+          </div>
+          <p class="entry__lead">Marca as informações de contato do autor ou responsável pela página (ou por um <code>article</code> específico) — endereço físico, e-mail, telefone.</p>
+    
+          <h3>O que é</h3>
+          <p>Apesar do nome, não se limita a endereço físico: <code>address</code> representa qualquer informação de contato relacionada ao dono do conteúdo — pode incluir e-mail, telefone e redes sociais, geralmente usado dentro do <code>footer</code>.</p>
+    
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;address&gt;
+  Contato: &lt;a href="mailto:contato@exemplo.com"&gt;contato@exemplo.com&lt;/a&gt;
+&lt;/address&gt;</code></pre>
+    
+          <h3>Atributos principais</h3>
+          <p>Aceita apenas os atributos globais (<code>id</code>, <code>class</code>).</p>
+    
+          <h3>Quando usar</h3>
+          <ul>
+            <li>Use no <code>footer</code> do site para os dados de contato da empresa/autor, ou dentro de um <code>article</code> para o contato de quem escreveu aquele conteúdo específico.</li>
+            <li>Não use para qualquer endereço mencionado no conteúdo (ex.: o endereço de um cliente em uma carta) — isso não é o contato do autor da página, e não deve usar <code>address</code>.</li>
+          </ul>
+    
+          <h3>Exemplo</h3>
+      <pre><code>&lt;footer&gt;
+  &lt;address&gt;
+    AutoVision — Rua das Concessionárias, 500&lt;br /&gt;
+    &lt;a href="mailto:contato@autovision.com"&gt;contato@autovision.com&lt;/a&gt;
+  &lt;/address&gt;
+&lt;/footer&gt;</code></pre>
+    
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>Reservar <code>address</code> para o contato do autor/responsável pela página ou pelo <code>article</code></li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>Usar <code>address</code> para qualquer endereço postal citado no conteúdo, sem relação com o autor da página</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+    
+        <!-- ================= TIME ================= -->
+        <section class="entry" id="time">
+          <div class="entry__head">
+            <span class="entry__name">&lt;time&gt;</span>
+            <span class="entry__category">Elementos adicionais</span>
+          </div>
+          <p class="entry__lead">Marca uma data, hora ou duração de forma que máquinas (navegadores, buscadores) consigam interpretá-la, independente de como o texto é exibido para o usuário.</p>
+    
+          <h3>O que é</h3>
+          <p>O texto visível pode estar em qualquer formato legível ("5 de setembro de 2026"), enquanto o atributo <code>datetime</code> guarda o valor em formato padronizado (ISO 8601), que é o que ferramentas automatizadas de fato leem.</p>
+    
+          <h3>Sintaxe genérica</h3>
+          <pre><code>&lt;time datetime="2026-09-05"&gt;5 de setembro de 2026&lt;/time&gt;</code></pre>
+    
+          <h3>Atributos principais</h3>
+          <table>
+            <thead>
+              <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>datetime</code></td><td>Valor da data/hora em formato padronizado, lido por máquinas</td><td><code>datetime="2026-09-05T14:30"</code></td></tr>
+            </tbody>
+          </table>
+    
+          <h3>Quando usar</h3>
+          <ul>
+            <li>Use sempre que exibir uma data, hora ou duração no conteúdo — data de publicação de um post, horário de um evento, prazo de uma promoção.</li>
+            <li>Mantenha o texto visível em um formato amigável para humanos, e o <code>datetime</code> sempre no padrão ISO 8601.</li>
+          </ul>
+    
+          <h3>Exemplo</h3>
+      <pre><code>&lt;p&gt;
+  Publicado em &lt;time datetime="2026-09-05"&gt;5 de setembro de 2026&lt;/time&gt;.
+&lt;/p&gt;</code></pre>
+    
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>Usar o formato ISO 8601 (<code>AAAA-MM-DD</code>) no atributo <code>datetime</code></li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>Deixar o <code>datetime</code> em um formato livre/informal, ou omiti-lo — isso perde o benefício de máquinas conseguirem interpretar a data</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+    
+        <!-- ================= MARK ================= -->
+        <section class="entry" id="mark">
+          <div class="entry__head">
+            <span class="entry__name">&lt;mark&gt;</span>
+            <span class="entry__category">Elementos adicionais</span>
+          </div>
+          <p class="entry__lead">Marca um trecho de texto como relevante no contexto atual — geralmente exibido com fundo destacado (highlight), como um marca-texto.</p>
+    
+          <h3>O que é</h3>
+          <p>Indica que aquele trecho é relevante para a situação específica em que aparece — por exemplo, os termos de busca destacados dentro de um resultado, ou um ponto-chave em um trecho copiado de outro lugar. Não deve ser confundido com <code>strong</code> (importância geral do conteúdo).</p>
+    
+          <h3>Sintaxe genérica</h3>
+          <pre><code>&lt;p&gt;Resultado da busca por &lt;mark&gt;sedan&lt;/mark&gt; automático.&lt;/p&gt;</code></pre>
+    
+          <h3>Atributos principais</h3>
+          <p>Aceita apenas os atributos globais (<code>id</code>, <code>class</code>).</p>
+    
+          <h3>Quando usar</h3>
+          <ul>
+            <li>Use para destacar termos de busca em resultados, ou trechos relevantes dentro de uma citação para o leitor atual.</li>
+            <li>Se o destaque é apenas estético, sem relação com relevância contextual, use <code>span</code> com CSS em vez de <code>mark</code>.</li>
+          </ul>
+    
+          <h3>Exemplo</h3>
+          <pre><code>&lt;p&gt;Encontramos 3 resultados para "&lt;mark&gt;sedan automático&lt;/mark&gt;".&lt;/p&gt;</code></pre>
+    
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>Reservar <code>mark</code> para relevância contextual real (resultados de busca, trechos citados de interesse)</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>Usar <code>mark</code> apenas como sinônimo estilístico de "fundo colorido" sem relação com relevância</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+            <!-- ================= CLASS/ID ================= -->
+    <section class="entry" id="class-id">
+      <div class="entry__head">
+        <span class="entry__name">class / id</span>
+        <span class="entry__category">Atributos globais</span>
+      </div>
+      <p class="entry__lead">Os dois atributos mais usados de qualquer elemento HTML — identificam elementos para aplicar CSS ou manipular via JavaScript.</p>
+
+      <h3>O que é</h3>
+      <p><code>class</code> é reutilizável: vários elementos podem compartilhar a mesma classe, e um mesmo elemento pode ter várias classes separadas por espaço. <code>id</code> é único: só pode existir um elemento com determinado <code>id</code> em toda a página, e é usado tanto para âncoras (<code>href="#id"</code>) quanto para associar rótulos (<code>label for</code>) e selecionar via JS.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;div class="cartao destaque" id="produto-42"&gt;...&lt;/div&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <table>
+        <thead>
+          <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>class</code></td><td>Aplica um ou mais estilos CSS reutilizáveis; um elemento pode ter várias classes</td><td><code>class="cartao destaque"</code></td></tr>
+          <tr><td><code>id</code></td><td>Identifica um único elemento na página, para âncoras, formulários ou JS</td><td><code>id="produto-42"</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use <code>class</code> sempre que o estilo/comportamento se repetir em mais de um elemento.</li>
+        <li>Use <code>id</code> quando precisar de uma referência única — um alvo de âncora, a associação de um <code>label</code>, ou um elemento específico manipulado via JS.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;nav&gt;
+  &lt;a href="#estoque"&gt;Estoque&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;section id="estoque" class="secao"&gt;
+  &lt;div class="cartao-produto"&gt;...&lt;/div&gt;
+  &lt;div class="cartao-produto destaque"&gt;...&lt;/div&gt;
+&lt;/section&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Usar nomes de classe descritivos do papel do elemento, não da aparência (<code>cartao-produto</code>, não <code>caixa-azul</code>)</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Repetir o mesmo <code>id</code> em mais de um elemento na página — isso quebra âncoras, formulários e seletores JS que dependem de unicidade</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DATA-* ================= -->
+    <section class="entry" id="data-attr">
+      <div class="entry__head">
+        <span class="entry__name">data-*</span>
+        <span class="entry__category">Atributos globais</span>
+      </div>
+      <p class="entry__lead">Permite armazenar dados customizados diretamente em um elemento HTML, para serem lidos e usados via JavaScript.</p>
+
+      <h3>O que é</h3>
+      <p>É um "prefixo livre": qualquer atributo que comece com <code>data-</code> é válido e não afeta a exibição da página. Serve para guardar informações que o JavaScript vai ler depois — como o ID de um produto, um estado, ou uma configuração associada àquele elemento.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;div data-produto-id="42" data-categoria="sedan"&gt;...&lt;/div&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <p>Não há uma lista fixa — o nome depois de <code>data-</code> é definido livremente por quem escreve o código, de acordo com a necessidade do projeto.</p>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use para guardar dados que o JavaScript vai consumir (ex.: o ID de um item em um card, para filtrar ou favoritar).</li>
+        <li>Não use <code>data-*</code> para guardar informação que deveria estar visível ao usuário — isso é conteúdo, não metadado.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;article class="cartao-produto" data-produto-id="42" data-categoria="sedan"&gt;
+  &lt;h3&gt;Sedan XT&lt;/h3&gt;
+&lt;/article&gt;
+
+&lt;script&gt;
+  const cartao = document.querySelector('.cartao-produto');
+  console.log(cartao.dataset.produtoId); // "42"
+&lt;/script&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Usar nomes descritivos após o <code>data-</code>, em minúsculas e com hífen (<code>data-produto-id</code>)</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Armazenar dados sensíveis em <code>data-*</code> — o atributo fica visível no HTML enviado ao navegador, então qualquer pessoa pode inspecioná-lo</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ARIA-* ================= -->
+    <section class="entry" id="aria-attr">
+      <div class="entry__head">
+        <span class="entry__name">aria-*</span>
+        <span class="entry__category">Atributos globais</span>
+      </div>
+      <p class="entry__lead">Complementam o HTML com informações de acessibilidade para leitores de tela, quando a semântica nativa não é suficiente.</p>
+
+      <h3>O que é</h3>
+      <p>Fazem parte do padrão WAI-ARIA. Servem para descrever papel, estado e propriedades de um elemento a tecnologias assistivas — especialmente úteis quando você constrói componentes de interface (menus, abas, modais) que não têm um elemento HTML nativo equivalente.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;button aria-label="Fechar" aria-expanded="false"&gt;×&lt;/button&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <table>
+        <thead>
+          <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>aria-label</code></td><td>Fornece um texto acessível quando não há texto visível suficiente (ex.: um botão só com ícone)</td><td><code>aria-label="Fechar modal"</code></td></tr>
+          <tr><td><code>aria-hidden</code></td><td>Esconde o elemento de leitores de tela, mesmo que continue visível (ex.: ícones puramente decorativos)</td><td><code>aria-hidden="true"</code></td></tr>
+          <tr><td><code>aria-expanded</code></td><td>Indica se um componente expansível (menu, accordion) está aberto ou fechado</td><td><code>aria-expanded="true"</code></td></tr>
+          <tr><td><code>aria-describedby</code></td><td>Associa um elemento a um texto de descrição adicional, pelo <code>id</code> desse texto</td><td><code>aria-describedby="ajuda-senha"</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use quando um elemento HTML nativo já resolveria o problema semântico — a primeira regra do ARIA é "não use ARIA se um elemento HTML nativo já faz o trabalho" (prefira <code>button</code> a <code>div role="button"</code>).</li>
+        <li>Use <code>aria-label</code> em botões/links que só têm ícone, sem texto visível.</li>
+        <li>Use <code>aria-expanded</code>/<code>aria-hidden</code> em componentes interativos personalizados (menus, modais, accordions feitos com JS).</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;button aria-label="Abrir menu" aria-expanded="false"&gt;
+  ☰
+&lt;/button&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Preferir sempre o elemento HTML semântico nativo antes de recorrer a atributos ARIA</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Usar ARIA para "consertar" uma estrutura HTML que deveria simplesmente usar a tag correta</li>
+            <li>Declarar um <code>aria-expanded</code> ou <code>aria-hidden</code> e esquecer de atualizá-lo dinamicamente via JS quando o estado muda</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TABINDEX ================= -->
+    <section class="entry" id="tabindex">
+      <div class="entry__head">
+        <span class="entry__name">tabindex</span>
+        <span class="entry__category">Atributos globais</span>
+      </div>
+      <p class="entry__lead">Controla se um elemento pode receber foco pelo teclado (tecla Tab) e em que ordem, dentro da navegação da página.</p>
+
+      <h3>O que é</h3>
+      <p>Elementos interativos nativos (<code>a</code>, <code>button</code>, <code>input</code>) já recebem foco automaticamente. O <code>tabindex</code> permite alterar esse comportamento — tornar focável um elemento que normalmente não seria, ou remover um elemento da navegação por Tab.</p>
+
+      <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;div tabindex="0"&gt;Agora esse div pode receber foco&lt;/div&gt;</code></pre>
+
+      <h3>Atributos principais</h3>
+      <table>
+        <thead>
+          <tr><th>Valor</th><th>Efeito</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>tabindex="0"</code></td><td>Torna o elemento focável, seguindo a ordem natural do documento</td></tr>
+          <tr><td><code>tabindex="-1"</code></td><td>Torna o elemento focável apenas via JavaScript (não pelo Tab), útil para mover o foco programaticamente</td></tr>
+          <tr><td><code>tabindex</code> positivo (ex.: <code>1</code>)</td><td>Define uma ordem manual de foco — geralmente desaconselhado</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Quando usar</h3>
+      <ul>
+        <li>Use <code>tabindex="0"</code> apenas quando precisar tornar focável um elemento não interativo por natureza (raro — normalmente prefira <code>button</code>/<code>a</code> nativos).</li>
+        <li>Use <code>tabindex="-1"</code> para mover o foco via JS para um elemento (ex.: título de uma seção após navegação), sem incluí-lo na ordem normal do Tab.</li>
+      </ul>
+
+      <h3>Exemplo</h3>
+      <pre><code>&lt;div class="cartao-clicavel" role="button" tabindex="0"&gt;
+  Ver detalhes
+&lt;/div&gt;</code></pre>
+
+      <h3>Boas práticas / erros comuns</h3>
+      <div class="practice">
+        <div>
+          <h4>Fazer</h4>
+          <ul>
+            <li>Preferir elementos nativamente focáveis (<code>button</code>, <code>a</code>) em vez de adicionar <code>tabindex</code> a uma <code>div</code></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar</h4>
+          <ul>
+            <li>Usar valores positivos de <code>tabindex</code> para forçar uma ordem manual — isso costuma confundir a navegação por teclado e é considerado má prática</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="note">Nota: sempre que possível, resolva a acessibilidade usando o elemento HTML correto (<code>button</code>, <code>a</code>) em vez de recriar o comportamento com <code>div</code> + <code>tabindex</code> + <code>aria-*</code>.</p>
+    </section>
+        <!-- ================= PICTURE/SOURCE ================= -->
+        <section class="entry" id="picture">
+          <div class="entry__head">
+            <span class="entry__name">&lt;picture&gt;/&lt;source&gt;</span>
+            <span class="entry__category">Elementos avançados</span>
+          </div>
+          <p class="entry__lead">Permite servir versões diferentes de uma imagem dependendo do tamanho da tela ou do formato suportado pelo navegador.</p>
+    
+          <h3>O que é</h3>
+          <p><code>picture</code> envolve várias tags <code>source</code>, cada uma apontando para uma versão diferente da imagem, e um <code>img</code> obrigatório como último filho (usado como alternativa, caso nenhum <code>source</code> se aplique). O navegador escolhe automaticamente qual <code>source</code> usar, com base nas condições declaradas.</p>
+    
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;picture&gt;
+  &lt;source srcset="imagem-grande.jpg" media="(min-width: 800px)" /&gt;
+  &lt;img src="imagem-pequena.jpg" alt="Descrição" /&gt;
+&lt;/picture&gt;</code></pre>
+    
+          <h3>Atributos principais</h3>
+          <table>
+            <thead>
+              <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>srcset</code> <span style="color:var(--text-muted)">(em source)</span></td><td>Arquivo de imagem a ser usado por esse <code>source</code></td><td><code>srcset="foto-hd.webp"</code></td></tr>
+              <tr><td><code>media</code> <span style="color:var(--text-muted)">(em source)</span></td><td>Condição de largura de tela para esse <code>source</code> ser escolhido</td><td><code>media="(min-width: 1024px)"</code></td></tr>
+              <tr><td><code>type</code> <span style="color:var(--text-muted)">(em source)</span></td><td>Formato do arquivo, para o navegador escolher o primeiro que suportar</td><td><code>type="image/webp"</code></td></tr>
+            </tbody>
+          </table>
+    
+          <h3>Quando usar</h3>
+          <ul>
+            <li>Use quando quiser servir imagens diferentes conforme o tamanho de tela (evitando baixar uma imagem grande desnecessariamente no celular).</li>
+            <li>Use também para oferecer formatos modernos (como <code>webp</code>) com fallback automático para formatos mais antigos (<code>jpg</code>/<code>png</code>) via <code>img</code>.</li>
+            <li>O <code>img</code> dentro do <code>picture</code> continua obrigatório — ele carrega o <code>alt</code> e serve de alternativa final.</li>
+          </ul>
+    
+          <h3>Exemplo</h3>
+      <pre><code>&lt;picture&gt;
+  &lt;source srcset="sedan-xt-mobile.webp" media="(max-width: 600px)" type="image/webp" /&gt;
+  &lt;source srcset="sedan-xt-desktop.webp" type="image/webp" /&gt;
+  &lt;img src="sedan-xt.jpg" alt="Sedan XT prata visto de frente" /&gt;
+&lt;/picture&gt;</code></pre>
+    
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>Sempre incluir um <code>img</code> com <code>alt</code> como último filho, garantindo compatibilidade e acessibilidade</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>Usar <code>picture</code> apenas para redimensionar visualmente uma imagem — isso é papel do CSS; <code>picture</code> serve para servir arquivos diferentes de fato</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+    
+        <!-- ================= CANVAS ================= -->
+        <section class="entry" id="canvas">
+          <div class="entry__head">
+            <span class="entry__name">&lt;canvas&gt;</span>
+            <span class="entry__category">Elementos avançados</span>
+          </div>
+          <p class="entry__lead">Cria uma área em branco na página onde é possível desenhar gráficos, formas, imagens e animações via JavaScript.</p>
+    
+          <h3>O que é</h3>
+          <p>Diferente de uma imagem estática, o <code>canvas</code> é uma "tela" vazia por padrão — todo o conteúdo visual dentro dele é desenhado dinamicamente por código (normalmente usando a API <code>CanvasRenderingContext2D</code> ou WebGL). Sem JavaScript, o <code>canvas</code> aparece vazio.</p>
+    
+          <h3>Sintaxe genérica</h3>
+          <pre><code>&lt;canvas id="grafico" width="400" height="200"&gt;&lt;/canvas&gt;</code></pre>
+    
+          <h3>Atributos principais</h3>
+          <table>
+            <thead>
+              <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>width</code></td><td>Largura da área de desenho, em pixels (não confundir com largura via CSS)</td><td><code>width="400"</code></td></tr>
+              <tr><td><code>height</code></td><td>Altura da área de desenho, em pixels</td><td><code>height="200"</code></td></tr>
+            </tbody>
+          </table>
+    
+          <h3>Quando usar</h3>
+          <ul>
+            <li>Use para gráficos gerados dinamicamente, jogos simples, editores de desenho ou visualizações de dados que exigem controle pixel a pixel.</li>
+            <li>Se o gráfico é estático (uma imagem só, sem interação), um <code>img</code> ou SVG é mais simples e mais acessível do que um <code>canvas</code>.</li>
+          </ul>
+    
+          <h3>Exemplo</h3>
+      <pre><code>&lt;canvas id="grafico-vendas" width="400" height="200"&gt;&lt;/canvas&gt;
+
+&lt;script&gt;
+  const ctx = document.getElementById('grafico-vendas').getContext('2d');
+  ctx.fillStyle = '#1a1a1a';
+  ctx.fillRect(10, 10, 100, 150);
+&lt;/script&gt;</code></pre>
+    
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>Definir <code>width</code>/<code>height</code> como atributos do próprio <code>canvas</code>, não apenas via CSS (evita distorção do desenho)</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>Usar <code>canvas</code> para conteúdo que poderia ser uma imagem estática ou SVG — o conteúdo do <code>canvas</code> não é acessível a leitores de tela por padrão</li>
+              </ul>
+            </div>
+          </div>
+    
+          <p class="note">Nota: o conteúdo desenhado dentro de um <code>canvas</code> não é lido por leitores de tela — se a informação for essencial, ofereça uma alternativa textual (ex.: uma tabela com os mesmos dados do gráfico).</p>
+        </section>
+    
+        <!-- ================= MAP/AREA ================= -->
+        <section class="entry" id="map">
+          <div class="entry__head">
+            <span class="entry__name">&lt;map&gt;/&lt;area&gt;</span>
+            <span class="entry__category">Elementos avançados</span>
+          </div>
+          <p class="entry__lead">Transforma regiões específicas de uma imagem em links clicáveis — um "mapa de imagem", com cada área levando a um destino diferente.</p>
+    
+          <h3>O que é</h3>
+          <p><code>map</code> define o conjunto de áreas clicáveis, associado a uma imagem através do atributo <code>usemap</code> no <code>img</code>. Cada <code>area</code> dentro do <code>map</code> descreve uma forma geométrica (retângulo, círculo, polígono) e o link correspondente àquela região.</p>
+    
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;img src="planta.jpg" usemap="#mapa-planta" alt="Planta do imóvel" /&gt;
+
+&lt;map name="mapa-planta"&gt;
+  &lt;area shape="rect" coords="0,0,100,100" href="#sala" alt="Sala" /&gt;
+&lt;/map&gt;</code></pre>
+    
+          <h3>Atributos principais</h3>
+          <table>
+            <thead>
+              <tr><th>Atributo</th><th>Para que serve</th><th>Exemplo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>name</code> <span style="color:var(--text-muted)">(em map)</span></td><td>Nome que conecta o <code>map</code> ao <code>usemap</code> da imagem</td><td><code>name="mapa-planta"</code></td></tr>
+              <tr><td><code>shape</code> <span style="color:var(--text-muted)">(em area)</span></td><td>Formato da região clicável: <code>rect</code>, <code>circle</code> ou <code>poly</code></td><td><code>shape="circle"</code></td></tr>
+              <tr><td><code>coords</code> <span style="color:var(--text-muted)">(em area)</span></td><td>Coordenadas em pixels que definem a posição/tamanho da região, de acordo com o <code>shape</code></td><td><code>coords="50,50,30"</code></td></tr>
+              <tr><td><code>href</code> <span style="color:var(--text-muted)">(em area)</span></td><td>Destino do link para aquela região</td><td><code>href="#quarto-1"</code></td></tr>
+              <tr><td><code>alt</code> <span style="color:var(--text-muted)">(em area)</span></td><td>Texto alternativo da região, para acessibilidade</td><td><code>alt="Quarto principal"</code></td></tr>
+            </tbody>
+          </table>
+    
+          <h3>Quando usar</h3>
+          <ul>
+            <li>Use quando precisar que diferentes partes de uma única imagem levem a destinos diferentes — plantas de imóveis, mapas geográficos, diagramas interativos.</li>
+            <li>Se as áreas clicáveis puderem ser blocos retangulares simples sobre a imagem, considere alternativas mais modernas com CSS (posicionamento absoluto sobre a imagem) antes de recorrer a <code>map</code>/<code>area</code>.</li>
+          </ul>
+    
+          <h3>Exemplo</h3>
+      <pre><code>&lt;img src="planta-casa.jpg" usemap="#mapa-casa" alt="Planta baixa da casa" /&gt;
+
+&lt;map name="mapa-casa"&gt;
+  &lt;area shape="rect" coords="0,0,200,150" href="#sala" alt="Sala de estar" /&gt;
+  &lt;area shape="rect" coords="200,0,400,150" href="#cozinha" alt="Cozinha" /&gt;
+&lt;/map&gt;</code></pre>
+    
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>Sempre incluir <code>alt</code> em cada <code>area</code>, descrevendo a região</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>Calcular as coordenadas manualmente sem testar — regiões mal calibradas quebram a usabilidade do mapa</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+    
+        <!-- ================= TEMPLATE ================= -->
+        <section class="entry" id="template">
+          <div class="entry__head">
+            <span class="entry__name">&lt;template&gt;</span>
+            <span class="entry__category">Elementos avançados</span>
+          </div>
+          <p class="entry__lead">Guarda um trecho de HTML que não é renderizado na página até ser clonado e inserido via JavaScript — um "molde" reutilizável.</p>
+    
+          <h3>O que é</h3>
+          <p>Todo o conteúdo dentro de um <code>template</code> fica inerte: imagens não carregam, scripts não executam, e nada aparece na tela. Ele só ganha vida quando o JavaScript acessa <code>.content</code>, clona esse conteúdo e o insere em outro lugar do documento — útil para gerar repetidamente a mesma estrutura (ex.: um item de lista) sem duplicar HTML manualmente.</p>
+    
+          <h3>Sintaxe genérica</h3>
+      <pre><code>&lt;template id="modelo-item"&gt;
+  &lt;li class="item"&gt;&lt;/li&gt;
+&lt;/template&gt;</code></pre>
+    
+          <h3>Atributos principais</h3>
+          <p>Aceita apenas os atributos globais (<code>id</code>, <code>class</code>) — o <code>id</code> costuma ser usado para localizar o modelo via JavaScript.</p>
+    
+          <h3>Quando usar</h3>
+          <ul>
+            <li>Use quando precisar criar repetidamente o mesmo bloco de HTML via JavaScript (itens de uma lista carregada dinamicamente, linhas de uma tabela, cards de produto).</li>
+            <li>Evita a prática de montar HTML como texto concatenado em JS (<code>"&lt;li&gt;" + item + "&lt;/li&gt;"</code>), que é mais propensa a erros.</li>
+          </ul>
+    
+          <h3>Exemplo</h3>
+      <pre><code>&lt;template id="modelo-produto"&gt;
+  &lt;article class="cartao-produto"&gt;
+    &lt;h3&gt;&lt;/h3&gt;
+    &lt;p class="preco"&gt;&lt;/p&gt;
+  &lt;/article&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  const modelo = document.getElementById('modelo-produto');
+  const clone = modelo.content.cloneNode(true);
+  clone.querySelector('h3').textContent = 'Sedan XT';
+  document.querySelector('.grade-produtos').appendChild(clone);
+&lt;/script&gt;</code></pre>
+    
+          <h3>Boas práticas / erros comuns</h3>
+          <div class="practice">
+            <div>
+              <h4>Fazer</h4>
+              <ul>
+                <li>Usar <code>template</code> para qualquer estrutura repetida que será populada dinamicamente via JS</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Evitar</h4>
+              <ul>
+                <li>Esperar que o conteúdo do <code>template</code> apareça sozinho na página — ele precisa ser explicitamente clonado e inserido via JavaScript</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const links = Array.from(document.querySelectorAll('.index a'));
+      const targets = links.map((l) =>
+        document.querySelector(l.getAttribute('href')),
+      );
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const id = '#' + entry.target.id;
+            const link = links.find((l) => l.getAttribute('href') === id);
+            if (!link) return;
+            if (entry.isIntersecting) {
+              links.forEach((l) => l.classList.remove('active'));
+              link.classList.add('active');
+            }
+          });
+        },
+        { rootMargin: '-20% 0px -70% 0px' },
+      );
+      targets.forEach((t) => t && observer.observe(t));
+    </script>
+  </body>
+</html>

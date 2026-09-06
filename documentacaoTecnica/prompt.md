@@ -1,1 +1,0 @@
-Esse é o esqueleto completo, já com o grupo Fundamentos pronto. Próximos grupos naturais: Display & posicionamento (display, position, float), Flexbox, Grid, Tipografia & cores, Fundo & bordas, Transições & animações, Pseudo-classes & pseudo-elementos, Responsividade (@media, variáveis CSS). Me avisa quando quiser seguir.

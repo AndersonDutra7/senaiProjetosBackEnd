@@ -1,0 +1,13 @@
+id,nome,e-mail,nome_usuario,senha,foto,tipo,createdAt,updatedAt
+1,Anderson Dutra,anderson.dutra@saepsaude.com.br,anderson.dutra,senha123,slide.png,funcionario,2024-08-14 18:56:33.531 +00:00,2024-08-14 18:56:33.531 +00:00
+2,Professora Marlei,marlei@saepsaude.com.br,prof.marlei,senha123,marlei.png,funcionario,2024-08-14 18:56:33.531 +00:00,2024-08-14 18:56:33.531 +00:00
+3,Caio Passold,caio.passold@gmail.com,caio.passold,senha123,caop.png,cliente,2024-08-14 18:56:33.531 +00:00,2024-08-14 18:56:33.531 +00:00
+4,Davi Pessoa Torres,davi.torres@gmail.com,davi.torres,senha123,davi.png,cliente,2024-08-14 18:56:33.531 +00:00,2024-08-14 18:56:33.531 +00:00
+5,Eduarda Lopes Vieira,eduarda.vieira@gmail.com,eduarda.vieira,senha123,eduarda.png,cliente,2024-08-14 18:56:33.531 +00:00,2024-08-14 18:56:33.531 +00:00
+6,George Allende Mesquita da Silva Filho,george.filho@gmail.com,george.filho,senha123,george.png,cliente,2024-08-14 18:56:33.531 +00:00,2024-08-14 18:56:33.531 +00:00
+7,Karolayne Silveira Ribas,karolayne.ribas@gmail.com,karolayne.ribas,senha123,karolayne.png,cliente,2024-08-14 18:56:33.531 +00:00,2024-08-14 18:56:33.531 +00:00
+8,Laila Gabrielle de Morais,laila.morais@gmail.com,laila.morais,senha123,laila.png,cliente,2024-08-14 18:56:33.531 +00:00,2024-08-14 18:56:33.531 +00:00
+9,Lucca Andre,lucca.andre@gmail.com,lucca.andre,senha123,lucca.png,cliente,2024-08-14 18:56:33.531 +00:00,2024-08-14 18:56:33.531 +00:00
+10,Samuel Brum de Andrade,samuel.andrade@gmail.com,samuel.andrade,senha123,samuel.png,cliente,2024-08-14 18:56:33.531 +00:00,2024-08-14 18:56:33.531 +00:00
+11,Thayssa Aparecida Paulo e Silva Viana,thayssa.viana@gmail.com,thayssa.viana,senha123,thayssa.png,cliente,2024-08-14 18:56:33.531 +00:00,2024-08-14 18:56:33.531 +00:00
+12,Yasmin Gasparini Laurentino,yasmin.laurentino@gmail.com,yasmin.laurentino,senha123,yasmin.png,cliente,2024-08-14 18:56:33.531 +00:00,2024-08-14 18:56:33.531 +00:00

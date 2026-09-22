@@ -1,0 +1,1891 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AVALIAÇÃO PRÁTICA - SA</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap');
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11pt;
+        color: #000;
+        background: #fff;
+      }
+
+      /* ── PAGE LAYOUT ── */
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 15mm 15mm 15mm 15mm;
+      }
+
+      /* ── HEADER TABLE ── */
+      .header-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 14px;
+      }
+      .header-table td,
+      .header-table th {
+        border: 1px solid #000;
+        padding: 3px 6px;
+        vertical-align: middle;
+        font-size: 10pt;
+      }
+      .logo-cell {
+        width: 140px;
+        text-align: center;
+        vertical-align: middle !important;
+        padding: 8px;
+      }
+      .senai-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .senai-brand img {
+        max-width: 120px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+      .title-cell {
+        text-align: center;
+        font-weight: bold;
+        font-size: 13pt;
+        letter-spacing: 1px;
+        padding: 6px;
+      }
+      .desemp-cell {
+        width: 90px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 10pt;
+        vertical-align: top;
+      }
+      .info-row td {
+        font-size: 10pt;
+      }
+      .label-bold {
+        font-weight: bold;
+      }
+      .equipe-row td {
+        font-weight: bold;
+        font-size: 10.5pt;
+      }
+
+      /* ── CAIXA DE CAPACIDADES / GENÉRICA ── */
+      .capacidades-header {
+        background: #2e5496;
+        color: #fff;
+        font-weight: bold;
+        font-size: 12pt;
+        padding: 10px 10px;
+        margin-top: 18px;
+        margin-bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .capacidades-content {
+        border: 1px solid #2e5496;
+        border-top: none;
+        padding: 8px 10px 10px 10px;
+        margin-bottom: 4px;
+      }
+      .capacidades-content p {
+        margin-bottom: 3px;
+      }
+      .capacidades-content p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* ── SECTION DIVIDER ── */
+      .section-divider {
+        margin: 28px 0;
+        border-top: 3px solid #2e5496;
+        border-bottom: 3px solid #2e5496;
+        padding: 12px 0 8px 0;
+      }
+      .section-title {
+        font-size: 13pt;
+        font-weight: bold;
+        color: #2e5496;
+        text-align: center;
+        margin-bottom: 4px;
+      }
+
+      /* ── PRINT ── */
+      @media print {
+        body {
+          background: #fff;
+        }
+        .capacidades-header {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .page {
+          margin: 0;
+          padding: 12mm 14mm;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- ══════════════════ CABEÇALHO ══════════════════ -->
+      <table class="header-table">
+        <tr>
+          <td class="logo-cell" rowspan="7">
+            <div class="senai-brand">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_sfpOEDmPPoL6K0aQL4qg5SsWL_41ZqhyF7zW1509kA&s=10"
+                alt="Logo SENAI"
+              />
+              <span>Serviço Nacional de Aprendizagem</span>
+            </div>
+          </td>
+          <td class="title-cell">AVALIAÇÃO PRÁTICA - SA</td>
+          <td class="desemp-cell" rowspan="7">Desempenho</td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Data:</span>
+            <em style="color: #2e5496; font-weight: bold">21/09/2026</em>
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Docente:</span>
+            <em style="color: #2e5496; font-weight: bold"
+              >Anderson Raulino Dutra</em
+            >
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Curso Técnico em:</span>
+            <em style="color: #2e5496; font-weight: bold">
+              Desenvolvimento de Sistemas</em
+            >
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Unidade Curricular:</span>
+            <em style="color: #2e5496; font-weight: bold"
+              >Projeto de Backend</em
+            >
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Turma:</span>
+            <em style="color: #2e5496; font-weight: bold">T TIIN 2025/1 M2</em>
+          </td>
+        </tr>
+        <tr class="estudante-row">
+          <td><strong>Colaborador / Avaliado:</strong></td>
+        </tr>
+      </table>
+
+      <div class="section-divider">
+        <div class="section-title">
+          AVALIAÇÃO OBJETIVA - SA <br />
+          Portal B2B de E-commerce e Integração Logística Industrial
+        </div>
+      </div>
+
+      <!-- ══════════════════ CAIXA DE CAPACIDADES TÉCNICAS ══════════════════ -->
+      <div class="capacidades-box">
+        <div class="capacidades-header">CAPACIDADES TÉCNICAS</div>
+        <div class="capacidades-content">
+          <p>
+            <strong>CT1:</strong> Aplicar técnicas de normalização e
+            padronização de dados.
+          </p>
+          <p><strong>CT2:</strong> Instalar e configurar banco de dados.</p>
+          <p>
+            <strong>CT3:</strong> Aplicar técnicas para garantir o tratamento
+            das requisições de sistemas web.
+          </p>
+          <p>
+            <strong>CT4:</strong> Executar testes de funcionamento de sistemas
+            para web.
+          </p>
+          <p>
+            <strong>CT5:</strong> Aplicar técnicas de segurança e tratamento de
+            dados.
+          </p>
+        </div>
+      </div>
+
+      <!-- ══════════════════ CAIXA DE CAPACIDADES SOCIOEMOCIONAIS ══════════════════ -->
+      <div class="capacidades-box">
+        <div class="capacidades-header">CAPACIDADES SOCIOEMOCIONAIS</div>
+        <div class="capacidades-content">
+          <p>
+            <strong>CS1:</strong> Reconhecer as exigências requeridas para a
+            resolução de um problema ou necessidade ou para se implantar uma
+            melhoria no seu campo de trabalho.
+          </p>
+          <p>
+            <strong>CS2:</strong> Estimular na equipe e/ou colegas de trabalho
+            comportamentos que considerem novos fatos, ideias e opiniões
+            diferentes para a resolução de problemas inerentes às atividades sob
+            sua responsabilidade.
+          </p>
+        </div>
+      </div>
+
+      <!-- ══════════════════ CAIXA DE CONTEXTO ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px">
+        <div class="capacidades-header">
+          CONTEXTO DA SITUAÇÃO DE APRENDIZAGEM
+        </div>
+        <div class="capacidades-content" style="padding: 12px 14px">
+          <p style="margin-bottom: 0; line-height: 1.5">
+            A indústria possui um
+            <strong>Portal Comercial B2B</strong> destinado ao gerenciamento de
+            pedidos de compras e inventários. Para disponibilizar o sistema em
+            produção, é necessário definir as configurações da aplicação e da
+            infraestrutura, estabelecer uma estratégia de implantação, aplicar
+            boas práticas de segurança e garantir que o ambiente esteja
+            devidamente preparado para a sua operação.
+          </p>
+        </div>
+      </div>
+
+      <!-- ══════════════════ CAIXA DE COMANDO E ENTREGAS ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px">
+        <div class="capacidades-header">
+          COMANDO DA SITUAÇÃO DE APRENDIZAGEM
+        </div>
+        <div class="capacidades-content" style="padding: 12px 14px">
+          <p style="margin-bottom: 10px; line-height: 1.5">
+            A equipe deverá analisar a arquitetura do
+            <strong>Portal Comercial B2B</strong>, definir e aplicar suas
+            configurações e parametrizações e elaborar um plano para sua
+            implantação em ambiente de produção.
+          </p>
+          <p style="margin-bottom: 10px; line-height: 1.5">
+            O plano deverá contemplar a preparação do ambiente, instalação e
+            configuração dos componentes, segurança da infraestrutura, migração
+            de dados quando necessária, execução da implantação, validação do
+            sistema e procedimentos para tratamento de falhas.
+          </p>
+          <p style="margin-bottom: 16px; line-height: 1.5">
+            Ao final, a equipe deverá comprovar o funcionamento do sistema em
+            produção e documentar todo o processo de implantação, distribuído ao
+            longo de <strong>4 entregas parciais</strong>.
+          </p>
+
+          <div style="margin-top: 10px">
+            <div
+              style="
+                font-weight: bold;
+                color: #2e5496;
+                font-size: 11pt;
+                margin-bottom: 8px;
+                text-transform: uppercase;
+              "
+            >
+              Visão Geral das Entregas por Módulo
+            </div>
+            <table
+              style="
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 10pt;
+                background: #fff;
+              "
+            >
+              <thead>
+                <tr style="background-color: #2e5496; color: #ffffff">
+                  <th
+                    style="
+                      padding: 8px;
+                      border: 1px solid #2e5496;
+                      text-align: center;
+                      width: 10%;
+                    "
+                  >
+                    Módulo
+                  </th>
+                  <th
+                    style="
+                      padding: 8px;
+                      border: 1px solid #2e5496;
+                      text-align: left;
+                      width: 35%;
+                    "
+                  >
+                    Título do Módulo
+                  </th>
+                  <th
+                    style="
+                      padding: 8px;
+                      border: 1px solid #2e5496;
+                      text-align: left;
+                    "
+                  >
+                    Escopo da Entrega Parcial
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td
+                    style="
+                      padding: 8px;
+                      border: 1px solid #d0d7de;
+                      text-align: center;
+                      font-weight: bold;
+                    "
+                  >
+                    I
+                  </td>
+                  <td
+                    style="
+                      padding: 8px;
+                      border: 1px solid #d0d7de;
+                      font-weight: bold;
+                      color: #2e5496;
+                    "
+                  >
+                    Planejamento Ágil, Arquitetura e Governança de Código
+                  </td>
+                  <td style="padding: 8px; border: 1px solid #d0d7de">
+                    Análise detalhada da arquitetura do Portal B2B, levantamento
+                    dos requisitos de armazenamento, modelagem e normalização de
+                    dados, além do estabelecimento das diretrizes de
+                    versionamento e governança de código.
+                  </td>
+                </tr>
+                <tr style="background-color: #fcfdfe">
+                  <td
+                    style="
+                      padding: 8px;
+                      border: 1px solid #d0d7de;
+                      text-align: center;
+                      font-weight: bold;
+                    "
+                  >
+                    II
+                  </td>
+                  <td
+                    style="
+                      padding: 8px;
+                      border: 1px solid #d0d7de;
+                      font-weight: bold;
+                      color: #2e5496;
+                    "
+                  >
+                    Parametrização, Frameworks e Construção do Core
+                  </td>
+                  <td style="padding: 8px; border: 1px solid #d0d7de">
+                    Instalação, parametrização e configuração do banco de dados,
+                    definição das variáveis de ambiente, elaboração dos scripts
+                    DDL/DML e desenvolvimento do core das regras de negócio e
+                    rotas da aplicação web.
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style="
+                      padding: 8px;
+                      border: 1px solid #d0d7de;
+                      text-align: center;
+                      font-weight: bold;
+                    "
+                  >
+                    III
+                  </td>
+                  <td
+                    style="
+                      padding: 8px;
+                      border: 1px solid #d0d7de;
+                      font-weight: bold;
+                      color: #2e5496;
+                    "
+                  >
+                    Engenharia de Testes, Resolução de Problemas e Segurança
+                  </td>
+                  <td style="padding: 8px; border: 1px solid #d0d7de">
+                    Elaboração e execução do plano de testes automatizados de
+                    funcionamento/integração, validação do tratamento de
+                    requisições, tratamento preventivo de falhas e aplicação das
+                    políticas de segurança de dados e DCL.
+                  </td>
+                </tr>
+                <tr style="background-color: #fcfdfe">
+                  <td
+                    style="
+                      padding: 8px;
+                      border: 1px solid #d0d7de;
+                      text-align: center;
+                      font-weight: bold;
+                    "
+                  >
+                    IV
+                  </td>
+                  <td
+                    style="
+                      padding: 8px;
+                      border: 1px solid #d0d7de;
+                      font-weight: bold;
+                      color: #1b7e36;
+                    "
+                  >
+                    Plano de Implantação, DevOps, Homologação e Documentação
+                  </td>
+                  <td style="padding: 8px; border: 1px solid #d0d7de">
+                    Preparação da infraestrutura de produção
+                    (containers/DevOps), execução da migração de dados,
+                    homologação e validação do sistema em ambiente produtivo e
+                    entrega do documento final do processo de implantação.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════ DESAFIO — REQUISITOS DE ENTREGA POR MÓDULO ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px">
+        <div class="capacidades-header">
+          DESAFIO — REQUISITOS DE ENTREGA POR MÓDULO
+        </div>
+        <div class="capacidades-content" style="padding: 12px 14px">
+          <p style="margin-bottom: 10px; line-height: 1.5">
+            Espera-se obter o <strong>Portal Comercial B2B</strong> devidamente
+            configurado, implantado e validado em ambiente de produção simulado,
+            seguindo as melhores práticas de arquitetura de software, segurança
+            da informação e implantação de sistemas web.
+          </p>
+          <p style="margin-bottom: 14px; line-height: 1.5">
+            O projeto demonstrará na prática: a
+            <strong>configuração e parametrização adequada do sistema</strong>,
+            o <strong>ambiente de produção preparado e seguro</strong>, o
+            <strong>plano de implantação executado</strong>, a
+            <strong>validação pós-implantação</strong> e a
+            <strong>documentação reprodutível do processo</strong>. A
+            distribuição dos artefatos está organizada nos 4 módulos abaixo:
+          </p>
+
+          <!-- ── MÓDULO I ── -->
+          <div style="margin-bottom: 18px">
+            <div
+              style="
+                background-color: #2e5496;
+                color: #ffffff;
+                padding: 6px 10px;
+                font-weight: bold;
+                font-size: 10.5pt;
+                border-radius: 2px 2px 0 0;
+              "
+            >
+              MÓDULO I — Entrega Parcial 1: Planejamento Ágil, Arquitetura e
+              Governança de Código
+            </div>
+            <table
+              style="
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 10pt;
+                background: #ffffff;
+                border: 1px solid #2e5496;
+                border-top: none;
+              "
+            >
+              <thead>
+                <tr style="background-color: #f2f4f8; color: #000000">
+                  <th
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 2px solid #2e5496;
+                      border-right: 1px solid #d0d7de;
+                      text-align: center;
+                      width: 10%;
+                    "
+                  >
+                    Seção
+                  </th>
+                  <th
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 2px solid #2e5496;
+                      border-right: 1px solid #d0d7de;
+                      text-align: left;
+                      width: 28%;
+                    "
+                  >
+                    Entregável
+                  </th>
+                  <th
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 2px solid #2e5496;
+                      text-align: left;
+                    "
+                  >
+                    Descrição Detalhada do Artefato
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 1px solid #e1e4e8;
+                      border-right: 1px solid #e1e4e8;
+                      text-align: center;
+                      font-weight: bold;
+                    "
+                  >
+                    01
+                  </td>
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 1px solid #e1e4e8;
+                      border-right: 1px solid #e1e4e8;
+                      font-weight: bold;
+                      color: #2e5496;
+                    "
+                  >
+                    Projeto de Arquitetura e Modelagem de Dados
+                  </td>
+                  <td
+                    style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8"
+                  >
+                    Elaborar os modelos Conceitual (DER) e Lógico do banco de
+                    dados do Portal B2B, aplicando regras de normalização (1FN a
+                    3FN), padronização temporal em UTC/ISO 8601 e levantamento
+                    dos requisitos de armazenamento de pedidos e inventários.
+                  </td>
+                </tr>
+                <tr style="background-color: #fcfdfe">
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: none;
+                      border-right: 1px solid #e1e4e8;
+                      text-align: center;
+                      font-weight: bold;
+                    "
+                  >
+                    02
+                  </td>
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: none;
+                      border-right: 1px solid #e1e4e8;
+                      font-weight: bold;
+                      color: #2e5496;
+                    "
+                  >
+                    Repositório Versionado do Projeto
+                  </td>
+                  <td style="padding: 6px 8px; border-bottom: none">
+                    Estruturar o repositório Git com estratégias de ramificação
+                    (branching), padronização de commits, arquivos de
+                    configuração inicial e diretrizes para governança de código
+                    da equipe.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── MÓDULO II ── -->
+          <div style="margin-bottom: 18px">
+            <div
+              style="
+                background-color: #2e5496;
+                color: #ffffff;
+                padding: 6px 10px;
+                font-weight: bold;
+                font-size: 10.5pt;
+                border-radius: 2px 2px 0 0;
+              "
+            >
+              MÓDULO II — Entrega Parcial 2: Parametrização, Frameworks e
+              Construção do Core
+            </div>
+            <table
+              style="
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 10pt;
+                background: #ffffff;
+                border: 1px solid #2e5496;
+                border-top: none;
+              "
+            >
+              <thead>
+                <tr style="background-color: #f2f4f8; color: #000000">
+                  <th
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 2px solid #2e5496;
+                      border-right: 1px solid #d0d7de;
+                      text-align: center;
+                      width: 10%;
+                    "
+                  >
+                    Seção
+                  </th>
+                  <th
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 2px solid #2e5496;
+                      border-right: 1px solid #d0d7de;
+                      text-align: left;
+                      width: 28%;
+                    "
+                  >
+                    Entregável
+                  </th>
+                  <th
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 2px solid #2e5496;
+                      text-align: left;
+                    "
+                  >
+                    Descrição Detalhada do Artefato
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 1px solid #e1e4e8;
+                      border-right: 1px solid #e1e4e8;
+                      text-align: center;
+                      font-weight: bold;
+                    "
+                  >
+                    03
+                  </td>
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 1px solid #e1e4e8;
+                      border-right: 1px solid #e1e4e8;
+                      font-weight: bold;
+                      color: #2e5496;
+                    "
+                  >
+                    Parametrização e Configuração de Sistema
+                  </td>
+                  <td
+                    style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8"
+                  >
+                    Configurar variáveis de ambiente, portas de serviço, pool de
+                    conexões com o SGBD e ajustar configurações técnicas da
+                    aplicação para comunicação com o banco de dados.
+                  </td>
+                </tr>
+                <tr style="background-color: #fcfdfe">
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: none;
+                      border-right: 1px solid #e1e4e8;
+                      text-align: center;
+                      font-weight: bold;
+                    "
+                  >
+                    04
+                  </td>
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: none;
+                      border-right: 1px solid #e1e4e8;
+                      font-weight: bold;
+                      color: #2e5496;
+                    "
+                  >
+                    Scripts DDL/DML e Desenvolvimento Core
+                  </td>
+                  <td style="padding: 6px 8px; border-bottom: none">
+                    Construir os scripts DDL (criação de tabelas e constraints)
+                    e DML (carga de dados inicial), além do desenvolvimento das
+                    rotas e serviços principais da API web B2B para gestão de
+                    inventários e pedidos.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── MÓDULO III ── -->
+          <div style="margin-bottom: 18px">
+            <div
+              style="
+                background-color: #2e5496;
+                color: #ffffff;
+                padding: 6px 10px;
+                font-weight: bold;
+                font-size: 10.5pt;
+                border-radius: 2px 2px 0 0;
+              "
+            >
+              MÓDULO III — Entrega Parcial 3: Engenharia de Testes, Resolução de
+              Problemas e Segurança
+            </div>
+            <table
+              style="
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 10pt;
+                background: #ffffff;
+                border: 1px solid #2e5496;
+                border-top: none;
+              "
+            >
+              <thead>
+                <tr style="background-color: #f2f4f8; color: #000000">
+                  <th
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 2px solid #2e5496;
+                      border-right: 1px solid #d0d7de;
+                      text-align: center;
+                      width: 10%;
+                    "
+                  >
+                    Seção
+                  </th>
+                  <th
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 2px solid #2e5496;
+                      border-right: 1px solid #d0d7de;
+                      text-align: left;
+                      width: 28%;
+                    "
+                  >
+                    Entregável
+                  </th>
+                  <th
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 2px solid #2e5496;
+                      text-align: left;
+                    "
+                  >
+                    Descrição Detalhada do Artefato
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 1px solid #e1e4e8;
+                      border-right: 1px solid #e1e4e8;
+                      text-align: center;
+                      font-weight: bold;
+                    "
+                  >
+                    05
+                  </td>
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 1px solid #e1e4e8;
+                      border-right: 1px solid #e1e4e8;
+                      font-weight: bold;
+                      color: #2e5496;
+                    "
+                  >
+                    Plano e Suíte de Testes Automatizados
+                  </td>
+                  <td
+                    style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8"
+                  >
+                    Elaborar o plano de testes e implementar a suíte
+                    automatizada para validação dos endpoints da API, cobrindo
+                    cenários de sucesso, validações de entrada e tratamento de
+                    requisições.
+                  </td>
+                </tr>
+                <tr style="background-color: #fcfdfe">
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: none;
+                      border-right: 1px solid #e1e4e8;
+                      text-align: center;
+                      font-weight: bold;
+                    "
+                  >
+                    06
+                  </td>
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: none;
+                      border-right: 1px solid #e1e4e8;
+                      font-weight: bold;
+                      color: #2e5496;
+                    "
+                  >
+                    Configuração de Infraestrutura e Segurança
+                  </td>
+                  <td style="padding: 6px 8px; border-bottom: none">
+                    Aplicar boas práticas de segurança da informação na
+                    comunicação e infraestrutura (DCL, controle de permissões de
+                    acesso ao banco, sanitização de requisições e proteção de
+                    endpoints).
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── MÓDULO IV ── -->
+          <div style="margin-bottom: 18px">
+            <div
+              style="
+                background-color: #1b7e36;
+                color: #ffffff;
+                padding: 6px 10px;
+                font-weight: bold;
+                font-size: 10.5pt;
+                border-radius: 2px 2px 0 0;
+              "
+            >
+              MÓDULO IV — Entrega Final: Plano de Implantação, DevOps,
+              Homologação e Documentação
+            </div>
+            <table
+              style="
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 10pt;
+                background: #ffffff;
+                border: 1px solid #1b7e36;
+                border-top: none;
+              "
+            >
+              <thead>
+                <tr style="background-color: #f2f8f4; color: #000000">
+                  <th
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 2px solid #1b7e36;
+                      border-right: 1px solid #d0d7de;
+                      text-align: center;
+                      width: 10%;
+                    "
+                  >
+                    Seção
+                  </th>
+                  <th
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 2px solid #1b7e36;
+                      border-right: 1px solid #d0d7de;
+                      text-align: left;
+                      width: 28%;
+                    "
+                  >
+                    Entregável
+                  </th>
+                  <th
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 2px solid #1b7e36;
+                      text-align: left;
+                    "
+                  >
+                    Descrição Detalhada do Artefato
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 1px solid #e1e4e8;
+                      border-right: 1px solid #e1e4e8;
+                      text-align: center;
+                      font-weight: bold;
+                    "
+                  >
+                    07
+                  </td>
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 1px solid #e1e4e8;
+                      border-right: 1px solid #e1e4e8;
+                      font-weight: bold;
+                      color: #1b7e36;
+                    "
+                  >
+                    Plano de Implantação e Cronograma
+                  </td>
+                  <td
+                    style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8"
+                  >
+                    Definir o plano detalhado de implantação contendo cronograma
+                    de execução, passos de preparação do ambiente, plano de
+                    migração de dados e procedimentos de contingência/rollback.
+                  </td>
+                </tr>
+                <tr style="background-color: #fcfdfe">
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 1px solid #e1e4e8;
+                      border-right: 1px solid #e1e4e8;
+                      text-align: center;
+                      font-weight: bold;
+                    "
+                  >
+                    08
+                  </td>
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: 1px solid #e1e4e8;
+                      border-right: 1px solid #e1e4e8;
+                      font-weight: bold;
+                      color: #1b7e36;
+                    "
+                  >
+                    Sistema Implantado & Relatório de Validação
+                  </td>
+                  <td
+                    style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8"
+                  >
+                    Disponibilizar o Portal B2B em ambiente de produção simulado
+                    e apresentar o Relatório de Validação comprovando a
+                    integridade, conectividade e correto funcionamento do
+                    sistema após a implantação.
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: none;
+                      border-right: 1px solid #e1e4e8;
+                      text-align: center;
+                      font-weight: bold;
+                    "
+                  >
+                    09
+                  </td>
+                  <td
+                    style="
+                      padding: 6px 8px;
+                      border-bottom: none;
+                      border-right: 1px solid #e1e4e8;
+                      font-weight: bold;
+                      color: #1b7e36;
+                    "
+                  >
+                    Deployment Runbook / Dossiê de Implantação
+                  </td>
+                  <td style="padding: 6px 8px; border-bottom: none">
+                    Documentar o processo completo de implantação em um Dossiê
+                    Técnico/Runbook reprodutível, contendo instruções passo a
+                    passo para subida dos containers, execução de scripts,
+                    parametrização e manutenção.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ── ORIENTAÇÕES DE FORMATO ── -->
+          <div
+            style="
+              background-color: #f8f9fa;
+              border-left: 4px solid #2e5496;
+              padding: 10px 12px;
+              font-size: 9.5pt;
+              line-height: 1.45;
+              border-radius: 0 4px 4px 0;
+            "
+          >
+            <strong>Formato das entregas:</strong> Os artefatos documentais
+            (Projetos, Planos, Dossiê e Relatórios) devem ser entregues
+            compilados em formato <strong>PDF</strong>. Os arquivos executáveis
+            de código-fonte, scripts SQL (<code>.sql</code>) e parametrizações
+            de infraestrutura deverão ser organizados no
+            <strong>Repositório Git Versionado</strong> oficial do projeto com
+            evidências visuais de funcionamento.
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════ LISTA DE VERIFICAÇÃO — CRITÉRIOS DE AVALIAÇÃO (MÓDULO I) ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px">
+        <div class="capacidades-header">
+          LISTA DE VERIFICAÇÃO — CRITÉRIOS DE AVALIAÇÃO (MÓDULO I)
+        </div>
+        <div class="capacidades-content" style="padding: 12px 14px">
+          <p style="margin-bottom: 12px; line-height: 1.5">
+            Esta lista de verificação consolida os critérios técnicos e
+            socioemocionais para a avaliação do
+            <strong
+              >Módulo I — Planejamento Ágil, Arquitetura e Governança de
+              Código</strong
+            >.
+          </p>
+
+          <table
+            style="
+              width: 100%;
+              border-collapse: collapse;
+              font-size: 10pt;
+              background: #ffffff;
+              border: 1px solid #2e5496;
+            "
+          >
+            <thead>
+              <tr style="background-color: #2e5496; color: #ffffff">
+                <th
+                  style="
+                    padding: 8px;
+                    border: 1px solid #2e5496;
+                    text-align: center;
+                    width: 5%;
+                  "
+                >
+                  #
+                </th>
+                <th
+                  style="
+                    padding: 8px;
+                    border: 1px solid #2e5496;
+                    text-align: center;
+                    width: 12%;
+                  "
+                >
+                  Ref. Cap.
+                </th>
+                <th
+                  style="
+                    padding: 8px;
+                    border: 1px solid #2e5496;
+                    text-align: left;
+                    width: 48%;
+                  "
+                >
+                  Critério de Avaliação / Indicador de Desempenho
+                </th>
+                <th
+                  style="
+                    padding: 8px;
+                    border: 1px solid #2e5496;
+                    text-align: left;
+                    width: 35%;
+                  "
+                >
+                  Evidência de Aprendizagem
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                  "
+                >
+                  01
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                    color: #2e5496;
+                  "
+                >
+                  CT1
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Estruturou o repositório versionado (Git) para o Portal B2B,
+                  definindo a estratégia de <em>branching</em>, arquivos de
+                  configuração (<code>.gitignore</code>, <code>README.md</code>)
+                  e convenções de commit.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Repositório Git configurado com histórico de commits e
+                  documentação do fluxo de trabalho.
+                </td>
+              </tr>
+              <tr style="background-color: #fcfdfe">
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                  "
+                >
+                  02
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                    color: #2e5496;
+                  "
+                >
+                  CT2
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Analisou a arquitetura do Portal B2B, levantando os requisitos
+                  técnicos da aplicação e a modelagem do fluxo de dados do
+                  sistema web.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Documento de Projeto de Arquitetura e Especificação Técnica
+                  entregue.
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                  "
+                >
+                  03
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                    color: #2e5496;
+                  "
+                >
+                  CS1
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Identificou com clareza as exigências de negócio do cliente
+                  B2B para estruturar os requisitos da solução de forma alinhada
+                  ao escopo do projeto.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Detalhamento de requisitos e premissas no Projeto de
+                  Arquitetura.
+                </td>
+              </tr>
+              <tr style="background-color: #fcfdfe">
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                  "
+                >
+                  04
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                    color: #2e5496;
+                  "
+                >
+                  CS2
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Demonstrou postura receptiva no trabalho em equipe,
+                  considerando novas ideias e opiniões para a definição da
+                  arquitetura e do fluxo de versionamento.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Histórico de discussões do time em Issues/PRs do repositório
+                  ou ata de reuniões.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════════════ LISTA DE VERIFICAÇÃO — CRITÉRIOS DE AVALIAÇÃO (MÓDULO II) ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px">
+        <div class="capacidades-header">
+          LISTA DE VERIFICAÇÃO — CRITÉRIOS DE AVALIAÇÃO (MÓDULO II)
+        </div>
+        <div class="capacidades-content" style="padding: 12px 14px">
+          <p style="margin-bottom: 12px; line-height: 1.5">
+            Esta lista de verificação consolida os critérios técnicos e
+            socioemocionais para a avaliação do
+            <strong
+              >Módulo II — Parametrização, Frameworks e Construção do
+              Core</strong
+            >.
+          </p>
+
+          <table
+            style="
+              width: 100%;
+              border-collapse: collapse;
+              font-size: 10pt;
+              background: #ffffff;
+              border: 1px solid #2e5496;
+            "
+          >
+            <thead>
+              <tr style="background-color: #2e5496; color: #ffffff">
+                <th
+                  style="
+                    padding: 8px;
+                    border: 1px solid #2e5496;
+                    text-align: center;
+                    width: 5%;
+                  "
+                >
+                  #
+                </th>
+                <th
+                  style="
+                    padding: 8px;
+                    border: 1px solid #2e5496;
+                    text-align: center;
+                    width: 12%;
+                  "
+                >
+                  Ref. Cap.
+                </th>
+                <th
+                  style="
+                    padding: 8px;
+                    border: 1px solid #2e5496;
+                    text-align: left;
+                    width: 48%;
+                  "
+                >
+                  Critério de Avaliação / Indicador de Desempenho
+                </th>
+                <th
+                  style="
+                    padding: 8px;
+                    border: 1px solid #2e5496;
+                    text-align: left;
+                    width: 35%;
+                  "
+                >
+                  Evidência de Aprendizagem
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                  "
+                >
+                  01
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                    color: #2e5496;
+                  "
+                >
+                  CT2
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Definiu e aplicou as configurações e parametrizações da
+                  aplicação web (variáveis de ambiente, portas, conexões de
+                  banco de dados e dependências).
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Arquivo de configuração de ambiente
+                  (<code>.env.example</code>) e arquivos de manifesto do
+                  projeto.
+                </td>
+              </tr>
+              <tr style="background-color: #fcfdfe">
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                  "
+                >
+                  02
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                    color: #2e5496;
+                  "
+                >
+                  CT3
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Construiu as rotas e regras de negócio principais (core) da
+                  aplicação web para o gerenciamento de pedidos e inventários,
+                  garantindo a manipulação adequada de dados.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Código-fonte funcional das rotas/controllers e módulos de
+                  negócio no repositório.
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                  "
+                >
+                  03
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                    color: #2e5496;
+                  "
+                >
+                  CS1
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Reconheceu as especificações técnicas necessárias para
+                  parametrizar e integrar a aplicação web de forma robusta e
+                  modular.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Justificativa das configurações e escolhas de frameworks na
+                  documentação técnica.
+                </td>
+              </tr>
+              <tr style="background-color: #fcfdfe">
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                  "
+                >
+                  04
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                    color: #2e5496;
+                  "
+                >
+                  CS2
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Estimulou o diálogo e o consenso na equipe na tomada de
+                  decisões relativas à escolha de bibliotecas, frameworks e
+                  padrões de codificação do core.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Registros de Pull Requests aprovados com revisão de pares
+                  (code review).
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════════════ LISTA DE VERIFICAÇÃO — CRITÉRIOS DE AVALIAÇÃO (MÓDULO III) ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px">
+        <div class="capacidades-header">
+          LISTA DE VERIFICAÇÃO — CRITÉRIOS DE AVALIAÇÃO (MÓDULO III)
+        </div>
+        <div class="capacidades-content" style="padding: 12px 14px">
+          <p style="margin-bottom: 12px; line-height: 1.5">
+            Esta lista de verificação consolida os critérios técnicos e
+            socioemocionais para a avaliação do
+            <strong
+              >Módulo III — Engenharia de Testes, Resolução de Problemas e
+              Segurança</strong
+            >.
+          </p>
+
+          <table
+            style="
+              width: 100%;
+              border-collapse: collapse;
+              font-size: 10pt;
+              background: #ffffff;
+              border: 1px solid #2e5496;
+            "
+          >
+            <thead>
+              <tr style="background-color: #2e5496; color: #ffffff">
+                <th
+                  style="
+                    padding: 8px;
+                    border: 1px solid #2e5496;
+                    text-align: center;
+                    width: 5%;
+                  "
+                >
+                  #
+                </th>
+                <th
+                  style="
+                    padding: 8px;
+                    border: 1px solid #2e5496;
+                    text-align: center;
+                    width: 12%;
+                  "
+                >
+                  Ref. Cap.
+                </th>
+                <th
+                  style="
+                    padding: 8px;
+                    border: 1px solid #2e5496;
+                    text-align: left;
+                    width: 48%;
+                  "
+                >
+                  Critério de Avaliação / Indicador de Desempenho
+                </th>
+                <th
+                  style="
+                    padding: 8px;
+                    border: 1px solid #2e5496;
+                    text-align: left;
+                    width: 35%;
+                  "
+                >
+                  Evidência de Aprendizagem
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                  "
+                >
+                  01
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                    color: #2e5496;
+                  "
+                >
+                  CT4
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Elaborou e executou o plano de testes automatizados
+                  (unitários/integração) para os endpoints da API, validando os
+                  fluxos de sucesso e exceção.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Plano de Testes documentado e relatório/script de execução dos
+                  testes automatizados.
+                </td>
+              </tr>
+              <tr style="background-color: #fcfdfe">
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                  "
+                >
+                  02
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                    color: #2e5496;
+                  "
+                >
+                  CT3 / CT4
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Aplicou práticas de segurança no tratamento de requisições
+                  HTTP e proteção dos dados (validação de entrada, sanitização,
+                  gestão de acessos e tratamento de erros).
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Implementação de middlewares de segurança,
+                  autenticação/autorização e validação de payloads.
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                  "
+                >
+                  03
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                    color: #2e5496;
+                  "
+                >
+                  CS1
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Identificou vulnerabilidades e requisitos de resiliência
+                  necessários para garantir o correto funcionamento e a proteção
+                  do Portal B2B em ambiente web.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Checklist de segurança e relatório de tratamento de exceções.
+                </td>
+              </tr>
+              <tr style="background-color: #fcfdfe">
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                  "
+                >
+                  04
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                    color: #2e5496;
+                  "
+                >
+                  CS2
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Incentivou a colaboração no time para a resolução conjunta de
+                  problemas, depuração de falhas e refatoração de código
+                  reportadas pelos testes.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Histórico de correção de falhas (issue tracker) e revisões
+                  colaborativas.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════════════ LISTA DE VERIFICAÇÃO — CRITÉRIOS DE AVALIAÇÃO (MÓDULO IV) ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px">
+        <div class="capacidades-header">
+          LISTA DE VERIFICAÇÃO — CRITÉRIOS DE AVALIAÇÃO (MÓDULO IV)
+        </div>
+        <div class="capacidades-content" style="padding: 12px 14px">
+          <p style="margin-bottom: 12px; line-height: 1.5">
+            Esta lista de verificação consolida os critérios técnicos e
+            socioemocionais para a avaliação do
+            <strong
+              >Módulo IV — Plano de Implantação, DevOps, Homologação e
+              Documentação</strong
+            >.
+          </p>
+
+          <table
+            style="
+              width: 100%;
+              border-collapse: collapse;
+              font-size: 10pt;
+              background: #ffffff;
+              border: 1px solid #1b7e36;
+            "
+          >
+            <thead>
+              <tr style="background-color: #1b7e36; color: #ffffff">
+                <th
+                  style="
+                    padding: 8px;
+                    border: 1px solid #1b7e36;
+                    text-align: center;
+                    width: 5%;
+                  "
+                >
+                  #
+                </th>
+                <th
+                  style="
+                    padding: 8px;
+                    border: 1px solid #1b7e36;
+                    text-align: center;
+                    width: 12%;
+                  "
+                >
+                  Ref. Cap.
+                </th>
+                <th
+                  style="
+                    padding: 8px;
+                    border: 1px solid #1b7e36;
+                    text-align: left;
+                    width: 48%;
+                  "
+                >
+                  Critério de Avaliação / Indicador de Desempenho
+                </th>
+                <th
+                  style="
+                    padding: 8px;
+                    border: 1px solid #1b7e36;
+                    text-align: left;
+                    width: 35%;
+                  "
+                >
+                  Evidência de Aprendizagem
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                  "
+                >
+                  01
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                    color: #1b7e36;
+                  "
+                >
+                  CT5
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Preparou a infraestrutura de produção (containers/servidores
+                  web) e publicou o sistema em ambiente produtivo simulado.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Arquivos de infraestrutura/DevOps (<code>Dockerfile</code> /
+                  <code>docker-compose.yml</code>) e logs do ambiente ativo.
+                </td>
+              </tr>
+              <tr style="background-color: #fcfdfe">
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                  "
+                >
+                  02
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                    color: #1b7e36;
+                  "
+                >
+                  CT5 / CT4
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Executou o plano de implantação, homologou o Portal B2B em
+                  produção e realizou testes de fumaça (<em>smoke tests</em>)
+                  para comprovar o pleno funcionamento pós-deploy.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Relatório de Validação da Implantação e sistema demonstrado em
+                  funcionamento.
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                  "
+                >
+                  03
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                    color: #1b7e36;
+                  "
+                >
+                  CT5 / CT1
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Documentou o processo completo de implantação em um
+                  <em>Deployment Runbook</em> reprodutível, contendo instruções
+                  de preparação, execução, contingência e rollback.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Documento <em>Deployment Runbook</em> / Dossiê de Implantação
+                  entregue em PDF.
+                </td>
+              </tr>
+              <tr style="background-color: #fcfdfe">
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                  "
+                >
+                  04
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                    color: #1b7e36;
+                  "
+                >
+                  CS1
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Reconheceu com precisão todas as exigências operacionais e de
+                  infraestrutura necessárias para a transição do sistema de
+                  desenvolvimento para o ambiente de produção.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Plano de contingência e estratégias de suporte e manutenção no
+                  Dossiê.
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                  "
+                >
+                  05
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border: 1px solid #d0d7de;
+                    text-align: center;
+                    font-weight: bold;
+                    color: #1b7e36;
+                  "
+                >
+                  CS2
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Demonstrou liderança e espírito colaborativo com os colegas no
+                  gerenciamento de imprevistos durante a janela de implantação e
+                  homologação final.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de">
+                  Ata de homologação final com divisão de papéis do time no
+                  deploy.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- /page -->
+  </body>
+</html>

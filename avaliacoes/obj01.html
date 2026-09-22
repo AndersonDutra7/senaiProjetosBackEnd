@@ -1,0 +1,1585 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avaliação Objetiva – Módulo 01</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap');
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11pt;
+        color: #000;
+        background: #fff;
+      }
+
+      /* ── PAGE LAYOUT ── */
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 15mm 15mm 15mm 15mm;
+      }
+
+      /* ── HEADER TABLE ── */
+      .header-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 14px;
+      }
+      .header-table td,
+      .header-table th {
+        border: 1px solid #000;
+        padding: 3px 6px;
+        vertical-align: middle;
+        font-size: 10pt;
+      }
+      .logo-cell {
+        width: 140px;
+        text-align: center;
+        vertical-align: middle !important;
+        padding: 8px;
+      }
+      .logo-cell span {
+        font-size: 9pt;
+        font-weight: normal;
+        display: block;
+        font-style: normal;
+      }
+
+      .senai-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .senai-brand img {
+        max-width: 120px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+      .title-cell {
+        text-align: center;
+        font-weight: bold;
+        font-size: 13pt;
+        letter-spacing: 1px;
+        padding: 6px;
+      }
+      .desemp-cell {
+        width: 90px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 10pt;
+        vertical-align: top;
+      }
+      .info-row td {
+        font-size: 10pt;
+      }
+      .label-bold {
+        font-weight: bold;
+      }
+      .estudante-row td {
+        font-weight: bold;
+        font-size: 10.5pt;
+      }
+
+      /* ── CAIXA DE CAPACIDADES GERAIS ── */
+      .capacidades-header {
+        background: #2e5496;
+        color: #fff;
+        font-weight: bold;
+        font-size: 12pt;
+        padding: 10px 10px;
+        margin-top: 18px;
+        margin-bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .capacidades-content {
+        border: 1px solid #2e5496;
+        border-top: none;
+        padding: 8px 10px 10px 10px;
+        margin-bottom: 4px;
+      }
+      .capacidades-content p {
+        margin-bottom: 3px;
+      }
+      .capacidades-content p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* ── ITEM HEADER ── */
+      .item-header {
+        background: #2e5496;
+        color: #fff;
+        font-weight: bold;
+        font-size: 12pt;
+        padding: 10px 10px;
+        margin-top: 18px;
+        margin-bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .item-box {
+        border: 1px solid #2e5496;
+        border-top: none;
+        padding: 8px 10px 10px 10px;
+        margin-bottom: 4px;
+      }
+
+      /* ── BADGES DE DIFICULDADE ── */
+      .badge {
+        font-size: 8.5pt;
+        font-weight: bold;
+        padding: 3px 10px;
+        border-radius: 4px;
+        color: #ffffff;
+        line-height: 1;
+        letter-spacing: 0.3px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+      }
+
+      .badge-facil {
+        background-color: #28a745;
+      }
+
+      .badge-medio {
+        background-color: #f0a500;
+      }
+
+      .badge-dificil {
+        background-color: #d9534f;
+      }
+
+      /* ── CAPACIDADE ── */
+      .capacidade-label {
+        font-weight: bold;
+        font-style: italic;
+        text-decoration: underline;
+        font-size: 10.5pt;
+        margin-bottom: 2px;
+      }
+      .capacidade-text {
+        font-size: 10.5pt;
+        margin-bottom: 8px;
+      }
+
+      /* ── CONTEXTO ── */
+      .contexto-label {
+        font-weight: bold;
+        font-style: italic;
+        text-decoration: underline;
+        font-size: 10.5pt;
+        margin-top: 6px;
+        margin-bottom: 3px;
+      }
+      .contexto-text {
+        font-size: 10.5pt;
+        margin-bottom: 8px;
+        line-height: 1.45;
+      }
+
+      /* ── COMANDO ── */
+      .comando-label {
+        font-weight: bold;
+        font-style: italic;
+        text-decoration: underline;
+        font-size: 10.5pt;
+        margin-top: 6px;
+        margin-bottom: 3px;
+      }
+      .comando-text {
+        font-size: 10.5pt;
+        margin-bottom: 8px;
+        line-height: 1.45;
+      }
+
+      /* ── ALTERNATIVAS ── */
+      .alternativas-label {
+        font-weight: bold;
+        font-style: italic;
+        text-decoration: underline;
+        font-size: 10.5pt;
+        margin-top: 6px;
+        margin-bottom: 6px;
+      }
+      .alternativa {
+        color: #c00000;
+        font-size: 10.5pt;
+        margin: 5px 0 5px 16px;
+        line-height: 1.5;
+      }
+      .alternativa span.letra {
+        font-weight: bold;
+      }
+
+      /* ── IMAGEM ── */
+      .diagrama-img {
+        display: block;
+        max-width: 100%;
+        margin: 8px auto;
+      }
+
+      /* ── CODE BLOCK ── */
+      .code-block {
+        background: #0d1117;
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 10px 0;
+      }
+      .code-header {
+        background: #0d1117;
+        border-bottom: 1px solid #f1f1f1;
+        padding: 6px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .code-dots {
+        display: flex;
+        gap: 6px;
+      }
+      .code-dots span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
+      .code-dots span:nth-child(1) {
+        background: #f85149;
+      }
+      .code-dots span:nth-child(2) {
+        background: #e3b341;
+      }
+      .code-dots span:nth-child(3) {
+        background: #39d353;
+      }
+      .code-filename {
+        font-size: 1rem;
+        color: #f1f1f1;
+        font-family: 'DM Mono', monospace;
+      }
+      .copy-btn {
+        background: none;
+        border: none;
+        color: #d2a8ff;
+        cursor: pointer;
+        font-size: 0.7rem;
+        padding: 3px 6px;
+        border-radius: 4px;
+        font-family: 'DM Mono', monospace;
+      }
+      .code-body {
+        padding: 12px 14px;
+        overflow-x: auto;
+      }
+      .code-body pre {
+        font-size: 1rem;
+        line-height: 1.55;
+        white-space: pre;
+        color: #f1f1f1;
+        font-family: 'DM Mono', monospace;
+      }
+      .kw {
+        color: #ff7b72;
+      }
+      .fn {
+        color: #d2a8ff;
+      }
+      .str {
+        color: #a5d6ff;
+      }
+      .num {
+        color: #6087f2;
+      }
+      .cmt {
+        color: #8b949e;
+      }
+      .prop {
+        color: #79c0ff;
+      }
+      .var {
+        color: #ffa657;
+      }
+
+      /* ── PAGE BREAK ── */
+      .page-break {
+        page-break-before: always;
+      }
+
+      /* ── SECTION DIVIDER ── */
+      .section-divider {
+        margin: 28px 0;
+        border-top: 3px solid #2e5496;
+        border-bottom: 3px solid #2e5496;
+        padding: 12px 0 8px 0;
+      }
+      .section-title {
+        font-size: 13pt;
+        font-weight: bold;
+        color: #2e5496;
+        text-align: center;
+        margin-bottom: 4px;
+      }
+
+      /* ── PRINT ── */
+      @media print {
+        * {
+          print-color-adjust: exact;
+        }
+        body {
+          background: #fff;
+        }
+
+        .item-header {
+          background: #2e5496 !important;
+          color: #fff !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+
+        .item-box {
+          border: 1px solid #2e5496 !important;
+        }
+
+        .code-block {
+          background: #0d1117 !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+
+        .page {
+          margin: 0;
+          padding: 12mm 14mm;
+          width: 100%;
+        }
+        .page-break {
+          page-break-before: always;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- ══════════════════ CABEÇALHO ══════════════════ -->
+      <table class="header-table">
+        <tr>
+          <td class="logo-cell" rowspan="7">
+            <div class="senai-brand">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_sfpOEDmPPoL6K0aQL4qg5SsWL_41ZqhyF7zW1509kA&s=10"
+                alt="Logo SENAI"
+              />
+              <span>Serviço Nacional de Aprendizagem</span>
+            </div>
+          </td>
+          <td class="title-cell">AVALIAÇÃO OBJETIVA</td>
+          <td class="desemp-cell" rowspan="7">Desempenho</td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Data:</span>
+            <em style="color: #2e5496; font-weight: bold">21/09/2026</em>
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Docente:</span>
+            <em style="color: #2e5496; font-weight: bold"
+              >Anderson Raulino Dutra</em
+            >
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Curso Técnico em:</span>
+            <em style="color: #2e5496; font-weight: bold">
+              Desenvolvimento de Sistemas</em
+            >
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Unidade Curricular:</span>
+            <em style="color: #2e5496; font-weight: bold"
+              >Projeto de Backend</em
+            >
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Turma:</span>
+            <em style="color: #2e5496; font-weight: bold">T TIIN 2025/1 M2</em>
+          </td>
+        </tr>
+        <tr class="estudante-row">
+          <td><strong>Colaborador / Avaliado:</strong></td>
+        </tr>
+      </table>
+
+      <div class="section-divider">
+        <div class="section-title">
+          AVALIAÇÃO OBJETIVA <br />
+          Módulo 01: Planejamento Ágil, Arquitetura e Governança de Código
+        </div>
+      </div>
+
+      <!-- ══════════════════ CAIXA DE CAPACIDADES ══════════════════ -->
+      <div class="capacidades-box">
+        <div class="capacidades-header">CAPACIDADES AVALIADAS</div>
+        <div class="capacidades-content">
+          <p><strong>C1:</strong> Correlacionar as demandas do cliente</p>
+          <p>
+            <strong>C2:</strong> Aplicar técnicas de levantamento de requisitos
+          </p>
+          <p>
+            <strong>C3:</strong> Aplicar técnicas de levantamento de requisitos
+            de armazenamento de dados.
+          </p>
+          <p><strong>C4:</strong> Aplicar técnicas de modelagem de dados</p>
+          <p>
+            <strong>C5:</strong> Seguir recomendações técnicas na aplicação da
+            linguagem de definição e manipulação de dados
+          </p>
+          <p>
+            <strong>C6:</strong> Aplicar técnicas de versionamento de software
+          </p>
+        </div>
+      </div>
+      <!-- ITEM 01 -->
+      <div class="item-header">
+        <span>ITEM 01</span>
+        <span class="badge badge-facil">Fácil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C1 – Correlacionar as demandas do cliente com as especificações
+          técnicas do projeto.
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma equipe de desenvolvimento backend para uma plataforma de
+          e-commerce reuniu-se com o gerente de produto do cliente para alinhar
+          as funcionalidades prioritárias do novo ciclo de entregas. O cliente
+          expressou que a funcionalidade de recuperação de senha por e-mail é
+          indispensável para a liberação da aplicação em produção, enquanto o
+          módulo de recomendação de produtos baseado em inteligência artificial
+          pode ser implementado em fases futuras sem impactar o lançamento
+          inicial.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Considerando a aplicação da técnica de priorização MoSCoW para
+          correlacionar corretamente as demandas apresentadas pelo cliente ao
+          backlog da aplicação, qual alternativa descreve a classificação
+          adequada dessas funcionalidades?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> A funcionalidade de recuperação de senha
+          deve ser classificada como Could Have por ser uma solicitação
+          frequente de usuários finais em sistemas legados, enquanto o módulo de
+          recomendação por inteligência artificial é classificado como Must Have
+          por representar o grande diferencial competitivo de mercado do produto
+          contratado.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> A funcionalidade de recuperação de senha
+          deve ser enquadrada como Should Have para garantir que os testes de
+          carga sejam finalizados antes de sua publicação, e o módulo de
+          recomendação deve ser rotulado como Won't Have nesta versão para
+          reduzir custos.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> O módulo de recomendação deve ser
+          classificado como Must Have para garantir a monetização imediata da
+          plataforma, e a recuperação de senha deve ser alocada como Could Have.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> A recuperação de senha é um requisito
+          Must Have, enquanto o sistema de recomendação classifica-se como Could
+          Have.
+        </div>
+      </div>
+
+      <!-- ITEM 02 -->
+      <div class="item-header">
+        <span>ITEM 02</span>
+        <span class="badge badge-medio">Média</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C1 – Correlacionar as demandas do cliente com as especificações
+          técnicas do projeto.
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Durante o levantamento de regras de negócio de um sistema de gestão
+          financeira corporativa, o cliente solicitou que o sistema bloqueie
+          automaticamente a emissão de notas fiscais caso a empresa contratante
+          esteja inadimplente há mais de 30 dias. Além disso, exigiu que a
+          liberação da funcionalidade ocorra de forma imediata assim que a
+          confirmação do pagamento for recebida via notificação assíncrona de um
+          gateway bancário.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Ao correlacionar essa demanda do cliente com o projeto da arquitetura
+          backend em Node.js, qual alternativa descreve o fluxo técnico adequado
+          para atender a esse requisito de negócio?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> O endpoint de emissão de nota fiscal
+          deve consultar diretamente a base de dados em memória do cliente no
+          front-end para determinar se a empresa possui débitos pendentes,
+          dispensando a validação das regras de negócio na camada backend de
+          serviços da aplicação Node.js para otimizar o tempo de resposta e
+          consumo de CPU.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> O endpoint de emissão deve consultar a
+          camada de serviço do backend para validar o status de adimplência do
+          cliente antes de gerar a nota, e o endpoint do webhook deve atualizar
+          o status financeiro do cliente no banco de dados assim que receber a
+          notificação do gateway bancário.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> O sistema deve criar um agendamento
+          assíncrono para emitir todas as notas fiscais no final do dia, sem
+          realizar validações de pendências financeiras no momento do envio da
+          requisição HTTP pelo usuário no front-end.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> O webhook de pagamento deve reescrever o
+          código-fonte da rota de emissão no servidor Node.js a cada confirmação
+          bancária recebida.
+        </div>
+      </div>
+
+      <!-- ITEM 03 -->
+      <div class="item-header">
+        <span>ITEM 03</span>
+        <span class="badge badge-dificil">Difícil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C1 – Correlacionar as demandas do cliente com as especificações
+          técnicas do projeto.
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Um grande portal de saúde necessita adequar a sua API backend para
+          atender às exigências legais da Lei Geral de Proteção de Dados (LGPD)
+          reportadas pelo setor jurídico do cliente. A demanda exige o controle
+          estrito do consentimento dos usuários sobre o compartilhamento de
+          exames médicos com terceiros, garantindo o rastreamento do histórico
+          de aceites e a possibilidade de revogação ou anonimização dos dados
+          pessoais a qualquer tempo.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Considerando a correlação entre essa restrição legal do cliente e a
+          arquitetura do backend em Node.js, qual decisão técnica atende
+          integralmente a esses requisitos?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Modelar uma entidade específica para o
+          registro de termos de consentimento com controle de versionamento no
+          banco de dados, aplicando middleware de autorização no backend Node.js
+          para interceptar requisições de compartilhamento de dados e rotinas
+          para anonimização dos registros em caso de revogação.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Armazenar o histórico de autorizações
+          dos pacientes exclusivamente em arquivos de log temporários do
+          servidor Node.js, permitindo a exclusão manual do arquivo pelo
+          administrador do sistema sempre que um usuário solicitar a revogação
+          do consentimento dos seus dados médicos.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Aplicar a criptografia de chave
+          simétrica apenas no banco de dados, assumindo que a criptografia
+          elimina a necessidade de registrar visualmente o consentimento ou de
+          tratar requisições de exclusão e anonimização formuladas pelo usuário.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Desabilitar todas as rotas de exportação
+          de dados da API para impedir o vazamento de informações de saúde de
+          forma permanente.
+        </div>
+      </div>
+
+      <!-- ITEM 04 -->
+      <div class="item-header">
+        <span>ITEM 04</span>
+        <span class="badge badge-facil">Fácil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C2 – Aplicar técnicas de levantamento de requisitos
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Em uma sessão de refinamento técnico para uma plataforma de streaming,
+          a equipe de arquitetura listou especificações para direcionar o
+          desenvolvimento da API backend. Entre as declarações registradas na
+          documentação, destacam-se duas: "O sistema deve permitir que o usuário
+          autentique-se via Single Sign-On (SSO) do Google" e "A API deve
+          responder a 95% das requisições de busca em tempo inferior a 200
+          milissegundos".
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Com base na classificação formal aplicada no levantamento de
+          requisitos de software, qual alternativa diferencia corretamente a
+          natureza dessas duas especificações?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> A funcionalidade de login por conta
+          externa representa um requisito de arquitetura de rede do servidor,
+          enquanto a métrica de tempo de resposta da busca representa um
+          requisito funcional de navegação direta da interface do usuário do
+          sistema.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Ambas as declarações representam
+          requisitos funcionais da aplicação backend, pois ambas descrevem
+          comportamentos que dependem diretamente de ações manuais do usuário
+          final durante a navegação na plataforma.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> O login via Google é um Requisito
+          Funcional, pois descreve uma ação que o sistema deve realizar,
+          enquanto o tempo de resposta inferior a 200ms é um Requisito Não
+          Funcional, pois especifica uma qualidade de desempenho.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> O tempo de resposta de 200ms é um
+          Requisito Funcional básico, e a autenticação externa é um Requisito
+          Não Funcional opcional.
+        </div>
+      </div>
+
+      <!-- ITEM 05 -->
+      <div class="item-header">
+        <span>ITEM 05</span>
+        <span class="badge badge-medio">Média</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C2 – Aplicar técnicas de levantamento de requisitos
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Um analista de sistemas backend está estruturando a documentação
+          técnica de um módulo de checkout. Para garantir que cada
+          funcionalidade levantada durante as reuniões com os stakeholders possa
+          ser validada pela equipe de qualidade (QA) e acompanhada até a sua
+          entrega final no repositório, ele precisa aplicar ferramentas para
+          governança e rastreabilidade dos requisitos.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Qual alternativa expressa corretamente o papel desempenhado pelos
+          Critérios de Aceite e pela Matriz de Rastreabilidade no levantamento e
+          gestão desses requisitos?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Os Critérios de Aceite especificam o
+          modelo sintático de DDL para criação de tabelas no PostgreSQL,
+          enquanto a Matriz de Rastreabilidade armazena as chaves de acesso aos
+          ambientes de homologação e produção do projeto.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> A Matriz de Rastreabilidade serve para
+          automatizar o deploy no servidor de aplicação, enquanto os Critérios
+          de Aceite definem as bibliotecas NPM que deverão ser instaladas
+          obrigatoriamente no Node.js.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Os Critérios de Aceite garantem que a
+          aplicação não utilize bancos de dados relacionais, enquanto a Matriz
+          de Rastreabilidade organiza o histórico de commits do repositório Git.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Os Critérios de Aceite definem as
+          condições objetivas para validar a entrega da funcionalidade, e a
+          Matriz conecta os requisitos às suas origens, artefatos de código e
+          testes.
+        </div>
+      </div>
+
+      <!-- ITEM 06 -->
+      <div class="item-header">
+        <span>ITEM 06</span>
+        <span class="badge badge-dificil">Difícil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C2 – Aplicar técnicas de levantamento de requisitos
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma equipe de engenharia foi encarregada de projetar uma API para
+          processar pagamentos simultâneos em eventos de alta demanda. Durante o
+          levantamento de requisitos não funcionais de desempenho para a
+          infraestrutura Node.js, observou-se que operações bloqueantes de
+          entrada e saída (I/O) no sistema de arquivos ou no banco de dados
+          poderiam congelar o Event Loop, degradando severamente a capacidade de
+          resposta da API.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Considerando a análise desse requisito não funcional e a arquitetura
+          single-threaded do Node.js, qual decisão técnica atende de forma mais
+          adequada às exigências de concorrência e desempenho?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Substituir o uso de chamadas assíncronas
+          no Node.js por rotinas síncronas com fs.readFileSync e operações
+          bloqueantes de leitura de banco de dados, garantindo que cada
+          requisição HTTP execute isoladamente do início ao fim sem intercalação
+          de eventos na memória do servidor.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Priorizar chamadas não bloqueantes
+          baseadas em Promises e async/await, delegando operações pesadas de I/O
+          ou processamento intensivo de CPU para workers dedicados ou filas
+          assíncronas, preservando o Event Loop livre para responder a novas
+          conexões.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Criar uma nova thread do sistema
+          operacional de forma síncrona a cada nova requisição HTTP recebida,
+          ignorando o modelo de Event Loop de thread única do Node.js para
+          simular um servidor tradicional multithread.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Desativar o mecanismo de log de erros no
+          servidor para evitar que o Event Loop seja suspenso durante
+          requisições simultâneas.
+        </div>
+      </div>
+
+      <!-- ITEM 07 -->
+      <div class="item-header">
+        <span>ITEM 07</span>
+        <span class="badge badge-facil">Fácil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C4- Aplicar técnicas de modelagem de dados
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma equipe de engenharia backend em Node.js está modelando a base de
+          dados de uma plataforma de e-commerce. Durante o levantamento de
+          entidades, identificou-se que um Cliente pode realizar múltiplos
+          Pedidos, mas cada Pedido pertence a apenas um único Cliente.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Para garantir a correta representação dessa regra de negócio no modelo
+          relacional do sistema, qual estratégia de modelagem de dados deve ser
+          adotada pela equipe?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> A equipe deve criar uma terceira tabela
+          intermediária contendo as chaves primárias das duas entidades, pois
+          relacionamentos em sistemas transacionais distribuídos exigem a
+          transformação obrigatória de qualquer vínculo em uma estrutura
+          associativa independente para evitar acoplamento no banco.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> A equipe deve replicar todos os campos
+          da tabela de Clientes diretamente dentro da tabela de Pedidos,
+          eliminando a necessidade de relacionamentos relacionais e tratando o
+          banco de dados como um repositório chave-valor não estruturado.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> A equipe deve definir uma relação de 1:N
+          (um para muitos), inserindo a chave primária de Cliente como chave
+          estrangeira na tabela de Pedidos para mapear o vínculo.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> A equipe deve criar uma relação N:N
+          vinculando diretamente as tabelas sem o uso de chaves estrangeiras.
+        </div>
+      </div>
+
+      <!-- ITEM 08 -->
+      <div class="item-header">
+        <span>ITEM 08</span>
+        <span class="badge badge-medio">Média</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C4- Aplicar técnicas de modelagem de dados
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Ao analisar a tabela de transações bancárias de uma fintech
+          desenvolvida em Node.js, o arquiteto de software notou que a tabela
+          continha o ID da transação, o valor, a data, o ID do cliente, o nome
+          do cliente, o CPF do cliente e o endereço do cliente. Toda vez que um
+          cliente realizava uma nova transação, seus dados pessoais e de
+          endereço eram duplicados na tabela de transações.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Considerando as boas práticas de modelagem relacional para eliminar
+          anomalias de atualização e redundâncias, qual procedimento de
+          normalização deve ser aplicado a essa estrutura?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Aplicar a Terceira Forma Normal (3FN),
+          separando os dados cadastrais do cliente em uma tabela própria e
+          mantendo na tabela de transações apenas a chave estrangeira do
+          cliente, garantindo que atributos não chave dependam exclusivamente da
+          chave primária.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Aplicar a Primeira Forma Normal (1FN),
+          convertendo os dados do cliente em coleções multivaloradas do tipo
+          matriz dentro de uma única coluna da tabela de transações, mantendo a
+          redundância estrutural no banco.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Desnormalizar a tabela para a Forma
+          Normal Zero, unificando os dados das transações com logs de auditoria
+          para acelerar as consultas na API REST.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Criar índices secundários em todas as
+          colunas redundantes para mitigar as falhas de integridade durante as
+          gravações.
+        </div>
+      </div>
+
+      <!-- ITEM 09 -->
+      <div class="item-header">
+        <span>ITEM 09</span>
+        <span class="badge badge-dificil">Difícil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C4- Aplicar técnicas de modelagem de dados
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma startup de entrega de encomendas está reestruturando sua API de
+          rastreamento em Node.js. O sistema precisa registrar o histórico de
+          rotas e eventos de localização em tempo real, onde cada pacote possui
+          dezenas de atualizações de status por minuto com campos altamente
+          dinâmicos (coordenadas GPS, temperatura do baú, velocidade, fotos de
+          comprovação de entrega). A equipe avalia se deve modelar esses dados
+          em um banco relacional (PostgreSQL) com relacionamentos complexos ou
+          em um banco NoSQL orientado a documentos (MongoDB).
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Analisando as características técnicas e a volumetria dinâmica do
+          cenário, qual alternativa justifica corretamente a escolha do modelo
+          de dados mais adequado?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> O modelo relacional é o mais indicado
+          pois impede alterações na estrutura de dados em tempo de execução,
+          obrigando que todas as coordenadas e metadados de rastreamento sigam
+          estritamente o mesmo esquema de tabela fixo sem comprometer a latência
+          da API.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> O modelo relacional com tabela única
+          unificada é superior pois elimina a necessidade de chaves primárias e
+          índices, garantindo throughput de gravação ilimitado para dados
+          estruturados complexos.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> O modelo NoSQL chave-valor é
+          indispensável pois permite realizar junções relacionais de alta
+          complexidade (JOINs) entre entidades heterogêneas sem consumir memória
+          do servidor Node.js.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> O modelo NoSQL orientado a documentos é
+          ideal devido ao esquema flexível e alta performance em gravações de
+          dados semiestruturados e voláteis.
+        </div>
+      </div>
+
+      <!-- ITEM 10 -->
+      <div class="item-header">
+        <span>ITEM 10</span>
+        <span class="badge badge-facil">Fácil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C3- Aplicar técnicas de levantamento de requisitos de armazenamento de
+          dados
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Durante a fase de concepção do backend de um portal de saúde
+          corporativo em Node.js, a liderança técnica listou as especificações
+          do sistema. A especificação R01 estabelece: "O sistema deve permitir
+          que o médico cadastre a receita digital do paciente". A especificação
+          R02 estabelece: "Todas as requisições à API backend devem ser
+          respondidas em no máximo 200 milissegundos sob uma carga de 5.000
+          usuários simultâneos".
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Com base na classificação padrão da engenharia de requisitos de
+          software, como as especificações R01 e R02 devem ser categorizadas,
+          respectivamente?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> A especificação R01 deve ser
+          classificada como um Requisito Não Funcional associado à regra de
+          negócio de domínio médico, enquanto a especificação R02 deve ser
+          considerada um Requisito Funcional focado estritamente nas tecnologias
+          de infraestrutura de armazenamento e servidores da API.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> A especificação R01 é um Requisito
+          Funcional, pois descreve uma funcionalidade ou comportamento direto do
+          sistema, e R02 é um Requisito Não Funcional, pois define uma restrição
+          de desempenho e qualidade do serviço.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> As especificações R01 e R02 são
+          Requisitos Não Funcionais, pois ambas tratam da arquitetura interna do
+          software e de diretrizes organizacionais de governança.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Ambas as declarações representam Regras
+          de Negócio operacionais sem impacto na engenharia de requisitos.
+        </div>
+      </div>
+
+      <!-- ITEM 11 -->
+      <div class="item-header">
+        <span>ITEM 11</span>
+        <span class="badge badge-medio">Média</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C3- Aplicar técnicas de levantamento de requisitos de armazenamento de
+          dados
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma equipe de desenvolvimento backend em Node.js está refinando o
+          backlog de um microsserviço de pagamentos. O Product Owner (PO)
+          apresentou o seguinte item: "Como usuário do aplicativo, quero
+          realizar pagamentos via PIX para transferir dinheiro de forma
+          instantânea". Durante a reunião de refinamento, os desenvolvedores
+          solicitaram detalhar as condições técnicas de erro (ex.: chave PIX
+          inexistente, saldo insuficiente, timeout na comunicação com o Banco
+          Central) para permitir a escrita de testes automatizados e validação
+          da entrega.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Qual artefato de engenharia de requisitos ágeis deve ser elaborado
+          pela equipe para registrar essas condições e delimitar o escopo de
+          pronto da História de Usuário?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Elaboração de um Diagrama de Caso de Uso
+          UML detalhando os atores primários e secundários, substituindo a User
+          Story original por uma especificação funcional em documento impresso
+          assinado pela diretoria antes do desenvolvimento do código em Node.js.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Definição do Termo de Abertura do
+          Projeto (Project Charter), que consolida as regras de negócio de alto
+          nível, os custos envolvidos e a matriz de riscos estratégicos do
+          ecossistema de pagamentos da empresa.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Escrita dos Critérios de Aceite
+          (Acceptance Criteria), que definem os cenários e condições que a
+          funcionalidade deve satisfazer para ser considerada concluída.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Criação do gráfico Burndown, que mapeia
+          a velocidade diária de codificação dos desenvolvedores backend durante
+          a Sprint.
+        </div>
+      </div>
+
+      <!-- ITEM 12 -->
+      <div class="item-header">
+        <span>ITEM 12</span>
+        <span class="badge badge-dificil">Difícil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C3- Aplicar técnicas de levantamento de requisitos de armazenamento de
+          dados
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Em uma empresa de tecnologia financeira, uma mudança regulatória
+          recente da autoridade monetária exige a alteração no formato de
+          retenção de impostos das transações. A API backend em Node.js possui
+          dezenas de serviços interconectados (faturamento, relatórios,
+          conciliação, extrato, notificação). Antes de autorizar a refatoração
+          do código, a liderança de arquitetura precisa mapear quais requisitos
+          de software, módulos e testes automatizados existentes serão
+          diretamente impactados por essa alteração legislativa.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Para realizar essa análise de impacto de forma precisa e prevenir
+          regressões no sistema, qual técnica de gestão e governança de
+          requisitos deve ser applied?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Utilização da Matriz de Rastreabilidade
+          de Requisitos (RTM), que vincula cada requisito regulatório às suas
+          respectivas regras de negócio, endpoints de API, tabelas no banco de
+          dados e casos de teste, permitindo avaliar a extensão completa das
+          mudanças antes da codificação.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Aplicação do método MoSCoW para
+          reclassificar todas as histórias do backlog do produto em 'Must Have'
+          ou 'Could Have', descartando os requisitos de relatórios do sistema
+          sem realizar o mapeamento técnico das dependências entre os módulos em
+          Node.js.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Execução de reuniões diárias (Daily
+          Scrum) estendidas com o time de engenharia para discutir informalmente
+          as partes do código backend que cada desenvolvedor acredita que devam
+          ser alteradas.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Aplicação da técnica Planning Poker para
+          estimar o tamanho em pontos de história da mudança sem avaliar quais
+          arquivos do sistema serão modificados.
+        </div>
+      </div>
+
+      <!-- ITEM 13 -->
+      <div class="item-header">
+        <span>ITEM 13</span>
+        <span class="badge badge-facil">Fácil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C5: Seguir recomendações técnicas na aplicação da linguagem de
+          definição e manipulação de dados
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Em uma API backend em Node.js para um sistema financeiro, um
+          desenvolvedor construiu uma rota de autenticação concatenando
+          diretamente as entradas do usuário na seguinte instrução SQL:
+        </div>
+
+        <!-- BLOCO DE CÓDIGO COM O SEU ESTILO -->
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="code-filename">📁 autenticacao.sql</div>
+            <button class="copy-btn">copiar</button>
+          </div>
+          <div class="code-body">
+            <pre>
+SELECT * FROM usuarios WHERE email = '` + email + `' AND senha = '` + senha + `';</pre
+            >
+          </div>
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Para corrigir essa falha e seguir as recomendações técnicas de
+          segurança na manipulação de dados, qual abordagem de codificação deve
+          ser adotada no backend?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Substituir a instrução SQL por uma
+          chamada de sistema operacional que execute scripts em lote para
+          sanitizar o texto da requisição antes de enviá-lo ao servidor de banco
+          de dados relacional.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Utilizar consultas parametrizadas
+          (prepared statements) enviando os argumentos separados do comando SQL
+          para impedir ataques de injeção de código.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Criptografar a string concatenada no
+          formato Base64 antes de realizar a consulta de validação no banco.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Converter todos os parâmetros recebidos
+          em letras maiúsculas via código.
+        </div>
+      </div>
+
+      <!-- ITEM 14 -->
+      <div class="item-header">
+        <span>ITEM 14</span>
+        <span class="badge badge-medio">Média</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C5- Seguir recomendações técnicas na aplicação da linguagem de
+          definição e manipulação de dados
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma plataforma de e-commerce construída em Node.js precisa processar o
+          cancelamento de um pedido. A operação exige atualizar o status do
+          pedido para "Cancelado", devolver os itens ao estoque e gerar um
+          comprovante de estorno na tabela de lançamentos financeiros. Se
+          qualquer uma dessas etapas falhar por queda de conexão ou erro de
+          validação, nenhuma alteração deve ser mantida na base de dados.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Para garantir a integridade dos dados durante o processamento dessa
+          rotina de cancelamento, qual recomendação técnica de manipulação de
+          dados deve ser implementada no backend?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Implementar a operação em requisições
+          HTTP paralelas independentes, confiando que o banco de dados desfaça
+          automaticamente as alterações das tabelas afetadas caso ocorra uma
+          falha de conexão na API Node.js durante a execução do script.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Executar comandos DDL de ALTER TABLE
+          antes de cada atualização para travar as tabelas no banco de dados
+          contra leituras concorrentes durante o processamento do cancelamento.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Gravar os registros em arquivos de log
+          em disco rígido locais no servidor Node.js antes de enviar as
+          consultas SQL isoladas para o banco de dados.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Envolver as três instruções de
+          manipulação (DML) em um bloco transacional com BEGIN, COMMIT e
+          ROLLBACK.
+        </div>
+      </div>
+
+      <!-- ITEM 15 -->
+      <div class="item-header">
+        <span>ITEM 15</span>
+        <span class="badge badge-medio">Média</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C5- Seguir recomendações técnicas na aplicação da linguagem de
+          definição e manipulação de dados
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Em uma API de relatórios para um marketplace com milhões de vendas
+          registradas, as consultas de busca por período e ID do vendedor
+          estavam demorando vários segundos para responder. O analista de banco
+          de dados sugeriu criar um índice composto na tabela de vendas
+          utilizando a linguagem de definição de dados (DDL) para otimizar as
+          leituras frequentes.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Considerando os impactos de desempenho na definição e manipulação de
+          dados, qual recomendação técnica deve ser avaliada antes de criar
+          múltiplos índices na tabela?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Embora os índices acelerem
+          significativamente as consultas de leitura (SELECT), eles geram custo
+          adicional nas operações de escrita e manipulação de dados (INSERT,
+          UPDATE e DELETE), pois o SGBD precisa atualizar a estrutura do índice
+          a cada alteração na tabela.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Os índices criados via DDL bloqueiam
+          permanentemente as operações de leitura na tabela durante a execução
+          de transações DML, tornando o banco inacessível para os clientes do
+          sistema.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> A criação de índices aumenta o tempo de
+          resposta das consultas SELECT, pois obriga o motor do banco a varrer
+          todas as páginas de dados sequencialmente.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Os índices substituem a necessidade de
+          chaves primárias e estrangeiras nas tabelas relacionais.
+        </div>
+      </div>
+
+      <!-- ITEM 16 -->
+      <div class="item-header">
+        <span>ITEM 16</span>
+        <span class="badge badge-dificil">Difícil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C5- Seguir recomendações técnicas na aplicação da linguagem de
+          definição e manipulação de dados
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma equipe backend refatorou um microsserviço em Node.js substituindo
+          a escrita manual de queries SQL puras por um ORM (Object-Relational
+          Mapping). Em uma das rotas de listagem de produtos com suas
+          respectivas categorias, a API passou a apresentar queda severa de
+          performance, executando 1 consulta para buscar 100 produtos e mais 100
+          consultas individuais para buscar a categoria de cada produto
+          (problema do N+1 queries).
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Qual recomendação técnica de manipulação e consulta de dados deve ser
+          aplicada para resolver o gargalo de desempenho gerado pelo uso do ORM?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Configurar a ORM para executar as 100
+          consultas individuais dentro de um laço de repetição assíncrono
+          (async/await) na aplicação Node.js, aumentando a quantidade de
+          conexões concorrentes no pool do banco de dados relacional para
+          distribuir a carga de processamento.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Substituir o banco relacional por um
+          repositório NoSQL de arquivos texto sem índices, eliminando a camada
+          de persistência para que a aplicação processe os dados diretamente em
+          memória RAM.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Ajustar o carregamento dos dados para
+          utilizar junções (Eager Loading / JOIN) na mesma consulta, reduzindo a
+          busca a uma única instrução SQL.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Adicionar cláusulas de ORDER BY DESC em
+          todas as subconsultas geradas automaticamente pela ORM.
+        </div>
+      </div>
+
+      <!-- ITEM 17 -->
+      <div class="item-header">
+        <span>ITEM 17</span>
+        <span class="badge badge-facil">Fácil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C6- Aplicar técnicas de versionamento de software
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Um novo desenvolvedor backend ingressou na equipe e precisa enviar
+          suas alterações de código de um microsserviço em Node.js para o
+          repositório remoto Git. Ele realizou as modificações nos arquivos, mas
+          precisa registrar a mensagem de commit seguindo o padrão corporativo
+          de <em>Conventional Commits</em> para facilitar a rastreabilidade e a
+          geração de changelogs automatizados.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Qual mensagem de commit atende corretamente às boas práticas do padrão
+          <em>Conventional Commits</em> para a inclusão de um novo filtro de
+          produtos?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span>
+          <code
+            >update: ajustei varios arquivos do projeto Node.js e corrigi erros
+            de sintaxe que estavam impedindo a subida da API para o ambiente de
+            testes do cliente</code
+          >
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span>
+          <code
+            >feat(produtos): adiciona endpoint para filtragem de itens por
+            categoria</code
+          >
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span>
+          <code
+            >Ajustes finais no codigo da API de produtos e correções do
+            banco</code
+          >
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span>
+          <code>commit inicial das mudancas de backend na branch main</code>
+        </div>
+      </div>
+
+      <!-- ITEM 18 -->
+      <div class="item-header">
+        <span>ITEM 18</span>
+        <span class="badge badge-medio">Média</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C6- Aplicar técnicas de versionamento de software
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma empresa de software adota o fluxo de trabalho
+          <em>Gitflow</em> para gerenciar o versionamento da sua API em Node.js.
+          A equipe de desenvolvimento precisa iniciar a construção de uma nova
+          funcionalidade de integração com gateway de pagamento que levará duas
+          semanas para ser concluída, enquanto outros desenvolvedores continuam
+          corrigindo bugs na branch de integração principal
+          (<code>develop</code>).
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Seguindo o modelo <em>Gitflow</em>, a partir de qual branch e com qual
+          padrão de nomenclatura a equipe deve criar o ambiente isolado de
+          trabalho para essa nova demanda?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Criar uma branch chamada
+          <code>hotfix/gateway-pagamento</code> diretamente a partir da branch
+          <code>main</code>, aplicando as alterações sem passar por code review
+          ou testes automatizados antes do deploy em produção.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Criar uma branch chamada
+          <code>release/gateway-pagamento</code> a partir da branch
+          <code>main</code>, bloqueando todos os outros commits do repositório
+          remoto até a conclusão do desenvolvimento.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Desenvolver as alterações diretamente na
+          branch <code>main</code>, utilizando tags numéricas diárias para
+          separar o código incompleto do código estável.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Criar uma branch
+          <code>feature/gateway-pagamento</code> a partir da branch
+          <code>develop</code>.
+        </div>
+      </div>
+
+      <!-- ITEM 19 -->
+      <div class="item-header">
+        <span>ITEM 19</span>
+        <span class="badge badge-medio">Média</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C6- Aplicar técnicas de versionamento de software
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Durante o desenvolvimento paralelo de duas <em>features</em> para uma
+          API Node.js, dois desenvolvedores alteraram as mesmas linhas do
+          arquivo de configuração de rotas (<code>routes.js</code>). Ao tentar
+          realizar a fusão das branches (<code>git merge</code>), o Git
+          interrompeu o processo e sinalizou um conflito de fusão (<em
+            >merge conflict</em
+          >).
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Qual procedimento técnico adequado deve ser adotado pelo desenvolvedor
+          para resolver esse conflito e manter o repositório consistente?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Abrir o arquivo <code>routes.js</code>,
+          analisar as marcações de conflito
+          (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>,
+          <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>), decidir junto com a equipe
+          qual código deve prevalecer, remover as marcações manuais, salvar o
+          arquivo, adicioná-lo à staging area (<code>git add</code>) e finalizar
+          a fusão com um novo commit.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Executar o comando
+          <code>git push --force</code> para sobrescrever o histórico do
+          repositório remoto com a versão local do desenvolvedor, ignorando as
+          alterações feitas pelo outro colega no arquivo <code>routes.js</code>.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Apagar a pasta <code>.git</code> do
+          projeto local e clonar novamente o repositório remoto, colando
+          manualmente as alterações perdidas sobre o código atualizado.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Deletar a branch principal do projeto e
+          recriá-la a partir do último commit estável.
+        </div>
+      </div>
+
+      <!-- ITEM 20 -->
+      <div class="item-header">
+        <span>ITEM 20</span>
+        <span class="badge badge-dificil">Difícil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C6- Aplicar técnicas de versionamento de software
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Um time de engenharia de software prepara a liberação da versão 2.4.1
+          de um microsserviço Node.js para o ambiente de produção. Para garantir
+          a rastreabilidade das entregas na esteira de CI/CD, a equipe utiliza a
+          especificação <em>Semantic Versioning</em> (SemVer -
+          <code>MAJOR.MINOR.PATCH</code>) e precisa marcar o commit exato da
+          liberação no histórico do Git.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Considerando a regra do <em>Semantic Versioning</em> e as boas
+          práticas de versionamento, o que representa a alteração do número
+          <code>PATCH</code> (de 2.4.0 para 2.4.1) e qual comando Git fixa essa
+          versão no repositório?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> A alteração no número PATCH indica a
+          introdução de uma nova funcionalidade incompatível com as versões
+          anteriores da API, e o comando utilizado para registrar essa versão é
+          o <code>git commit -m "v2.4.1"</code>.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> O incremento do PATCH indica a
+          reestruturação completa da arquitetura do banco de dados, e o comando
+          correto para publicar essa mudança no repositório remoto é
+          <code>git branch v2.4.1</code>.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> O PATCH indica correções de bugs
+          retrocompatíveis sem adição de novas funcionalidades, e o comando
+          <code>git tag -a v2.4.1 -m "Release v2.4.1"</code> cria a anotação do
+          marco no Git.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> O PATCH indica a adição de
+          funcionalidades compatíveis, e o comando é
+          <code>git checkout -b v2.4.1</code>.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1866 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avaliação Objetiva – Módulo 02</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap');
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11pt;
+        color: #000;
+        background: #fff;
+      }
+
+      /* ── PAGE LAYOUT ── */
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 15mm 15mm 15mm 15mm;
+      }
+
+      /* ── HEADER TABLE ── */
+      .header-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 14px;
+      }
+      .header-table td,
+      .header-table th {
+        border: 1px solid #000;
+        padding: 3px 6px;
+        vertical-align: middle;
+        font-size: 10pt;
+      }
+      .logo-cell {
+        width: 140px;
+        text-align: center;
+        vertical-align: middle !important;
+        padding: 8px;
+      }
+      .logo-cell span {
+        font-size: 9pt;
+        font-weight: normal;
+        display: block;
+        font-style: normal;
+      }
+
+      .senai-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .senai-brand img {
+        max-width: 120px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+      .title-cell {
+        text-align: center;
+        font-weight: bold;
+        font-size: 13pt;
+        letter-spacing: 1px;
+        padding: 6px;
+      }
+      .desemp-cell {
+        width: 90px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 10pt;
+        vertical-align: top;
+      }
+      .info-row td {
+        font-size: 10pt;
+      }
+      .label-bold {
+        font-weight: bold;
+      }
+      .estudante-row td {
+        font-weight: bold;
+        font-size: 10.5pt;
+      }
+
+      /* ── CAIXA DE CAPACIDADES GERAIS ── */
+      .capacidades-header {
+        background: #2e5496;
+        color: #fff;
+        font-weight: bold;
+        font-size: 12pt;
+        padding: 10px 10px;
+        margin-top: 18px;
+        margin-bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .capacidades-content {
+        border: 1px solid #2e5496;
+        border-top: none;
+        padding: 8px 10px 10px 10px;
+        margin-bottom: 4px;
+      }
+      .capacidades-content p {
+        margin-bottom: 3px;
+      }
+      .capacidades-content p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* ── ITEM HEADER ── */
+      .item-header {
+        background: #2e5496;
+        color: #fff;
+        font-weight: bold;
+        font-size: 12pt;
+        padding: 10px 10px;
+        margin-top: 18px;
+        margin-bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .item-box {
+        border: 1px solid #2e5496;
+        border-top: none;
+        padding: 8px 10px 10px 10px;
+        margin-bottom: 4px;
+      }
+
+      /* ── BADGES DE DIFICULDADE ── */
+      .badge {
+        font-size: 8.5pt;
+        font-weight: bold;
+        padding: 3px 10px;
+        border-radius: 4px;
+        color: #ffffff;
+        line-height: 1;
+        letter-spacing: 0.3px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+      }
+
+      .badge-facil {
+        background-color: #28a745;
+      }
+
+      .badge-medio {
+        background-color: #f0a500;
+      }
+
+      .badge-dificil {
+        background-color: #d9534f;
+      }
+
+      /* ── CAPACIDADE ── */
+      .capacidade-label {
+        font-weight: bold;
+        font-style: italic;
+        text-decoration: underline;
+        font-size: 10.5pt;
+        margin-bottom: 2px;
+      }
+      .capacidade-text {
+        font-size: 10.5pt;
+        margin-bottom: 8px;
+      }
+
+      /* ── CONTEXTO ── */
+      .contexto-label {
+        font-weight: bold;
+        font-style: italic;
+        text-decoration: underline;
+        font-size: 10.5pt;
+        margin-top: 6px;
+        margin-bottom: 3px;
+      }
+      .contexto-text {
+        font-size: 10.5pt;
+        margin-bottom: 8px;
+        line-height: 1.45;
+      }
+
+      /* ── COMANDO ── */
+      .comando-label {
+        font-weight: bold;
+        font-style: italic;
+        text-decoration: underline;
+        font-size: 10.5pt;
+        margin-top: 6px;
+        margin-bottom: 3px;
+      }
+      .comando-text {
+        font-size: 10.5pt;
+        margin-bottom: 8px;
+        line-height: 1.45;
+      }
+
+      /* ── ALTERNATIVAS ── */
+      .alternativas-label {
+        font-weight: bold;
+        font-style: italic;
+        text-decoration: underline;
+        font-size: 10.5pt;
+        margin-top: 6px;
+        margin-bottom: 6px;
+      }
+      .alternativa {
+        color: #c00000;
+        font-size: 10.5pt;
+        margin: 5px 0 5px 16px;
+        line-height: 1.5;
+      }
+      .alternativa span.letra {
+        font-weight: bold;
+      }
+
+      /* ── IMAGEM ── */
+      .diagrama-img {
+        display: block;
+        max-width: 100%;
+        margin: 8px auto;
+      }
+
+      /* ── CODE BLOCK ── */
+      .code-block {
+        background: #0d1117;
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 10px 0;
+      }
+      .code-header {
+        background: #0d1117;
+        border-bottom: 1px solid #f1f1f1;
+        padding: 6px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .code-dots {
+        display: flex;
+        gap: 6px;
+      }
+      .code-dots span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
+      .code-dots span:nth-child(1) {
+        background: #f85149;
+      }
+      .code-dots span:nth-child(2) {
+        background: #e3b341;
+      }
+      .code-dots span:nth-child(3) {
+        background: #39d353;
+      }
+      .code-filename {
+        font-size: 1rem;
+        color: #f1f1f1;
+        font-family: 'DM Mono', monospace;
+      }
+      .copy-btn {
+        background: none;
+        border: none;
+        color: #d2a8ff;
+        cursor: pointer;
+        font-size: 0.7rem;
+        padding: 3px 6px;
+        border-radius: 4px;
+        font-family: 'DM Mono', monospace;
+      }
+      .code-body {
+        padding: 12px 14px;
+        overflow-x: auto;
+      }
+      .code-body pre {
+        font-size: 1rem;
+        line-height: 1.55;
+        white-space: pre;
+        color: #f1f1f1;
+        font-family: 'DM Mono', monospace;
+      }
+      .kw {
+        color: #ff7b72;
+      }
+      .fn {
+        color: #d2a8ff;
+      }
+      .str {
+        color: #a5d6ff;
+      }
+      .num {
+        color: #6087f2;
+      }
+      .cmt {
+        color: #8b949e;
+      }
+      .prop {
+        color: #79c0ff;
+      }
+      .var {
+        color: #ffa657;
+      }
+
+      /* ── PAGE BREAK ── */
+      .page-break {
+        page-break-before: always;
+      }
+
+      /* ── SECTION DIVIDER ── */
+      .section-divider {
+        margin: 28px 0;
+        border-top: 3px solid #2e5496;
+        border-bottom: 3px solid #2e5496;
+        padding: 12px 0 8px 0;
+      }
+      .section-title {
+        font-size: 13pt;
+        font-weight: bold;
+        color: #2e5496;
+        text-align: center;
+        margin-bottom: 4px;
+      }
+
+      /* ── PRINT ── */
+      @media print {
+        * {
+          print-color-adjust: exact;
+        }
+        body {
+          background: #fff;
+        }
+
+        .item-header {
+          background: #2e5496 !important;
+          color: #fff !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+
+        .item-box {
+          border: 1px solid #2e5496 !important;
+        }
+
+        .code-block {
+          background: #0d1117 !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+
+        .page {
+          margin: 0;
+          padding: 12mm 14mm;
+          width: 100%;
+        }
+        .page-break {
+          page-break-before: always;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- ══════════════════ CABEÇALHO ══════════════════ -->
+      <table class="header-table">
+        <tr>
+          <td class="logo-cell" rowspan="7">
+            <div class="senai-brand">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_sfpOEDmPPoL6K0aQL4qg5SsWL_41ZqhyF7zW1509kA&s=10"
+                alt="Logo SENAI"
+              />
+              <span>Serviço Nacional de Aprendizagem</span>
+            </div>
+          </td>
+          <td class="title-cell">AVALIAÇÃO OBJETIVA</td>
+          <td class="desemp-cell" rowspan="7">Desempenho</td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Data:</span>
+            <em style="color: #2e5496; font-weight: bold">21/09/2026</em>
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Docente:</span>
+            <em style="color: #2e5496; font-weight: bold"
+              >Anderson Raulino Dutra</em
+            >
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Curso Técnico em:</span>
+            <em style="color: #2e5496; font-weight: bold">
+              Desenvolvimento de Sistemas</em
+            >
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Unidade Curricular:</span>
+            <em style="color: #2e5496; font-weight: bold"
+              >Projeto de Backend</em
+            >
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Turma:</span>
+            <em style="color: #2e5496; font-weight: bold">T TIIN 2025/1 M2</em>
+          </td>
+        </tr>
+        <tr class="estudante-row">
+          <td><strong>Colaborador / Avaliado:</strong></td>
+        </tr>
+      </table>
+
+      <div class="section-divider">
+        <div class="section-title">
+          AVALIAÇÃO OBJETIVA <br />
+          Módulo 02: Parametrização, Frameworks e Construção do Core
+        </div>
+      </div>
+
+      <!-- ══════════════════ CAIXA DE CAPACIDADES ══════════════════ -->
+      <div class="capacidades-box">
+        <div class="capacidades-header">CAPACIDADES AVALIADAS</div>
+        <div class="capacidades-content">
+          <p>
+            <strong>C1:</strong> Considerar o escopo do projeto na escola dos
+            protocolos de comunicação de sistemas web
+          </p>
+          <p>
+            <strong>C2:</strong> Aplicar técnicas para garantir o tratamento das
+            requisições de sistemas web
+          </p>
+          <p>
+            <strong>C3:</strong> Determinar técnicas de manipulação de dados
+            requeridas pelo projeto
+          </p>
+          <p>
+            <strong>C4:</strong> Determinar o tipo do banco de dados empregado
+          </p>
+          <p>
+            <strong>C5:</strong> Aplicar técnicas de normalização e padronização
+            de dados
+          </p>
+          <p>
+            <strong>C6:</strong> Executar testes de funcionamento da sistemas
+            para web. Instalar e configurar banco de dados
+          </p>
+          <p>
+            <strong>C7:</strong> Aplicar as configurações e parametrizações do
+            sistema para web Definir as configurações e parametrizações do
+            sistema para web
+          </p>
+        </div>
+      </div>
+      <!-- ITEM 01 -->
+      <div class="item-header">
+        <span>ITEM 01</span>
+        <span class="badge badge-facil">Fácil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C1- Considerar o escopo do projeto na escolha dos protocolos de
+          comunicação de sistemas web
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma equipe de desenvolvimento backend em Node.js está projetando um
+          sistema de atendimento ao cliente em tempo real para um aplicativo de
+          telemedicina. O requisito principal do sistema é permitir a troca
+          instantânea de mensagens bidirecionais entre o paciente e o médico sem
+          a necessidade de o cliente realizar sucessivas requisições de sondagem
+          (polling) ao servidor.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Para atender ao requisito de comunicação bidirecional contínua em
+          tempo real de forma eficiente, qual protocolo de comunicação web deve
+          ser selecionado pela equipe?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> O protocolo HTTP/1.1 operando no modo
+          stateless padrão, pois obriga a abertura e o fechamento de uma nova
+          conexão TCP a cada mensagem enviada pelo usuário, garantindo a máxima
+          segurança no tráfego de dados sensíveis de saúde sem consumir recursos
+          permanentes de memória no servidor Node.js.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> O protocolo SOAP baseado no formato XML,
+          pois fornece criptografia nativa no nível de transporte de mensagens
+          assíncronas e gerencia a persistência de estados atômicos entre o
+          cliente web e o backend da aplicação.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> O protocolo WebSockets, pois estabelece
+          uma conexão full-duplex permanente sobre uma única tomada TCP,
+          permitindo o envio de dados em tempo real com baixa latência.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> O protocolo FTP, pois é otimizado para o
+          envio assíncrono de pacotes de dados textuais.
+        </div>
+      </div>
+
+      <!-- ITEM 02 -->
+      <div class="item-header">
+        <span>ITEM 02</span>
+        <span class="badge badge-medio">Média</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C1- Considerar o escopo do projeto na escolha dos protocolos de
+          comunicação de sistemas web
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma plataforma de streaming de alta volumetria está reestruturando sua
+          arquitetura interna de microsserviços Node.js. O microsserviço de
+          autenticação precisa processar dezenas de milhares de chamadas por
+          segundo oriundas do microsserviço de catálogo. Para otimizar a
+          velocidade de transferência, reduzir o overhead de transporte e
+          utilizar multiplexação de requisições sobre uma única conexão TCP com
+          serialização binária de dados, a engenharia de infraestrutura precisa
+          definir o padrão de comunicação entre os microsserviços.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Considerando os requisitos de alta performance e baixo payload no
+          tráfego interno da arquitetura, qual protocolo e formato de dados são
+          os mais adequados para essa integração?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> gRPC utilizando HTTP/2 como meio de
+          transporte e Protocol Buffers (Protobuf) como formato de serialização
+          binária, pois permite a multiplexação de chamadas concorrentes e reduz
+          drasticamente o tamanho das mensagens trafegadas entre os
+          microsserviços.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> REST utilizando HTTP/1.1 com payloads em
+          formato XML estritamente validados por esquemas XSD, pois garante
+          maior velocidade de navegação na rede interna e suporte nativo em
+          navegadores web.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> WebSockets com payloads serializados em
+          formato YAML, pois converte automaticamente chamadas síncronas em
+          eventos assíncronos desacoplados.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> GraphQL sobre HTTP/1.0 enviando
+          requisições GET com dados codificados em Base64.
+        </div>
+      </div>
+
+      <!-- ITEM 03 -->
+      <div class="item-header">
+        <span>ITEM 03</span>
+        <span class="badge badge-dificil">Difícil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C1- Considerar o escopo do projeto na escolha dos protocolos de
+          comunicação de sistemas web
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma empresa de logística monitora a localização de 50.000 veículos em
+          tempo real através de rastreadores embarcados com hardware limitado e
+          conexões móveis instáveis (2G/3G de baixa largura de banda). Os
+          dispositivos precisam enviar pacotes mínimos de telemetria (latitude,
+          longitude, velocidade) continuamente para um servidor Node.js central,
+          minimizando o consumo de dados e mantendo a conexão aberta com baixo
+          consumo de energia.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Avaliando as restrições severas de infraestrutura de rede móvel,
+          restrição de hardware dos dispositivos e a necessidade de baixo
+          overhead de cabeçalho de rede, qual protocolo de comunicação deve ser
+          adotado na arquitetura de ingestão dos dados?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> O protocolo REST sobre HTTP/1.1
+          utilizando requisições POST com payloads JSON completos, pois os
+          cabeçalhos HTTP adicionam uma sobrecarga irrelevante ao pacote de
+          dados e garantem a reconexão automática sem perda de pacotes no
+          servidor backend.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> O protocolo WebSockets sobre TLS, pois
+          exige que os rastreadores mantenham conexões bidirecionais contínuas
+          com troca constante de frames de ping/pong de alto custo de largura de
+          banda e processamento local.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> O protocolo GraphQL sobre HTTP/2, pois
+          otimiza as consultas no banco de dados através da seleção precisa de
+          campos diretamente na camada do dispositivo do veículo.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> O protocolo MQTT, pois foi projetado
+          para redes instáveis com cabeçalhos mínimos e arquitetura
+          publica/subscreve.
+        </div>
+      </div>
+
+      <!-- ITEM 04 -->
+      <div class="item-header">
+        <span>ITEM 04</span>
+        <span class="badge badge-facil">Fácil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C2-  o tratamento das requisições de
+          sistemas web
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Durante a construção de uma API RESTful em Node.js com Express para um
+          e-commerce, o time de desenvolvimento precisa definir o método HTTP
+          adequado para um endpoint que permite atualizar
+          <b>apenas o preço</b> de um produto já cadastrado, mantendo
+          inalterados os demais campos (como nome, descrição e categoria).
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <span class="code-filename">📁 rotas_produtos.js</span>
+            <button class="copy-btn">copiar</button>
+          </div>
+          <div class="code-body">
+            <pre><span class="kw">const</span> <span class="var">express</span> = <span class="fn">require</span>(<span class="str">'express'</span>);
+<span class="kw">const</span> <span class="var">router</span> = <span class="var">express</span>.<span class="fn">Router</span>();
+
+<span class="var">router</span>.<span class="fn">patch</span>(<span class="str">'/produtos/:id'</span>, <span class="var">produtoController</span>.<span class="prop">atualizarPreco</span>);</pre>
+          </div>
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Considerando as convenções do padrão REST para roteamento e verbos
+          HTTP, qual verbo e justificativa técnica devem ser aplicados nessa
+          rota?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Utilizar o verbo <b>PUT</b> na rota
+          <b>/produtos/:id</b>, pois a especificação REST exige a substituição
+          integral de todo o documento do produto no banco de dados, sendo
+          obrigatório reenviar todos os campos no corpo da requisição mesmo para
+          pequenas alterações de um único atributo.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Utilizar o verbo <b>PATCH</b> na rota
+          <b>/produtos/:id</b>, pois este método é indicado para modificações
+          parciais em um recurso existente, atualizando apenas os atributos
+          informados no payload.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Utilizar o verbo <b>POST</b> na rota
+          <b>/produtos/atualizar-preco</b>, pois operações de alteração de
+          valores devem criar novos recursos associados ao produto original.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Utilizar o verbo <b>GET</b> informando
+          os novos dados via parâmetros na URL da requisição.
+        </div>
+      </div>
+
+      <!-- ITEM 05 -->
+      <div class="item-header">
+        <span>ITEM 05</span>
+        <span class="badge badge-medio">Média</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C2- Aplicar técnicas para garantir o tratamento das requisições de
+          sistemas web
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Em um serviço de cadastro de usuários em Node.js com Express, uma
+          requisição do tipo <b>POST</b> é recebida no endpoint
+          <b>/usuarios</b>. Ao realizar o parsing do corpo da requisição
+          (<b>req.body</b>), o backend identifica que o campo <b>email</b> não
+          foi informado pela aplicação cliente.
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <span class="code-filename">📁 usuarios_controller.js</span>
+            <button class="copy-btn">copiar</button>
+          </div>
+          <div class="code-body">
+            <pre><span class="var">app</span>.<span class="fn">post</span>(<span class="str">'/usuarios'</span>, (<span class="var">req</span>, <span class="var">res</span>) => {
+  <span class="kw">const</span> { <span class="prop">nome</span>, <span class="prop">email</span> } = <span class="var">req</span>.<span class="prop">body</span>;
+  <span class="kw">if</span> (!<span class="prop">nome</span> || !<span class="prop">email</span>) {
+    <span class="kw">return</span> <span class="var">res</span>.<span class="fn">status</span>(<span class="num">400</span>).<span class="fn">json</span>({ <span class="prop">erro</span>: <span class="str">'Dados obrigatórios ausentes'</span> });
+  }
+  <span class="comment">// ... rotina de salvamento ...</span>
+});</pre>
+          </div>
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Seguindo os padrões de tratamento de requisições e códigos de status
+          HTTP, como a API backend deve responder a essa requisição com falha de
+          validação?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Retornar o código de status
+          <b>500 Internal Server Error</b>, informando no corpo da resposta o
+          erro de execução interna do servidor para indicar que o banco de dados
+          não conseguiu salvar o usuário sem o campo obrigatório.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Retornar o código de status
+          <b>200 OK</b> contendo uma mensagem textual explicativa no corpo em
+          JSON, garantindo que o cliente frontend não dispare o tratamento de
+          erros HTTP em sua interface.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Retornar o código de status
+          <b>400 Bad Request</b>, sinalizando um erro do cliente devido ao
+          payload malformado ou ausência de atributos obrigatórios.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Retornar o código de status
+          <b>404 Not Found</b> indicando a falta da rota de cadastro de e-mail.
+        </div>
+      </div>
+
+      <!-- ITEM 06 -->
+      <div class="item-header">
+        <span>ITEM 06</span>
+        <span class="badge badge-dificil">Difícil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C2- Aplicar técnicas para garantir o tratamento das requisições de
+          sistemas web
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Durante o processamento de pagamentos assíncronos em uma API
+          Node.js/Express de alto tráfego, exceções não tratadas em funções
+          <b>async/await</b> estavam derrubando a aplicação e deixando
+          requisições pendentes sem resposta HTTP para os clientes. Para
+          solucionar o problema, a equipe precisa implementar um middleware
+          global de tratamento de erros.
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <span class="code-filename">📁 error_middleware.js</span>
+            <button class="copy-btn">copiar</button>
+          </div>
+          <div class="code-body">
+            <pre><span class="var">app</span>.<span class="fn">use</span>((<span class="var">err</span>, <span class="var">req</span>, <span class="var">res</span>, <span class="var">next</span>) => {
+  <span class="var">logger</span>.<span class="fn">error</span>(<span class="var">err</span>.<span class="prop">stack</span>);
+  <span class="var">res</span>.<span class="fn">status</span>(<span class="num">500</span>).<span class="fn">json</span>({ <span class="prop">erro</span>: <span class="str">'Erro interno no servidor'</span> });
+});</pre>
+          </div>
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Como deve ser declarada e posicionada a função de middleware no
+          Express para capturar centralizadamente qualquer exceção lançada pelas
+          rotas da aplicação?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Declarar a função com quatro parâmetros
+          obrigatoriamente <b>(err, req, res, next)</b> e registrá-la via
+          <b>app.use()</b> após a definição de todas as rotas da aplicação,
+          permitindo capturar os erros encaminhados explicitamente ou por
+          middlewares assíncronos.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Declarar a função com os dois parâmetros
+          convencionais <b>(req, res)</b> no topo do arquivo principal antes da
+          importação das rotas, garantindo que o Express intercepte o fluxo da
+          requisição antes do seu processamento.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Utilizar o método
+          <b>process.on('uncaughtException')</b> substituindo todas as respostas
+          HTTP da API por logs em arquivo texto sem responder ao cliente.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Inserir blocos
+          <b>try/catch</b> individuais dentro do arquivo de configuração do
+          banco de dados relacional.
+        </div>
+      </div>
+
+      <!-- ITEM 07 -->
+      <div class="item-header">
+        <span>ITEM 07</span>
+        <span class="badge badge-facil">Fácil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C4- Determinar o tipo do banco de dados empregado.
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma instituição bancária está desenvolvendo o serviço backend de
+          transferência financeira entre contas de clientes utilizando Node.js.
+          O sistema requer garantia estrita de integridade transacional
+          (propriedades ACID), suporte a relacionamentos estruturados entre
+          contas, agências e clientes, além da garantia de que uma transação com
+          falha reverta completamente todas as operações envolvidas sem deixar
+          dados inconsistentes.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Qual modelo de banco de dados deve ser selecionado pela equipe de
+          engenharia para atender rigorosamente às necessidades de consistência
+          e acoplamento relacional desse serviço?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> O modelo não-relacional baseado em
+          famílias de colunas (como Apache Cassandra), pois distribui os
+          registros financeiro-contábeis entre múltiplos nós da rede sem exigir
+          validações prévias de esquemas de tabela e sem necessitar do uso de
+          transações ACID na camada de armazenamento do banco.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> O modelo de banco de dados relacional
+          (SQL), pois oferece suporte nativo às propriedades ACID (Atomicidade,
+          Consistência, Isolamento e Durabilidade) e garante a integridade
+          referencial por meio de chaves estrangeiras.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> O modelo NoSQL orientado a grafos, pois
+          prioriza o mapeamento de conexões entre redes sociais e ignora
+          transações financeiras atômicas.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> O modelo de armazenamento chave-valor em
+          memória RAM sem persistência em disco rígido.
+        </div>
+      </div>
+
+      <!-- ITEM 08 -->
+      <div class="item-header">
+        <span>ITEM 08</span>
+        <span class="badge badge-medio">Média</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C4- Determinar o tipo do banco de dados empregado.
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Um portal de e-commerce internacional precisa armazenar o catálogo de
+          produtos de milhares de vendedores. Cada categoria de produto possui
+          um conjunto totalmente diferente de atributos e especificações
+          técnicas (por exemplo, um notebook possui processador e memória RAM,
+          enquanto uma peça de roupa possui tamanho, tecido e cor). A estrutura
+          precisa suportar inclusões frequentes de novos tipos de atributos sem
+          a necessidade de executar migrações de esquema (DDL) que bloqueiem a
+          base de dados.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Considerando a necessidade de esquema dinâmico (schema-less) e alta
+          velocidade de leitura de estruturas hierárquicas complexas, qual banco
+          de dados é o mais indicado?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Um banco de dados relacional clássico
+          configurado com tabelas desnormalizadas em uma única coluna do tipo
+          texto sem formatação, pois obriga que a aplicação backend em Node.js
+          faça a conversão manual de todos os tipos de dados a cada requisição
+          de busca efetuada pelos clientes do aplicativo.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Um banco de dados não-relacional (NoSQL)
+          orientado a colunas, pois reorganiza as tabelas em vetores numéricos
+          sequenciais e impede o armazenamento de estruturas de dados aninhadas
+          ou objetos JSON complexos.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Um banco de dados relacional com tabelas
+          estáticas rígidas, pois requer a criação de colunas adicionais via
+          comandos DDL para cada novo atributo.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Um banco de dados NoSQL orientado a
+          documentos (como MongoDB), pois armazena os dados em JSON/BSON com
+          esquema flexível.
+        </div>
+      </div>
+
+      <!-- ITEM 09 -->
+      <div class="item-header">
+        <span>ITEM 09</span>
+        <span class="badge badge-dificil">Difícil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C4- Determinar o tipo do banco de dados empregado.
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma plataforma de mobilidade urbana necessita processar dois fluxos de
+          dados distintos: a gestão financeira de corridas e pagamentos, que
+          exige rigorosa consistência ACID e transações complexas entre
+          passageiros e motoristas; e o armazenamento de sessões ativas de
+          usuários e dados temporários de geolocalização dos veículos, que
+          demandam leituras e escritas com latência inferior a 5 milissegundos e
+          suporte a alta volatilidade.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Para atender com máxima eficiência técnica aos dois requisitos sem
+          comprometer a performance ou a integridade da plataforma, qual
+          arquitetura de persistência deve ser adotada?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Adotar a Persistência Poliglota
+          (Polyglot Persistence), combinando um banco de dados relacional (ex.:
+          PostgreSQL) para as operações financeiras com um banco NoSQL em
+          memória/chave-valor (ex.: Redis) para o gerenciamento de sessões e
+          cache de geolocalização.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Unificar toda a infraestrutura em um
+          banco NoSQL chave-valor em memória, descartando o uso de armazenamento
+          em disco e abrindo mão da consistência ACID no processamento dos
+          pagamentos das corridas.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Migrar toda a aplicação para um único
+          banco de dados relacional sem mecanismos de cache, aceitando o aumento
+          na latência de resposta do sistema.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Armazenar os dados de sessão em arquivos
+          texto locais no servidor Node.js.
+        </div>
+      </div>
+
+      <!-- ITEM 10 -->
+      <div class="item-header">
+        <span>ITEM 10</span>
+        <span class="badge badge-facil">Fácil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C3- Determinar técnicas de manipulação de dados requeridas pelo projeto
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma API Node.js desenvolvida para um portal de notícias precisa listar
+          os artigos mais recentes no feed principal. A tabela do banco de dados
+          relacional possui mais de 500.000 artigos cadastrados. Se a API buscar
+          todos os registros de uma só vez, haverá estouro de memória RAM no
+          servidor e lentidão excessiva para a aplicação cliente.
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <span class="code-filename">📁 artigos_repository.sql</span>
+            <button class="copy-btn">copiar</button>
+          </div>
+          <div class="code-body">
+            <pre><span class="kw">SELECT</span> <span class="prop">id</span>, <span class="prop">titulo</span>, <span class="prop">data_publicacao</span>
+<span class="kw">FROM</span> <span class="var">artigos</span>
+<span class="kw">ORDER BY</span> <span class="prop">data_publicacao</span> <span class="kw">DESC</span>
+<span class="kw">LIMIT</span> <span class="num">20</span> <span class="kw">OFFSET</span> <span class="num">0</span>;</pre>
+          </div>
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Qual técnica de manipulação de dados foi applied na consulta SQL acima
+          para solucionar o problema de consumo excessivo de memória no backend?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Execução de uma busca completa no banco
+          de dados com transferência do resultado bruto para a memória da
+          aplicação Node.js, onde os primeiros 20 registros são filtrados
+          manualmente através de um laço de repetição antes de serem enviados na
+          resposta JSON ao cliente web.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Aplicação de uma trava exclusiva de
+          leitura na tabela inteira de artigos para impedir que novas notícias
+          sejam inseridas enquanto a consulta de listagem estiver sendo
+          executada pelo servidor backend.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Implementação de paginação de dados via
+          cláusulas <b>LIMIT</b> e <b>OFFSET</b>, restringindo a quantidade de
+          registros retornados pelo banco por requisição.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Criação de um trigger no banco de dados
+          para deletar artigos antigos automaticamente.
+        </div>
+      </div>
+
+      <!-- ITEM 11 -->
+      <div class="item-header">
+        <span>ITEM 11</span>
+        <span class="badge badge-medio">Média</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C3- Determinar técnicas de manipulação de dados requeridas pelo projeto
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Em um sistema de e-commerce construído em Node.js, dois clientes
+          tentaram comprar o último item de um produto no mesmo milissegundo
+          durante uma promoção relâmpago. Como a checagem de estoque e a
+          atualização do saldo foram feitas em passos separados sem tratamento
+          de concorrência, o sistema vendeu duas vezes o mesmo item, gerando um
+          estoque negativo.
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <span class="code-filename">📁 estoque_service.sql</span>
+            <button class="copy-btn">copiar</button>
+          </div>
+          <div class="code-body">
+            <pre><span class="kw">UPDATE</span> <span class="var">produtos</span>
+<span class="kw">SET</span> <span class="prop">estoque</span> = <span class="prop">estoque</span> - <span class="num">1</span>
+<span class="kw">WHERE</span> <span class="prop">id</span> = <span class="var">:produtoId</span> <span class="kw">AND</span> <span class="prop">estoque</span> >= <span class="num">1</span>;</pre>
+          </div>
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Considerando as boas práticas de manipulação de dados concorrentes no
+          banco relacional, por que a instrução atômica acima resolve a condição
+          de corrida (race condition)?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Porque a instrução cria uma cópia da
+          tabela de produtos em segundo plano, executando a alteração de estoque
+          na tabela temporária e sincronizando com a tabela principal através de
+          um processo em lote (batch job) executado periodicamente a cada hora
+          pela API Node.js.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Porque a atualização atômica e a
+          checagem da condição (<b>estoque >= 1</b>) ocorrem na mesma instrução
+          no banco de dados, utilizando o bloqueio de linha (row lock) para
+          garantir a consistência sob concorrência.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Porque o comando substitui a necessidade
+          de utilizar bancos de dados relacionais, transferindo a validação para
+          o arquivo de configuração do Node.js.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Porque o comando deleta os registros
+          duplicados após a confirmação do pagamento no e-commerce.
+        </div>
+      </div>
+
+      <!-- ITEM 12 -->
+      <div class="item-header">
+        <span>ITEM 12</span>
+        <span class="badge badge-dificil">Difícil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C3- Determinar técnicas de manipulação de dados requeridas pelo projeto
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Um microsserviço de inteligência de negócios precisa importar
+          diariamente um arquivo CSV com 2 milhões de transações para uma base
+          de dados PostgreSQL através de uma API em Node.js. Tentativas de ler
+          todo o arquivo em memória e disparar inserções individuais (uma a uma
+          via <b>INSERT</b>) causaram queda da aplicação por estouro de memória
+          (Out of Memory) e estouro de tempo limite de conexão (timeout) com o
+          banco de dados.
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Qual técnica e estratégia de manipulação de dados deve ser adotada na
+          aplicação para realizar essa carga massiva de registros de forma
+          eficiente e segura?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Dividir o processamento do arquivo CSV
+          em múltiplas requisições HTTP paralelas enviadas do cliente para o
+          servidor Node.js, executando comandos DDL de recreação das tabelas e
+          índices a cada lote recebido para garantir que o banco não aloque
+          espaço em disco desnecessário durante a inserção.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Converter os 2 milhões de registros em
+          um único objeto JSON global na memória da aplicação e enviá-lo em uma
+          única consulta SQL concatenada sem o uso de transações ou limitação de
+          tamanho do buffer de rede.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Processar o arquivo em lote utilizando
+          <b>Streams</b> em Node.js e realizar inserções em blocos (bulk insert)
+          agrupados dentro de transações gerenciadas no banco.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Executar chamadas do tipo
+          <b>SELECT</b> repetitivas em laço aberto sem controle de concorrência
+          no banco.
+        </div>
+      </div>
+
+      <!-- ITEM 13 -->
+      <div class="item-header">
+        <span>ITEM 13</span>
+        <span class="badge badge-facil">Fácil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C5- Aplicar técnicas de normalização e padronização de dados.
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma equipe de desenvolvimento backend em Node.js está reestruturando a
+          tabela de cadastros de clientes de um sistema financeiro. Durante a
+          análise, notou-se que um mesmo cliente possui múltiplos telefones
+          armazenados em colunas repetidas (<b>telefone_1</b>,
+          <b>telefone_2</b>, <b>telefone_3</b>) dentro da própria tabela de
+          clientes.
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <span class="code-filename">📁 clientes_schema.sql</span>
+            <button class="copy-btn">copiar</button>
+          </div>
+          <div class="code-body">
+            <pre><span class="kw">CREATE TABLE</span> <span class="var">clientes</span> (
+  <span class="prop">id</span> <span class="kw">INT PRIMARY KEY</span>,
+  <span class="prop">nome</span> <span class="kw">VARCHAR</span>(<span class="num">100</span>),
+  <span class="prop">telefone_1</span> <span class="kw">VARCHAR</span>(<span class="num">20</span>),
+  <span class="prop">telefone_2</span> <span class="kw">VARCHAR</span>(<span class="num">20</span>),
+  <span class="prop">telefone_3</span> <span class="kw">VARCHAR</span>(<span class="num">20</span>)
+);</pre>
+          </div>
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Para adequar a estrutura da base de dados à Primeira Forma Normal
+          (1FN) e evitar colunas redundantes no modelo relacional, qual técnica
+          de normalização deve ser aplicada?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Criar uma nova tabela separada para
+          armazenar os telefones dos clientes, definindo uma relação de um para
+          muitos (1:N) onde cada registro possui o identificador do cliente como
+          chave estrangeira, eliminando grupos repetidos e colunas redundantes
+          na entidade principal.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Manter os telefones na mesma tabela
+          unificados em uma única coluna do tipo texto no formato de matriz
+          (array), processando a separação das informações diretamente na camada
+          de código da aplicação Node.js.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Converter a tabela de clientes em uma
+          coleção NoSQL chave-valor sem chaves primárias ou relacionamentos
+          estruturados entre tabelas.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Adicionar índices secundários nas três
+          colunas de telefone existentes para acelerar as buscas SQL.
+        </div>
+      </div>
+
+      <!-- ITEM 14 -->
+      <div class="item-header">
+        <span>ITEM 14</span>
+        <span class="badge badge-medio">Média</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C5- Aplicar técnicas de normalização e padronização de dados.
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Em uma plataforma global de pagamentos em Node.js, transações ocorrem
+          em fusos horários distintos. O time de desenvolvimento notou
+          inconsistências em relatórios operacionais porque cada servidor
+          registrava o horário do evento na hora local da sua respectiva região
+          geográfica.
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <span class="code-filename">📁 transacao_model.js</span>
+            <button class="copy-btn">copiar</button>
+          </div>
+          <div class="code-body">
+            <pre><span class="kw">const</span> <span class="var">transacaoSchema</span> = <span class="kw">new</span> <span class="fn">Schema</span>({
+  <span class="prop">valor</span>: { <span class="prop">type</span>: <span class="var">Number</span>, <span class="prop">required</span>: <span class="kw">true</span> },
+  <span class="prop">dataCriacao</span>: { <span class="prop">type</span>: <span class="var">Date</span>, <span class="prop">default</span>: <span class="var">Date</span>.<span class="prop">now</span> }
+});</pre>
+          </div>
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Para padronizar os dados de data/hora e garantir a consistência das
+          transações globalmente, qual recomendação de padronização deve ser
+          adotada no banco de dados e na API?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Padronizar o armazenamento de datas em
+          UTC utilizando o formato ISO 8601 na API e no banco de dados,
+          garantindo que o fuso horário local de cada cliente seja calculado
+          apenas no momento da apresentação visual no frontend.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Armazenar as datas como strings em
+          formato regional de cada país (ex.: "21/09/2026 10:00:00"), deixando a
+          conversão sob responsabilidade do cliente.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Armazenar dia, mês, ano e hora em
+          colunas numéricas separadas do tipo decimal no SGBD.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Configurar o servidor backend para
+          converter todas as datas para o fuso local do banco.
+        </div>
+      </div>
+
+      <!-- ITEM 15 -->
+      <div class="item-header">
+        <span>ITEM 15</span>
+        <span class="badge badge-dificil">Difícil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C5- Aplicar técnicas de normalização e padronização de dados.
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma equipe de arquitetura de software está reestruturando o modelo de
+          dados de um microsserviço de faturamento em Node.js. Durante a
+          revisão, identificou-se uma tabela desnormalizada com cálculos
+          derivados gravados em colunas permanentes:
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <span class="code-filename">📁 faturamento_schema.sql</span>
+            <button class="copy-btn">copiar</button>
+          </div>
+          <div class="code-body">
+            <pre><span class="kw">CREATE TABLE</span> <span class="var">faturas</span> (
+  <span class="prop">id_fatura</span> <span class="kw">INT PRIMARY KEY</span>,
+  <span class="prop">id_cliente</span> <span class="kw">INT</span>,
+  <span class="prop">id_item</span> <span class="kw">INT</span>,
+  <span class="prop">valor_item</span> <span class="kw">DECIMAL</span>(<span class="num">10</span>,<span class="num">2</span>),
+  <span class="prop">aliquota_imposto</span> <span class="kw">DECIMAL</span>(<span class="num">4</span>,<span class="num">2</span>),
+  <span class="prop">valor_imposto_calculado</span> <span class="kw">DECIMAL</span>(<span class="num">10</span>,<span class="num">2</span>)
+);</pre>
+          </div>
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Analisando a estrutura apresentada, qual intervenção técnica de
+          normalização elimina a redundância do atributo derivado e garante a
+          conformidade com as formas normais?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Converter a tabela em uma coleção
+          semiestruturada NoSQL e manter o campo
+          <b>valor_imposto_calculado</b> gravado de forma redundante junto com a
+          alíquota, forçando a aplicação backend a executar rotinas de
+          sincronização assíncrona periódicas no banco de dados para evitar
+          divergências nos relatórios financeiros.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Remover a coluna derivada
+          <b>valor_imposto_calculado</b> do banco de dados relacional,
+          calculando esse valor dinamicamente na camada da aplicação ou na
+          consulta SQL a partir da multiplicação de <b>valor_item</b> pela
+          <b>aliquota_imposto</b>.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Criar uma tabela intermediária N:N
+          contendo apenas o <b>valor_imposto_calculado</b> associado a todas as
+          chaves primárias do sistema.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Adicionar uma restrição de verificação
+          (CHECK) na coluna <b>id_cliente</b>.
+        </div>
+      </div>
+
+      <!-- ITEM 16 -->
+      <div class="item-header">
+        <span>ITEM 16</span>
+        <span class="badge badge-facil">Fácil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C6- Executar testes de funcionamento da sistemas para web. Instalar e
+          configurar banco de dados.
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma equipe de engenharia backend está configurando o ambiente de
+          desenvolvimento de uma API REST em Node.js que utiliza o banco de
+          dados relacional PostgreSQL. Para testar o correto funcionamento do
+          serviço antes do deploy, os desenvolvedores precisam validar a conexão
+          entre a aplicação e o banco.
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <span class="code-filename">📁 db_config.js</span>
+            <button class="copy-btn">copiar</button>
+          </div>
+          <div class="code-body">
+            <pre><span class="kw">const</span> { <span class="var">Pool</span> } = <span class="fn">require</span>(<span class="str">'pg'</span>);
+<span class="kw">const</span> <span class="var">pool</span> = <span class="kw">new</span> <span class="fn">Pool</span>({
+  <span class="prop">host</span>: <span class="var">process</span>.<span class="prop">env</span>.<span class="prop">DB_HOST</span>,
+  <span class="prop">port</span>: <span class="var">process</span>.<span class="prop">env</span>.<span class="prop">DB_PORT</span>,
+  <span class="prop">user</span>: <span class="var">process</span>.<span class="prop">env</span>.<span class="prop">DB_USER</span>,
+  <span class="prop">password</span>: <span class="var">process</span>.<span class="prop">env</span>.<span class="prop">DB_PASS</span>,
+  <span class="prop">database</span>: <span class="var">process</span>.<span class="prop">env</span>.<span class="prop">DB_NAME</span>
+});</pre>
+          </div>
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Qual procedimento de configuração e teste garante que a conexão entre
+          o servidor Node.js e o SGBD PostgreSQL está operacional?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Alterar as portas de comunicação do SGBD
+          para a porta padrão do protocolo HTTPS (443), desabilitando a
+          exigência de usuário e senha no arquivo de configuração do PostgreSQL
+          para permitir conexões anônimas irrestritas executadas pela aplicação
+          backend.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Configurar as variáveis de ambiente no
+          arquivo <b>.env</b> e validar a conexão disparando uma consulta
+          simples de teste como <b>SELECT 1</b> no momento da inicialização do
+          servidor.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Substituir o driver de banco de dados
+          por um gerenciador de arquivos locais de texto e desativar o serviço
+          do PostgreSQL.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Reiniciar o serviço do SGBD a cada nova
+          requisição HTTP recebida pela API.
+        </div>
+      </div>
+
+      <!-- ITEM 17 -->
+      <div class="item-header">
+        <span>ITEM 17</span>
+        <span class="badge badge-medio">Média</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C6- Executar testes de funcionamento da sistemas para web. Instalar e
+          configurar banco de dados.
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma fintech precisa validar o funcionamento dos endpoints de sua API
+          de pagamentos. O desenvolvedor backend implementou o seguinte teste
+          automatizado de integração utilizando Jest e Supertest em Node.js:
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <span class="code-filename">📁 cliente.test.js</span>
+            <button class="copy-btn">copiar</button>
+          </div>
+          <div class="code-body">
+            <pre><span class="kw">const</span> <span class="var">request</span> = <span class="fn">require</span>(<span class="str">'supertest'</span>);
+<span class="kw">const</span> <span class="var">app</span> = <span class="fn">require</span>(<span class="str">'../app'</span>);
+
+<span class="fn">test</span>(<span class="str">'Deve criar cliente com sucesso'</span>, <span class="kw">async</span> () => {
+  <span class="kw">const</span> <span class="var">res</span> = <span class="kw">await</span> <span class="fn">request</span>(<span class="var">app</span>)
+    .<span class="fn">post</span>(<span class="str">'/clientes'</span>)
+    .<span class="fn">send</span>({ <span class="prop">nome</span>: <span class="str">'Maria'</span>, <span class="prop">email</span>: <span class="str">'maria@email.com'</span> });
+  
+  <span class="fn">expect</span>(<span class="var">res</span>.<span class="prop">statusCode</span>).<span class="fn">toBe</span>(<span class="num">201</span>);
+  <span class="fn">expect</span>(<span class="var">res</span>.<span class="prop">body</span>).<span class="fn">toHaveProperty</span>(<span class="str">'id'</span>);
+});</pre>
+          </div>
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          O que esse teste automatizado de integração valida e qual a sua
+          importância no ciclo de desenvolvimento web?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> O teste verifica a velocidade de
+          renderização dos componentes visuais no navegador do cliente,
+          garantindo que formulários e botões do frontend HTML5 sejam exibidos
+          corretamente independente da resposta da API backend em Node.js.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> O teste simula uma requisição HTTP do
+          tipo POST para o endpoint <b>/clientes</b> e assere que a API responde
+          com o código de status HTTP <b>201 Created</b> e retorna o
+          identificador único gerado para o novo cliente.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> O teste valida a sintaxe do arquivo de
+          configuração do SGBD e cria automaticamente os índices de tabela
+          necessários para otimizar as buscas no banco de dados.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> O teste compila o código do backend e
+          simula uma falha física no servidor de banco de dados relacional.
+        </div>
+      </div>
+
+      <!-- ITEM 18 -->
+      <div class="item-header">
+        <span>ITEM 18</span>
+        <span class="badge badge-dificil">Difícil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C6- Executar testes de funcionamento da sistemas para web. Instalar e
+          configurar banco de dados.
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Durante o deploy de uma nova versão de um e-commerce em ambiente de
+          homologação, a API Node.js não conseguiu conectar ao banco de dados
+          MySQL recém-instalado via Docker. O log apontou falha de
+          incompatibilidade do protocolo de autenticação.
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <span class="code-filename">📁 docker-compose.yml</span>
+            <button class="copy-btn">copiar</button>
+          </div>
+          <div class="code-body">
+            <pre><span class="kw">services</span>:
+  <span class="prop">db</span>:
+    <span class="prop">image</span>: <span class="str">mysql:8.0</span>
+    <span class="prop">command</span>: <span class="str">--default-authentication-plugin=mysql_native_password</span>
+    <span class="prop">ports</span>:
+      - <span class="str">"3306:3306"</span></pre>
+          </div>
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Sabendo que o MySQL 8.0 utiliza por padrão o plugin de autenticação
+          <b>caching_sha2_password</b> e que drivers legados em Node.js requerem
+          <b>mysql_native_password</b>, qual procedimento de parametrização
+          resolve essa incompatibilidade?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Alterar a porta de escuta do MySQL de
+          3306 para a porta 8080 no arquivo de configuração do container Docker,
+          forçando a API Node.js a converter automaticamente todas as
+          credenciais de acesso para o formato de autenticação do protocolo
+          HTTP/1.1 sem necessidade de ajustes no banco de dados.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Configurar o SGBD para utilizar o plugin
+          <b>mysql_native_password</b> através do parâmetro de inicialização no
+          container ou executando o comando SQL
+          <b
+            >ALTER USER 'usuario'@'%' IDENTIFIED WITH mysql_native_password BY
+            'senha';</b
+          >
+          para permitir a autenticação do driver Node.js.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Formatar o volume de dados do container
+          e reinstalar o sistema operacional do servidor Node.js para desativar
+          a criptografia de senhas.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Excluir as tabelas relacionais do banco
+          e alterar o driver para NoSQL chave-valor.
+        </div>
+      </div>
+
+      <!-- ITEM 19 -->
+      <div class="item-header">
+        <span>ITEM 19</span>
+        <span class="badge badge-facil">Fácil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C7- Aplicar as configurações e parametrizações do sistema
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Um desenvolvedor backend está preparando uma API Node.js para
+          implantação. Durante a revisão de código, identificou-se que as
+          credenciais de acesso ao banco de dados e a chave secreta de
+          assinatura de tokens JWT estavam escritas diretamente no código-fonte
+          principal da aplicação.
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <span class="code-filename">📁 .env</span>
+            <button class="copy-btn">copiar</button>
+          </div>
+          <div class="code-body">
+            <pre><span class="var">PORT</span>=<span class="num">3000</span>
+<span class="var">DB_HOST</span>=<span class="str">localhost</span>
+<span class="var">DB_USER</span>=<span class="str">admin</span>
+<span class="var">DB_PASS</span>=<span class="str">s3cr3t_p@ss</span>
+<span class="var">JWT_SECRET</span>=<span class="str">minha_chave_super_secreta</span></pre>
+          </div>
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Para corrigir a vulnerabilidade e seguir os padrões de parametrização
+          de ambiente em sistemas web, qual abordagem deve ser adotada?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Armazenar as credenciais sensíveis em um
+          arquivo de configuração <b>.env</b> fora do repositório Git e
+          acessá-las via <b>process.env</b> na aplicação Node.js, garantindo que
+          dados confidenciais não sejam expostos no código-fonte.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Hardcodear todas as senhas diretamente
+          nos arquivos do controller para acelerar a execução.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Enviar o arquivo de chaves públicas e
+          privadas criptografadas via parâmetro GET na URL.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Gravar as credenciais na tabela pública
+          do banco de dados.
+        </div>
+      </div>
+
+      <!-- ITEM 20 -->
+      <div class="item-header">
+        <span>ITEM 20</span>
+        <span class="badge badge-medio">Média</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C7- Aplicar as configurações e parametrizações do sistema
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma API RESTful em Node.js com Express precisa ser consumida por uma
+          aplicação Single Page Application (SPA) hospedada em um domínio
+          diferente (<b>https://app.empresa.com</b>). Sem as devido
+          parametrizações no backend, as requisições enviadas pelo navegador são
+          bloqueadas por segurança.
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <span class="code-filename">📁 server.js</span>
+            <button class="copy-btn">copiar</button>
+          </div>
+          <div class="code-body">
+            <pre><span class="kw">const</span> <span class="var">express</span> = <span class="fn">require</span>(<span class="str">'express'</span>);
+<span class="kw">const</span> <span class="var">cors</span> = <span class="fn">require</span>(<span class="str">'cors'</span>);
+<span class="kw">const</span> <span class="var">app</span> = <span class="fn">express</span>();
+
+<span class="var">app</span>.<span class="fn">use</span>(<span class="fn">cors</span>({ <span class="prop">origin</span>: <span class="str">'https://app.empresa.com'</span> }));</pre>
+          </div>
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Qual o propósito da parametrização do middleware de CORS apresentada
+          no trecho de código?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Restringir as origens permitidas via
+          middleware de CORS garante que navegadores bloqueiem requisições de
+          domínios não autorizados, prevenindo ataques do tipo Cross-Site
+          Request Forgery (CSRF) e acessos indevidos aos recursos da API
+          backend.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> Habilitar a origem curinga <b>*</b> para
+          permitir que qualquer site externo acesse dados confidenciais sem
+          necessidade de autenticação no servidor Node.js.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> Desativar o protocolo HTTP/2 no servidor
+          para impedir o tráfego de cabeçalhos de origem.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> Mudar o formato de resposta da API de
+          JSON para XML.
+        </div>
+      </div>
+
+      <!-- ITEM 21 -->
+      <div class="item-header">
+        <span>ITEM 21</span>
+        <span class="badge badge-dificil">Difícil</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C7- Aplicar as configurações e parametrizações do sistema
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Uma API financeira em Node.js/Express sofreu lentidão devido a um
+          volume anormal de requisições automatizadas em um curto intervalo de
+          tempo. Para proteger o servidor contra indisponibilidade e ataques de
+          força bruta, a equipe configurou um limitador de taxa de requisições
+          (rate-limiting).
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <span class="code-filename">📁 rate_limit.js</span>
+            <button class="copy-btn">copiar</button>
+          </div>
+          <div class="code-body">
+            <pre><span class="kw">const</span> <span class="var">rateLimit</span> = <span class="fn">require</span>(<span class="str">'express-rate-limit'</span>);
+
+<span class="kw">const</span> <span class="var">limiter</span> = <span class="fn">rateLimit</span>({
+  <span class="prop">windowMs</span>: <span class="num">15</span> * <span class="num">60</span> * <span class="num">1000</span>,
+  <span class="prop">max</span>: <span class="num">100</span>,
+  <span class="prop">message</span>: <span class="str">'Muitas requisições originadas deste IP.'</span>
+});
+
+<span class="var">app</span>.<span class="fn">use</span>(<span class="var">limiter</span>);</pre>
+          </div>
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Como essa parametrização de infraestrutura protege o sistema web
+          contra exaustão de recursos?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> A parametrização de rate limiting limita
+          a quantidade de requisições por IP em um determinado intervalo de
+          tempo, bloqueando abusos e requisições maliciosas com o código HTTP
+          <b>429 Too Many Requests</b> antes que afetem o processamento do
+          servidor backend.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> O rate limiting duplica o número de
+          threads do servidor Node.js para cada nova requisição recebida,
+          garantindo que ataques DDoS sejam processados sem aumento de latência.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> A configuração altera o banco de dados
+          de relacional para NoSQL automaticamente sempre que a CPU atingir 100%
+          de uso.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> O middleware deleta os logs do sistema
+          operacional para liberar espaço no disco rígido.
+        </div>
+      </div>
+
+      <!-- ITEM 22 -->
+      <div class="item-header">
+        <span>ITEM 22</span>
+        <span class="badge badge-medio">Média</span>
+      </div>
+      <div class="item-box">
+        <div class="capacidade-label">CAPACIDADE:</div>
+        <div class="capacidade-text">
+          C7- Aplicar as configurações e parametrizações do sistema
+        </div>
+
+        <div class="contexto-label">Contexto:</div>
+        <div class="contexto-text">
+          Em um servidor web de produção, a variável de ambiente
+          <b>NODE_ENV</b> é utilizada para sinalizar o modo de operação do
+          ambiente de execução.
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <span class="code-filename">📁 environment.js</span>
+            <button class="copy-btn">copiar</button>
+          </div>
+          <div class="code-body">
+            <pre><span class="kw">if</span> (<span class="var">process</span>.<span class="prop">env</span>.<span class="prop">NODE_ENV</span> === <span class="str">'production'</span>) {
+  <span class="var">app</span>.<span class="fn">disable</span>(<span class="str">'x-powered-by'</span>);
+  <span class="var">logger</span>.<span class="prop">level</span> = <span class="str">'error'</span>;
+}</pre>
+          </div>
+        </div>
+
+        <div class="comando-label">Comando:</div>
+        <div class="comando-text">
+          Qual a importância técnica de parametrizar o ambiente como
+          <b>production</b> em sistemas web construídos em Node.js?
+        </div>
+
+        <div class="alternativas-label">Alternativas:</div>
+        <div class="alternativa">
+          <span class="letra">a)</span> Definir a variável <b>NODE_ENV</b> como
+          <b>production</b> desativa mensagens de depuração detalhadas, ativa o
+          cache interno de frameworks como o Express e otimiza a performance
+          geral do servidor de aplicação web.
+        </div>
+        <div class="alternativa">
+          <span class="letra">b)</span> A variável <b>NODE_ENV</b> reescreve as
+          consultas SQL enviadas ao banco de dados relacional para executá-las
+          no formato NoSQL.
+        </div>
+        <div class="alternativa">
+          <span class="letra">c)</span> A parametrização impede a execução de
+          testes automatizados e remove todas as rotas do tipo POST do backend.
+        </div>
+        <div class="alternativa">
+          <span class="letra">d)</span> O ajuste altera a porta do servidor de
+          aplicações web de 3000 para a porta 21.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

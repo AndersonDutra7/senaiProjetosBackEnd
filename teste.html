@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Lista de Exercícios Práticos - MER e Notação de Chen no draw.io
+    </title>
+    <style>
+      :root {
+        --bg-color: #f6f8fa;
+        --text-color: #24292f;
+        --container-bg: #ffffff;
+        --border-color: #d0d7de;
+        --primary-color: #0969da;
+        --code-bg: #afb8c133;
+        --terminal-bg: #161b22;
+        --terminal-text: #e6edf3;
+        --js-box-bg: #fff8c5;
+        --js-box-border: #d4a72c66;
+        --js-text-color: #9a6700;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica,
+          Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--bg-color);
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 850px;
+        margin: 0 auto;
+        background-color: var(--container-bg);
+        padding: 40px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        font-size: 2em;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.3em;
+        margin-top: 0;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.3em;
+        margin-top: 24px;
+      }
+
+      h3 {
+        font-size: 1.25em;
+        margin-top: 20px;
+      }
+
+      p {
+        margin-top: 0;
+        margin-bottom: 16px;
+      }
+
+      code {
+        font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco,
+          Consolas, 'Liberation Mono', 'Courier New', monospace;
+        font-size: 85%;
+        background-color: var(--code-bg);
+        padding: 0.2em 0.4em;
+        border-radius: 6px;
+      }
+
+      ul {
+        padding-left: 2em;
+        margin-top: 0;
+        margin-bottom: 16px;
+      }
+
+      li {
+        margin-bottom: 4px;
+      }
+
+      hr {
+        height: 0.25em;
+        padding: 0;
+        margin: 24px 0;
+        background-color: var(--border-color);
+        border: 0;
+      }
+
+      .js-box {
+        background-color: var(--js-box-bg);
+        border: 1px solid var(--js-box-border);
+        padding: 16px;
+        border-radius: 6px;
+        margin-top: 15px;
+      }
+
+      .js-box h4 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: var(--js-text-color);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .js-box ul {
+        margin-bottom: 0;
+        list-style-type: none;
+        padding-left: 0;
+      }
+
+      .js-box li::before {
+        content: '⚡ ';
+        display: inline-block;
+        width: 1.2em;
+      }
+
+      .badge {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 8px 16px;
+        font-size: 20px;
+        font-weight: 600;
+        border-radius: 2em;
+        vertical-align: middle;
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>
+        Lista de Exercícios Práticos <br />Modelagem de Dados (MER e Notação de
+        Chen no draw.io)
+      </h1>
+
+      <h2>Objetivo</h2>
+      <p>
+        Nesta atividade você atuará como Engenheiro de Dados responsável por
+        elaborar o
+        <strong>Modelo Entidade-Relacionamento (MER)</strong> utilizando a
+        <strong>Notação de Chen</strong> no software <code>draw.io</code>. O
+        objetivo é mapear cenários reais do universo dos jogos, animes e cultura
+        pop, aplicando corretamente os conceitos de <strong>Entidades</strong>,
+        <strong
+          >Relacionamentos com Cardinalidade Mínima e Máxima (min, max)</strong
+        >
+        e todos os <strong>5 Tipos de Atributos</strong>.
+      </p>
+      <p>
+        Para a notação visual no <code>draw.io</code>, utilize as seguintes
+        convenções:
+      </p>
+      <ul>
+        <li>
+          <strong>Entidade</strong>: Retângulo com o nome em maiúsculo (ex:
+          <code>JOGADOR</code>).
+        </li>
+        <li>
+          <strong>Relacionamento</strong>: Losango com verbo de ação (ex:
+          <code>PERTENCE</code>).
+        </li>
+        <li>
+          <strong>Atributo Chave / Identificador</strong>: Elipse com o texto
+          sublinhado (ex: <code><u>id_player</u></code
+          >).
+        </li>
+        <li>
+          <strong>Atributo Simples / Atômico</strong>: Elipse de linha contínua
+          simples.
+        </li>
+        <li>
+          <strong>Atributo Composto</strong>: Elipse principal ramificada em
+          sub-elipses conectadas.
+        </li>
+        <li>
+          <strong>Atributo Multivalorado</strong>: Elipse com borda dupla (opção
+          <em>Style > Double</em>).
+        </li>
+        <li>
+          <strong>Atributo Derivado</strong>: Elipse com linha tracejada (opção
+          <em>Style > Dashed</em>).
+        </li>
+        <li>
+          <strong>Cardinalidade</strong>: Rótulo textual nas linhas de conexão
+          indicando <code>(min, max)</code> em cada extremidade.
+        </li>
+      </ul>
+
+      <hr />
+
+      <h2>Exercício 01 — Arena E-Sports (Valorant & LoL)</h2>
+      <h3>Contexto</h3>
+      <p>
+        Uma grande organização de e-sports precisa estruturar um banco de dados
+        relacional para gerenciar seus campeonatos oficiais, partidas ao vivo,
+        atletas contratados e os mapas onde ocorrem os confrontos.
+      </p>
+
+      <h3>Comando</h3>
+      <p>
+        Crie o Diagrama Entidade-Relacionamento na Notação de Chen contendo 5
+        entidades:
+        <code>JOGADOR</code>, <code>EQUIPE</code>, <code>PARTIDA</code>,
+        <code>TORNEIO</code> e <code>MAPA</code>. Modele os relacionamentos com
+        cardinalidades <code>(min, max)</code> nas duas pontas e adicione os 5
+        tipos de atributos obrigatórios na entidade <code>JOGADOR</code>.
+      </p>
+
+      <div class="js-box">
+        <h4>💡 Desafio MER (Notação de Chen no draw.io)</h4>
+        <ul>
+          <li>
+            Modelar a entidade <code>JOGADOR</code> contendo:
+            <code><u>id_player</u></code> (Chave sublinhada),
+            <code>nickname</code> (Simples),
+            <code>nome_completo</code> (Composto: <code>primeiro_nome</code> e
+            <code>sobrenome</code>),
+            <code>agentes_principais</code> (Multivalorado com borda dupla) e
+            <code>idade</code> (Derivado tracejado de
+            <code>data_nascimento</code>).
+          </li>
+          <li>
+            Relacionamento <code>PERTENCE</code> entre <code>JOGADOR</code>
+            <strong>(1,1)</strong> e <code>EQUIPE</code> <strong>(5,n)</strong>.
+          </li>
+          <li>
+            Relacionamento <code>DISPUTA</code> entre <code>EQUIPE</code>
+            <strong>(2,2)</strong> e <code>PARTIDA</code>
+            <strong>(0,n)</strong>.
+          </li>
+          <li>
+            Relacionamentos <code>ORGANIZA</code> (entre <code>TORNEIO</code>
+            <strong>(1,1)</strong> e <code>PARTIDA</code>
+            <strong>(1,n)</strong>) e <code>OCORRE_EM</code> (entre
+            <code>PARTIDA</code> <strong>(0,n)</strong> e <code>MAPA</code>
+            <strong>(1,1)</strong>).
+          </li>
+        </ul>
+      </div>
+
+      <hr />
+
+      <h2>Exercício 02 — Plataforma de Streaming de Animes (OtakuVerse)</h2>
+      <h3>Contexto</h3>
+      <p>
+        O serviço de streaming OtakuVerse deseja mapear seu acervo de animes,
+        episódios, elenco de dubladores e os planos assinados pelos usuários
+        para personalizar recomendações.
+      </p>
+
+      <h3>Comando</h3>
+      <p>
+        Desenhe no <code>draw.io</code> o modelo Chen contemplando 5 entidades:
+        <code>USUARIO</code>, <code>PLANO</code>, <code>ANIME</code>,
+        <code>EPISODIO</code> e <code>DUBLADOR</code>. Mapeie os relacionamentos
+        de assinatura, favoritos, catálogo e dublagem com suas devidas
+        cardinalidades <code>(min, max)</code>.
+      </p>
+
+      <div class="js-box">
+        <h4>💡 Desafio MER (Notação de Chen no draw.io)</h4>
+        <ul>
+          <li>
+            Modelar a entidade <code>USUARIO</code> com:
+            <code><u>id_usuario</u></code> (Chave),
+            <code>email</code> (Simples), <code>endereco</code> (Composto:
+            <code>rua</code>, <code>numero</code>, <code>cep</code>),
+            <code>idiomas_legenda</code> (Multivalorado duplo) e
+            <code>tempo_membro_dias</code> (Derivado tracejado).
+          </li>
+          <li>
+            Relacionamento <code>ASSINA</code> entre <code>USUARIO</code>
+            <strong>(1,1)</strong> e <code>PLANO</code> <strong>(0,n)</strong>.
+          </li>
+          <li>
+            Relacionamento <code>FAVORITA</code> entre <code>USUARIO</code>
+            <strong>(0,n)</strong> e <code>ANIME</code> <strong>(0,n)</strong>.
+          </li>
+          <li>
+            Relacionamentos <code>POSSUI</code> (entre <code>ANIME</code>
+            <strong>(1,1)</strong> e <code>EPISODIO</code>
+            <strong>(1,n)</strong>) e <code>DUBLA</code> (entre
+            <code>DUBLADOR</code> <strong>(0,n)</strong> e
+            <code>EPISODIO</code> <strong>(1,n)</strong>).
+          </li>
+        </ul>
+      </div>
+
+      <hr />
+
+      <h2>Exercício 03 — Liga Pokémon & Batalhas de Ginásio</h2>
+      <h3>Contexto</h3>
+      <p>
+        A Associação da Liga Pokémon precisa registrar o histórico de
+        treinadores regionais, seus Pokémon capturados, os ginásios oficiais e
+        as insígnias conquistadas em desafios oficiais.
+      </p>
+
+      <h3>Comando</h3>
+      <p>
+        Elabore o MER em notação de Chen composto por 5 entidades:
+        <code>TREINADOR</code>, <code>POKEMON</code>, <code>GINASIO</code>,
+        <code>INSIGNIA</code> e <code>DESAFIO</code>. Represente os 5 tipos de
+        atributos na entidade <code>TREINADOR</code> e defina as cardinalidades
+        do sistema.
+      </p>
+
+      <div class="js-box">
+        <h4>💡 Desafio MER (Notação de Chen no draw.io)</h4>
+        <ul>
+          <li>
+            Modelar a entidade <code>TREINADOR</code> com:
+            <code><u>id_treinador</u></code> (Chave),
+            <code>nome</code> (Simples), <code>origem</code> (Composto:
+            <code>regiao</code>, <code>cidade</code>),
+            <code>insignias_favoritas</code> (Multivalorado duplo) e
+            <code>vitorias_totais</code> (Derivado tracejado).
+          </li>
+          <li>
+            Relacionamento <code>CAPTURA</code> entre <code>TREINADOR</code>
+            <strong>(1,1)</strong> e <code>POKEMON</code>
+            <strong>(1,n)</strong>.
+          </li>
+          <li>
+            Relacionamento <code>REALIZA</code> entre <code>TREINADOR</code>
+            <strong>(1,1)</strong> e <code>DESAFIO</code>
+            <strong>(0,n)</strong>.
+          </li>
+          <li>
+            Relacionamentos <code>OCORRE_EM</code> (entre <code>DESAFIO</code>
+            <strong>(1,n)</strong> e <code>GINASIO</code>
+            <strong>(1,1)</strong>) e <code>CONCEDE</code> (entre
+            <code>GINASIO</code> <strong>(1,1)</strong> e <code>INSIGNIA</code>
+            <strong>(0,n)</strong>).
+          </li>
+        </ul>
+      </div>
+
+      <hr />
+
+      <h2>Exercício 04 — Guilda de Caçadores (Solo Leveling)</h2>
+      <h3>Contexto</h3>
+      <p>
+        A Associação de Caçadores necessita de um sistema central para monitorar
+        o surgimento de portais (Dungeons) de diversos Ranks, alocação de
+        equipes de caçadores, equipamentos mágicos e guias de guildas.
+      </p>
+
+      <h3>Comando</h3>
+      <p>
+        Construa no <code>draw.io</code> um diagrama Chen com 5 entidades:
+        <code>CACADOR</code>, <code>GUILDA</code>, <code>PORTAL</code>,
+        <code>MISSAO</code> e <code>EQUIPAMENTO</code>. Aplique a estilização
+        correta para atributos multivalorados, derivados e compostos.
+      </p>
+
+      <div class="js-box">
+        <h4>💡 Desafio MER (Notação de Chen no draw.io)</h4>
+        <ul>
+          <li>
+            Modelar a entidade <code>CACADOR</code> com:
+            <code><u>id_cacador</u></code> (Chave),
+            <code>rank_classe</code> (Simples),
+            <code>nome_completo</code> (Composto: <code>primeiro_nome</code>,
+            <code>sobrenome</code>),
+            <code>habilidades_especiais</code> (Multivalorado duplo) e
+            <code>anos_servico</code> (Derivado tracejado de
+            <code>data_despertar</code>).
+          </li>
+          <li>
+            Relacionamento <code>AFILIADO_A</code> entre <code>CACADOR</code>
+            <strong>(0,1)</strong> e <code>GUILDA</code> <strong>(1,n)</strong>.
+          </li>
+          <li>
+            Relacionamento <code>PARTICIPA</code> entre <code>CACADOR</code>
+            <strong>(1,n)</strong> e <code>MISSAO</code> <strong>(0,n)</strong>.
+          </li>
+          <li>
+            Relacionamentos <code>ALVO_DE</code> (entre <code>MISSAO</code>
+            <strong>(0,1)</strong> e <code>PORTAL</code> <strong>(1,1)</strong>)
+            e <code>EQUIPA</code> (entre <code>CACADOR</code>
+            <strong>(0,1)</strong> e <code>EQUIPAMENTO</code>
+            <strong>(0,n)</strong>).
+          </li>
+        </ul>
+      </div>
+
+      <hr />
+
+      <h2>Exercício 05 — Loja Virtual de Jogos (Estilo Steam)</h2>
+      <h3>Contexto</h3>
+      <p>
+        Uma plataforma digital de vendas de jogos de PC precisa gerenciar seu
+        catálogo global, publicações de desenvolvedoras, conquistas
+        desbloqueadas e o inventário de itens dos jogadores.
+      </p>
+
+      <h3>Comando</h3>
+      <p>
+        Desenhe a estrutura MER completa em notação de Chen utilizando 5
+        entidades:
+        <code>JOGADOR</code>, <code>JOGO</code>, <code>DESENVOLVEDORA</code>,
+        <code>CONQUISTA</code> e <code>ITEM_INVENTARIO</code>. Garanta que todas
+        as regras de cardinalidade <code>(min, max)</code> e especificações de
+        atributos estejam mapeadas.
+      </p>
+
+      <div class="js-box">
+        <h4>💡 Desafio MER (Notação de Chen no draw.io)</h4>
+        <ul>
+          <li>
+            Modelar a entidade <code>JOGADOR</code> com:
+            <code><u>id_steam</u></code> (Chave),
+            <code>nickname</code> (Simples), <code>localizacao</code> (Composto:
+            <code>pais</code>, <code>estado</code>),
+            <code>jogos_desejados</code> (Multivalorado duplo) e
+            <code>idade</code> (Derivado tracejado de
+            <code>data_nascimento</code>).
+          </li>
+          <li>
+            Relacionamento <code>PUBLICA</code> entre
+            <code>DESENVOLVEDORA</code> <strong>(1,1)</strong> e
+            <code>JOGO</code> <strong>(1,n)</strong>.
+          </li>
+          <li>
+            Relacionamento <code>COMPRA</code> entre <code>JOGADOR</code>
+            <strong>(0,n)</strong> e <code>JOGO</code> <strong>(0,n)</strong>.
+          </li>
+          <li>
+            Relacionamentos <code>PERTENCE_A</code> (entre
+            <code>CONQUISTA</code> <strong>(1,1)</strong> e <code>JOGO</code>
+            <strong>(0,n)</strong>) e <code>POSSUI</code> (entre
+            <code>JOGADOR</code> <strong>(1,1)</strong> e
+            <code>ITEM_INVENTARIO</code> <strong>(0,n)</strong>).
+          </li>
+        </ul>
+      </div>
+
+      <hr />
+
+      <div style="text-align: center">
+        <h2 style="font-size: 2.8rem">Parabéns!!!</h2>
+        <span class="badge"
+          >👑 Novo título desbloqueado: Mestre da Modelagem MER e Notação de
+          Chen!!</span
+        >
+      </div>
+    </div>
+  </body>
+</html>

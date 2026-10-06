@@ -1,0 +1,620 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATIVIDADE PRÁTICA - Engenharia de Testes e Segurança</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11pt;
+        color: #000;
+        background: #fff;
+      }
+
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 15mm 15mm 15mm 15mm;
+      }
+
+      /* ── HEADER TABLE ── */
+      .header-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 14px;
+      }
+      .header-table td,
+      .header-table th {
+        border: 1px solid #000;
+        padding: 3px 6px;
+        vertical-align: middle;
+        font-size: 10pt;
+      }
+      .logo-cell {
+        width: 140px;
+        text-align: center;
+        vertical-align: middle !important;
+        padding: 8px;
+      }
+      .senai-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .senai-brand img {
+        max-width: 120px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+      .title-cell {
+        text-align: center;
+        font-weight: bold;
+        font-size: 13pt;
+        letter-spacing: 1px;
+        padding: 6px;
+      }
+      .desemp-cell {
+        width: 90px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 10pt;
+        vertical-align: top;
+      }
+      .info-row td {
+        font-size: 10pt;
+      }
+      .label-bold {
+        font-weight: bold;
+      }
+
+      /* ── CAIXAS ── */
+      .capacidades-header {
+        background: #2e5496;
+        color: #fff;
+        font-weight: bold;
+        font-size: 12pt;
+        padding: 10px 10px;
+        margin-top: 18px;
+        margin-bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .capacidades-content {
+        border: 1px solid #2e5496;
+        border-top: none;
+        padding: 8px 10px 10px 10px;
+        margin-bottom: 4px;
+      }
+      .capacidades-content p {
+        margin-bottom: 3px;
+      }
+      .capacidades-content p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* ── SECTION DIVIDER ── */
+      .section-divider {
+        margin: 28px 0;
+        border-top: 3px solid #2e5496;
+        border-bottom: 3px solid #2e5496;
+        padding: 12px 0 8px 0;
+      }
+      .section-title {
+        font-size: 13pt;
+        font-weight: bold;
+        color: #2e5496;
+        text-align: center;
+        margin-bottom: 4px;
+      }
+
+      /* ── PRINT ── */
+      @media print {
+        body { background: #fff; }
+        .capacidades-header {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .page {
+          margin: 0;
+          padding: 12mm 14mm;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+
+      <!-- ══════════════════ CABEÇALHO ══════════════════ -->
+      <table class="header-table">
+        <tr>
+          <td class="logo-cell" rowspan="7">
+            <div class="senai-brand">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_sfpOEDmPPoL6K0aQL4qg5SsWL_41ZqhyF7zW1509kA&s=10"
+                alt="Logo SENAI"
+              />
+              <span>Serviço Nacional de Aprendizagem Industrial</span>
+            </div>
+          </td>
+          <td class="title-cell">ATIVIDADE PRÁTICA</td>
+          <td class="desemp-cell" rowspan="7">Desempenho</td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Data:</span>
+            <em style="color: #2e5496; font-weight: bold">____/____/________</em>
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Docente:</span>
+            <em style="color: #2e5496; font-weight: bold">Anderson Raulino Dutra</em>
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Curso Técnico em:</span>
+            <em style="color: #2e5496; font-weight: bold">Desenvolvimento de Sistemas</em>
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Unidade Curricular:</span>
+            <em style="color: #2e5496; font-weight: bold">Projeto de Backend</em>
+          </td>
+        </tr>
+        <tr class="info-row">
+          <td>
+            <span class="label-bold">Turma:</span>
+            <em style="color: #2e5496; font-weight: bold">T TIIN 2025/1 M2</em>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Colaborador / Avaliado:</strong></td>
+        </tr>
+      </table>
+
+      <!-- ══════════════════ DIVISOR DE SEÇÃO ══════════════════ -->
+      <div class="section-divider">
+        <div class="section-title">
+          ATIVIDADE PRÁTICA<br />
+          Engenharia de Testes, Resolução de Problemas e Segurança<br />
+          <span style="font-size: 10.5pt; font-weight: normal; color: #444;">AutoVision — Plataforma de Anúncios de Veículos</span>
+        </div>
+      </div>
+
+      <!-- ══════════════════ CAPACIDADES TÉCNICAS ══════════════════ -->
+      <div class="capacidades-box">
+        <div class="capacidades-header">CAPACIDADES TÉCNICAS</div>
+        <div class="capacidades-content">
+          <p><strong>CT1:</strong> Aplicar boas práticas de segurança na comunicação entre os sistemas web.</p>
+          <p><strong>CT2:</strong> Aplicar técnicas de segurança e tratamento de dados.</p>
+          <p><strong>CT3:</strong> Executar testes de funcionamento de sistemas para web.</p>
+          <p><strong>CT4:</strong> Instalar e configurar banco de dados.</p>
+          <p><strong>CT5:</strong> Aplicar boas práticas na execução dos testes.</p>
+          <p><strong>CT6:</strong> Elaborar plano de testes de sistemas para web.</p>
+          <p><strong>CT7:</strong> Aplicar boas práticas de segurança da informação na infraestrutura dos ambientes.</p>
+        </div>
+      </div>
+
+      <!-- ══════════════════ CONTEXTO ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px">
+        <div class="capacidades-header">CONTEXTO DA SITUAÇÃO DE APRENDIZAGEM</div>
+        <div class="capacidades-content" style="padding: 12px 14px">
+          <p style="margin-bottom: 0; line-height: 1.6">
+            A <strong>AutoVision</strong> é uma plataforma web de anúncios de veículos usados que 
+            conecta vendedores e compradores por meio de uma API REST desenvolvida em 
+            <strong>Node.js com Express</strong> e banco de dados <strong>PostgreSQL</strong>. 
+            A aplicação possui endpoints para listagem e busca de anúncios, autenticação de 
+            usuários, registro de interesse em veículos, gerenciamento de perfis e publicação 
+            de novos anúncios com upload de imagem. A equipe responsável pelo desenvolvimento 
+            concluiu a implementação das rotas principais e agora precisa garantir a 
+            <strong>qualidade, a segurança e a confiabilidade</strong> da plataforma antes de 
+            disponibilizá-la para os usuários. Para isso, é necessário elaborar e executar um 
+            plano de testes estruturado, identificar e corrigir vulnerabilidades na camada de 
+            comunicação e assegurar que o banco de dados opere de forma segura e isolada.
+          </p>
+        </div>
+      </div>
+
+      <!-- ══════════════════ COMANDO ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px">
+        <div class="capacidades-header">COMANDO DA SITUAÇÃO DE APRENDIZAGEM</div>
+        <div class="capacidades-content" style="padding: 12px 14px">
+          <p style="margin-bottom: 10px; line-height: 1.6">
+            A equipe deverá atuar como um <strong>time de Quality Assurance (QA) e Segurança</strong> 
+            responsável por validar a plataforma <strong>AutoVision</strong> antes do seu lançamento.
+          </p>
+          <p style="margin-bottom: 10px; line-height: 1.6">
+            Vocês deverão <strong>elaborar e executar um Plano de Testes</strong> cobrindo os 
+            cenários funcionais e de exceção das rotas da API (<code>GET /api/anuncios</code>, 
+            <code>POST /api/login</code>, <code>POST /api/interesses/:id</code>, 
+            <code>POST /api/anuncios</code> e <code>DELETE /api/anuncios/:id</code>), 
+            <strong>implementar mecanismos de segurança</strong> na camada HTTP (validação de 
+            entradas, proteção de credenciais e controle de acesso) e <strong>documentar e 
+            corrigir as falhas</strong> identificadas durante o processo, registrando o ciclo 
+            completo de resolução de problemas.
+          </p>
+          <p style="margin-bottom: 16px; line-height: 1.6">
+            Ao final, a equipe entregará os artefatos distribuídos nas seções abaixo, todos 
+            versionados no repositório do projeto.
+          </p>
+
+          <!-- Visão Geral da Avaliação -->
+          <div style="margin-top: 10px">
+            <div style="font-weight: bold; color: #2e5496; font-size: 11pt; margin-bottom: 8px; text-transform: uppercase;">
+              Visão Geral da Avaliação
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #fff;">
+              <thead>
+                <tr style="background-color: #2e5496; color: #ffffff">
+                  <th style="padding: 8px; border: 1px solid #2e5496; text-align: center; width: 10%;">Seção</th>
+                  <th style="padding: 8px; border: 1px solid #2e5496; text-align: left; width: 32%;">Entregável</th>
+                  <th style="padding: 8px; border: 1px solid #2e5496; text-align: left;">Escopo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-weight: bold;">01</td>
+                  <td style="padding: 8px; border: 1px solid #d0d7de; font-weight: bold; color: #2e5496;">Plano de Testes e Relatório de Execução</td>
+                  <td style="padding: 8px; border: 1px solid #d0d7de;">
+                    Elaboração do plano de testes com escopo, responsabilidades e casos de teste; 
+                    execução com framework de testes e entrega do relatório consolidado.
+                  </td>
+                </tr>
+                <tr style="background-color: #fcfdfe">
+                  <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-weight: bold;">02</td>
+                  <td style="padding: 8px; border: 1px solid #d0d7de; font-weight: bold; color: #2e5496;">Camada de Segurança e Middlewares de Proteção</td>
+                  <td style="padding: 8px; border: 1px solid #d0d7de;">
+                    Implementação de validação/sanitização de dados, controle de autenticação, 
+                    cabeçalhos de segurança HTTP e tratamento centralizado de erros.
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-weight: bold;">03</td>
+                  <td style="padding: 8px; border: 1px solid #d0d7de; font-weight: bold; color: #2e5496;">Checklist de Vulnerabilidades e Resiliência</td>
+                  <td style="padding: 8px; border: 1px solid #d0d7de;">
+                    Mapeamento de vulnerabilidades (OWASP Top 10 simplificado), relatório de 
+                    resiliência com hipóteses testadas e validação das correções aplicadas.
+                  </td>
+                </tr>
+                <tr style="background-color: #fcfdfe">
+                  <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-weight: bold;">04</td>
+                  <td style="padding: 8px; border: 1px solid #d0d7de; font-weight: bold; color: #2e5496;">Configuração Segura do Banco de Dados</td>
+                  <td style="padding: 8px; border: 1px solid #d0d7de;">
+                    Configuração do ambiente de testes com banco de dados isolado, aplicação de 
+                    DCL (controle de acesso de usuários) e documentação dos procedimentos.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════ DESAFIO — ENTREGÁVEIS DETALHADOS ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 20px">
+        <div class="capacidades-header">DESAFIO — ENTREGÁVEIS DETALHADOS</div>
+        <div class="capacidades-content" style="padding: 12px 14px">
+
+          <p style="margin-bottom: 14px; line-height: 1.6">
+            Espera-se que a plataforma <strong>AutoVision</strong> seja entregue com qualidade 
+            e segurança comprovadas, demonstrando na prática: a elaboração e execução de um 
+            plano de testes estruturado, a implementação das camadas de segurança HTTP, a 
+            identificação e correção de vulnerabilidades e a configuração segura do banco de dados. 
+            Os artefatos estão detalhados nas seções abaixo.
+          </p>
+
+          <!-- Seção 01 -->
+          <div style="margin-bottom: 18px">
+            <div style="background-color: #2e5496; color: #ffffff; padding: 6px 10px; font-weight: bold; font-size: 10.5pt; border-radius: 2px 2px 0 0;">
+              SEÇÃO 01 — Plano de Testes e Relatório de Execução
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #ffffff; border: 1px solid #2e5496; border-top: none;">
+              <thead>
+                <tr style="background-color: #f2f4f8; color: #000000">
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: center; width: 8%;">Item</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: left; width: 28%;">Artefato</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; text-align: left;">Descrição</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">1.1</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Documento do Plano de Testes</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; line-height: 1.5">
+                    Elaborar o Plano de Testes da AutoVision contendo: escopo dos testes (endpoints cobertos), 
+                    responsabilidades da equipe, ambiente e ferramentas utilizadas, critérios de entrada e saída, 
+                    e tabela de casos de teste para cada rota da API (<code>GET /api/anuncios</code> com e sem 
+                    filtro, <code>POST /api/login</code> com credenciais válidas e inválidas, 
+                    <code>POST /api/interesses/:id</code> com campos faltantes, <code>POST /api/anuncios</code> 
+                    sem imagem, <code>DELETE /api/anuncios/:id</code>).
+                  </td>
+                </tr>
+                <tr style="background-color: #fcfdfe">
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">1.2</td>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Scripts de Teste e Relatório de Execução</td>
+                  <td style="padding: 6px 8px; border-bottom: none; line-height: 1.5">
+                    Implementar os testes automatizados (unitários e/ou de integração) utilizando framework 
+                    adequado (ex.: Jest + Supertest) cobrindo os cenários definidos no plano. Entregar o 
+                    relatório consolidado com: status de cada caso de teste (passou/falhou), métricas de 
+                    cobertura e evidências de execução (print do terminal ou arquivo de log).
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Seção 02 -->
+          <div style="margin-bottom: 18px">
+            <div style="background-color: #2e5496; color: #ffffff; padding: 6px 10px; font-weight: bold; font-size: 10.5pt; border-radius: 2px 2px 0 0;">
+              SEÇÃO 02 — Camada de Segurança e Middlewares de Proteção
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #ffffff; border: 1px solid #2e5496; border-top: none;">
+              <thead>
+                <tr style="background-color: #f2f4f8; color: #000000">
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: center; width: 8%;">Item</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: left; width: 28%;">Artefato</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; text-align: left;">Descrição</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">2.1</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Validação e Sanitização de Dados</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; line-height: 1.5">
+                    Implementar validação dos campos obrigatórios e sanitização das entradas em todos 
+                    os endpoints, prevenindo injeção SQL (verificar uso de queries parametrizadas), 
+                    XSS e envio de payloads malformados. Documentar as regras de validação aplicadas 
+                    por endpoint.
+                  </td>
+                </tr>
+                <tr style="background-color: #fcfdfe">
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">2.2</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Cabeçalhos de Segurança HTTP e CORS</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; line-height: 1.5">
+                    Configurar cabeçalhos de segurança HTTP (via biblioteca <em>Helmet</em> ou equivalente) 
+                    incluindo <code>Content-Security-Policy</code>, <code>X-Content-Type-Options</code> e 
+                    <code>X-Frame-Options</code>. Definir e documentar a política de CORS da aplicação.
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">2.3</td>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Tratamento Centralizado de Erros</td>
+                  <td style="padding: 6px 8px; border-bottom: none; line-height: 1.5">
+                    Implementar middleware de tratamento centralizado de erros garantindo que as 
+                    respostas de erro não exponham detalhes internos da aplicação (stack traces, 
+                    senhas, estrutura do banco) e retornem mensagens padronizadas com códigos HTTP 
+                    apropriados.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Seção 03 -->
+          <div style="margin-bottom: 18px">
+            <div style="background-color: #2e5496; color: #ffffff; padding: 6px 10px; font-weight: bold; font-size: 10.5pt; border-radius: 2px 2px 0 0;">
+              SEÇÃO 03 — Checklist de Vulnerabilidades e Relatório de Resiliência
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #ffffff; border: 1px solid #2e5496; border-top: none;">
+              <thead>
+                <tr style="background-color: #f2f4f8; color: #000000">
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: center; width: 8%;">Item</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: left; width: 28%;">Artefato</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; text-align: left;">Descrição</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">3.1</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Checklist de Segurança (OWASP Simplificado)</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; line-height: 1.5">
+                    Preencher o Checklist de Segurança da Informação verificando os principais pontos 
+                    de vulnerabilidade da AutoVision: exposição de dados sensíveis (senha em texto puro 
+                    no banco), ausência de autenticação em endpoints críticos, falhas de autorização 
+                    (qualquer usuário pode excluir qualquer anúncio), ausência de rate limiting e 
+                    validação de tipo de arquivo no upload.
+                  </td>
+                </tr>
+                <tr style="background-color: #fcfdfe">
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">3.2</td>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Relatório de Resiliência e Ciclo de Correção</td>
+                  <td style="padding: 6px 8px; border-bottom: none; line-height: 1.5">
+                    Elaborar o Relatório de Resiliência documentando para cada falha identificada: 
+                    <strong>(1)</strong> hipótese formulada, <strong>(2)</strong> forma de testagem 
+                    da hipótese, <strong>(3)</strong> solução implementada e <strong>(4)</strong> 
+                    validação do resultado — evidenciando o ciclo completo de resolução de problemas.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Seção 04 -->
+          <div style="margin-bottom: 14px">
+            <div style="background-color: #2e5496; color: #ffffff; padding: 6px 10px; font-weight: bold; font-size: 10.5pt; border-radius: 2px 2px 0 0;">
+              SEÇÃO 04 — Configuração Segura do Banco de Dados
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 10pt; background: #ffffff; border: 1px solid #2e5496; border-top: none;">
+              <thead>
+                <tr style="background-color: #f2f4f8; color: #000000">
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: center; width: 8%;">Item</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; border-right: 1px solid #d0d7de; text-align: left; width: 28%;">Artefato</th>
+                  <th style="padding: 6px 8px; border-bottom: 2px solid #2e5496; text-align: left;">Descrição</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">4.1</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Ambiente de Testes Isolado (PostgreSQL)</td>
+                  <td style="padding: 6px 8px; border-bottom: 1px solid #e1e4e8; line-height: 1.5">
+                    Configurar um banco de dados PostgreSQL dedicado para o ambiente de testes, 
+                    separado do banco de desenvolvimento, com script de criação e população de 
+                    dados fictícios (<em>seed</em>) para execução dos testes automatizados.
+                  </td>
+                </tr>
+                <tr style="background-color: #fcfdfe">
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; text-align: center; font-weight: bold;">4.2</td>
+                  <td style="padding: 6px 8px; border-bottom: none; border-right: 1px solid #e1e4e8; font-weight: bold; color: #2e5496;">Controle de Acesso (DCL) e Gestão de Credenciais</td>
+                  <td style="padding: 6px 8px; border-bottom: none; line-height: 1.5">
+                    Aplicar DCL (Data Control Language) criando um usuário de banco de dados com 
+                    permissões mínimas necessárias para a aplicação (sem acesso de superusuário). 
+                    Documentar o processo de migração das credenciais hardcoded do <code>server.js</code> 
+                    para variáveis de ambiente (<code>.env</code>), entregando o modelo 
+                    <code>.env.example</code>.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Orientações de formato -->
+          <div style="background-color: #f8f9fa; border-left: 4px solid #2e5496; padding: 10px 12px; font-size: 9.5pt; line-height: 1.45; border-radius: 0 4px 4px 0;">
+            <strong>Formato das entregas:</strong> Os artefatos documentais (Plano de Testes, Relatório de 
+            Execução, Checklist de Segurança e Relatório de Resiliência) devem ser entregues em formato 
+            <strong>PDF</strong>. Os scripts de testes automatizados, middlewares implementados e arquivos 
+            de configuração do banco de dados deverão ser versionados no <strong>Repositório Git</strong> 
+            do projeto com evidências visuais de execução (prints ou logs do terminal).
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════ LISTA DE VERIFICAÇÃO ══════════════════ -->
+      <div class="capacidades-box" style="margin-bottom: 25px">
+        <div class="capacidades-header">LISTA DE VERIFICAÇÃO — CRITÉRIOS DE AVALIAÇÃO</div>
+        <div class="capacidades-content" style="padding: 0">
+          <table style="width: 100%; border-collapse: collapse; font-size: 9.5pt; background: #ffffff;">
+            <thead>
+              <tr style="background-color: #2e5496; color: #ffffff">
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: left; width: 40%;">Critério de Avaliação</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: left; width: 28%;">Capacidade Avaliada</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: center; width: 7%;">Atingiu</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: center; width: 8%;">Parcialmente</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: center; width: 7%;">Não Atingiu</th>
+                <th style="padding: 8px; border: 1px solid #2e5496; text-align: center; width: 10%;">Obs.</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de; line-height: 1.4">
+                  Elaborou o Plano de Testes da AutoVision com escopo definido, responsabilidades 
+                  distribuídas, critérios de entrada/saída e casos de teste para os cenários de 
+                  fluxo principal e de exceção de cada endpoint da API.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; font-size: 9pt;">
+                  <strong>CT6:</strong> Elaborar plano de testes de sistemas para web.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;"></td>
+              </tr>
+
+              <tr style="background-color: #fcfdfe">
+                <td style="padding: 8px; border: 1px solid #d0d7de; line-height: 1.4">
+                  Executou os testes automatizados (unitários e/ou de integração) utilizando 
+                  framework adequado, aplicando boas práticas de nomenclatura, isolamento de 
+                  dependências e asserções objetivas, com relatório de cobertura e evidências 
+                  de execução.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; font-size: 9pt;">
+                  <strong>CT3:</strong> Executar testes de funcionamento de sistemas para web.<br/>
+                  <strong>CT5:</strong> Aplicar boas práticas na execução dos testes.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;"></td>
+              </tr>
+
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de; line-height: 1.4">
+                  Implementou middlewares de segurança HTTP na AutoVision — validação/sanitização 
+                  de dados de entrada, configuração de cabeçalhos de segurança (Helmet/CORS) e 
+                  tratamento centralizado de erros sem vazamento de informações sensíveis.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; font-size: 9pt;">
+                  <strong>CT1:</strong> Aplicar boas práticas de segurança na comunicação entre os sistemas web.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;"></td>
+              </tr>
+
+              <tr style="background-color: #fcfdfe">
+                <td style="padding: 8px; border: 1px solid #d0d7de; line-height: 1.4">
+                  Aplicou técnicas de segurança e tratamento de dados: documentou e corrigiu 
+                  vulnerabilidades encontradas (ex.: senhas em texto puro, ausência de 
+                  autorização no DELETE, ausência de validação de tipo de arquivo no upload).
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; font-size: 9pt;">
+                  <strong>CT2:</strong> Aplicar técnicas de segurança e tratamento de dados.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;"></td>
+              </tr>
+
+              <tr>
+                <td style="padding: 8px; border: 1px solid #d0d7de; line-height: 1.4">
+                  Instalou e configurou banco de dados PostgreSQL em ambiente de testes isolado, 
+                  com script de seed para dados fictícios e variáveis de ambiente (<code>.env</code>) 
+                  substituindo credenciais hardcoded do servidor.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; font-size: 9pt;">
+                  <strong>CT4:</strong> Instalar e configurar banco de dados.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;"></td>
+              </tr>
+
+              <tr style="background-color: #fcfdfe">
+                <td style="padding: 8px; border: 1px solid #d0d7de; line-height: 1.4">
+                  Preencheu o Checklist de Segurança (OWASP simplificado) e entregou o Relatório 
+                  de Resiliência documentando o ciclo completo de resolução de problemas: hipóteses 
+                  formuladas, testagem e validação das correções aplicadas.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; font-size: 9pt;">
+                  <strong>CT7:</strong> Aplicar boas práticas de segurança da informação na infraestrutura dos ambientes.
+                </td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de; text-align: center; font-size: 14pt; color: #555;">☐</td>
+                <td style="padding: 8px; border: 1px solid #d0d7de;"></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════════════ ASSINATURAS ══════════════════ -->
+      <div style="margin-top: 30px; display: flex; justify-content: space-between; gap: 20px; font-size: 10pt;">
+        <div style="flex: 1; text-align: center; border-top: 1px solid #000; padding-top: 4px;">Assinatura do Docente</div>
+        <div style="flex: 1; text-align: center; border-top: 1px solid #000; padding-top: 4px;">Assinatura do Avaliado</div>
+        <div style="flex: 1; text-align: center; border-top: 1px solid #000; padding-top: 4px;">Visto da Coordenação</div>
+      </div>
+
+    </div>
+  </body>
+</html>

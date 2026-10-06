@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
@@ -22,8 +22,8 @@
         --l6: #f97316; /* JS */
         --l7: #94a3b8; /* Checklist */
 
-        --font-display: 'Palatino Linotype', Palatino, 'Iowan Old Style',
-          Georgia, serif;
+        --font-display:
+          'Palatino Linotype', Palatino, 'Iowan Old Style', Georgia, serif;
         --font-body: -apple-system, 'Segoe UI', Roboto, system-ui, sans-serif;
         --font-mono: 'SF Mono', Consolas, Menlo, 'Liberation Mono', monospace;
       }
@@ -135,7 +135,9 @@
         border-radius: 8px;
         color: var(--text-muted);
         font-size: 0.92rem;
-        transition: color 0.15s ease, background 0.15s ease;
+        transition:
+          color 0.15s ease,
+          background 0.15s ease;
       }
       .stack-nav a:hover {
         color: var(--text);
@@ -487,9 +489,9 @@
           <p>
             Passo a passo prático para construir o módulo de anúncios de
             veículos e registro de interesse exigido pelo enunciado, na ordem
-            que gera mais pontos por minuto investido. O objetivo é sair do
-            zero e chegar a uma aplicação funcional: banco → API → tela.
-            Deixe estilo e detalhes visuais por último.
+            que gera mais pontos por minuto investido. O objetivo é sair do zero
+            e chegar a uma aplicação funcional: banco → API → tela. Deixe estilo
+            e detalhes visuais por último.
           </p>
         </div>
 
@@ -511,7 +513,7 @@
             CSS e JavaScript sem internet, instale os arquivos
             <code>.vsix</code> das seguintes extensões:
           </p>
-<pre><code><span class="cm"># Extensões essenciais (Instalação via arquivo .vsix local)</span>
+          <pre><code><span class="cm"># Extensões essenciais (Instalação via arquivo .vsix local)</span>
 • christian-kohler.path-intellisense  <span class="cm">// Autocomplete de caminhos de imagens e scripts</span>
 • xabikos.javascriptsnippets          <span class="cm">// Atalhos e snippets para código JavaScript</span>
 • formulahendry.auto-rename-tag       <span class="cm">// Renomeia tags HTML de abertura e fechamento juntas</span>
@@ -580,12 +582,14 @@ node --watch server.js</code></pre>
 
           <h3 class="topic">1. Estrutura das tabelas do banco de dados</h3>
           <p class="topic-desc">
-            O banco é composto por 4 tabelas: <b>Usuários</b>
-            (somente vendedores fazem login e anunciam carros), <b>Anúncios</b>
-            (criados pelo vendedor logado), <b>Interesses</b> (clientes não têm conta,
-            então nome e contato vão direto no registro) e <b>Mensagens</b> (contato do cliente com o vendedor sobre um anúncio).
+            O banco é composto por 4 tabelas: <b>Usuários</b> (somente
+            vendedores fazem login e anunciam carros), <b>Anúncios</b> (criados
+            pelo vendedor logado), <b>Interesses</b> (clientes não têm conta,
+            então nome e contato vão direto no registro) e
+            <b>Mensagens</b> (contato do cliente com o vendedor sobre um
+            anúncio).
           </p>
-  <pre><code><span class="cm">-- schema.sql</span>
+          <pre><code><span class="cm">-- schema.sql</span>
 
 <span class="cm">-- 1. Usuários: somente vendedores fazem login e anunciam carros</span>
 <span class="tg">CREATE TABLE</span> usuarios (
@@ -628,7 +632,13 @@ node --watch server.js</code></pre>
 );</code></pre>
 
           <div class="note">
-            <b>Interesses e Mensagens sem conta:</b> Como os clientes não precisam fazer login, seus dados de contato (<code>cliente_nome</code> e <code>cliente_contato</code>) são gravados diretamente nas tabelas <code>interesses</code> e <code>mensagens</code> referenciando o anúncio desejado (<code>anuncio_id</code>).
+            <b>Interesses e Mensagens sem conta:</b> Como os clientes não
+            precisam fazer login, seus dados de contato (<code
+              >cliente_nome</code
+            >
+            e <code>cliente_contato</code>) são gravados diretamente nas tabelas
+            <code>interesses</code> e <code>mensagens</code> referenciando o
+            anúncio desejado (<code>anuncio_id</code>).
           </div>
 
           <h3 class="topic">2. Rodando o schema no pgAdmin</h3>
@@ -724,18 +734,21 @@ node --watch server.js</code></pre>
         </section>
 
         <!-- ================= 03 BACKEND ================= -->
-<section class="layer" id="backend" style="--accent-color: var(--l3)">
-  <div class="layer__head">
-    <span class="big-num">03</span>
-    <h2>Backend — server.js</h2>
-    <span class="tag">~45 min</span>
-  </div>
+        <section class="layer" id="backend" style="--accent-color: var(--l3)">
+          <div class="layer__head">
+            <span class="big-num">03</span>
+            <h2>Backend — server.js</h2>
+            <span class="tag">~45 min</span>
+          </div>
 
-  <h3 class="topic">1. Setup do Express + conexão com o banco</h3>
-  <p class="topic-desc">
-    Importação das dependências essenciais (Express, PG, Multer, Path), configuração do middleware para servir arquivos estáticos na pasta <code>public</code> e criação do pool de conexões com o banco de dados PostgreSQL (<code>autovision</code>).
-  </p>
-<pre><code><span class="tg">const</span> express = require(<span class="st">'express'</span>);
+          <h3 class="topic">1. Setup do Express + conexão com o banco</h3>
+          <p class="topic-desc">
+            Importação das dependências essenciais (Express, PG, Multer, Path),
+            configuração do middleware para servir arquivos estáticos na pasta
+            <code>public</code> e criação do pool de conexões com o banco de
+            dados PostgreSQL (<code>autovision</code>).
+          </p>
+          <pre><code><span class="tg">const</span> express = require(<span class="st">'express'</span>);
 <span class="tg">const</span> { Pool } = require(<span class="st">'pg'</span>);
 <span class="tg">const</span> multer = require(<span class="st">'multer'</span>);
 <span class="tg">const</span> path = require(<span class="st">'path'</span>);
@@ -746,28 +759,41 @@ app.use(express.static(<span class="st">'public'</span>)); <span class="cm">// s
 
 <span class="tg">const</span> pool = <span class="tg">new</span> Pool({
   user: <span class="st">'postgres'</span>,
-  password: <span class="st">'Senai1510'</span>,
+  password: <span class="st">'SUA SENHA'</span>,
   host: <span class="st">'localhost'</span>,
   port: <span class="st">5432</span>,
   database: <span class="st">'autovision'</span>
-});</code></pre>
+});</code>
 
-  <h3 class="topic">2. Upload de imagem com multer</h3>
-  <p class="topic-desc">
-    Configuração do armazenamento em disco (<code>diskStorage</code>) do Multer para salvar as imagens dos veículos na pasta <code>public/uploads</code>. Gera um nome único para cada arquivo combinando a data/hora em milissegundos com a extensão original do arquivo.
-  </p>
-<pre><code><span class="tg">const</span> storage = multer.diskStorage({
+app.listen(<span class="st">3000</span>, () =>
+  console.log(<span class="st">'Servidor rodando em http://localhost:3000'</span>)
+);</pre>
+
+          <h3 class="topic">2. Upload de imagem com multer</h3>
+          <p class="topic-desc">
+            Configuração do armazenamento em disco (<code>diskStorage</code>) do
+            Multer para salvar as imagens dos veículos na pasta
+            <code>public/uploads</code>. Gera um nome único para cada arquivo
+            combinando a data/hora em milissegundos com a extensão original do
+            arquivo.
+          </p>
+          <pre><code><span class="tg">const</span> storage = multer.diskStorage({
   destination: <span class="st">'public/uploads'</span>,
   filename: (req, file, cb) =>
     cb(<span class="tg">null</span>, Date.now() + path.extname(file.originalname))
 });
 <span class="tg">const</span> upload = multer({ storage });</code></pre>
 
-  <h3 class="topic">3. Vitrine e busca por modelo</h3>
-  <p class="topic-desc">
-    Rota de consulta (<code>GET</code>) que retorna os anúncios cadastrados. Executa um <code>JOIN</code> com a tabela de usuários para incluir os dados do vendedor e um <code>LEFT JOIN</code> agregando a quantidade total de demonstrações de interesse registradas. Permite filtrar dinamicamente por modelo através da query string <code>?modelo=</code>.
-  </p>
-<pre><code>app.get(<span class="st">'/api/anuncios'</span>, <span class="tg">async</span> (req, res) => {
+          <h3 class="topic">3. Vitrine e busca por modelo</h3>
+          <p class="topic-desc">
+            Rota de consulta (<code>GET</code>) que retorna os anúncios
+            cadastrados. Executa um <code>JOIN</code> com a tabela de usuários
+            para incluir os dados do vendedor e um
+            <code>LEFT JOIN</code> agregando a quantidade total de demonstrações
+            de interesse registradas. Permite filtrar dinamicamente por modelo
+            através da query string <code>?modelo=</code>.
+          </p>
+          <pre><code>app.get(<span class="st">'/api/anuncios'</span>, <span class="tg">async</span> (req, res) => {
   <span class="tg">const</span> { modelo } = req.query;
   <span class="tg">const</span> params = [];
 
@@ -791,15 +817,23 @@ app.use(express.static(<span class="st">'public'</span>)); <span class="cm">// s
   <span class="tg">const</span> { rows } = <span class="tg">await</span> pool.query(query, params);
   res.json(rows);
 });</code></pre>
-  <div class="note">
-    A rota busca os anúncios cadastrados realizando o <code>JOIN</code> com os dados do vendedor e contabilizando a quantidade total de interesses com <code>COUNT(i.id)</code>. Permite filtrar os anúncios pelo título/modelo do veículo via parâmetro de query <code>?modelo=</code>.
-  </div>
+          <div class="note">
+            A rota busca os anúncios cadastrados realizando o
+            <code>JOIN</code> com os dados do vendedor e contabilizando a
+            quantidade total de interesses com <code>COUNT(i.id)</code>. Permite
+            filtrar os anúncios pelo título/modelo do veículo via parâmetro de
+            query <code>?modelo=</code>.
+          </div>
 
-  <h3 class="topic">4. Rota de login</h3>
-  <p class="topic-desc">
-    Endpoint de autenticação via <code>POST</code>. Valida as credenciais (usuário e senha) no banco de dados PostgreSQL. Se as credenciais forem válidas, retorna os dados cadastrais do vendedor; caso contrário, retorna HTTP Status <code>401</code> informando o erro.
-  </p>
-<pre><code>app.post(<span class="st">'/api/login'</span>, <span class="tg">async</span> (req, res) => {
+          <h3 class="topic">4. Rota de login</h3>
+          <p class="topic-desc">
+            Endpoint de autenticação via <code>POST</code>. Valida as
+            credenciais (usuário e senha) no banco de dados PostgreSQL. Se as
+            credenciais forem válidas, retorna os dados cadastrais do vendedor;
+            caso contrário, retorna HTTP Status <code>401</code> informando o
+            erro.
+          </p>
+          <pre><code>app.post(<span class="st">'/api/login'</span>, <span class="tg">async</span> (req, res) => {
   <span class="tg">const</span> { usuario, senha } = req.body;
   <span class="tg">const</span> { rows } = <span class="tg">await</span> pool.query(
     <span class="st">'SELECT id, nome, usuario, telefone, foto_perfil FROM usuarios WHERE usuario = $1 AND senha = $2'</span>,
@@ -813,11 +847,14 @@ app.use(express.static(<span class="st">'public'</span>)); <span class="cm">// s
   res.json(rows[<span class="st">0</span>]);
 });</code></pre>
 
-  <h3 class="topic">5. Registrar interesse no anúncio</h3>
-  <p class="topic-desc">
-    Registra no banco a demonstração de interesse efetuada por qualquer visitante da plataforma. Insere o nome e contato fornecidos na tabela <code>interesses</code> e retorna o novo total de interações acumuladas naquele anúncio.
-  </p>
-<pre><code>app.post(<span class="st">'/api/interesses/:anuncioId'</span>, <span class="tg">async</span> (req, res) => {
+          <h3 class="topic">5. Registrar interesse no anúncio</h3>
+          <p class="topic-desc">
+            Registra no banco a demonstração de interesse efetuada por qualquer
+            visitante da plataforma. Insere o nome e contato fornecidos na
+            tabela <code>interesses</code> e retorna o novo total de interações
+            acumuladas naquele anúncio.
+          </p>
+          <pre><code>app.post(<span class="st">'/api/interesses/:anuncioId'</span>, <span class="tg">async</span> (req, res) => {
   <span class="tg">const</span> { anuncioId } = req.params;
   <span class="tg">const</span> { cliente_nome, cliente_contato } = req.body;
 
@@ -836,15 +873,20 @@ app.use(express.static(<span class="st">'public'</span>)); <span class="cm">// s
   );
   res.json({ interesses: rows[<span class="st">0</span>].total });
 });</code></pre>
-  <div class="note">
-    Como os clientes não possuem conta cadastrada, o nome e contato fornecidos no formulário de interesse são gravados diretamente na tabela <code>interesses</code> associados ao ID do anúncio.
-  </div>
+          <div class="note">
+            Como os clientes não possuem conta cadastrada, o nome e contato
+            fornecidos no formulário de interesse são gravados diretamente na
+            tabela <code>interesses</code> associados ao ID do anúncio.
+          </div>
 
-  <h3 class="topic">6. Perfil do vendedor (menu lateral)</h3>
-  <p class="topic-desc">
-    Consulta consolidada que busca os veículos publicados por um determinado vendedor (<code>vendedor_id</code>), calculando tanto a contagem de anúncios quanto o somatório total de interesses recebidos em todas as suas publicações.
-  </p>
-<pre><code>app.get(<span class="st">'/api/perfil/:id'</span>, <span class="tg">async</span> (req, res) => {
+          <h3 class="topic">6. Perfil do vendedor (menu lateral)</h3>
+          <p class="topic-desc">
+            Consulta consolidada que busca os veículos publicados por um
+            determinado vendedor (<code>vendedor_id</code>), calculando tanto a
+            contagem de anúncios quanto o somatório total de interesses
+            recebidos em todas as suas publicações.
+          </p>
+          <pre><code>app.get(<span class="st">'/api/perfil/:id'</span>, <span class="tg">async</span> (req, res) => {
   <span class="tg">const</span> { id } = req.params;
   <span class="tg">const</span> anuncios = <span class="tg">await</span> pool.query(
     <span class="st">`
@@ -867,11 +909,15 @@ app.use(express.static(<span class="st">'public'</span>)); <span class="cm">// s
   });
 });</code></pre>
 
-  <h3 class="topic">7. Cadastrar e excluir anúncio</h3>
-  <p class="topic-desc">
-    Endpoints para gerenciamento de anúncios. O método <code>POST</code> processa o formulário multipart enviando a imagem via Multer e salvando as informações no banco. O método <code>DELETE</code> remove permanentemente o anúncio informado pelo seu identificador (<code>id</code>).
-  </p>
-<pre><code>app.post(<span class="st">'/api/anuncios'</span>, upload.single(<span class="st">'imagem'</span>), <span class="tg">async</span> (req, res) => {
+          <h3 class="topic">7. Cadastrar e excluir anúncio</h3>
+          <p class="topic-desc">
+            Endpoints para gerenciamento de anúncios. O método
+            <code>POST</code> processa o formulário multipart enviando a imagem
+            via Multer e salvando as informações no banco. O método
+            <code>DELETE</code> remove permanentemente o anúncio informado pelo
+            seu identificador (<code>id</code>).
+          </p>
+          <pre><code>app.post(<span class="st">'/api/anuncios'</span>, upload.single(<span class="st">'imagem'</span>), <span class="tg">async</span> (req, res) => {
   <span class="tg">const</span> { titulo, local, preco, vendedor_id } = req.body;
   <span class="tg">if</span> (!req.file) <span class="tg">return</span> res.status(<span class="st">400</span>).json({ erro: <span class="st">'Imagem obrigatória'</span> });
 
@@ -887,11 +933,14 @@ app.delete(<span class="st">'/api/anuncios/:id'</span>, <span class="tg">async</
   res.json({ ok: <span class="tg">true</span> });
 });</code></pre>
 
-  <h3 class="topic">8. Enviar mensagem ao vendedor</h3>
-  <p class="topic-desc">
-    Recebe as mensagens diretas digitadas pelos potenciais compradores no modal, armazenando o nome, contato e o texto enviado na tabela <code>mensagens</code>. Por fim, inicia a execução do servidor Express escutando na porta local 3000.
-  </p>
-<pre><code>app.post(<span class="st">'/api/mensagens/:anuncioId'</span>, <span class="tg">async</span> (req, res) => {
+          <h3 class="topic">8. Enviar mensagem ao vendedor</h3>
+          <p class="topic-desc">
+            Recebe as mensagens diretas digitadas pelos potenciais compradores
+            no modal, armazenando o nome, contato e o texto enviado na tabela
+            <code>mensagens</code>. Por fim, inicia a execução do servidor
+            Express escutando na porta local 3000.
+          </p>
+          <pre><code>app.post(<span class="st">'/api/mensagens/:anuncioId'</span>, <span class="tg">async</span> (req, res) => {
   <span class="tg">const</span> { anuncioId } = req.params;
   <span class="tg">const</span> { cliente_nome, cliente_contato, mensagem } = req.body;
 
@@ -907,57 +956,54 @@ app.delete(<span class="st">'/api/anuncios/:id'</span>, <span class="tg">async</
   );
 
   res.json({ ok: <span class="tg">true</span> });
-});
+});</code></pre>
 
-app.listen(<span class="st">3000</span>, () =>
-  console.log(<span class="st">'Servidor rodando em http://localhost:3000'</span>)
-);</code></pre>
-
-  <table class="ref">
-    <tr>
-      <th>Rota</th>
-      <th>Método</th>
-      <th>Usada por</th>
-    </tr>
-    <tr>
-      <td><code>/api/anuncios</code></td>
-      <td>GET</td>
-      <td>
-        Vitrine inicial e busca por modelo do veículo (via <code>?modelo=</code>)
-      </td>
-    </tr>
-    <tr>
-      <td><code>/api/login</code></td>
-      <td>POST</td>
-      <td>Formulário de login de vendedores</td>
-    </tr>
-    <tr>
-      <td><code>/api/interesses/:anuncioId</code></td>
-      <td>POST</td>
-      <td>Modal de demonstração de interesse (nome e contato)</td>
-    </tr>
-    <tr>
-      <td><code>/api/perfil/:id</code></td>
-      <td>GET</td>
-      <td>Menu lateral "Ver Perfil" do vendedor</td>
-    </tr>
-    <tr>
-      <td><code>/api/anuncios</code></td>
-      <td>POST</td>
-      <td>Formulário de cadastro de veículo</td>
-    </tr>
-    <tr>
-      <td><code>/api/anuncios/:id</code></td>
-      <td>DELETE</td>
-      <td>Ícone de exclusão em "Seus anúncios"</td>
-    </tr>
-    <tr>
-      <td><code>/api/mensagens/:anuncioId</code></td>
-      <td>POST</td>
-      <td>Modal de envio de mensagem para o vendedor</td>
-    </tr>
-  </table>
-</section>
+          <table class="ref">
+            <tr>
+              <th>Rota</th>
+              <th>Método</th>
+              <th>Usada por</th>
+            </tr>
+            <tr>
+              <td><code>/api/anuncios</code></td>
+              <td>GET</td>
+              <td>
+                Vitrine inicial e busca por modelo do veículo (via
+                <code>?modelo=</code>)
+              </td>
+            </tr>
+            <tr>
+              <td><code>/api/login</code></td>
+              <td>POST</td>
+              <td>Formulário de login de vendedores</td>
+            </tr>
+            <tr>
+              <td><code>/api/interesses/:anuncioId</code></td>
+              <td>POST</td>
+              <td>Modal de demonstração de interesse (nome e contato)</td>
+            </tr>
+            <tr>
+              <td><code>/api/perfil/:id</code></td>
+              <td>GET</td>
+              <td>Menu lateral "Ver Perfil" do vendedor</td>
+            </tr>
+            <tr>
+              <td><code>/api/anuncios</code></td>
+              <td>POST</td>
+              <td>Formulário de cadastro de veículo</td>
+            </tr>
+            <tr>
+              <td><code>/api/anuncios/:id</code></td>
+              <td>DELETE</td>
+              <td>Ícone de exclusão em "Seus anúncios"</td>
+            </tr>
+            <tr>
+              <td><code>/api/mensagens/:anuncioId</code></td>
+              <td>POST</td>
+              <td>Modal de envio de mensagem para o vendedor</td>
+            </tr>
+          </table>
+        </section>
 
         <!-- ================= 04 HTML ================= -->
         <section class="layer" id="html" style="--accent-color: var(--l4)">
@@ -969,13 +1015,13 @@ app.listen(<span class="st">3000</span>, () =>
 
           <h3 class="topic">1. Cabeçalho, busca, vitrine e rodapé</h3>
           <p class="topic-desc">
-            O avatar padrão usa a logo
-            do sistema (<code>assets/logo.png</code>) em vez de um ícone
-            genérico de usuário, e fica <strong>fora</strong> da
-            <code>.user-section</code> — ele é visível mesmo sem login. Já a
-            <code>.user-section</code> (nome + botão "Ver Perfil") começa
-            escondida com <code>class="oculto"</code> e só aparece depois do
-            login, controlada via JS pelo <code>id="userSection"</code>.
+            O avatar padrão usa a logo do sistema (<code>assets/logo.png</code>)
+            em vez de um ícone genérico de usuário, e fica
+            <strong>fora</strong> da <code>.user-section</code> — ele é visível
+            mesmo sem login. Já a <code>.user-section</code> (nome + botão "Ver
+            Perfil") começa escondida com <code>class="oculto"</code> e só
+            aparece depois do login, controlada via JS pelo
+            <code>id="userSection"</code>.
           </p>
           <pre><code><span class="tg">&lt;body&gt;</span>
   <span class="tg">&lt;header&gt;</span>
@@ -1112,11 +1158,11 @@ app.listen(<span class="st">3000</span>, () =>
 
           <h3 class="topic">4. Modais do cliente (interesse e mensagem)</h3>
           <p class="topic-desc">
-            Estes dois modais são exclusivos do <strong>cliente sem
-            login</strong>: marcar interesse (coração) e mandar mensagem ao
-            vendedor. Cada um pede só nome + contato (e a mensagem, no
-            segundo caso) — não exigem <code>usuarioAtual</code>. É por isso
-            que eles funcionam mesmo antes de qualquer login ser feito.
+            Estes dois modais são exclusivos do
+            <strong>cliente sem login</strong>: marcar interesse (coração) e
+            mandar mensagem ao vendedor. Cada um pede só nome + contato (e a
+            mensagem, no segundo caso) — não exigem <code>usuarioAtual</code>. É
+            por isso que eles funcionam mesmo antes de qualquer login ser feito.
           </p>
           <pre><code><span class="cm">&lt;!-- Modal de interesse (cliente sem login) --&gt;</span>
 <span class="tg">&lt;div</span> <span class="at">id</span>=<span class="st">"modalInteresse"</span> <span class="at">class</span>=<span class="st">"overlay oculto"</span><span class="tg">&gt;</span>
@@ -1164,11 +1210,11 @@ app.listen(<span class="st">3000</span>, () =>
           <div class="note">
             Como o formulário tem <code>erroTitulo</code>,
             <code>erroLocal</code>, <code>erroPreco</code> e
-            <code>erroImagem</code> separados, a seção 06 (JS) faz uma
-            validação campo a campo que escreve a mensagem certa em cada
+            <code>erroImagem</code> separados, a seção 06 (JS) faz uma validação
+            campo a campo que escreve a mensagem certa em cada
             <code>span.msg-erro</code> — inclusive checando se o preço é um
-            número maior que zero. Já os modais de interesse e mensagem
-            validam nome/contato (e texto, no caso da mensagem) usando
+            número maior que zero. Já os modais de interesse e mensagem validam
+            nome/contato (e texto, no caso da mensagem) usando
             <code>span.erro</code>, mostrado logo abaixo dos campos, sem
             <code>alert()</code>.
           </div>
@@ -1184,9 +1230,13 @@ app.listen(<span class="st">3000</span>, () =>
 
           <h3 class="topic">1. Variáveis, reset e botões</h3>
           <p class="topic-desc">
-            Definição das variáveis globais utilizando o azul institucional (<code>--azul-principal</code> no tom base e <code>--azul-escuro</code> no tooltip para maior contraste), neutros de apoio e botões reutilizáveis (<code>.btn-preto</code>, <code>.btn-outline</code> e <code>.btn-fechar</code>).
+            Definição das variáveis globais utilizando o azul institucional
+            (<code>--azul-principal</code> no tom base e
+            <code>--azul-escuro</code> no tooltip para maior contraste), neutros
+            de apoio e botões reutilizáveis (<code>.btn-preto</code>,
+            <code>.btn-outline</code> e <code>.btn-fechar</code>).
           </p>
-  <pre><code><span class="tg">:root</span> {
+          <pre><code><span class="tg">:root</span> {
 <span class="at">--azul-principal</span>: <span class="st">#0b3d91</span>; <span class="cm">/* base */</span>
 <span class="at">--azul-escuro</span>: <span class="st">#072a66</span>; <span class="cm">/* usado no tooltip, mais contraste */</span>
 <span class="at">--branco</span>: <span class="st">#fff</span>;
@@ -1215,9 +1265,11 @@ app.listen(<span class="st">3000</span>, () =>
 
           <h3 class="topic">2. Header, busca e footer</h3>
           <p class="topic-desc">
-            Cabeçalho com avatar maior de 50px, controle de exibição da seção de usuário via <code>.user-section.oculto</code>, campo de busca com lupa e rodapé padronizado em azul principal.
+            Cabeçalho com avatar maior de 50px, controle de exibição da seção de
+            usuário via <code>.user-section.oculto</code>, campo de busca com
+            lupa e rodapé padronizado em azul principal.
           </p>
-  <pre><code><span class="tg">header</span> {
+          <pre><code><span class="tg">header</span> {
 <span class="at">display</span>: <span class="st">flex</span>; <span class="at">align-items</span>: <span class="st">center</span>; <span class="at">justify-content</span>: <span class="st">space-between</span>;
 <span class="at">padding</span>: <span class="st">16px 32px</span>; <span class="at">border-bottom</span>: <span class="st">1px solid var(--cinza-borda)</span>;
 }
@@ -1244,12 +1296,18 @@ app.listen(<span class="st">3000</span>, () =>
 <span class="tg">.redes img</span> { <span class="at">width</span>: <span class="st">22px</span>; <span class="at">height</span>: <span class="st">22px</span>; <span class="at">object-fit</span>: <span class="st">contain</span>; }</code></pre>
 
           <h3 class="topic">
-            3. Vitrine de 4 colunas: tooltip no topo, rodapé do card e botão de mensagem
+            3. Vitrine de 4 colunas: tooltip no topo, rodapé do card e botão de
+            mensagem
           </h3>
           <p class="topic-desc">
-            Vitrine configurada com 4 colunas em grid (<code>repeat(4, 1fr)</code>). O <code>.tooltip</code> azul escuro cobre o <b>topo</b> da foto no hover. O <code>.rodape-card</code> traz título, preço, contador de interesse e a área <code>.acoes</code> com o botão <code>.btn-mensagem</code>.
+            Vitrine configurada com 4 colunas em grid (<code
+              >repeat(4, 1fr)</code
+            >). O <code>.tooltip</code> azul escuro cobre o <b>topo</b> da foto
+            no hover. O <code>.rodape-card</code> traz título, preço, contador
+            de interesse e a área <code>.acoes</code> com o botão
+            <code>.btn-mensagem</code>.
           </p>
-  <pre><code><span class="tg">.vitrine</span> {
+          <pre><code><span class="tg">.vitrine</span> {
 <span class="at">display</span>: <span class="st">grid</span>; <span class="at">grid-template-columns</span>: <span class="st">repeat(4, 1fr)</span>; <span class="at">gap</span>: <span class="st">18px</span>;
 <span class="at">padding</span>: <span class="st">0 32px 32px 32px</span>;
 }
@@ -1289,16 +1347,22 @@ app.listen(<span class="st">3000</span>, () =>
 <span class="at">border-radius</span>: <span class="st">6px</span>; <span class="at">padding</span>: <span class="st">4px 10px</span>; <span class="at">font-size</span>: <span class="st">0.78rem</span>; <span class="at">cursor</span>: <span class="st">pointer</span>;
 }</code></pre>
           <div class="note">
-            O <code>.rodape-card</code> agrupa o título, a linha com preço e a div <code>.acoes</code> (com o botão <code>.btn-mensagem</code> e a estrela de interesse) — lembre de posicionar essa estrutura abaixo da imagem do card ao renderizar pelo JavaScript.
+            O <code>.rodape-card</code> agrupa o título, a linha com preço e a
+            div <code>.acoes</code> (com o botão <code>.btn-mensagem</code> e a
+            estrela de interesse) — lembre de posicionar essa estrutura abaixo
+            da imagem do card ao renderizar pelo JavaScript.
           </div>
 
           <h3 class="topic">
             4. Modais, caixas de texto e painel lateral (à esquerda)
           </h3>
           <p class="topic-desc">
-            Estilização de modais genéricos, suporte a campos do tipo <code>textarea</code> para envio de mensagens e painel lateral posicionado à esquerda (<code>left: 0</code>) com botão de destaque azul.
+            Estilização de modais genéricos, suporte a campos do tipo
+            <code>textarea</code> para envio de mensagens e painel lateral
+            posicionado à esquerda (<code>left: 0</code>) com botão de destaque
+            azul.
           </p>
-  <pre><code><span class="tg">.overlay</span> {
+          <pre><code><span class="tg">.overlay</span> {
 <span class="at">position</span>: <span class="st">fixed</span>; <span class="at">inset</span>: <span class="st">0</span>; <span class="at">background</span>: <span class="st">rgba(0, 0, 0, 0.5)</span>;
 <span class="at">display</span>: <span class="st">flex</span>; <span class="at">align-items</span>: <span class="st">center</span>; <span class="at">justify-content</span>: <span class="st">center</span>; <span class="at">z-index</span>: <span class="st">1000</span>;
 }
@@ -1331,9 +1395,12 @@ app.listen(<span class="st">3000</span>, () =>
             5. Formulário de cadastro, lista de anúncios e lixeira vermelha
           </h3>
           <p class="topic-desc">
-            Formulário estruturado com <code>.grupo-input</code> para alinhamento e mensagens de erro por campo (<code>.msg-erro</code>). A lixeira de exclusão no perfil aplica filtro SVG para exibir a tonalidade vermelha.
+            Formulário estruturado com <code>.grupo-input</code> para
+            alinhamento e mensagens de erro por campo (<code>.msg-erro</code>).
+            A lixeira de exclusão no perfil aplica filtro SVG para exibir a
+            tonalidade vermelha.
           </p>
-  <pre><code><span class="tg">#formCadastro</span> { <span class="at">display</span>: <span class="st">flex</span>; <span class="at">flex-direction</span>: <span class="st">column</span>; <span class="at">gap</span>: <span class="st">10px</span>; <span class="at">margin-top</span>: <span class="st">12px</span>; }
+          <pre><code><span class="tg">#formCadastro</span> { <span class="at">display</span>: <span class="st">flex</span>; <span class="at">flex-direction</span>: <span class="st">column</span>; <span class="at">gap</span>: <span class="st">10px</span>; <span class="at">margin-top</span>: <span class="st">12px</span>; }
 
 <span class="tg">.grupo-input</span> { <span class="at">display</span>: <span class="st">flex</span>; <span class="at">flex-direction</span>: <span class="st">column</span>; <span class="at">gap</span>: <span class="st">4px</span>; }
 <span class="tg">.grupo-input label</span> { <span class="at">font-size</span>: <span class="st">0.85rem</span>; <span class="at">font-weight</span>: <span class="st">bold</span>; <span class="at">color</span>: <span class="st">var(--azul-principal)</span>; }
@@ -1362,23 +1429,30 @@ app.listen(<span class="st">3000</span>, () =>
 <span class="tg">.item-perfil .lixeira:hover</span> { <span class="at">transform</span>: <span class="st">scale(1.1)</span>; }
 <span class="tg">.lixeira</span> { <span class="at">width</span>: <span class="st">18px</span>; <span class="at">height</span>: <span class="st">18px</span>; <span class="at">object-fit</span>: <span class="st">contain</span>; <span class="at">cursor</span>: <span class="st">pointer</span>; }</code></pre>
           <div class="note">
-            Note que o ícone de interesse (<code>.interesse-icone.ativa</code>, tópico 3) utiliza o filtro para tom azul vibrante, enquanto a lixeira (<code>.item-perfil .lixeira</code>) utiliza o filtro para tom vermelho. Copie cada valor de <code>filter</code> individualmente.
+            Note que o ícone de interesse (<code>.interesse-icone.ativa</code>,
+            tópico 3) utiliza o filtro para tom azul vibrante, enquanto a
+            lixeira (<code>.item-perfil .lixeira</code>) utiliza o filtro para
+            tom vermelho. Copie cada valor de
+            <code>filter</code> individualmente.
           </div>
         </section>
 
         <!-- ================= 06 JS ================= -->
-<section class="layer" id="js" style="--accent-color: var(--l6)">
-  <div class="layer__head">
-    <span class="big-num">06</span>
-    <h2>JavaScript — app.js</h2>
-    <span class="tag">~40 min</span>
-  </div>
+        <section class="layer" id="js" style="--accent-color: var(--l6)">
+          <div class="layer__head">
+            <span class="big-num">06</span>
+            <h2>JavaScript — app.js</h2>
+            <span class="tag">~40 min</span>
+          </div>
 
-  <h3 class="topic">1. Estado global e carregamento da vitrine</h3>
-  <p class="topic-desc">
-    Gerenciamento do estado do usuário e consulta de veículos com filtro por modelo (<code>filtroModelo</code>). A renderização dos cards insere dinamicamente as ações de enviar mensagem e registrar interesse (<code>coracao.svg</code>).
-  </p>
-  <pre><code><span class="tg">let</span> usuarioAtual = <span class="tg">null</span>; <span class="cm">// guarda { id, nome, usuario, telefone, foto_perfil } — só vendedor loga</span>
+          <h3 class="topic">1. Estado global e carregamento da vitrine</h3>
+          <p class="topic-desc">
+            Gerenciamento do estado do usuário e consulta de veículos com filtro
+            por modelo (<code>filtroModelo</code>). A renderização dos cards
+            insere dinamicamente as ações de enviar mensagem e registrar
+            interesse (<code>coracao.svg</code>).
+          </p>
+          <pre><code><span class="tg">let</span> usuarioAtual = <span class="tg">null</span>; <span class="cm">// guarda { id, nome, usuario, telefone, foto_perfil } — só vendedor loga</span>
 
 <span class="cm">// --- 1. VITRINE DE ANÚNCIOS ---</span>
 <span class="tg">async function</span> carregarVitrine(filtroModelo = <span class="st">''</span>) {
@@ -1440,11 +1514,13 @@ app.listen(<span class="st">3000</span>, () =>
 
 carregarVitrine(); <span class="cm">// primeira carga, sem reload de página</span></code></pre>
 
-  <h3 class="topic">2. Modais de interesse e mensagem ao vendedor</h3>
-  <p class="topic-desc">
-    Permite que qualquer visitante (sem login) expresse interesse ou envie mensagens diretas ao vendedor através de modais interativos configurados separadamente.
-  </p>
-  <pre><code><span class="cm">// --- 2. INTERESSES ---</span>
+          <h3 class="topic">2. Modais de interesse e mensagem ao vendedor</h3>
+          <p class="topic-desc">
+            Permite que qualquer visitante (sem login) expresse interesse ou
+            envie mensagens diretas ao vendedor através de modais interativos
+            configurados separadamente.
+          </p>
+          <pre><code><span class="cm">// --- 2. INTERESSES ---</span>
 <span class="tg">let</span> anuncioIdInteresse = <span class="tg">null</span>;
 <span class="tg">let</span> iconeInteresseAtual = <span class="tg">null</span>;
 
@@ -1544,11 +1620,13 @@ carregarVitrine(); <span class="cm">// primeira carga, sem reload de página</sp
     <span class="tg">document</span>.getElementById(<span class="st">'modalMensagem'</span>).classList.add(<span class="st">'oculto'</span>);
   });</code></pre>
 
-  <h3 class="topic">3. Autenticação de vendedores (Login / Logout)</h3>
-  <p class="topic-desc">
-    Gerencia a sessão de usuários do tipo vendedor, ajustando dinamicamente a interface do topo (<code>userSection</code>), foto de perfil e a alternância do botão para estado de Logout.
-  </p>
-  <pre><code><span class="cm">// --- 3. AUTENTICAÇÃO (SÓ VENDEDOR) ---</span>
+          <h3 class="topic">3. Autenticação de vendedores (Login / Logout)</h3>
+          <p class="topic-desc">
+            Gerencia a sessão de usuários do tipo vendedor, ajustando
+            dinamicamente a interface do topo (<code>userSection</code>), foto
+            de perfil e a alternância do botão para estado de Logout.
+          </p>
+          <pre><code><span class="cm">// --- 3. AUTENTICAÇÃO (SÓ VENDEDOR) ---</span>
 <span class="tg">const</span> btnLogin = <span class="tg">document</span>.getElementById(<span class="st">'btnLogin'</span>);
 
 btnLogin.addEventListener(<span class="st">'click'</span>, () =&gt; {
@@ -1646,11 +1724,12 @@ btnLogin.addEventListener(<span class="st">'click'</span>, () =&gt; {
   carregarVitrine();
 }</code></pre>
 
-  <h3 class="topic">4. Busca por modelo</h3>
-  <p class="topic-desc">
-    Dispara a busca de veículos filtrados por modelo via <kbd>Enter</kbd> no campo ou clique no ícone da lupa.
-  </p>
-  <pre><code><span class="cm">// --- 4. BUSCA POR MODELO ---</span>
+          <h3 class="topic">4. Busca por modelo</h3>
+          <p class="topic-desc">
+            Dispara a busca de veículos filtrados por modelo via
+            <kbd>Enter</kbd> no campo ou clique no ícone da lupa.
+          </p>
+          <pre><code><span class="cm">// --- 4. BUSCA POR MODELO ---</span>
 <span class="tg">function</span> executarBusca() {
   <span class="tg">const</span> termo = <span class="tg">document</span>.getElementById(<span class="st">'inputBusca'</span>).value.trim();
   carregarVitrine(termo);
@@ -1665,11 +1744,12 @@ btnLogin.addEventListener(<span class="st">'click'</span>, () =&gt; {
   iconeLupa.addEventListener(<span class="st">'click'</span>, executarBusca);
 }</code></pre>
 
-  <h3 class="topic">5. Painel de perfil do vendedor</h3>
-  <p class="topic-desc">
-    Exibe dados consolidados (total de interesses e anúncios cadastrados) e permite a exclusão direta de anúncios cadastrados.
-  </p>
-  <pre><code><span class="cm">// --- 5. PAINEL DE PERFIL ---</span>
+          <h3 class="topic">5. Painel de perfil do vendedor</h3>
+          <p class="topic-desc">
+            Exibe dados consolidados (total de interesses e anúncios
+            cadastrados) e permite a exclusão direta de anúncios cadastrados.
+          </p>
+          <pre><code><span class="cm">// --- 5. PAINEL DE PERFIL ---</span>
 <span class="tg">document</span>.getElementById(<span class="st">'btnVerPerfil'</span>).addEventListener(<span class="st">'click'</span>, <span class="tg">async</span> () =&gt; {
   <span class="tg">const</span> resp = <span class="tg">await</span> fetch(<span class="st">`/api/perfil/${usuarioAtual.id}`</span>);
   <span class="tg">const</span> dados = <span class="tg">await</span> resp.json();
@@ -1703,11 +1783,15 @@ btnLogin.addEventListener(<span class="st">'click'</span>, () =&gt; {
   <span class="tg">document</span>.getElementById(<span class="st">'painelPerfil'</span>).classList.add(<span class="st">'oculto'</span>);
 });</code></pre>
 
-  <h3 class="topic">6. Cadastro de novo anúncio (com validações individuais)</h3>
-  <p class="topic-desc">
-    Submissão do formulário de anúncio com tratamento de erros detalhado campo a campo (título, localização, preço válido e extensões de imagens suportadas).
-  </p>
-  <pre><code><span class="cm">// --- 6. CADASTRO DE NOVO ANÚNCIO (Com validações individuais) ---</span>
+          <h3 class="topic">
+            6. Cadastro de novo anúncio (com validações individuais)
+          </h3>
+          <p class="topic-desc">
+            Submissão do formulário de anúncio com tratamento de erros detalhado
+            campo a campo (título, localização, preço válido e extensões de
+            imagens suportadas).
+          </p>
+          <pre><code><span class="cm">// --- 6. CADASTRO DE NOVO ANÚNCIO (Com validações individuais) ---</span>
 <span class="tg">document</span>
   .getElementById(<span class="st">'formCadastro'</span>)
   .addEventListener(<span class="st">'submit'</span>, <span class="tg">async</span> (e) =&gt; {
@@ -1786,75 +1870,145 @@ btnLogin.addEventListener(<span class="st">'click'</span>, () =&gt; {
       <span class="tg">document</span>.getElementById(<span class="st">'btnVerPerfil'</span>).click(); <span class="cm">// Recarrega os dados do perfil</span>
     }
   });</code></pre>
-</section>
+        </section>
 
-<!-- ================= 07 CHECKLIST FINAL ================= -->
-<section class="layer" id="checklist" style="--accent-color: var(--l7)">
-  <div class="layer__head">
-    <span class="big-num">07</span>
-    <h2>Checklist Final & Guia da Prova</h2>
-    <span class="tag">Estratégia</span>
-  </div>
+        <!-- ================= 07 CHECKLIST FINAL ================= -->
+        <section class="layer" id="checklist" style="--accent-color: var(--l7)">
+          <div class="layer__head">
+            <span class="big-num">07</span>
+            <h2>Checklist Final & Guia da Prova</h2>
+            <span class="tag">Estratégia</span>
+          </div>
 
-  <h3 class="topic">1. Ordem de execução recomendada nas 3 horas</h3>
-  <p class="topic-desc">
-    Cronograma tático para gerenciar o tempo do exame, garantindo o funcionamento do fluxo principal (CRUD, Banco e Rotas) antes dos detalhes visuais e de validação.
-  </p>
-  <ul class="checklist-list">
-    <li>
-      <strong>0h00 – 0h20 (20 min) | Banco de Dados e Setup Inicial:</strong>
-      Crie o banco de dados <code>autovision</code> no PostgreSQL, execute o script SQL com as tabelas (<code>usuarios</code>, <code>anuncios</code>, <code>interesses</code>, <code>mensagens</code>) e dados iniciais (<code>INSERT</code>). Inicialize o projeto Node (<code>npm init -y</code>), instale as dependências (<code>express</code>, <code>pg</code>, <code>multer</code>) e crie a pasta <code>public/uploads</code>.
-    </li>
-    <li>
-      <strong>0h20 – 1h05 (45 min) | Backend e APIs (server.js):</strong>
-      Implemente as rotas REST do Express: listagem e busca por modelo, login de vendedores, envio de mensagens, registro de interesses, perfil do vendedor, cadastro com upload de imagens via Multer e exclusão de anúncios. Teste as rotas rapidamente.
-    </li>
-    <li>
-      <strong>1h05 – 1h45 (40 min) | Estrutura HTML e Estilização CSS:</strong>
-      Monte a estrutura da vitrine, barra de busca, modais (Login, Interesse e Mensagem), painel de perfil do vendedor e formulário de cadastro. Aplique os estilos CSS essenciais para layout de cards, posicionamento de modais e responsividade básica.
-    </li>
-    <li>
-      <strong>1h45 – 2h30 (45 min) | Integração Front-end JavaScript (app.js):</strong>
-      Conecte a interface ao backend via <code>fetch</code>. Faça a carga dinâmica da vitrine, filtro por busca em tempo real/Enter, acionamento dos modais, fluxo de login/logout, botão de interesse com atualização do contador e envio de formulários sem recarregar a página.
-    </li>
-    <li>
-      <strong>2h30 – 3h00 (30 min) | Validações, Testes de Ponta a Ponta e Ajustes:</strong>
-      Aplique as mensagens de erro individuais campo a campo. Valide upload de imagens com extensões permitidas, formatação de preços em BRL, exclusão de anúncios no perfil e teste todos os fluxos como visitante e como vendedor logado.
-    </li>
-  </ul>
+          <h3 class="topic">1. Ordem de execução recomendada nas 3 horas</h3>
+          <p class="topic-desc">
+            Cronograma tático para gerenciar o tempo do exame, garantindo o
+            funcionamento do fluxo principal (CRUD, Banco e Rotas) antes dos
+            detalhes visuais e de validação.
+          </p>
+          <ul class="checklist-list">
+            <li>
+              <strong
+                >0h00 – 0h20 (20 min) | Banco de Dados e Setup Inicial:</strong
+              >
+              Crie o banco de dados <code>autovision</code> no PostgreSQL,
+              execute o script SQL com as tabelas (<code>usuarios</code>,
+              <code>anuncios</code>, <code>interesses</code>,
+              <code>mensagens</code>) e dados iniciais (<code>INSERT</code>).
+              Inicialize o projeto Node (<code>npm init -y</code>), instale as
+              dependências (<code>express</code>, <code>pg</code>,
+              <code>multer</code>) e crie a pasta <code>public/uploads</code>.
+            </li>
+            <li>
+              <strong
+                >0h20 – 1h05 (45 min) | Backend e APIs (server.js):</strong
+              >
+              Implemente as rotas REST do Express: listagem e busca por modelo,
+              login de vendedores, envio de mensagens, registro de interesses,
+              perfil do vendedor, cadastro com upload de imagens via Multer e
+              exclusão de anúncios. Teste as rotas rapidamente.
+            </li>
+            <li>
+              <strong
+                >1h05 – 1h45 (40 min) | Estrutura HTML e Estilização
+                CSS:</strong
+              >
+              Monte a estrutura da vitrine, barra de busca, modais (Login,
+              Interesse e Mensagem), painel de perfil do vendedor e formulário
+              de cadastro. Aplique os estilos CSS essenciais para layout de
+              cards, posicionamento de modais e responsividade básica.
+            </li>
+            <li>
+              <strong
+                >1h45 – 2h30 (45 min) | Integração Front-end JavaScript
+                (app.js):</strong
+              >
+              Conecte a interface ao backend via <code>fetch</code>. Faça a
+              carga dinâmica da vitrine, filtro por busca em tempo real/Enter,
+              acionamento dos modais, fluxo de login/logout, botão de interesse
+              com atualização do contador e envio de formulários sem recarregar
+              a página.
+            </li>
+            <li>
+              <strong
+                >2h30 – 3h00 (30 min) | Validações, Testes de Ponta a Ponta e
+                Ajustes:</strong
+              >
+              Aplique as mensagens de erro individuais campo a campo. Valide
+              upload de imagens com extensões permitidas, formatação de preços
+              em BRL, exclusão de anúncios no perfil e teste todos os fluxos
+              como visitante e como vendedor logado.
+            </li>
+          </ul>
 
-  <h3 class="topic">2. Requisitos do enunciado fáceis de esquecer</h3>
-  <p class="topic-desc">
-    Pontos críticos frequentemente avaliados em critérios de correção e pontuação que exigem atenção redobrada:
-  </p>
-  <ul class="checklist-list">
-    <li>
-      <strong>Pasta Físicas para Uploads:</strong> A pasta <code>public/uploads</code> deve existir fisicamente no diretório do projeto, e o middleware <code>express.static('public')</code> deve estar ativo. Caso contrário, o Multer falhará ao tentar salvar os arquivos enviados.
-    </li>
-    <li>
-      <strong>Validações Individuais por Campo:</strong> Exibir mensagens de erro específicas abaixo ou junto de cada campo inválido no formulário de cadastro (título vazio, preço zerado/negativo, extensão de arquivo incorreta como <code>.pdf</code> ou <code>.exe</code>), em vez de apenas um alerta genérico.
-    </li>
-    <li>
-      <strong>Comportamento Sem Reload (SPA):</strong> O envio de mensagens, registro de interesse, login e cadastro de anúncio devem atualizar a tela via manipulação de DOM/AJAX sem efetuar o recarregamento total da página (<code>e.preventDefault()</code> em formulários).
-    </li>
-    <li>
-      <strong>Diferenciação de Papéis (Visitante vs Vendedor):</strong> Visitantes <em>não precisam de login</em> para navegar na vitrine, filtrar por modelo, registrar interesse ou enviar mensagens. Apenas vendedores realizam login para publicar e excluir anúncios.
-    </li>
-    <li>
-      <strong>Contador de Interesses Dinâmico:</strong> Ao clicar no coração de interesse, a rota do backend deve retornar o total atualizado e o front-end deve atualizar a contagem visível do card e alterar a cor do ícone sem necessitar de busca completa na vitrine.
-    </li>
-    <li>
-      <strong>Busca Parcial e Case-Insensitive (ILIKE):</strong> A consulta SQL de busca por modelo deve usar o operador <code>ILIKE</code> com `%` em ambos os lados do termo pesquisado (ex: <code>WHERE a.titulo ILIKE $1</code>) para encontrar correspondências parciais independentemente de letras maiúsculas ou minúsculas.
-    </li>
-    <li>
-      <strong>Formatação de Moeda no Front-end:</strong> Garantir que os preços dos veículos vindos do banco (valores numéricos) sejam apresentados na vitrine no padrão brasileiro (<code>R$ 0,00</code>) utilizando <code>Number(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })</code>.
-    </li>
-  </ul>
+          <h3 class="topic">2. Requisitos do enunciado fáceis de esquecer</h3>
+          <p class="topic-desc">
+            Pontos críticos frequentemente avaliados em critérios de correção e
+            pontuação que exigem atenção redobrada:
+          </p>
+          <ul class="checklist-list">
+            <li>
+              <strong>Pasta Físicas para Uploads:</strong> A pasta
+              <code>public/uploads</code> deve existir fisicamente no diretório
+              do projeto, e o middleware
+              <code>express.static('public')</code> deve estar ativo. Caso
+              contrário, o Multer falhará ao tentar salvar os arquivos enviados.
+            </li>
+            <li>
+              <strong>Validações Individuais por Campo:</strong> Exibir
+              mensagens de erro específicas abaixo ou junto de cada campo
+              inválido no formulário de cadastro (título vazio, preço
+              zerado/negativo, extensão de arquivo incorreta como
+              <code>.pdf</code> ou <code>.exe</code>), em vez de apenas um
+              alerta genérico.
+            </li>
+            <li>
+              <strong>Comportamento Sem Reload (SPA):</strong> O envio de
+              mensagens, registro de interesse, login e cadastro de anúncio
+              devem atualizar a tela via manipulação de DOM/AJAX sem efetuar o
+              recarregamento total da página (<code>e.preventDefault()</code> em
+              formulários).
+            </li>
+            <li>
+              <strong>Diferenciação de Papéis (Visitante vs Vendedor):</strong>
+              Visitantes <em>não precisam de login</em> para navegar na vitrine,
+              filtrar por modelo, registrar interesse ou enviar mensagens.
+              Apenas vendedores realizam login para publicar e excluir anúncios.
+            </li>
+            <li>
+              <strong>Contador de Interesses Dinâmico:</strong> Ao clicar no
+              coração de interesse, a rota do backend deve retornar o total
+              atualizado e o front-end deve atualizar a contagem visível do card
+              e alterar a cor do ícone sem necessitar de busca completa na
+              vitrine.
+            </li>
+            <li>
+              <strong>Busca Parcial e Case-Insensitive (ILIKE):</strong> A
+              consulta SQL de busca por modelo deve usar o operador
+              <code>ILIKE</code> com `%` em ambos os lados do termo pesquisado
+              (ex: <code>WHERE a.titulo ILIKE $1</code>) para encontrar
+              correspondências parciais independentemente de letras maiúsculas
+              ou minúsculas.
+            </li>
+            <li>
+              <strong>Formatação de Moeda no Front-end:</strong> Garantir que os
+              preços dos veículos vindos do banco (valores numéricos) sejam
+              apresentados na vitrine no padrão brasileiro (<code>R$ 0,00</code
+              >) utilizando
+              <code
+                >Number(valor).toLocaleString('pt-BR', { style: 'currency',
+                currency: 'BRL' })</code
+              >.
+            </li>
+          </ul>
 
-  <div class="note">
-    <strong>Dica de Ouro para o Exame:</strong> Comece garantindo que o banco de dados e as rotas do Node.js estejam funcionando. Uma API bem estruturada permite testar o front-end rapidamente e evita perder tempo corrigindo bugs de banco no final da prova.
-  </div>
-</section>
+          <div class="note">
+            <strong>Dica de Ouro para o Exame:</strong> Comece garantindo que o
+            banco de dados e as rotas do Node.js estejam funcionando. Uma API
+            bem estruturada permite testar o front-end rapidamente e evita
+            perder tempo corrigindo bugs de banco no final da prova.
+          </div>
+        </section>
       </main>
     </div>
 
@@ -1882,16 +2036,13 @@ btnLogin.addEventListener(<span class="st">'click'</span>, () =&gt; {
       targets.forEach((t) => t && observer.observe(t));
 
       document.querySelectorAll('pre, code').forEach((bloco) => {
-  // Impede o início da seleção de texto
-  bloco.addEventListener('selectstart', (e) => e.preventDefault());
-
-  // Impede a ação de copiar
-  bloco.addEventListener('copy', (e) => e.preventDefault());
-
-  // Impede o menu do botão direito do mouse sobre o bloco
-  bloco.addEventListener('contextmenu', (e) => e.preventDefault());
-});
-
+        // Impede o início da seleção de texto
+        // bloco.addEventListener('selectstart', (e) => e.preventDefault());
+        // Impede a ação de copiar
+        // bloco.addEventListener('copy', (e) => e.preventDefault());
+        // Impede o menu do botão direito do mouse sobre o bloco
+        // bloco.addEventListener('contextmenu', (e) => e.preventDefault());
+      });
     </script>
   </body>
 </html>

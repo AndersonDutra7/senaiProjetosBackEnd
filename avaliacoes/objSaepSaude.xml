@@ -1,0 +1,869 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+
+<question type="category">
+  <category><text>$course$/top/SAEP Diagnóstica Fase 3 - 2025.2-TIINT-AV.DIAG.FASE3</text></category>
+</question>
+
+<!-- 01 -->
+<question type="multichoice">
+<name><text>SAEP_43503</text></name>
+<questiontext format="html"><text><![CDATA[<p>A imagem apresentada mostra o comando Switch Case executando um laço de repetição com base no valor da variável C, o valor que será apresentado é:</p>
+<pre>int A = 2
+int B = 3
+int C = A^B
+switch(c){
+
+    case 2:
+        print("Advogado");
+        break;
+    case 3:
+        print("Médico");
+        break;
+    case 5:
+        print("Professor");
+        break;
+    case 6:
+        print("Analista");
+        break;
+    case 8:
+        print("Estudante");
+        break;
+}</pre>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[Advogado]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Analista]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[Estudante]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Médico]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Professor]]></text></answer>
+<tags><tag><text>Fácil</text></tag></tags>
+</question>
+
+<!-- 02 -->
+<question type="multichoice">
+<name><text>SAEP_43824</text></name>
+<questiontext format="html"><text><![CDATA[<p>Uma API tem padrão de retornos para códigos HTTP. A documentação da API determina quais retornos são possíveis para cada método. O mais conhecido é o 404 que representa não encontrar o endpoint passado pelo sistema, conhecido também por não encontrar o caminho da URL fornecida.</p>
+<p>Dos comandos HTTP o que representa um resposta positiva de uma API é respetivamente:</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[500]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[201]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[400]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[404]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[200]]></text></answer>
+<tags><tag><text>Fácil</text></tag></tags>
+</question>
+
+<!-- 03 -->
+<question type="multichoice">
+<name><text>SAEP_43829</text></name>
+<questiontext format="html"><text><![CDATA[<p>O SQL é uma linguagem para manipulação de banco de dados: criação e modificação de bancos e tabelas. É uma linguagem dividido em duas partes: DDL (parte que interagem com os objetos do banco), a DML (parte que interage com os dados).</p>
+<p>Parte do SQL conhecida como DDL responsável por criar, alterar, excluir objetos de um banco (não os dados). Os comandos dessa parte são:</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="100" format="html"><text><![CDATA[CREATE, o ALTER e o DROP]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[SELECT, FROM e WHERE]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[NEW, OLD e DO]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[PROCEDURE, TRIGGER e WHILE]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[INSERT, UPDATE e DELETE.]]></text></answer>
+<tags><tag><text>Fácil</text></tag></tags>
+</question>
+
+<!-- 04 (REVISAR: alternativas em HTML não foram extraídas do PDF) -->
+<question type="multichoice">
+<name><text>SAEP_51856</text></name>
+<questiontext format="html"><text><![CDATA[<p>Um estudante do curso técnico de informática para internet está utilizando linguagem de marcação para desenvolver um botão no formulário de uma página web.</p>
+<p><em>[INSERIR IMAGEM: formulário com os campos Nome, E-mail, Texto e o botão "Enviar"]</em></p>
+<p>Qual linha de código aplicará para essa funcionalidade?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[[REVISAR - código da alternativa A não extraído do PDF]]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[[REVISAR - código da alternativa B não extraído do PDF]]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[<code>&lt;input type="submit" value="Enviar"&gt;</code> [REVISAR - código reconstruído]]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[[REVISAR - código da alternativa D não extraído do PDF]]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[[REVISAR - código da alternativa E não extraído do PDF]]]></text></answer>
+<tags><tag><text>Médio</text></tag></tags>
+</question>
+
+<!-- 05 (REVISAR: alternativa B teve o operador perdido no PDF) -->
+<question type="multichoice">
+<name><text>SAEP_52144</text></name>
+<questiontext format="html"><text><![CDATA[<p>Um desenvolvedor ao participar de um processo seletivo em uma empresa, recebeu o desafio para construir um algoritmo, que verificasse se uma pessoa tem idade para dirigir ou não, usando o pseudocódigo Portugol.</p>
+<p>Sendo assim, qual dos códigos abaixo, atende o requisito acima?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[<code>se(idade &gt; 18){ escreva(“Pode Dirigir”) }senao{ escreva(“Não pode dirigir”) }</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>se(idade &lt; 18){ escreva(“Pode Dirigir”) }senao{ escreva(“Não pode dirigir”) }</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>se(idade = 18){ escreva(“Pode Dirigir”) }senao{ escreva(“Não pode dirigir”) }</code>]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[<code>se(idade &gt;= 18){ escreva(“Pode Dirigir”) }senao{ escreva(“Não pode dirigir”) }</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>se(idade === 18){ escreva(“Pode Dirigir”) }senao{ escreva(“Não pode dirigir”) }</code>]]></text></answer>
+<tags><tag><text>Difícil</text></tag></tags>
+</question>
+
+<!-- 06 -->
+<question type="multichoice">
+<name><text>SAEP_53911</text></name>
+<questiontext format="html"><text><![CDATA[<p>Um desenvolvedor está trabalhando em um projeto colaborativo no GitHub e deseja registrar suas alterações para o repositório local.</p>
+<p>O comando a ser utilizado é:</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[git branch]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[git commit]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[git status]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[git push]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[git diff]]></text></answer>
+<tags><tag><text>Fácil</text></tag></tags>
+</question>
+
+<!-- 07 -->
+<question type="multichoice">
+<name><text>SAEP_54183</text></name>
+<questiontext format="html"><text><![CDATA[<p>Um programador está desenvolvendo um site de previsão do tempo que requer informações atualizadas sobre o clima.</p>
+<pre>1 - const city = "NomeDaCidade";
+2 - const apiKey = "SuaChaveDeAPI";
+3 - const url = `https://api.weatherprovider.com/forecast?city=${city}&amp;apikey=${apiKey}`;
+4 - fetch(url)
+5 - ??????
+6 - .then(data =&gt; {
+7 - });</pre>
+<p>Qual comando em JavaScript deve ser aplicado na linha 5:</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[<code>httpClient = HttpClients.createDefault();</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>$data = json_decode($response, true);</code>]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[<code>.then(response =&gt; response.json())</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>response = Net::HTTP.get(url)</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>response = requests.get(url)</code>]]></text></answer>
+<tags><tag><text>Difícil</text></tag></tags>
+</question>
+
+<!-- 08 -->
+<question type="multichoice">
+<name><text>SAEP_55231</text></name>
+<questiontext format="html"><text><![CDATA[<p>Uma equipe está projetando um aplicativo de entrega de comida e deseja assegurar que a interface de usuário seja intuitiva, que permita aos usuários filtrar por tipo e variedade de comida.</p>
+<p>Considerando padrões de design de interação para proporcionar a melhor experiência do usuário, na situação apresentada, identifique como proporcionar essa interface intuitiva:</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[Apresentar os filtros em uma página separada da página principal.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Utilizar ícones animados para chamar a atenção para os filtros.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Usar fontes "elegantes" para adicionar personalidade no filtros.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Colocar os filtros em um submenu para evitar poluição visual.]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[Tornar os rótulos de filtro claros e facilmente compreensíveis.]]></text></answer>
+<tags><tag><text>Médio</text></tag></tags>
+</question>
+
+<!-- 09 -->
+<question type="multichoice">
+<name><text>SAEP_55233</text></name>
+<questiontext format="html"><text><![CDATA[<p>Um programador está criando um algoritmo que verifica se um número é par, observe o código:</p>
+<pre>1 - programa
+2 - {
+3 -   funcao inicio()
+4 -   {
+5 -     logico teste
+6 -     real num
+7 -     escreva ("Digite o número desejado para saber se é par: ")
+8 -     leia (num)
+9 -     teste = (num ???? 2 == 0)
+10 -    escreva ("O número digitado é par? ", teste)
+11 - }</pre>
+<p>Qual operador aritmético aplicar para resolver a linha 9 do código?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[<code>num / 2 == 0;</code>]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[<code>num % 2 == 0;</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>num * 2 == 0;</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>num + 2 == 0;</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>num - 2 == 0;</code>]]></text></answer>
+<tags><tag><text>Médio</text></tag></tags>
+</question>
+
+<!-- 10 -->
+<question type="multichoice">
+<name><text>SAEP_55484</text></name>
+<questiontext format="html"><text><![CDATA[<p>Um desenvolvedor de software está configurando o ambiente para um novo projeto de comércio eletrônico em um ambiente MySQL. O projeto envolverá o gerenciamento de produtos, e o desenvolvedor precisa criar um banco de dados necessário para armazenar essas informações.</p>
+<p>Qual comando deve ser utilizado pelo desenvolvedor para criar o banco de dados?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="100" format="html"><text><![CDATA[CREATE DATABASE]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[CREATE TABLE]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[INSERT INTO]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[UPDATE]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[SELECT]]></text></answer>
+<tags><tag><text>Fácil</text></tag></tags>
+</question>
+
+<!-- 11 (REVISAR: alternativas C e E tiveram o operador perdido no PDF) -->
+<question type="multichoice">
+<name><text>SAEP_55724</text></name>
+<questiontext format="html"><text><![CDATA[<p>Um programador deseja visualizar informações dos alunos em um banco de dados. Ele quer selecionar os nomes e as idades de todos os alunos com notas maiores ou iguais a 90.</p>
+<p>Qual comando deve ser aplicado para realizar essa consulta em SQL?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="100" format="html"><text><![CDATA[<code>SELECT name, age FROM students WHERE grade &gt;= 90;</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>SELECT name, age FROM students WHERE grade = 90;</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>SELECT name, age FROM students WHERE grade &lt;= 90;</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>SELECT name, age FROM students WHERE grade &gt; 90;</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>SELECT name, age FROM students WHERE grade &lt; 90;</code>]]></text></answer>
+<tags><tag><text>Difícil</text></tag></tags>
+</question>
+
+<!-- 12 -->
+<question type="multichoice">
+<name><text>SAEP_55764</text></name>
+<questiontext format="html"><text><![CDATA[<p>Um estudante está participando de um workshop de desenvolvimento de software, onde o tópico é a criação de APIs para integração entre sistemas. Durante o processo o instrutor pediu para apresentar como funciona a criação de uma API.</p>
+<p>Qual o processo inicial para desenvolver essa API?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="100" format="html"><text><![CDATA[Identificar as funcionalidades principais da API, determinar os endpoints e definir os métodos de requisição (GET, POST, etc.).]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Escolher a linguagem de programação preferida, desenvolver algoritmos complexos e criar interfaces visuais para os usuários.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Realizar testes de carga e desempenho no servidor de hospedagem para garantir a escalabilidade da API.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Definir o layout visual da interface de usuário, escolher cores e fontes, e criar elementos de interação.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Projetar o banco de dados, definir tabelas e relações, e criar consultas SQL otimizadas.]]></text></answer>
+<tags><tag><text>Fácil</text></tag></tags>
+</question>
+
+<!-- 13 -->
+<question type="multichoice">
+<name><text>SAEP_55786</text></name>
+<questiontext format="html"><text><![CDATA[<p>Durante o desenvolvimento de um projeto em PHP, um programador deseja reutilizar um conjunto de funções armazenadas em um arquivo separado.</p>
+<p>Qual comando deve ser aplicado para obter esse resultado?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[urlencode]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[implode]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[include]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[unlink]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[$_post]]></text></answer>
+<tags><tag><text>Difícil</text></tag></tags>
+</question>
+
+<!-- 14 -->
+<question type="multichoice">
+<name><text>SAEP_55983</text></name>
+<questiontext format="html"><text><![CDATA[<p>Uma loja de autopeças tem diversos fornecedores para os produtos que revende a seus clientes. A loja tem enfrentado dificuldades para controlar e monitorar o seu estoque, tudo é registrado em fichas e todos os registros que vinculam os produtos às suas marcas são feitos manualmente.</p>
+<p>Para modernizar esse processo, controlar e monitorar o estoque de forma mais eficiente, um programador modelou e implementou em um banco de dados com duas tabelas, compostas pelos seguintes dados:</p>
+<p>Tabela marca: id_marca; nome_marca; pais_origem.<br>Tabela produtos: id_produtos; nome_produto; id_marca.</p>
+<p>Levando-se em consideração que uma marca possui vários produtos, qual código SQL deve ser implementado para garantir o relacionamento um para muitos entre as duas tabelas?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[<pre>CREATE TABLE produtos (
+  id_produto INT PRIMARY KEY,
+  nome_produto VARCHAR(100),
+  id_marca INT,
+  FOREIGN KEY (id_marca) REFERENCES marca(id_marca)
+);
+CREATE TABLE marca (
+  id_marca INT PRIMARY KEY,
+  nome_marca VARCHAR(100),
+  id_produto INT,
+  FOREIGN KEY (id_produto) REFERENCES produtos(id_produto)
+);</pre>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<pre>CREATE TABLE produtos (
+  id_produto INT PRIMARY KEY,
+  nome_produto VARCHAR(100),
+  id_marca INT,
+  FOREIGN KEY (id_marca) REFERENCES marca(id_marca)
+);
+CREATE TABLE marca (
+  id_marca INT PRIMARY KEY,
+  nome_marca VARCHAR(100),
+  FOREIGN KEY (id_marca) REFERENCES produtos(id_marca)
+);</pre>]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[<pre>CREATE TABLE marca (
+  id_marca INT PRIMARY KEY,
+  nome_marca VARCHAR(100),
+  pais_origem VARCHAR(100)
+);
+CREATE TABLE produtos (
+  id_produto INT PRIMARY KEY,
+  nome_produto VARCHAR(100),
+  id_marca INT,
+  FOREIGN KEY (id_marca) REFERENCES marca(id_marca)
+);</pre>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<pre>CREATE TABLE marca (
+  id_marca INT PRIMARY KEY,
+  nome_marca VARCHAR(100),
+  id_produto INT
+);
+CREATE TABLE produtos (
+  id_produto INT PRIMARY KEY,
+  nome_produto VARCHAR(100),
+  FOREIGN KEY (id_produto) REFERENCES marca(id_produto)
+);</pre>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<pre>CREATE TABLE marca (
+  id_marca INT PRIMARY KEY,
+  nome_marca VARCHAR(100)
+);
+CREATE TABLE produtos (
+  id_produto INT PRIMARY KEY,
+  nome_produto VARCHAR(100),
+  id_marca INT,
+  FOREIGN KEY (id_marca) REFERENCES marca(id_produto)
+);</pre>]]></text></answer>
+<tags><tag><text>Fácil</text></tag></tags>
+</question>
+
+<!-- 15 -->
+<question type="multichoice">
+<name><text>SAEP_56025</text></name>
+<questiontext format="html"><text><![CDATA[<p>O comando SELECT é utilizado para buscar dados em uma tabela do banco de dados, podendo ser usado com funções de agrupamentos, como AVG, SUM, MIN, MAX e COUNT. Analise a tabela produtos e o código SQL abaixo.</p>
+<table border="1" cellpadding="4" cellspacing="0">
+<tr><th>Codigo</th><th>Produto</th><th>Preco_Unitario</th><th>Quantidade</th><th>Fabricante</th></tr>
+<tr><td>1</td><td>Pendrive</td><td>50</td><td>20</td><td>Kingston</td></tr>
+<tr><td>2</td><td>HD Externo</td><td>320</td><td>5</td><td>Seagate</td></tr>
+<tr><td>3</td><td>Mouse</td><td>100</td><td>10</td><td>Microsoft</td></tr>
+<tr><td>4</td><td>Teclado</td><td>35</td><td>10</td><td>Positivo</td></tr>
+</table>
+<pre>SELECT AVG(Quantidade) FROM produtos WHERE Codigo &gt;= 3</pre>
+<p>Após análise da tabela e o código SQL, qual valor será exibido no resultado da consulta?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="100" format="html"><text><![CDATA[10]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[20]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[11,25]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[45]]></text></answer>
+<tags><tag><text>Médio</text></tag></tags>
+</question>
+
+<!-- 16 -->
+<question type="multichoice">
+<name><text>SAEP_56083</text></name>
+<questiontext format="html"><text><![CDATA[<p>Um desenvolvedor está trabalhando em um projeto de e-commerce e precisa implementar uma funcionalidade avançada no carrinho de compras. Ele precisa criar uma lógica que arredonde o resultado do cálculo do total da compra para duas casas decimais.</p>
+<p>Qual comando em PHP ele deve usar para resolver essa tarefa?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[number_format().]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[floatval( ).]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[round( ).]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[floor( ).]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[ceil( ).]]></text></answer>
+<tags><tag><text>Difícil</text></tag></tags>
+</question>
+
+<!-- 17 -->
+<question type="multichoice">
+<name><text>SAEP_56156</text></name>
+<questiontext format="html"><text><![CDATA[<p>Operações com cálculos envolvendo uma linguagem de programação são primordiais para o funcionamento dos sistemas. Uma escola de inglês possui uma página em sua intranet para o cadastro de alunos e suas 4 notas bimestrais. O programador definiu como identificador das variáveis dos campos do formulário como N1, N2, N3 e N4. A página não está retornando os valores esperados como resultado o somatório das notas. Você foi solicitado a realizar uma alteração na página. Para isso é necessário identificar quais as linhas de comando fazem a operação definida acima.</p>
+<p>Quais as linhas de comandos buscam os dados do HTML e calcula a soma das notas?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[<pre>num1=document.getElementById("n1").value;
+num2=document.getElementById("n2").value;
+num3=document.getElementById("n3").value;
+num4=document.getElementById("n4").value;
+soma1=num1+num2+num3+num4;</pre>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<pre>num1=document.getElementById("n1");
+num2=document.getElementById("n2");
+num3=document.getElementById("n3");
+num4=document.getElementById("n4");
+soma1=num1+num2+num3+num4;</pre>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<pre>num1=document.getElementByTagName("n1").value;
+num2=document.getElementByTagName("n1").value;
+num3=document.getElementByTagName("n3").value;
+num4=document.getElementByTagName("n4").value;
+soma1=num1+num2+num3+num4;</pre>]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[<pre>num1=parseInt(document.getElementById("n1").value);
+num2=parseInt(document.getElementById("n2").value);
+num3=parseInt(document.getElementById("n3").value);
+num4=parseInt(document.getElementById("n4").value);
+soma1=num1+num2+num3+num4;</pre>]]></text></answer>
+<tags><tag><text>Difícil</text></tag></tags>
+</question>
+
+<!-- 18 -->
+<question type="multichoice">
+<name><text>SAEP_56158</text></name>
+<questiontext format="html"><text><![CDATA[<p>Os dados em uma tabela podem ser pesquisados usando o comando SELECT. A empresa necessita buscar os alunos com as notas entre 80 e 90 pontos.</p>
+<p>Para executar a consulta acima, qual linha de comandos podemos usar?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="100" format="html"><text><![CDATA[<code>select * from alunos where notafinal between 80 and 90.</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>select * from alunos where notafinal between 80 or 90.</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>select alunos from notas where notafinal &gt;= 80.</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>select * from alunos where notafinal &gt;=80.</code>]]></text></answer>
+<tags><tag><text>Médio</text></tag></tags>
+</question>
+
+<!-- 19 -->
+<question type="multichoice">
+<name><text>SAEP_56207</text></name>
+<questiontext format="html"><text><![CDATA[<p>Por mais que se planeje a construção de um software, erros podem ocorrer. Pode ser um bug em um game, uma falha que fecha o programa ou um erro que impossibilita salvar um arquivo. Tais situações podem gerar prejuízos de tempo e dinheiro.</p>
+<p>O teste de software serve, justamente, para tentar encontrar possíveis erros de sistema de modo que no melhor dos casos esse erro seja corrigido antes que o produto seja lançado no mercado.</p>
+<p>Qual teste tem por objetivo testar a menor parte possível de um sistema?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="100" format="html"><text><![CDATA[Teste Unitário.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Teste de Sistema.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Teste de Integração.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Teste de Aceitação.]]></text></answer>
+<tags><tag><text>Médio</text></tag></tags>
+</question>
+
+<!-- 20 (REVISAR: operador do WHERE perdido no PDF; reconstruído como <) -->
+<question type="multichoice">
+<name><text>SAEP_56210</text></name>
+<questiontext format="html"><text><![CDATA[<p>SQL é uma linguagem usada para inserir, manipular e buscar dados nos bancos de dados. Com base no conceito de SQL, analise a tabela funcionário e o código SQL abaixo.</p>
+<pre>SELECT * FROM funcionario WHERE Código &lt; 20</pre>
+<table border="1" cellpadding="4" cellspacing="0">
+<tr><th>Código</th><th>Nome</th><th>Função</th><th>Idade</th><th>Salário</th></tr>
+<tr><td>10</td><td>Ana Maria</td><td>Analista</td><td>30</td><td>1500</td></tr>
+<tr><td>20</td><td>Paulo</td><td>Programador</td><td>22</td><td>900</td></tr>
+<tr><td>30</td><td>Beatriz</td><td>Analista</td><td>40</td><td>2200</td></tr>
+<tr><td>40</td><td>Leonardo</td><td>Gerente</td><td>45</td><td>3500</td></tr>
+</table>
+<p>Após análise da tabela e o código SQL, qual(s) registro será exibido no resultado da consulta?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[Os registros de Código 30 e 40.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Os registros de Código 10 e 20.]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[Apenas o registro de Código 10.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Todos os registros.]]></text></answer>
+<tags><tag><text>Médio</text></tag></tags>
+</question>
+
+<!-- 21 -->
+<question type="multichoice">
+<name><text>SAEP_56211</text></name>
+<questiontext format="html"><text><![CDATA[<p>SQL é uma linguagem usada para inserir, manipular e buscar dados nos bancos de dados. Com base no conceito de SQL, analise a tabela funcionário e o código SQL abaixo.</p>
+<pre>SELECT * FROM funcionário WHERE nome not like ‘%a’</pre>
+<table border="1" cellpadding="4" cellspacing="0">
+<tr><th>Código</th><th>Nome</th><th>Função</th><th>Idade</th><th>Salário</th></tr>
+<tr><td>10</td><td>Ana Maria</td><td>Analista</td><td>30</td><td>1500</td></tr>
+<tr><td>20</td><td>Paulo</td><td>Programador</td><td>22</td><td>900</td></tr>
+<tr><td>30</td><td>Beatriz</td><td>Analista</td><td>40</td><td>2200</td></tr>
+<tr><td>40</td><td>Leonardo</td><td>Gerente</td><td>45</td><td>3500</td></tr>
+</table>
+<p>Após análise da tabela e do código SQL, quais registros serão exibido no resultado da consulta?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[Os registros terminados com a letra A no campo nome.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Os registros não começados pela letra A no campo nome.]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[Os registros que terminam com a letra diferente de A no campo nome.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Todos os registros.]]></text></answer>
+<tags><tag><text>Difícil</text></tag></tags>
+</question>
+
+<!-- 22 -->
+<question type="multichoice">
+<name><text>SAEP_56236</text></name>
+<questiontext format="html"><text><![CDATA[<p>Um docente está trabalhando em uma planilha no Microsoft Excel, onde ele registra as notas de seus alunos. As notas estão localizadas na coluna "B" da planilha, das células B2 até B11. O docente precisa calcular a soma das notas desses 10 alunos.</p>
+<p>Qual fórmula deve ser aplicada pelo docente?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[=CONT.SE(B2:B11, "&gt;5")]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[=MULTIPLICAR(B2:B11)]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[=MÉDIA(B2:B11)]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[=SOMA(B2:B11)]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[=MIN(B2:B11)]]></text></answer>
+<tags><tag><text>Muito Fácil</text></tag></tags>
+</question>
+
+<!-- 23 -->
+<question type="multichoice">
+<name><text>SAEP_56258</text></name>
+<questiontext format="html"><text><![CDATA[<p>Um desenvolvedor está criando um programa que precisa tomar uma ação se pelo menos uma das duas condições for verdadeira para continuar com a próxima ação.</p>
+<p>Qual operação booleana aplicar para atender a essa condição?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[AND]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[NOT]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[XOR]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[NOR]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[OR]]></text></answer>
+<tags><tag><text>Médio</text></tag></tags>
+</question>
+
+<!-- 24 -->
+<question type="multichoice">
+<name><text>SAEP_56374</text></name>
+<questiontext format="html"><text><![CDATA[<p>Um programador está precisando implementar uma estrutura que execute um bloco de código pelo menos uma vez.</p>
+<p>Qual estrutura de repetição deve ser aplicada para atender esse requisito?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[Foreach]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[Do while]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Elseif]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[While]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[For]]></text></answer>
+<tags><tag><text>Médio</text></tag></tags>
+</question>
+
+<!-- 25 -->
+<question type="multichoice">
+<name><text>SAEP_56660</text></name>
+<questiontext format="html"><text><![CDATA[<p>A empresa IANES Tech, necessita de um cadastro específico de dados, para posterior manipulação das informações, afim de uma análise mais detalhada das características dos clientes que acessam a sua loja virtual. Existem várias tabelas, que combinadas, formam um conjunto de dados desses clientes.</p>
+<p>Nessas tabelas existem campos de índice que são compartilhadas entre si. Quando são da tabela principal, são chamadas de Chave Primária e quando há um relacionamento entre duas tabelas, como são chamadas na segunda tabela?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[Chave Estendida.]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[Chave Estrangeira.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Chave Primária.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Chave Secundária.]]></text></answer>
+<tags><tag><text>Muito Fácil</text></tag></tags>
+</question>
+
+<!-- 26 -->
+<question type="multichoice">
+<name><text>SAEP_56841</text></name>
+<questiontext format="html"><text><![CDATA[<p>Ao criar uma planilha no Microsoft Excel é provável que em algum momento sejam inseridos dados fora de um padrão esperado. Por exemplo, uma planilha para digitação de notas de alunos em uma prova com pontuação variando entre 0 e 100 pontos não deve receber notas fora deste intervalo.</p>
+<p>No Microsoft Excel é possível modificar a formatação de uma célula quando seu conteúdo não obedece a um determinado critério, por meio da</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="100" format="html"><text><![CDATA[formatação condicional.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[função se.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[função seerro.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[função alterarformato.]]></text></answer>
+<tags><tag><text>Muito Fácil</text></tag></tags>
+</question>
+
+<!-- 27 -->
+<question type="multichoice">
+<name><text>SAEP_56889</text></name>
+<questiontext format="html"><text><![CDATA[<p>A linguagem PHP é versátil e próxima dos comandos em HTML. Outra vantagem é ser open source, ou seja, código aberto, gratuito para todos os usuários e desenvolvedores.</p>
+<p>O PHP é uma linguagem</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[client-side.]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[server-side.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[client-side e server-side.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[para navegadores Web.]]></text></answer>
+<tags><tag><text>Muito Fácil</text></tag></tags>
+</question>
+
+<!-- 28 (REVISAR: operador do enquanto perdido no PDF; reconstruído como <=) -->
+<question type="multichoice">
+<name><text>SAEP_59426</text></name>
+<questiontext format="html"><text><![CDATA[<p>Um programador foi contratado para analisar a estrutura de controle de fluxo:</p>
+<pre>// codigo 1
+i = 1
+fim = 7
+enquanto i &lt;= fim faça
+    escreva(i)
+    i = i + 1
+fim enquanto
+depois = i
+
+// codigo 2
+fim = 6
+i = 0
+enquanto i &lt;= fim faça
+    i = i + 1
+    escreva(i)
+fim enquanto
+depois = i</pre>
+<p>Ao processar a estrutura de controle, o programador chegou a seguinte conclusão:</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[Os códigos 1 e 2, apresentam resultados diferêntes.]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[Os códigos 1 e 2, apresentam o mesmo resultado.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Os códigos 1 e 2, não seram executados, pois possuem erros de sintaxa.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[O código 1, será executado, mas o 2 não, pois há erro de sintaxe.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[O Código 2, será executado, mas o 1 não, pois há erros de sintaxe.]]></text></answer>
+<tags><tag><text>Difícil</text></tag></tags>
+</question>
+
+<!-- 29 -->
+<question type="multichoice">
+<name><text>SAEP_59581</text></name>
+<questiontext format="html"><text><![CDATA[<p>Um grupo de pessoas vem trabalhando na elaboração de uma manual de usuário de um Software, utilizando o editor de textos Microsoft Word, mas estão tendo problemas com a produtividade na formatação dos textos, pois estão tendo que formatar item por item.</p>
+<p>Considerando o editor de texto informado, é possível realizar a cópia e aplicar a formatação em vários locais do documento utilizando a opção:</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[Temas.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Alterar Estilos.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Marcar Entrada.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Painel de Seleção.]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[Pincel de Formatação.]]></text></answer>
+<tags><tag><text>Médio</text></tag></tags>
+</question>
+
+<!-- 30 -->
+<question type="multichoice">
+<name><text>SAEP_59583</text></name>
+<questiontext format="html"><text><![CDATA[<p>Um técnico desenvolve cronogramas para projetos em uma indústria e usa planilhas eletrônicas para automatizar os cálculos. Em um dos seus últimos trabalhos, realizou as seguintes operações ao preencher uma planilha:</p>
+<p>A célula C5 tinha a fórmula =soma(a10:b20) e na célula F4 a fórmula =máximo(c1:c4).</p>
+<p>Ele selecionou a coluna E, clicou com o botão direito do mouse e inseriu uma nova coluna. Em seguida, selecionou a linha 7 e clicou com o botão direito do mouse para inserir uma nova linha.</p>
+<p>Nestas condições, após a execução dessas operações, as fórmulas, agora presentes nas células C5 e G4, são respectivamente:</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[=SOMA(A10:B20) &nbsp; =MÁXIMO(C1:C4)]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[=SOMA(A11:B21) &nbsp; =MÁXIMO(C1:C4)]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[=SOMA(A11:B21) &nbsp; =MÁXIMO(D1:D4)]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[=SOMA(B10:C20) &nbsp; =MÁXIMO(C2:C5)]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[=SOMA(B11:C21) &nbsp; =MÁXIMO(D1:D4)]]></text></answer>
+<tags><tag><text>Difícil</text></tag></tags>
+</question>
+
+<!-- 31 -->
+<question type="multichoice">
+<name><text>SAEP_67263</text></name>
+<questiontext format="html"><text><![CDATA[<p>Técnico de informática está criando um novo site para uma loja vender seus produtos online que será preciso integrar com o sistema de estoque existente na empresa, usando requisição HTTP para fazer consultas.</p>
+<p>Neste cenário, o método que permitirá obter as informações necessárias é:</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[DELETE]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[PATCH]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[POST]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[PUT]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[GET]]></text></answer>
+<tags><tag><text>Médio</text></tag></tags>
+</question>
+
+<!-- 32 -->
+<question type="multichoice">
+<name><text>SAEP_67264</text></name>
+<questiontext format="html"><text><![CDATA[<p>Em um banco de dados de uma indústria, há uma tabela intitulada como cliente. Para atender à lei LGPD (Lei geral de proteção de dados), a coluna DATA_NASCIMENTO, precisa ser removida da referida tabela.</p>
+<p>Nesse cenário, o comando em SQL que atenderá a solicitação é:</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[<code>DROP DATA_NASCIMENTO FROM CLIENTE;</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>DELETE COLUMN DATA_NASCIMENTO FROM CLIENTE;</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>REMOVE COLUMN DATA_NASCIMENTO FROM CLIENTE;</code>]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[<code>ALTER TABLE CLIENTE DROP COLUMN DATA_NASCIMENTO;</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>MODIFY TABLE CLIENTE DELETE COLUMN DATA_NASCIMENTO;</code>]]></text></answer>
+<tags><tag><text>Médio</text></tag></tags>
+</question>
+
+<!-- 33 -->
+<question type="multichoice">
+<name><text>SAEP_68231</text></name>
+<questiontext format="html"><text><![CDATA[<p>Para uma campanha de Marketing, foi criado um aplicativo de design para interiores visando unir a necessidade e realidade do profissional da área, aliando eficácia e visão do produto em simular ambientes, no intuito de entregar mais funcionalidades ao dia-a-dia do seu negócio.</p>
+<p>Diante da necessidade do profissional e, visando entender a realidade do cliente, o profissional utilizando linguagens back-end e front-end de desenvolvimento deverá?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[Diferenciar os segmentos e atividades do setor com necessidade, aplicando o conhecimento de profissionais do ramo de atividade.]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[Desenvolver identidade visual, pensando no escopo do projeto e em atender a realidade do profissional da área.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Aplicar os dados recebidos e desenvolver um sistema de forma a abranger todos os setores.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Quantificar todo o mercado e abranger a necessidade de profissionais do ramo solicitado.]]></text></answer>
+<tags><tag><text>Difícil</text></tag></tags>
+</question>
+
+<!-- 34 -->
+<question type="multichoice">
+<name><text>SAEP_69108</text></name>
+<questiontext format="html"><text><![CDATA[<p>A equipe de TI de um sistema de gerenciamento de pedidos detectou falhas no sistema, causadas pela ausência de relacionamentos definidos corretamente entre as tabelas, resultando em pedidos que não estão associados a nenhum cliente. O banco de dados possui duas tabelas principais: Clientes e Pedidos, cada qual com seu identificador.</p>
+<p>Diante desse fato, implemente o relacionamento correto entre as tabelas.</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[<code>CREATE INDEX idx_cliente ON Pedidos(id_cliente);</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>UPDATE Pedidos SET id_cliente = NULL WHERE id_cliente NOT IN (SELECT id_cliente FROM Clientes);</code>]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[<code>ALTER TABLE Pedidos ADD CONSTRAINT fk_cliente FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente);</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>INSERT INTO Clientes (id_cliente) SELECT DISTINCT id_cliente FROM Pedidos WHERE id_cliente NOT IN (SELECT id_cliente FROM Clientes);</code>]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[<code>CREATE TRIGGER trg_pedidos_clientes BEFORE INSERT ON Pedidos FOR EACH ROW BEGIN IF (NEW.id_cliente NOT IN (SELECT id_cliente FROM Clientes)) THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cliente inválido'; END IF; END;</code>]]></text></answer>
+<tags><tag><text>Difícil</text></tag></tags>
+</question>
+
+<!-- 35 -->
+<question type="multichoice">
+<name><text>SAEP_69584</text></name>
+<questiontext format="html"><text><![CDATA[<p>Um sistema de autenticação possui os seguintes requisitos: O usuário deve inserir um nome de usuário e senha válidos para realizar o login. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos um número e uma letra maiúscula. O sistema deve bloquear o acesso após 3 tentativas de login inválidas.</p>
+<p>Neste cenário, analise os requisitos listados e indique aquele com menor impacto sobre a cobertura para o caso de teste sobre autenticação.</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[Inserir um nome de usuário e uma senha em branco.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Inserir um nome de usuário inválido e uma senha válida.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Inserir um nome de usuário válido e uma senha com caracteres especiais.]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[Inserir um nome de usuário válido e uma senha com menos de 8 caracteres.]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[Inserir um nome de usuário válido, uma senha válida e tentar realizar o login novamente.]]></text></answer>
+<tags><tag><text>Difícil</text></tag></tags>
+</question>
+
+<!-- 36 (REVISAR: inserir a imagem do DER manualmente) -->
+<question type="multichoice">
+<name><text>SAEP_70122</text></name>
+<questiontext format="html"><text><![CDATA[<p>Um técnico em informática para internet está projetando um sistema de gerenciamento de produtos e pedidos para uma empresa de e-commerce. Para isso, o mesmo decidiu criar um DER (Diagrama Entidade-Relacionamento), a fim de definir a forma de relação entre as entidades.</p>
+<p><em>[INSERIR IMAGEM DO DIAGRAMA: entidade Produto (IDProduto, NomeProduto, Preco, Descrição) ligada pelo relacionamento "pacote" à entidade Pedido (IDPedido, DataPedido, ValorTotal)]</em></p>
+<p>Levando em consideração o diagrama acima, qual a cardinalidade entre as entidades?</p>]]></text></questiontext>
+<generalfeedback format="html"><text></text></generalfeedback>
+<defaultgrade>1.0000000</defaultgrade>
+<penalty>0.3333333</penalty>
+<hidden>0</hidden>
+<single>true</single>
+<shuffleanswers>0</shuffleanswers>
+<answernumbering>ABCD</answernumbering>
+<answer fraction="0" format="html"><text><![CDATA[A cardinalidade é de "1:N"]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[A cardinalidade é de "1:1"]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[A cardinalidade é de "N:1"]]></text></answer>
+<answer fraction="0" format="html"><text><![CDATA[A cardinalidade é de "0:N"]]></text></answer>
+<answer fraction="100" format="html"><text><![CDATA[A cardinalidade é de "N:N"]]></text></answer>
+<tags><tag><text>Médio</text></tag></tags>
+</question>
+
+</quiz>

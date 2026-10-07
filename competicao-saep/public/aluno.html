@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Competição SAEP – Aluno</title>
+    <link rel="stylesheet" href="/estilo-prova.css" />
+    <link rel="stylesheet" href="/jogo.css" />
+  </head>
+  <body class="prova">
+    <div class="wrap" id="app"></div>
+    <script src="/comum.js"></script>
+    <script>
+      const app = document.getElementById('app');
+      let pid = localStorage.getItem('pid');
+      let nome = localStorage.getItem('nome');
+      let st = null;
+      let erroMsg = '';
+      let chaveAtual = '';
+
+      const ws = abrirWS(onMsg, (on) => {
+        if (on && (pid || nome)) ws.send({ t: 'join', pid, nome });
+        if (!on) clearInterval(iniciarTimer.id);
+        renderEntrada();
+      });
+
+      function onMsg(m) {
+        if (m.t === 'erro') {
+          erroMsg = m.msg;
+          return renderEntrada();
+        }
+        if (m.t === 'entrou') {
+          pid = m.pid; nome = m.nome;
+          localStorage.setItem('pid', pid);
+          localStorage.setItem('nome', nome);
+          erroMsg = '';
+          return;
+        }
+        if (m.t === 'state') {
+          st = m;
+          render();
+        }
+      }
+
+      function renderEntrada() {
+        if (st) return;
+        chaveAtual = 'entrada';
+        app.innerHTML = `
+          <div class="card center">
+            <h1 class="titulo">Competição SAEP</h1>
+            <p class="muted">Digite seu nome para entrar na partida.</p>
+            <input class="nome" id="nome" maxlength="20" placeholder="Seu nome" autocomplete="off" />
+            <button class="btn" id="entrar">Entrar</button>
+            <div class="erro">${esc(erroMsg)}</div>
+          </div>`;
+        const inp = document.getElementById('nome');
+        const entrar = () => ws.send({ t: 'join', nome: inp.value });
+        document.getElementById('entrar').onclick = entrar;
+        inp.onkeydown = (e) => e.key === 'Enter' && entrar();
+      }
+
+      function render() {
+        const chave = st.phase + ':' + st.qi;
+        if (st.phase === 'question' && chave === chaveAtual) return atualizarBotoes();
+        chaveAtual = chave;
+        clearInterval(iniciarTimer.id);
+        window.scrollTo(0, 0);
+
+        if (st.phase === 'lobby') {
+          app.innerHTML = `<div class="card center"><h1 class="titulo">Você está dentro, ${esc(st.nome)}!</h1>
+            <p>Aguarde o professor iniciar a partida.</p></div>`;
+        }
+
+        if (st.phase === 'question') {
+          app.innerHTML = `
+            <div class="tempo"><div class="trilho"><div class="barra" id="barra"></div></div><div class="seg" id="seg"></div></div>
+            <div class="item">${itemHTML(st)}</div>
+            <div class="botoes"><div class="status" id="status"></div>
+              <div class="grade">${['a', 'b', 'c', 'd'].map((l) => `<button data-l="${l}">${l.toUpperCase()}</button>`).join('')}</div>
+            </div>`;
+          document.querySelectorAll('.botoes button').forEach((b) => {
+            b.onclick = () => {
+              if (st.respondeu) return;
+              ws.send({ t: 'resposta', escolha: b.dataset.l });
+              st.respondeu = true;
+              st.escolha = b.dataset.l;
+              atualizarBotoes();
+            };
+          });
+          iniciarTimer(document.getElementById('barra'), document.getElementById('seg'), st.restante, st.tempo, () => {
+            st.encerrou = true;
+            atualizarBotoes();
+          });
+          atualizarBotoes();
+        }
+
+        if (st.phase === 'reveal') {
+          const r = st.minha;
+          let cls = 'nada', tit = 'Sem resposta', sub = 'Você não respondeu a tempo.';
+          if (r.escolha) {
+            cls = r.certa ? 'ok' : 'erro2';
+            tit = r.certa ? 'Acertou! 🎉' : 'Errou';
+            sub = r.certa ? `+${r.pontos} pontos` : `A correta era a letra ${st.correta.toUpperCase()}`;
+          }
+          app.innerHTML = `
+            <div class="resultado ${cls}"><div class="grande">${tit}</div><div>${sub}</div>
+              <div style="margin-top:6px">Total: <b>${st.pontos}</b> pts · ${st.posicao}º de ${st.nJogadores}</div></div>
+            <div class="item" id="item">${itemHTML(st)}</div>
+            <div class="card center muted">${st.ultima ? 'Aguarde o resultado final.' : 'Aguarde a próxima questão.'}</div>`;
+          marcar(document.getElementById('item'), st.correta, r.escolha);
+        }
+
+        if (st.phase === 'final') {
+          app.innerHTML = `
+            <div class="card center"><h1 class="titulo">Fim de jogo!</h1>
+              <p style="font-size:1.4rem"><b>${st.posicao}º lugar</b> de ${st.nJogadores}</p>
+              <p>${st.pontos} pontos · ${st.acertos} acertos</p></div>
+            <div class="card"><table class="rank">${st.ranking
+              .map((r, i) => `<tr><td class="n">${i + 1}º</td><td>${esc(r.nome)}</td><td class="p">${r.pontos}</td></tr>`)
+              .join('')}</table></div>`;
+        }
+      }
+
+      function atualizarBotoes() {
+        const status = document.getElementById('status');
+        if (!status) return;
+        const bloqueado = st.respondeu || st.encerrou;
+        document.querySelectorAll('.botoes button').forEach((b) => {
+          b.disabled = bloqueado;
+          b.classList.toggle('minha', st.escolha === b.dataset.l);
+        });
+        status.textContent = st.respondeu
+          ? `Resposta ${st.escolha.toUpperCase()} enviada. Aguarde…`
+          : st.encerrou ? 'Tempo esgotado.' : 'Escolha a alternativa:';
+      }
+    </script>
+  </body>
+</html>

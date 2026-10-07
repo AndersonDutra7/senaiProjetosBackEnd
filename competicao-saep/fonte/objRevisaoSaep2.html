@@ -1,0 +1,1966 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avaliação Objetiva – Informática para Internet (Nível Avançado)</title>
+    <style>
+      /* ══════════════════════════════════════════════════════════
+         FRAMEWORK DE AVALIAÇÃO OBJETIVA
+         Tudo escopado em body.prova. Para trocar a identidade
+         visual, altere apenas as variáveis abaixo.
+         ══════════════════════════════════════════════════════════ */
+      :root {
+        --azul: #2e5496;
+        --azul-claro: #e8eef9;
+        --azul-borda: #9bb0d6;
+        --cinza-borda: #d0d7de;
+        --cinza-fundo: #f3f4f6;
+        --alternativa: #c00000;
+        --facil: #28a745;
+        --medio: #f0a500;
+        --dificil: #d9534f;
+        --fonte: Arial, Helvetica, sans-serif;
+        --mono: 'DM Mono', Consolas, 'Courier New', monospace;
+      }
+
+      /* ── BASE ── */
+      .prova *,
+      .prova *::before,
+      .prova *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body.prova {
+        font-family: var(--fonte);
+        font-size: 11pt;
+        color: #000;
+        background: #fff;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 15mm;
+      }
+
+      /* ── CABEÇALHO ── */
+      .header-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 14px;
+      }
+      .header-table td {
+        border: 1px solid #000;
+        padding: 3px 6px;
+        vertical-align: middle;
+        font-size: 10pt;
+      }
+      .logo-cell {
+        width: 140px;
+        text-align: center;
+        padding: 8px !important;
+      }
+      .senai-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .senai-brand img {
+        max-width: 120px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+      .senai-brand span {
+        display: block;
+        font-size: 9pt;
+      }
+      .title-cell {
+        text-align: center;
+        font-weight: bold;
+        font-size: 13pt !important;
+        letter-spacing: 1px;
+        padding: 6px !important;
+      }
+      .desemp-cell {
+        width: 90px;
+        text-align: center;
+        font-weight: bold;
+        vertical-align: top !important;
+      }
+      .estudante-row td {
+        font-weight: bold;
+        font-size: 10.5pt !important;
+      }
+      .rotulo {
+        font-weight: bold;
+      }
+      .campo {
+        color: var(--azul);
+        font-style: italic;
+      }
+      .campo.negrito {
+        font-weight: bold;
+      }
+
+      /* ── FAIXAS AZUIS (capacidades, itens e gabarito) ── */
+      .capacidades-header,
+      .item-header,
+      .gabarito-titulo {
+        background: var(--azul);
+        color: #fff;
+        font-weight: bold;
+        font-size: 12pt;
+        padding: 10px;
+        margin-top: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .capacidades-content,
+      .item-box {
+        border: 1px solid var(--azul);
+        border-top: none;
+        padding: 8px 10px 10px;
+        margin-bottom: 4px;
+      }
+      .capacidades-content p {
+        margin-bottom: 3px;
+      }
+      .capacidades-content p:last-child {
+        margin-bottom: 0;
+      }
+
+      .section-divider {
+        margin: 28px 0;
+        border-top: 3px solid var(--azul);
+        border-bottom: 3px solid var(--azul);
+        padding: 12px 0 8px;
+      }
+      .section-title {
+        font-size: 13pt;
+        font-weight: bold;
+        color: var(--azul);
+        text-align: center;
+        margin-bottom: 4px;
+      }
+
+      /* ── SELOS DE DIFICULDADE ── */
+      .badge {
+        font-size: 8.5pt;
+        font-weight: bold;
+        padding: 3px 10px;
+        border-radius: 4px;
+        color: #fff;
+        line-height: 1;
+        letter-spacing: 0.3px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+      }
+      .badge-facil {
+        background: var(--facil);
+      }
+      .badge-medio {
+        background: var(--medio);
+      }
+      .badge-dificil {
+        background: var(--dificil);
+      }
+
+      /* ── ITEM: blocos de texto com rótulo gerado por CSS ── */
+      .item {
+        break-inside: avoid;
+      }
+      .capacidade,
+      .contexto,
+      .comando,
+      .alternativas {
+        font-size: 10.5pt;
+        line-height: 1.45;
+      }
+      .capacidade,
+      .contexto,
+      .comando {
+        margin-bottom: 8px;
+      }
+      .capacidade::before,
+      .contexto::before,
+      .comando::before,
+      .alternativas::before {
+        display: block;
+        font-weight: bold;
+        font-style: italic;
+        text-decoration: underline;
+        margin: 6px 0 3px;
+      }
+      .capacidade::before {
+        content: 'CAPACIDADE:';
+        margin-top: 0;
+        margin-bottom: 2px;
+      }
+      .contexto::before {
+        content: 'Contexto:';
+      }
+      .comando::before {
+        content: 'Comando:';
+      }
+      .alternativas::before {
+        content: 'Alternativas:';
+        margin-bottom: 6px;
+      }
+
+      /* ── ALTERNATIVAS (letras automáticas a) b) c) d)) ── */
+      .alternativas {
+        list-style: none;
+        counter-reset: alt;
+      }
+      .alternativas > li {
+        counter-increment: alt;
+        color: var(--alternativa);
+        margin: 5px 0 5px 16px;
+        line-height: 1.5;
+      }
+      .alternativas > li::before {
+        content: counter(alt, lower-alpha) ') ';
+        font-weight: bold;
+      }
+      .item code {
+        font-family: var(--mono);
+        font-weight: bold;
+      }
+
+      /* ── AFIRMATIVAS I, II, III (dentro do contexto ou comando) ── */
+      .afirmativas {
+        list-style: upper-roman;
+        margin: 6px 0 6px 34px !important;
+      }
+      .afirmativas > li {
+        margin-bottom: 3px;
+      }
+
+      /* ══════════════════════════════════════════════════════════
+         FIGURAS: moldura única com variantes
+         .figura-codigo | .figura-diagrama | .figura-tabela | .figura-imagem
+         ══════════════════════════════════════════════════════════ */
+      .figura {
+        margin: 10px 0 14px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--cinza-borda);
+        background: #fff;
+      }
+      .figura-cab {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 12px;
+        background: var(--cinza-fundo);
+        border-bottom: 1px solid var(--cinza-borda);
+      }
+      .pontos {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #f85149;
+        box-shadow:
+          14px 0 #e3b341,
+          28px 0 #39d353;
+        margin-right: 28px;
+      }
+      .figura-titulo {
+        font-family: var(--mono);
+        font-size: 9pt;
+        color: #333;
+      }
+      .figura-corpo {
+        padding: 8px;
+        overflow-x: auto;
+      }
+      .figura-corpo svg {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+      }
+      .figura-corpo img {
+        display: block;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      /* variante: código */
+      .figura-codigo {
+        background: #0d1117;
+        border-color: #0d1117;
+      }
+      .figura-codigo .figura-cab {
+        background: #0d1117;
+        border-bottom-color: #f1f1f1;
+      }
+      .figura-codigo .figura-titulo {
+        color: #f1f1f1;
+        font-size: 1rem;
+      }
+      .figura-codigo .figura-corpo {
+        padding: 12px 14px;
+      }
+      .figura-codigo pre {
+        font-family: var(--mono);
+        font-size: 1rem;
+        line-height: 1.55;
+        white-space: pre;
+        color: #f1f1f1;
+      }
+      .figura-codigo .kw {
+        color: #ff7b72;
+      }
+      .figura-codigo .fn {
+        color: #d2a8ff;
+      }
+      .figura-codigo .str {
+        color: #a5d6ff;
+      }
+      .figura-codigo .num {
+        color: #6087f2;
+      }
+      .figura-codigo .cmt {
+        color: #8b949e;
+      }
+      .figura-codigo .prop {
+        color: #79c0ff;
+      }
+      .figura-codigo .var {
+        color: #ffa657;
+      }
+
+      /* variante: tabela de dados */
+      .tabela-dados {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 10pt;
+      }
+      .tabela-dados th {
+        background: var(--azul-claro);
+        border: 1px solid var(--azul);
+        padding: 5px 8px;
+        text-align: left;
+      }
+      .tabela-dados td {
+        border: 1px solid var(--azul-borda);
+        padding: 4px 8px;
+      }
+
+      /* ── SVG: Notação de Chen e DER simples (traço preto) ── */
+      .dg-forma {
+        fill: #fff;
+        stroke: #000;
+        stroke-width: 1.5;
+      }
+      .dg-tx {
+        font: 12px var(--fonte);
+        fill: #000;
+      }
+      .dg-tx-c {
+        text-anchor: middle;
+      }
+      .dg-tx-b {
+        font-weight: bold;
+      }
+      .dg-tx-u {
+        text-decoration: underline;
+      }
+
+      /* ── SVG: DER lógico completo (pé de galinha, traço azul) ── */
+      .dg-e {
+        fill: #fff;
+        stroke: var(--azul);
+        stroke-width: 1.2;
+      }
+      .dg-h {
+        fill: var(--azul);
+      }
+      .dg-t {
+        font: bold 12px var(--fonte);
+        fill: #fff;
+        text-anchor: middle;
+      }
+      .dg-a {
+        font: 10px var(--fonte);
+        fill: #000;
+      }
+      .dg-k {
+        font: bold 10px var(--fonte);
+        fill: #000;
+      }
+      .dg-s {
+        stroke: var(--cinza-borda);
+        stroke-width: 1;
+      }
+      .dg-l {
+        stroke: var(--azul);
+        stroke-width: 1.5;
+        fill: none;
+      }
+      .dg-c {
+        fill: #fff;
+        stroke: var(--azul);
+        stroke-width: 1.5;
+      }
+      .dg-lb {
+        font: italic 9px var(--fonte);
+        fill: var(--azul);
+        text-anchor: middle;
+      }
+      .dg-lg {
+        font: 10px var(--fonte);
+        fill: #000;
+      }
+
+      /* ── GABARITO (gerado por JavaScript) ── */
+      .gabarito-section {
+        margin-top: 28px;
+      }
+      .gabarito-section .gabarito-titulo {
+        margin-top: 0;
+      }
+      .gabarito-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid var(--azul);
+      }
+      .gabarito-table th {
+        background: var(--azul-claro);
+        border: 1px solid var(--azul);
+        padding: 6px;
+        font-size: 10pt;
+        text-align: center;
+      }
+      .gabarito-table td {
+        border: 1px solid var(--azul-borda);
+        padding: 5px;
+        text-align: center;
+        font-size: 10.5pt;
+      }
+      .gabarito-table th:nth-child(1) {
+        width: 15%;
+      }
+      .gabarito-table th:nth-child(2) {
+        width: 25%;
+      }
+      .gabarito-table th:nth-child(3),
+      .gabarito-table th:nth-child(4) {
+        width: 30%;
+      }
+      .resposta-correta {
+        display: inline-block;
+        min-width: 28px;
+        padding: 2px 8px;
+        border: 2px solid var(--azul);
+        border-radius: 50%;
+        font-weight: bold;
+        color: var(--azul);
+      }
+
+      /* ── IMPRESSÃO ── */
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      @media print {
+        .page {
+          width: 100%;
+          min-height: 0;
+          margin: 0;
+          padding: 12mm 14mm;
+        }
+        .gabarito-section {
+          break-before: page;
+          margin-top: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="prova">
+    <!--
+    ════════════════════════════════════════════════════════════════
+    CATÁLOGO DE COMPONENTES (referência para novos itens)
+    ════════════════════════════════════════════════════════════════
+    O cabeçalho "ITEM NN", o selo de dificuldade, a linha CAPACIDADE
+    e o gabarito são gerados pelo script no fim do arquivo, a partir
+    dos atributos data-* da section.item. A numeração é automática.
+
+    ITEM
+      <section class="item" data-ct="C1" data-dif="facil|medio|dificil" data-resp="a|b|c|d">
+        <div class="contexto">texto do contexto</div>
+        [figura opcional]
+        <div class="comando">texto do comando</div>
+        <ol class="alternativas">
+          <li>texto da alternativa a</li>
+          <li>texto da alternativa b</li>
+          <li>texto da alternativa c</li>
+          <li>texto da alternativa d</li>
+        </ol>
+      </section>
+    ════════════════════════════════════════════════════════════════
+    -->
+
+    <div class="page">
+      <!-- ══════════════════ CABEÇALHO ══════════════════ -->
+      <table class="header-table">
+        <tr>
+          <td class="logo-cell" rowspan="7">
+            <div class="senai-brand">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_sfpOEDmPPoL6K0aQL4qg5SsWL_41ZqhyF7zW1509kA&s=10"
+                alt="Logo SENAI"
+              />
+              <span>Serviço Nacional de Aprendizagem</span>
+            </div>
+          </td>
+          <td class="title-cell">AVALIAÇÃO OBJETIVA</td>
+          <td class="desemp-cell" rowspan="7">Desempenho</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Data:</span>
+            <em class="campo negrito">___/___/______</em>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Docente:</span>
+            <em class="campo negrito">&nbsp;</em>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Curso Técnico em:</span>
+            <em class="campo negrito">Informática para Internet</em>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Unidade Curricular:</span>
+            <em class="campo negrito"
+              >Todo o curso (Avaliação Diagnóstica – Nível Avançado)</em
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Turma:</span>
+            <em class="campo negrito">&nbsp;</em>
+          </td>
+        </tr>
+        <tr class="estudante-row">
+          <td>Estudante:</td>
+        </tr>
+      </table>
+
+      <div class="section-divider">
+        <div class="section-title">
+          AVALIAÇÃO OBJETIVA – NÍVEL AVANÇADO <br />
+          Técnico em Informática para Internet <br />
+          Lógica, Web, Programação, Segurança, Banco de Dados, Testes e
+          Ofimática
+        </div>
+      </div>
+
+      <!-- ══════════════════ CAPACIDADES ══════════════════ -->
+      <div class="capacidades-box">
+        <div class="capacidades-header">CAPACIDADES</div>
+        <div class="capacidades-content">
+          <p>
+            <strong>C1:</strong> Utilizar ferramentas de ofimática (planilhas e
+            editores de texto) para produtividade e automação de tarefas.
+          </p>
+          <p>
+            <strong>C2:</strong> Aplicar princípios de design de interação,
+            usabilidade e acessibilidade no desenvolvimento de interfaces.
+          </p>
+          <p>
+            <strong>C3:</strong> Aplicar lógica de programação e algoritmos na
+            resolução de problemas.
+          </p>
+          <p>
+            <strong>C4:</strong> Interpretar a modelagem de dados e a
+            arquitetura de aplicações web.
+          </p>
+          <p>
+            <strong>C5:</strong> Desenvolver interfaces web com HTML, CSS e
+            JavaScript.
+          </p>
+          <p>
+            <strong>C6:</strong> Desenvolver aplicações seguras com linguagens
+            de programação, APIs e controle de versão.
+          </p>
+          <p>
+            <strong>C7:</strong> Aplicar linguagem SQL e conceitos de bancos de
+            dados para definição, consulta e manipulação de dados.
+          </p>
+          <p>
+            <strong>C8:</strong> Aplicar técnicas e práticas de teste de
+            software.
+          </p>
+        </div>
+      </div>
+
+      <!-- ══════════════════ ITENS ══════════════════ -->
+
+      <!-- ITEM 01 -->
+      <section class="item" data-ct="C3" data-dif="dificil" data-resp="b">
+        <div class="contexto">
+          Um programador está analisando o algoritmo em pseudocódigo abaixo, que
+          calcula um produto parcial a partir de um valor inicial.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 produto_parcial.alg</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="var">n</span> = <span class="num">5</span>
+<span class="var">fat</span> = <span class="num">1</span>
+<span class="kw">enquanto</span> <span class="var">n</span> &gt; <span class="num">1</span> <span class="kw">faça</span>
+    <span class="var">fat</span> = <span class="var">fat</span> * <span class="var">n</span>
+    <span class="var">n</span> = <span class="var">n</span> - <span class="num">2</span>
+<span class="kw">fim enquanto</span>
+<span class="fn">escreva</span>(<span class="var">fat</span>)</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual valor será exibido ao final da execução do algoritmo?
+        </div>
+        <ol class="alternativas">
+          <li>120</li>
+          <li>15</li>
+          <li>60</li>
+          <li>5</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 02 -->
+      <section class="item" data-ct="C3" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          O algoritmo a seguir utiliza duas estruturas de repetição aninhadas
+          para contar quantas vezes o bloco interno é executado.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 contagem.alg</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="var">cont</span> = <span class="num">0</span>
+<span class="kw">para</span> <span class="var">i</span> <span class="kw">de</span> <span class="num">1</span> <span class="kw">até</span> <span class="num">4</span> <span class="kw">faça</span>
+    <span class="kw">para</span> <span class="var">j</span> <span class="kw">de</span> <span class="var">i</span> <span class="kw">até</span> <span class="num">4</span> <span class="kw">faça</span>
+        <span class="var">cont</span> = <span class="var">cont</span> + <span class="num">1</span>
+    <span class="kw">fim para</span>
+<span class="kw">fim para</span>
+<span class="fn">escreva</span>(<span class="var">cont</span>)</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual valor será exibido para a variável <code>cont</code>?
+        </div>
+        <ol class="alternativas">
+          <li>16</li>
+          <li>12</li>
+          <li>8</li>
+          <li>10</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 03 -->
+      <section class="item" data-ct="C3" data-dif="dificil" data-resp="a">
+        <div class="contexto">
+          Uma equipe precisa localizar um código em um vetor já ordenado, com
+          100 elementos, utilizando o algoritmo de busca binária, que a cada
+          comparação descarta metade das posições restantes.
+        </div>
+        <div class="comando">
+          Qual é o número máximo aproximado de comparações necessárias, no pior
+          caso, para concluir a busca?
+        </div>
+        <ol class="alternativas">
+          <li>7 comparações.</li>
+          <li>50 comparações.</li>
+          <li>100 comparações.</li>
+          <li>10 comparações.</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 04 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Um desenvolvedor PHP implementou a hierarquia de classes apresentada
+          abaixo e percorreu uma lista com objetos de tipos diferentes.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 animais.php</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="kw">class</span> <span class="fn">Animal</span> {
+    <span class="kw">public function</span> <span class="fn">falar</span>() { <span class="kw">return</span> <span class="str">"..."</span>; }
+}
+<span class="kw">class</span> <span class="fn">Cao</span> <span class="kw">extends</span> <span class="fn">Animal</span> {
+    <span class="kw">public function</span> <span class="fn">falar</span>() { <span class="kw">return</span> <span class="str">"Au"</span>; }
+}
+<span class="kw">class</span> <span class="fn">Gato</span> <span class="kw">extends</span> <span class="fn">Animal</span> {
+    <span class="kw">public function</span> <span class="fn">falar</span>() { <span class="kw">return</span> <span class="str">"Miau"</span>; }
+}
+
+<span class="var">$lista</span> = [<span class="kw">new</span> <span class="fn">Cao</span>(), <span class="kw">new</span> <span class="fn">Gato</span>(), <span class="kw">new</span> <span class="fn">Animal</span>()];
+<span class="kw">foreach</span> (<span class="var">$lista</span> <span class="kw">as</span> <span class="var">$a</span>) {
+    <span class="kw">echo</span> <span class="var">$a</span>-&gt;<span class="fn">falar</span>() . <span class="str">" "</span>;
+}</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual será a saída produzida pela execução do script?
+        </div>
+        <ol class="alternativas">
+          <li><code>... ... ...</code></li>
+          <li><code>Au Au Au</code></li>
+          <li><code>Au Miau ...</code></li>
+          <li>
+            Um erro fatal, pois a classe <code>Animal</code> não pode ser
+            instanciada diretamente.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 05 -->
+      <section class="item" data-ct="C5" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          Um desenvolvedor testou, no console do navegador, o comportamento dos
+          operadores de comparação do JavaScript, conforme o código abaixo.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 comparacao.js</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="var">console</span>.<span class="fn">log</span>(<span class="num">0</span> == <span class="str">"0"</span>);
+<span class="var">console</span>.<span class="fn">log</span>(<span class="num">0</span> === <span class="str">"0"</span>);
+<span class="var">console</span>.<span class="fn">log</span>(<span class="kw">null</span> == <span class="kw">undefined</span>);
+<span class="var">console</span>.<span class="fn">log</span>(<span class="kw">null</span> === <span class="kw">undefined</span>);</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Quais valores serão exibidos, respectivamente, no console?
+        </div>
+        <ol class="alternativas">
+          <li><code>true, true, false, false</code></li>
+          <li><code>false, false, true, true</code></li>
+          <li><code>true, false, false, false</code></li>
+          <li><code>true, false, true, false</code></li>
+        </ol>
+      </section>
+
+      <!-- ITEM 06 -->
+      <section class="item" data-ct="C5" data-dif="dificil" data-resp="b">
+        <div class="contexto">
+          Um desenvolvedor front-end precisa processar uma lista de notas
+          usando métodos de array do JavaScript, como mostra o código abaixo.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 notas.js</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="kw">const</span> <span class="var">notas</span> = [<span class="num">4</span>, <span class="num">7</span>, <span class="num">9</span>, <span class="num">5</span>, <span class="num">10</span>];
+<span class="kw">const</span> <span class="var">r</span> = <span class="var">notas</span>
+    .<span class="fn">filter</span>(<span class="var">n</span> =&gt; <span class="var">n</span> &gt;= <span class="num">6</span>)
+    .<span class="fn">map</span>(<span class="var">n</span> =&gt; <span class="var">n</span> * <span class="num">2</span>);
+<span class="var">console</span>.<span class="fn">log</span>(<span class="var">r</span>);</pre>
+          </div>
+        </figure>
+
+        <div class="comando">Qual será o conteúdo exibido para <code>r</code>?</div>
+        <ol class="alternativas">
+          <li><code>[8, 14, 18, 10, 20]</code></li>
+          <li><code>[14, 18, 20]</code></li>
+          <li><code>[7, 9, 10]</code></li>
+          <li><code>51</code></li>
+        </ol>
+      </section>
+
+      <!-- ITEM 07 -->
+      <section class="item" data-ct="C5" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Em um estudo sobre o modelo de execução assíncrona do JavaScript, um
+          estudante executou o código abaixo no navegador.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 ordem.js</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="var">console</span>.<span class="fn">log</span>(<span class="str">"A"</span>);
+<span class="fn">setTimeout</span>(() =&gt; <span class="var">console</span>.<span class="fn">log</span>(<span class="str">"B"</span>), <span class="num">0</span>);
+<span class="var">Promise</span>.<span class="fn">resolve</span>().<span class="fn">then</span>(() =&gt; <span class="var">console</span>.<span class="fn">log</span>(<span class="str">"C"</span>));
+<span class="var">console</span>.<span class="fn">log</span>(<span class="str">"D"</span>);</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Em qual ordem as letras serão exibidas no console?
+        </div>
+        <ol class="alternativas">
+          <li><code>A, B, C, D</code></li>
+          <li><code>A, C, D, B</code></li>
+          <li><code>A, D, C, B</code></li>
+          <li><code>A, D, B, C</code></li>
+        </ol>
+      </section>
+
+      <!-- ITEM 08 -->
+      <section class="item" data-ct="C5" data-dif="dificil" data-resp="a">
+        <div class="contexto">
+          Uma página possui o HTML e as regras CSS apresentados abaixo.
+          Diferentes seletores competem para definir a cor do mesmo link.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 pagina.html</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="cmt">/* CSS */</span>
+<span class="prop">#menu a</span> { <span class="prop">color</span>: <span class="str">red</span>; }
+<span class="prop">.link</span>   { <span class="prop">color</span>: <span class="str">green</span>; }
+<span class="prop">a</span>       { <span class="prop">color</span>: <span class="str">blue</span>; }
+
+<span class="cmt">&lt;!-- HTML --&gt;</span>
+&lt;<span class="kw">div</span> <span class="prop">id</span>=<span class="str">"menu"</span>&gt;
+  &lt;<span class="kw">a</span> <span class="prop">class</span>=<span class="str">"link"</span> <span class="prop">href</span>=<span class="str">"#"</span>&gt;Início&lt;/<span class="kw">a</span>&gt;
+&lt;/<span class="kw">div</span>&gt;</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual será a cor aplicada ao texto “Início” e por quê?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Vermelha, pois o seletor com <code>id</code> tem maior
+            especificidade que o seletor de classe e o de elemento.
+          </li>
+          <li>
+            Verde, pois o seletor de classe sempre prevalece sobre qualquer
+            outro seletor.
+          </li>
+          <li>
+            Azul, pois a regra declarada por último no arquivo sempre vence,
+            independentemente do seletor.
+          </li>
+          <li>
+            Verde, pois a classe está aplicada diretamente no elemento, o que
+            anula regras de elementos ancestrais.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 09 -->
+      <section class="item" data-ct="C5" data-dif="medio" data-resp="d">
+        <div class="contexto">
+          Um desenvolvedor aplicou ao elemento <code>.cartao</code> o estilo
+          mostrado abaixo, sem alterar a propriedade
+          <code>box-sizing</code> (valor padrão <code>content-box</code>).
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 estilo.css</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="prop">.cartao</span> {
+  <span class="prop">width</span>: <span class="num">200px</span>;
+  <span class="prop">padding</span>: <span class="num">20px</span>;
+  <span class="prop">border</span>: <span class="num">5px</span> <span class="str">solid</span> <span class="str">#333</span>;
+}</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual será a largura total ocupada pelo elemento na página?
+        </div>
+        <ol class="alternativas">
+          <li>200px</li>
+          <li>220px</li>
+          <li>225px</li>
+          <li>250px</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 10 -->
+      <section class="item" data-ct="C5" data-dif="dificil" data-resp="b">
+        <div class="contexto">
+          Uma galeria possui seis imagens dentro de um contêiner que recebeu o
+          CSS apresentado abaixo.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 galeria.css</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="prop">.galeria</span> {
+  <span class="prop">display</span>: <span class="str">grid</span>;
+  <span class="prop">grid-template-columns</span>: <span class="fn">repeat</span>(<span class="num">3</span>, <span class="num">1fr</span>);
+  <span class="prop">gap</span>: <span class="num">16px</span>;
+}</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Como as imagens serão organizadas pelo navegador?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Em seis colunas de larguras iguais, todas na mesma linha, com 16px
+            de espaço entre elas.
+          </li>
+          <li>
+            Em duas linhas com três colunas de larguras iguais, que dividem o
+            espaço disponível, com 16px entre linhas e colunas.
+          </li>
+          <li>
+            Em três linhas com duas colunas de 1 pixel cada, separadas por
+            16px.
+          </li>
+          <li>
+            Em uma única coluna, com cada imagem repetida três vezes e 16px de
+            espaço entre elas.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 11 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Durante uma revisão de segurança, a equipe encontrou o trecho de
+          código PHP abaixo na tela de login de um sistema.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 login.php</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="var">$sql</span> = <span class="str">"SELECT * FROM usuarios WHERE email = '"</span>
+     . <span class="var">$_POST</span>[<span class="str">'email'</span>] . <span class="str">"'"</span>;
+<span class="var">$res</span> = <span class="var">$pdo</span>-&gt;<span class="fn">query</span>(<span class="var">$sql</span>);</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual alteração elimina a vulnerabilidade de injeção de SQL presente
+          nesse código?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Aplicar <code>addslashes()</code> ao e-mail e manter a concatenação
+            na consulta, pois o escape de aspas impede qualquer tipo de
+            injeção.
+          </li>
+          <li>
+            Trocar <code>$_POST</code> por <code>$_GET</code>, pois a URL limita
+            os caracteres aceitos.
+          </li>
+          <li>
+            Usar consulta preparada, como
+            <code
+              >$st = $pdo-&gt;prepare("SELECT * FROM usuarios WHERE email =
+              ?"); $st-&gt;execute([$_POST['email']]);</code
+            >, separando o comando SQL dos dados informados.
+          </li>
+          <li>
+            Aplicar <code>md5()</code> ao e-mail antes de montar a string da
+            consulta.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 12 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="a">
+        <div class="contexto">
+          Um sistema web precisa armazenar as senhas dos usuários de forma que,
+          mesmo em caso de vazamento do banco de dados, as senhas originais não
+          sejam facilmente descobertas.
+        </div>
+        <div class="comando">
+          Qual prática atende a esse requisito em PHP?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Gravar o resultado de <code>password_hash()</code> e, no login,
+            validar a senha informada com <code>password_verify()</code>.
+          </li>
+          <li>
+            Gravar a senha com <code>base64_encode()</code>, que impede a
+            leitura por pessoas não autorizadas.
+          </li>
+          <li>
+            Gravar a senha em texto puro e ocultá-la na interface com campos do
+            tipo <code>password</code>.
+          </li>
+          <li>
+            Gravar a senha com <code>md5()</code> sem qualquer valor adicional,
+            pois o algoritmo é considerado seguro para esse fim.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 13 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          Uma página exibe, sem qualquer tratamento, os comentários digitados
+          pelos visitantes, com o comando
+          <code>echo $comentario;</code>. Um usuário mal-intencionado
+          cadastrou um comentário contendo um trecho de JavaScript, que passou
+          a ser executado no navegador de quem acessa a página.
+        </div>
+        <div class="comando">
+          Qual é o nome desse ataque e qual é a medida de mitigação
+          adequada?
+        </div>
+        <ol class="alternativas">
+          <li>
+            SQL Injection, mitigado com o uso de <code>strlen()</code> para
+            limitar o tamanho do comentário.
+          </li>
+          <li>
+            CSRF, mitigado com o uso de <code>trim()</code> para remover
+            espaços do comentário.
+          </li>
+          <li>
+            Força bruta, mitigada com o uso de <code>json_encode()</code> na
+            gravação do comentário.
+          </li>
+          <li>
+            XSS (Cross-Site Scripting), mitigado com
+            <code>htmlspecialchars()</code> ao imprimir o conteúdo na página.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 14 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="b">
+        <div class="contexto">
+          Para reduzir o risco de <em>session fixation</em> (fixação de
+          sessão), a equipe de segurança determinou que o identificador da
+          sessão do usuário seja trocado imediatamente após uma autenticação
+          bem-sucedida.
+        </div>
+        <div class="comando">
+          Qual função do PHP deve ser chamada logo após validar o login?
+        </div>
+        <ol class="alternativas">
+          <li><code>session_destroy()</code>, mantendo o mesmo usuário logado.</li>
+          <li><code>session_regenerate_id(true)</code></li>
+          <li>
+            <code>setcookie()</code> com data de expiração no passado, sem
+            alterar a sessão.
+          </li>
+          <li><code>ob_start()</code>, que reinicia o buffer de saída.</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 15 -->
+      <section class="item" data-ct="C7" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Uma loja possui as tabelas <code>cliente</code> e
+          <code>pedido</code>, com os dados apresentados abaixo, e executou a
+          consulta SQL em seguida.
+        </div>
+
+        <figure class="figura figura-tabela">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">🗂️ Tabelas cliente e pedido</span>
+          </div>
+          <div class="figura-corpo">
+            <table class="tabela-dados">
+              <thead>
+                <tr>
+                  <th colspan="2">cliente</th>
+                  <th colspan="2">pedido</th>
+                </tr>
+                <tr>
+                  <th>id_cliente</th>
+                  <th>nome</th>
+                  <th>id_pedido</th>
+                  <th>id_cliente</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Ana</td>
+                  <td>10</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Bruno</td>
+                  <td>11</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Carla</td>
+                  <td>12</td>
+                  <td>3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </figure>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 consulta.sql</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="kw">SELECT</span> <span class="prop">c.nome</span>, <span class="fn">COUNT</span>(<span class="prop">p.id_pedido</span>)
+<span class="kw">FROM</span> <span class="var">cliente</span> c
+<span class="kw">LEFT JOIN</span> <span class="var">pedido</span> p <span class="kw">ON</span> <span class="prop">p.id_cliente</span> = <span class="prop">c.id_cliente</span>
+<span class="kw">GROUP BY</span> <span class="prop">c.nome</span>;</pre>
+          </div>
+        </figure>
+
+        <div class="comando">Qual resultado a consulta exibirá?</div>
+        <ol class="alternativas">
+          <li>Ana 2 e Carla 1, apenas.</li>
+          <li>Ana 2, Bruno 1 e Carla 1.</li>
+          <li>Ana 2, Bruno 0 e Carla 1.</li>
+          <li>Ana 3, Bruno 0 e Carla 0.</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 16 -->
+      <section class="item" data-ct="C7" data-dif="dificil" data-resp="b">
+        <div class="contexto">
+          A tabela <code>venda</code> possui as colunas
+          <code>id_venda</code>, <code>vendedor</code> e <code>valor</code>. A
+          gerência quer listar apenas os vendedores cuja soma de vendas seja
+          superior a 1000.
+        </div>
+        <div class="comando">
+          Qual consulta SQL atende corretamente a esse requisito?
+        </div>
+        <ol class="alternativas">
+          <li>
+            <code
+              >SELECT vendedor, SUM(valor) FROM venda WHERE SUM(valor) &gt; 1000
+              GROUP BY vendedor;</code
+            >
+          </li>
+          <li>
+            <code
+              >SELECT vendedor, SUM(valor) FROM venda GROUP BY vendedor HAVING
+              SUM(valor) &gt; 1000;</code
+            >
+          </li>
+          <li>
+            <code
+              >SELECT vendedor, SUM(valor) FROM venda HAVING SUM(valor) &gt;
+              1000;</code
+            >
+          </li>
+          <li>
+            <code
+              >SELECT vendedor FROM venda GROUP BY valor HAVING vendedor &gt;
+              1000;</code
+            >
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 17 -->
+      <section class="item" data-ct="C7" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          Um analista de dados encontrou a tabela <code>cliente</code> abaixo,
+          em que o campo <code>telefones</code> armazena mais de um número
+          separado por vírgula.
+        </div>
+
+        <figure class="figura figura-tabela">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">🗂️ Tabela cliente</span>
+          </div>
+          <div class="figura-corpo">
+            <table class="tabela-dados">
+              <thead>
+                <tr>
+                  <th>id_cliente</th>
+                  <th>nome</th>
+                  <th>telefones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Ana</td>
+                  <td>99999-1111, 98888-2222</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Bruno</td>
+                  <td>97777-3333</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual forma normal está sendo violada e qual é a correção adequada?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Segunda Forma Normal; separar o campo <code>nome</code> em uma nova
+            tabela.
+          </li>
+          <li>
+            Terceira Forma Normal; remover a coluna <code>id_cliente</code> da
+            tabela.
+          </li>
+          <li>
+            Primeira Forma Normal; adicionar as colunas
+            <code>telefone2</code>, <code>telefone3</code> e assim
+            sucessivamente.
+          </li>
+          <li>
+            Primeira Forma Normal; criar uma tabela <code>telefone</code> com
+            uma linha por número e chave estrangeira para
+            <code>cliente</code>.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 18 -->
+      <section class="item" data-ct="C7" data-dif="medio" data-resp="a">
+        <div class="contexto">
+          Em um sistema bancário, uma transferência executa duas operações: o
+          débito na conta de origem e o crédito na conta de destino. Se ocorrer
+          uma falha entre as duas operações, o sistema não pode deixar apenas
+          uma delas registrada.
+        </div>
+        <div class="comando">
+          Qual propriedade das transações (ACID) garante que as operações sejam
+          executadas por completo ou que nenhuma delas seja aplicada?
+        </div>
+        <ol class="alternativas">
+          <li>Atomicidade</li>
+          <li>Isolamento</li>
+          <li>Durabilidade</li>
+          <li>Consistência</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 19 -->
+      <section class="item" data-ct="C7" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Uma consulta que filtra clientes pela coluna
+          <code>email</code> está lenta em uma tabela com milhões de
+          registros. O administrador do banco decidiu criar uma estrutura
+          auxiliar para acelerar essas buscas.
+        </div>
+        <div class="comando">
+          Qual alternativa apresenta a solução adequada e o custo associado a
+          ela?
+        </div>
+        <ol class="alternativas">
+          <li>
+            <code>CREATE VIEW</code> sobre a tabela, que armazena fisicamente
+            uma cópia ordenada dos dados e não tem nenhum custo adicional.
+          </li>
+          <li>
+            <code>CREATE TRIGGER</code> na coluna, que acelera as leituras e
+            também acelera as gravações.
+          </li>
+          <li>
+            <code>CREATE INDEX idx_email ON cliente(email);</code>, que melhora
+            as leituras filtradas por essa coluna, mas ocupa espaço adicional e
+            torna as gravações mais custosas.
+          </li>
+          <li>
+            <code>DROP INDEX</code> em todas as colunas da tabela, reduzindo o
+            volume de dados que precisa ser lido.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 20 -->
+      <section class="item" data-ct="C7" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          Uma loja precisa listar todos os produtos cujo preço seja superior à
+          média de preços da tabela <code>produto</code>.
+        </div>
+        <div class="comando">
+          Qual consulta SQL realiza corretamente essa operação?
+        </div>
+        <ol class="alternativas">
+          <li>
+            <code>SELECT * FROM produto WHERE preco &gt; AVG(preco);</code>
+          </li>
+          <li>
+            <code>SELECT * FROM produto HAVING preco &gt; AVG(preco);</code>
+          </li>
+          <li>
+            <code
+              >SELECT AVG(preco) FROM produto WHERE preco &gt; AVG(preco);</code
+            >
+          </li>
+          <li>
+            <code
+              >SELECT * FROM produto WHERE preco &gt; (SELECT AVG(preco) FROM
+              produto);</code
+            >
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 21 -->
+      <section class="item" data-ct="C7" data-dif="dificil" data-resp="b">
+        <div class="contexto">
+          A tabela <code>pedido</code> foi criada com o comando abaixo, e o
+          cliente de código 3 possui vários pedidos cadastrados.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 pedido.sql</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="kw">CREATE TABLE</span> <span class="var">pedido</span> (
+  <span class="prop">id_pedido</span> <span class="kw">SERIAL PRIMARY KEY</span>,
+  <span class="prop">id_cliente</span> <span class="kw">INTEGER NOT NULL</span>,
+  <span class="kw">FOREIGN KEY</span> (<span class="prop">id_cliente</span>)
+    <span class="kw">REFERENCES</span> <span class="var">cliente</span>(<span class="prop">id_cliente</span>)
+    <span class="kw">ON DELETE CASCADE</span>
+);</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          O que acontece ao executar
+          <code>DELETE FROM cliente WHERE id_cliente = 3;</code>?
+        </div>
+        <ol class="alternativas">
+          <li>
+            A exclusão é bloqueada, pois existem pedidos vinculados ao cliente.
+          </li>
+          <li>
+            O cliente é excluído e todos os seus pedidos são excluídos
+            automaticamente.
+          </li>
+          <li>
+            O cliente é excluído e o campo <code>id_cliente</code> dos pedidos
+            passa a ser nulo.
+          </li>
+          <li>
+            O cliente é excluído e os pedidos permanecem inalterados, ficando
+            sem cliente correspondente.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 22 -->
+      <section class="item" data-ct="C4" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Uma escola de cursos livres modelou parte do seu banco de dados e
+          obteve o diagrama lógico abaixo, em notação pé de galinha. Na tabela
+          <code>matricula</code>, os campos <code>id_aluno</code> e
+          <code>id_curso</code> formam, juntos, a chave primária.
+        </div>
+
+        <figure class="figura figura-diagrama">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📐 DER lógico — Escola de Cursos</span>
+          </div>
+          <div class="figura-corpo">
+            <svg
+              viewBox="0 0 620 100"
+              xmlns="http://www.w3.org/2000/svg"
+              role="img"
+              aria-label="DER com as tabelas aluno, matricula e curso em notação pé de galinha"
+            >
+              <!-- aluno -->
+              <rect class="dg-e" x="10" y="10" width="170" height="78" />
+              <rect class="dg-h" x="10" y="10" width="170" height="24" />
+              <text class="dg-t" x="95" y="27">aluno</text>
+              <line class="dg-s" x1="10" y1="52" x2="180" y2="52" />
+              <line class="dg-s" x1="10" y1="70" x2="180" y2="70" />
+              <text class="dg-k" x="18" y="47">PK id_aluno</text>
+              <text class="dg-a" x="18" y="65">nome</text>
+              <text class="dg-a" x="18" y="83">email</text>
+
+              <!-- matricula -->
+              <rect class="dg-e" x="225" y="10" width="170" height="78" />
+              <rect class="dg-h" x="225" y="10" width="170" height="24" />
+              <text class="dg-t" x="310" y="27">matricula</text>
+              <line class="dg-s" x1="225" y1="52" x2="395" y2="52" />
+              <line class="dg-s" x1="225" y1="70" x2="395" y2="70" />
+              <text class="dg-k" x="233" y="47">PK, FK id_aluno</text>
+              <text class="dg-k" x="233" y="65">PK, FK id_curso</text>
+              <text class="dg-a" x="233" y="83">data_matricula</text>
+
+              <!-- curso -->
+              <rect class="dg-e" x="440" y="10" width="170" height="78" />
+              <rect class="dg-h" x="440" y="10" width="170" height="24" />
+              <text class="dg-t" x="525" y="27">curso</text>
+              <line class="dg-s" x1="440" y1="52" x2="610" y2="52" />
+              <line class="dg-s" x1="440" y1="70" x2="610" y2="70" />
+              <text class="dg-k" x="448" y="47">PK id_curso</text>
+              <text class="dg-a" x="448" y="65">nome</text>
+              <text class="dg-a" x="448" y="83">carga_horaria</text>
+
+              <!-- aluno 1 —— 0..N matricula -->
+              <line class="dg-l" x1="180" y1="43" x2="225" y2="43" />
+              <path class="dg-l" d="M188 36V50M194 36V50" />
+              <path
+                class="dg-l"
+                d="M213 43L225 36M213 43L225 43M213 43L225 50"
+              />
+              <circle class="dg-c" cx="206" cy="43" r="4" />
+
+              <!-- curso 1 —— 0..N matricula -->
+              <line class="dg-l" x1="395" y1="43" x2="440" y2="43" />
+              <path class="dg-l" d="M432 36V50M426 36V50" />
+              <path
+                class="dg-l"
+                d="M407 43L395 36M407 43L395 43M407 43L395 50"
+              />
+              <circle class="dg-c" cx="414" cy="43" r="4" />
+            </svg>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual alternativa interpreta corretamente o modelo apresentado?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Um aluno pode se matricular em, no máximo, um curso, e cada curso
+            pode ter vários alunos, caracterizando um relacionamento 1:N entre
+            aluno e curso.
+          </li>
+          <li>
+            A tabela <code>matricula</code> é opcional no modelo, pois aluno e
+            curso já possuem relacionamento direto entre si.
+          </li>
+          <li>
+            Um aluno pode estar matriculado em vários cursos e um curso pode ter
+            vários alunos, relacionamento N:N resolvido pela tabela associativa
+            <code>matricula</code>, cuja chave composta impede a mesma matrícula
+            duplicada.
+          </li>
+          <li>
+            Cada aluno deve ter obrigatoriamente ao menos uma matrícula e cada
+            curso deve ter obrigatoriamente ao menos um aluno, pois a
+            participação é obrigatória nos dois lados.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 23 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="a">
+        <div class="contexto">
+          Uma API REST autentica seus usuários por meio de tokens. Um usuário
+          com perfil comum, que enviou um token válido, tentou acessar o
+          endpoint <code>GET /admin/relatorios</code>, que é exclusivo de
+          administradores.
+        </div>
+        <div class="comando">
+          Qual código de status HTTP é o mais adequado para essa resposta?
+        </div>
+        <ol class="alternativas">
+          <li>403 (Forbidden), pois o usuário foi identificado, mas não tem permissão.</li>
+          <li>401 (Unauthorized), pois o usuário não está autenticado.</li>
+          <li>404 (Not Found), pois a rota nunca existe para usuários comuns.</li>
+          <li>400 (Bad Request), pois o token enviado possui formato inválido.</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 24 -->
+      <section class="item" data-ct="C6" data-dif="medio" data-resp="d">
+        <div class="contexto">
+          Em integrações com APIs, falhas de rede podem fazer com que um mesmo
+          cliente repita a mesma requisição. Por isso, é importante conhecer
+          quais métodos HTTP são idempotentes, ou seja, produzem o mesmo estado
+          no servidor ainda que sejam executados várias vezes.
+        </div>
+        <div class="comando">
+          Quais métodos HTTP são idempotentes por definição?
+        </div>
+        <ol class="alternativas">
+          <li>POST e PATCH</li>
+          <li>POST e DELETE</li>
+          <li>GET e POST</li>
+          <li>GET, PUT e DELETE</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 25 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="b">
+        <div class="contexto">
+          Um front-end executado em <code>http://localhost:3000</code> tenta
+          consumir uma API hospedada em <code>http://localhost:8000</code>. O
+          console do navegador exibe a mensagem “blocked by CORS policy” e a
+          resposta da API não é entregue à aplicação.
+        </div>
+        <div class="comando">
+          Qual é a causa do problema e a solução correta?
+        </div>
+        <ol class="alternativas">
+          <li>
+            O banco de dados da API recusou a conexão por falta de índices; a
+            solução é criar índices nas tabelas consultadas.
+          </li>
+          <li>
+            A política de mesma origem do navegador bloqueia a resposta, pois a
+            API não autorizou a origem do front-end; a solução é configurar a
+            API para enviar o cabeçalho
+            <code>Access-Control-Allow-Origin</code> adequado.
+          </li>
+          <li>
+            O front-end deve trocar o método GET por POST, pois o navegador
+            bloqueia requisições GET entre portas diferentes.
+          </li>
+          <li>
+            O protocolo HTTP não permite duas portas locais simultâneas; a
+            solução é mudar o front-end para HTTPS.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 26 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Ao executar <code>git merge</code> para unir uma branch de
+          funcionalidade à branch principal, o Git informou conflito no arquivo
+          <code>index.php</code>, que passou a conter os marcadores
+          <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>,
+          <code>=======</code> e <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>.
+        </div>
+        <div class="comando">
+          Qual é o procedimento correto para concluir a união das branches?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Executar <code>git commit</code> imediatamente, pois o Git resolve
+            conflitos automaticamente ao registrar, e depois
+            <code>git push --force</code>.
+          </li>
+          <li>
+            Executar <code>git reset --hard</code> e repetir o
+            <code>git pull</code> até que o conflito desapareça.
+          </li>
+          <li>
+            Editar o arquivo definindo o conteúdo final e removendo os
+            marcadores, executar <code>git add</code> no arquivo e concluir com
+            <code>git commit</code>.
+          </li>
+          <li>
+            Apagar o repositório local e cloná-lo novamente, descartando todo o
+            trabalho em andamento.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 27 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="a">
+        <div class="contexto">
+          Um commit com erro já foi enviado (<code>push</code>) para o
+          repositório remoto compartilhado por toda a equipe, e outros
+          desenvolvedores já baixaram esse histórico. É necessário desfazer os
+          efeitos desse commit sem reescrever o histórico público.
+        </div>
+        <div class="comando">
+          Qual é a abordagem mais segura para essa situação?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Executar <code>git revert</code> com o identificador do commit, que
+            cria um novo commit desfazendo as alterações.
+          </li>
+          <li>
+            Executar <code>git reset --hard HEAD~1</code> e depois
+            <code>git push --force</code>, substituindo o histórico remoto.
+          </li>
+          <li>
+            Executar <code>git clean -fd</code>, que remove o commit do
+            histórico remoto.
+          </li>
+          <li>
+            Executar <code>git stash</code>, que apaga o commit enviado ao
+            repositório remoto.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 28 -->
+      <section class="item" data-ct="C8" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          Uma equipe adotou o TDD (<em>Test-Driven Development</em>) no
+          desenvolvimento de uma nova funcionalidade e precisa seguir o ciclo
+          característico dessa prática.
+        </div>
+        <div class="comando">
+          Qual alternativa apresenta corretamente a sequência do ciclo do TDD?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Refatorar o código, escrever o teste e, por último, implementar a
+            funcionalidade.
+          </li>
+          <li>
+            Implementar a funcionalidade completa, escrever os testes e
+            refatorar somente se algum teste falhar.
+          </li>
+          <li>
+            Escrever um teste que já passa, implementar a funcionalidade e
+            executar testes manuais.
+          </li>
+          <li>
+            Escrever um teste que falha (<em>red</em>), implementar o mínimo
+            necessário para passar (<em>green</em>) e refatorar o código
+            (<em>refactor</em>).
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 29 -->
+      <section class="item" data-ct="C8" data-dif="dificil" data-resp="b">
+        <div class="contexto">
+          Uma equipe precisa escrever testes unitários para uma função que
+          consulta o valor do frete em uma API externa de transportadoras.
+          Durante a discussão, foram feitas as afirmativas a seguir sobre o
+          uso de dublês de teste (<em>mocks</em> e <em>stubs</em>).
+          <ol class="afirmativas">
+            <li>
+              Um <em>mock</em> permite simular a resposta da API externa,
+              tornando o teste previsível e repetível.
+            </li>
+            <li>
+              Testes unitários que dependem do serviço externo real tendem a ser
+              mais rápidos e estáveis do que os que usam dublês.
+            </li>
+            <li>
+              O uso de dublês ajuda a isolar a unidade testada de suas
+              dependências.
+            </li>
+          </ol>
+        </div>
+        <div class="comando">Estão corretas as afirmativas:</div>
+        <ol class="alternativas">
+          <li>Apenas I.</li>
+          <li>Apenas I e III.</li>
+          <li>Apenas II e III.</li>
+          <li>I, II e III.</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 30 -->
+      <section class="item" data-ct="C8" data-dif="medio" data-resp="c">
+        <div class="contexto">
+          Após a correção de um bug no módulo de cálculo de descontos, a equipe
+          deseja garantir que nenhuma funcionalidade que já funcionava
+          corretamente tenha sido afetada pela alteração.
+        </div>
+        <div class="comando">
+          Qual tipo de teste deve ser reexecutado para atender a esse
+          objetivo?
+        </div>
+        <ol class="alternativas">
+          <li>Teste de carga</li>
+          <li>Teste de aceitação inicial</li>
+          <li>Teste de regressão</li>
+          <li>Teste de usabilidade</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 31 -->
+      <section class="item" data-ct="C2" data-dif="medio" data-resp="a">
+        <div class="contexto">
+          Em um sistema de pedidos, o usuário clica no botão “Enviar pedido” e
+          nada muda na tela por cerca de cinco segundos. Sem saber se o clique
+          foi registrado, muitos usuários clicam repetidamente, gerando pedidos
+          duplicados.
+        </div>
+        <div class="comando">
+          Qual heurística de usabilidade de Nielsen foi desrespeitada?
+        </div>
+        <ol class="alternativas">
+          <li>Visibilidade do status do sistema</li>
+          <li>Prevenção de erros</li>
+          <li>Flexibilidade e eficiência de uso</li>
+          <li>Estética e design minimalista</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 32 -->
+      <section class="item" data-ct="C2" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          Uma loja virtual deseja tornar seu site acessível a pessoas com
+          deficiência visual que utilizam leitores de tela. Uma das imagens da
+          página é a foto do produto, que transmite informação relevante para a
+          compra.
+        </div>
+        <div class="comando">
+          Qual prática atende às recomendações de acessibilidade (WCAG) para
+          essa imagem?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Usar o texto <code>alt="imagem"</code> em todas as imagens do site.
+          </li>
+          <li>
+            Deixar o atributo <code>alt</code> vazio (<code>alt=""</code>), para
+            que o leitor de tela leia o nome do arquivo.
+          </li>
+          <li>
+            Inserir a foto como <code>background-image</code> em CSS, pois
+            leitores de tela interpretam o conteúdo visual.
+          </li>
+          <li>
+            Informar no atributo <code>alt</code> uma descrição objetiva do
+            conteúdo da imagem e de sua função na página.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 33 -->
+      <section class="item" data-ct="C1" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Uma loja controla seus produtos no Microsoft Excel, conforme a
+          planilha abaixo. Uma funcionária digitou, em outra célula, a fórmula
+          <code>=PROCV(103; A2:C5; 3; FALSO)</code>.
+        </div>
+
+        <figure class="figura figura-tabela">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📊 Planilha de produtos (A1:C5)</span>
+          </div>
+          <div class="figura-corpo">
+            <table class="tabela-dados">
+              <thead>
+                <tr>
+                  <th>&nbsp;</th>
+                  <th>A</th>
+                  <th>B</th>
+                  <th>C</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1</strong></td>
+                  <td><strong>Código</strong></td>
+                  <td><strong>Produto</strong></td>
+                  <td><strong>Preço</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>2</strong></td>
+                  <td>101</td>
+                  <td>Mouse</td>
+                  <td>50</td>
+                </tr>
+                <tr>
+                  <td><strong>3</strong></td>
+                  <td>102</td>
+                  <td>Teclado</td>
+                  <td>120</td>
+                </tr>
+                <tr>
+                  <td><strong>4</strong></td>
+                  <td>103</td>
+                  <td>Monitor</td>
+                  <td>900</td>
+                </tr>
+                <tr>
+                  <td><strong>5</strong></td>
+                  <td>104</td>
+                  <td>Cabo</td>
+                  <td>15</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </figure>
+
+        <div class="comando">Qual valor será exibido pela fórmula?</div>
+        <ol class="alternativas">
+          <li>103</li>
+          <li>Monitor</li>
+          <li>900</li>
+          <li>#N/D</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 34 -->
+      <section class="item" data-ct="C1" data-dif="medio" data-resp="b">
+        <div class="contexto">
+          Um professor utiliza no Excel a fórmula abaixo para classificar os
+          alunos, e a célula <code>B2</code> contém a nota 5,5.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📊 Fórmula da célula C2</span>
+          </div>
+          <div class="figura-corpo">
+            <pre>=<span class="fn">SE</span>(<span class="prop">B2</span>&gt;=<span class="num">7</span>; <span class="str">"Aprovado"</span>;
+   <span class="fn">SE</span>(<span class="prop">B2</span>&gt;=<span class="num">5</span>; <span class="str">"Recuperação"</span>; <span class="str">"Reprovado"</span>))</pre>
+          </div>
+        </figure>
+
+        <div class="comando">Qual resultado será exibido na célula C2?</div>
+        <ol class="alternativas">
+          <li>Aprovado</li>
+          <li>Recuperação</li>
+          <li>Reprovado</li>
+          <li>#VALOR!</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 35 -->
+      <section class="item" data-ct="C1" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          Em uma tabela de multiplicação no Excel, a célula
+          <code>C2</code> contém a fórmula <code>=$A2*B$1</code>, que utiliza
+          referências mistas. A fórmula foi copiada da célula
+          <code>C2</code> para a célula <code>D4</code> (uma coluna à direita e
+          duas linhas abaixo).
+        </div>
+        <div class="comando">
+          Qual será a fórmula presente na célula <code>D4</code>?
+        </div>
+        <ol class="alternativas">
+          <li><code>=$A2*B$1</code></li>
+          <li><code>=A4*C1</code></li>
+          <li><code>=$A2*C$1</code></li>
+          <li><code>=$A4*C$1</code></li>
+        </ol>
+      </section>
+
+      <!-- ══════════════════ GABARITO (gerado pelo script) ══════════════════ -->
+      <div class="gabarito-section" id="gabarito"></div>
+    </div>
+    <!-- /page -->
+
+    <script>
+      /* Monta, a partir dos atributos data-* de cada section.item:
+         cabeçalho "ITEM NN" com selo de dificuldade, linha CAPACIDADE e gabarito. */
+      (function () {
+        var DIF = {
+          facil: { item: 'Fácil', gab: 'Fácil', cls: 'badge-facil' },
+          medio: { item: 'Média', gab: 'Médio', cls: 'badge-medio' },
+          dificil: { item: 'Difícil', gab: 'Difícil', cls: 'badge-dificil' },
+        };
+        var linhas = '';
+
+        document.querySelectorAll('.item').forEach(function (item, i) {
+          var num = i + 1;
+          var nn = (num < 10 ? '0' : '') + num;
+          var ct = item.getAttribute('data-ct') || '?';
+          var dif = DIF[item.getAttribute('data-dif')];
+          var resp = (item.getAttribute('data-resp') || '').toUpperCase();
+
+          /* validações (aparecem no console do navegador) */
+          if (!dif)
+            console.warn(
+              'Item ' +
+                nn +
+                ': data-dif inválido (use facil, medio ou dificil).',
+            );
+          if (!/^[A-D]$/.test(resp))
+            console.warn(
+              'Item ' + nn + ': data-resp inválido (use a, b, c ou d).',
+            );
+          if (item.querySelectorAll('.alternativas > li').length !== 4)
+            console.warn(
+              'Item ' + nn + ': esperado exatamente 4 alternativas.',
+            );
+
+          /* cabeçalho + caixa do item */
+          var cab = document.createElement('div');
+          cab.className = 'item-header';
+          cab.innerHTML =
+            '<span>ITEM ' +
+            nn +
+            '</span>' +
+            '<span class="badge ' +
+            (dif ? dif.cls : '') +
+            '">' +
+            (dif ? dif.item : '?') +
+            '</span>';
+
+          var box = document.createElement('div');
+          box.className = 'item-box';
+          box.innerHTML = '<div class="capacidade">' + ct + '</div>';
+          while (item.firstChild) box.appendChild(item.firstChild);
+          item.appendChild(cab);
+          item.appendChild(box);
+
+          linhas +=
+            '<tr><td><strong>' +
+            num +
+            '</strong></td><td>' +
+            ct +
+            '</td>' +
+            '<td><span class="badge ' +
+            (dif ? dif.cls : '') +
+            '">' +
+            (dif ? dif.gab : '?') +
+            '</span></td>' +
+            '<td><span class="resposta-correta">' +
+            resp +
+            '</span></td></tr>';
+        });
+
+        document.getElementById('gabarito').innerHTML =
+          '<div class="gabarito-titulo">RESPOSTAS CORRETAS</div>' +
+          '<table class="gabarito-table"><thead><tr>' +
+          '<th>Questão</th><th>Capacidade</th><th>Dificuldade</th><th>Resposta Correta</th>' +
+          '</tr></thead><tbody>' +
+          linhas +
+          '</tbody></table>';
+      })();
+    </script>
+  </body>
+</html>

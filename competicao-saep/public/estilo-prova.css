@@ -1,0 +1,480 @@
+
+      /* ══════════════════════════════════════════════════════════
+         FRAMEWORK DE AVALIAÇÃO OBJETIVA
+         Tudo escopado em body.prova. Para trocar a identidade
+         visual, altere apenas as variáveis abaixo.
+         ══════════════════════════════════════════════════════════ */
+      :root {
+        --azul: #2e5496;
+        --azul-claro: #e8eef9;
+        --azul-borda: #9bb0d6;
+        --cinza-borda: #d0d7de;
+        --cinza-fundo: #f3f4f6;
+        --alternativa: #c00000;
+        --facil: #28a745;
+        --medio: #f0a500;
+        --dificil: #d9534f;
+        --fonte: Arial, Helvetica, sans-serif;
+        --mono: 'DM Mono', Consolas, 'Courier New', monospace;
+      }
+
+      /* ── BASE ── */
+      .prova *,
+      .prova *::before,
+      .prova *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body.prova {
+        font-family: var(--fonte);
+        font-size: 11pt;
+        color: #000;
+        background: #fff;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 15mm;
+      }
+
+      /* ── CABEÇALHO ── */
+      .header-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 14px;
+      }
+      .header-table td {
+        border: 1px solid #000;
+        padding: 3px 6px;
+        vertical-align: middle;
+        font-size: 10pt;
+      }
+      .logo-cell {
+        width: 140px;
+        text-align: center;
+        padding: 8px !important;
+      }
+      .senai-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .senai-brand img {
+        max-width: 120px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+      .senai-brand span {
+        display: block;
+        font-size: 9pt;
+      }
+      .title-cell {
+        text-align: center;
+        font-weight: bold;
+        font-size: 13pt !important;
+        letter-spacing: 1px;
+        padding: 6px !important;
+      }
+      .desemp-cell {
+        width: 90px;
+        text-align: center;
+        font-weight: bold;
+        vertical-align: top !important;
+      }
+      .estudante-row td {
+        font-weight: bold;
+        font-size: 10.5pt !important;
+      }
+      .rotulo {
+        font-weight: bold;
+      }
+      .campo {
+        color: var(--azul);
+        font-style: italic;
+      }
+      .campo.negrito {
+        font-weight: bold;
+      }
+
+      /* ── FAIXAS AZUIS (capacidades, itens e gabarito) ── */
+      .capacidades-header,
+      .item-header,
+      .gabarito-titulo {
+        background: var(--azul);
+        color: #fff;
+        font-weight: bold;
+        font-size: 12pt;
+        padding: 10px;
+        margin-top: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .capacidades-content,
+      .item-box {
+        border: 1px solid var(--azul);
+        border-top: none;
+        padding: 8px 10px 10px;
+        margin-bottom: 4px;
+      }
+      .capacidades-content p {
+        margin-bottom: 3px;
+      }
+      .capacidades-content p:last-child {
+        margin-bottom: 0;
+      }
+
+      .section-divider {
+        margin: 28px 0;
+        border-top: 3px solid var(--azul);
+        border-bottom: 3px solid var(--azul);
+        padding: 12px 0 8px;
+      }
+      .section-title {
+        font-size: 13pt;
+        font-weight: bold;
+        color: var(--azul);
+        text-align: center;
+        margin-bottom: 4px;
+      }
+
+      /* ── SELOS DE DIFICULDADE ── */
+      .badge {
+        font-size: 8.5pt;
+        font-weight: bold;
+        padding: 3px 10px;
+        border-radius: 4px;
+        color: #fff;
+        line-height: 1;
+        letter-spacing: 0.3px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+      }
+      .badge-facil {
+        background: var(--facil);
+      }
+      .badge-medio {
+        background: var(--medio);
+      }
+      .badge-dificil {
+        background: var(--dificil);
+      }
+
+      /* ── ITEM: blocos de texto com rótulo gerado por CSS ── */
+      .item {
+        break-inside: avoid;
+      }
+      .capacidade,
+      .contexto,
+      .comando,
+      .alternativas {
+        font-size: 10.5pt;
+        line-height: 1.45;
+      }
+      .capacidade,
+      .contexto,
+      .comando {
+        margin-bottom: 8px;
+      }
+      .capacidade::before,
+      .contexto::before,
+      .comando::before,
+      .alternativas::before {
+        display: block;
+        font-weight: bold;
+        font-style: italic;
+        text-decoration: underline;
+        margin: 6px 0 3px;
+      }
+      .capacidade::before {
+        content: 'CAPACIDADE:';
+        margin-top: 0;
+        margin-bottom: 2px;
+      }
+      .contexto::before {
+        content: 'Contexto:';
+      }
+      .comando::before {
+        content: 'Comando:';
+      }
+      .alternativas::before {
+        content: 'Alternativas:';
+        margin-bottom: 6px;
+      }
+
+      /* ── ALTERNATIVAS (letras automáticas a) b) c) d)) ── */
+      .alternativas {
+        list-style: none;
+        counter-reset: alt;
+      }
+      .alternativas > li {
+        counter-increment: alt;
+        color: var(--alternativa);
+        margin: 5px 0 5px 16px;
+        line-height: 1.5;
+      }
+      .alternativas > li::before {
+        content: counter(alt, lower-alpha) ') ';
+        font-weight: bold;
+      }
+      .item code {
+        font-family: var(--mono);
+        font-weight: bold;
+      }
+
+      /* ── AFIRMATIVAS I, II, III (dentro do contexto ou comando) ── */
+      .afirmativas {
+        list-style: upper-roman;
+        margin: 6px 0 6px 34px !important;
+      }
+      .afirmativas > li {
+        margin-bottom: 3px;
+      }
+
+      /* ══════════════════════════════════════════════════════════
+         FIGURAS: moldura única com variantes
+         .figura-codigo | .figura-diagrama | .figura-tabela | .figura-imagem
+         ══════════════════════════════════════════════════════════ */
+      .figura {
+        margin: 10px 0 14px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--cinza-borda);
+        background: #fff;
+      }
+      .figura-cab {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 12px;
+        background: var(--cinza-fundo);
+        border-bottom: 1px solid var(--cinza-borda);
+      }
+      .pontos {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #f85149;
+        box-shadow:
+          14px 0 #e3b341,
+          28px 0 #39d353;
+        margin-right: 28px;
+      }
+      .figura-titulo {
+        font-family: var(--mono);
+        font-size: 9pt;
+        color: #333;
+      }
+      .figura-corpo {
+        padding: 8px;
+        overflow-x: auto;
+      }
+      .figura-corpo svg {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+      }
+      .figura-corpo img {
+        display: block;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      /* variante: código */
+      .figura-codigo {
+        background: #0d1117;
+        border-color: #0d1117;
+      }
+      .figura-codigo .figura-cab {
+        background: #0d1117;
+        border-bottom-color: #f1f1f1;
+      }
+      .figura-codigo .figura-titulo {
+        color: #f1f1f1;
+        font-size: 1rem;
+      }
+      .figura-codigo .figura-corpo {
+        padding: 12px 14px;
+      }
+      .figura-codigo pre {
+        font-family: var(--mono);
+        font-size: 1rem;
+        line-height: 1.55;
+        white-space: pre;
+        color: #f1f1f1;
+      }
+      .figura-codigo .kw {
+        color: #ff7b72;
+      }
+      .figura-codigo .fn {
+        color: #d2a8ff;
+      }
+      .figura-codigo .str {
+        color: #a5d6ff;
+      }
+      .figura-codigo .num {
+        color: #6087f2;
+      }
+      .figura-codigo .cmt {
+        color: #8b949e;
+      }
+      .figura-codigo .prop {
+        color: #79c0ff;
+      }
+      .figura-codigo .var {
+        color: #ffa657;
+      }
+
+      /* variante: tabela de dados */
+      .tabela-dados {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 10pt;
+      }
+      .tabela-dados th {
+        background: var(--azul-claro);
+        border: 1px solid var(--azul);
+        padding: 5px 8px;
+        text-align: left;
+      }
+      .tabela-dados td {
+        border: 1px solid var(--azul-borda);
+        padding: 4px 8px;
+      }
+
+      /* ── SVG: Notação de Chen e DER simples (traço preto) ── */
+      .dg-forma {
+        fill: #fff;
+        stroke: #000;
+        stroke-width: 1.5;
+      }
+      .dg-tx {
+        font: 12px var(--fonte);
+        fill: #000;
+      }
+      .dg-tx-c {
+        text-anchor: middle;
+      }
+      .dg-tx-b {
+        font-weight: bold;
+      }
+      .dg-tx-u {
+        text-decoration: underline;
+      }
+
+      /* ── SVG: DER lógico completo (pé de galinha, traço azul) ── */
+      .dg-e {
+        fill: #fff;
+        stroke: var(--azul);
+        stroke-width: 1.2;
+      }
+      .dg-h {
+        fill: var(--azul);
+      }
+      .dg-t {
+        font: bold 12px var(--fonte);
+        fill: #fff;
+        text-anchor: middle;
+      }
+      .dg-a {
+        font: 10px var(--fonte);
+        fill: #000;
+      }
+      .dg-k {
+        font: bold 10px var(--fonte);
+        fill: #000;
+      }
+      .dg-s {
+        stroke: var(--cinza-borda);
+        stroke-width: 1;
+      }
+      .dg-l {
+        stroke: var(--azul);
+        stroke-width: 1.5;
+        fill: none;
+      }
+      .dg-c {
+        fill: #fff;
+        stroke: var(--azul);
+        stroke-width: 1.5;
+      }
+      .dg-lb {
+        font: italic 9px var(--fonte);
+        fill: var(--azul);
+        text-anchor: middle;
+      }
+      .dg-lg {
+        font: 10px var(--fonte);
+        fill: #000;
+      }
+
+      /* ── GABARITO (gerado por JavaScript) ── */
+      .gabarito-section {
+        margin-top: 28px;
+      }
+      .gabarito-section .gabarito-titulo {
+        margin-top: 0;
+      }
+      .gabarito-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid var(--azul);
+      }
+      .gabarito-table th {
+        background: var(--azul-claro);
+        border: 1px solid var(--azul);
+        padding: 6px;
+        font-size: 10pt;
+        text-align: center;
+      }
+      .gabarito-table td {
+        border: 1px solid var(--azul-borda);
+        padding: 5px;
+        text-align: center;
+        font-size: 10.5pt;
+      }
+      .gabarito-table th:nth-child(1) {
+        width: 15%;
+      }
+      .gabarito-table th:nth-child(2) {
+        width: 25%;
+      }
+      .gabarito-table th:nth-child(3),
+      .gabarito-table th:nth-child(4) {
+        width: 30%;
+      }
+      .resposta-correta {
+        display: inline-block;
+        min-width: 28px;
+        padding: 2px 8px;
+        border: 2px solid var(--azul);
+        border-radius: 50%;
+        font-weight: bold;
+        color: var(--azul);
+      }
+
+      /* ── IMPRESSÃO ── */
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      @media print {
+        .page {
+          width: 100%;
+          min-height: 0;
+          margin: 0;
+          padding: 12mm 14mm;
+        }
+        .gabarito-section {
+          break-before: page;
+          margin-top: 0;
+        }
+      }
+    

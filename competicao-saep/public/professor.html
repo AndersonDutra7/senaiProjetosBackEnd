@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Competição SAEP – Professor</title>
+    <link rel="stylesheet" href="/estilo-prova.css" />
+    <link rel="stylesheet" href="/jogo.css" />
+  </head>
+  <body class="prova">
+    <div class="wrap" id="app"><div class="card center">Conectando…</div></div>
+    <script src="/comum.js"></script>
+    <script>
+      const app = document.getElementById('app');
+      const key = new URLSearchParams(location.search).get('key') || sessionStorage.getItem('key') || '';
+      sessionStorage.setItem('key', key);
+      let st = null;
+      let chaveAtual = '';
+
+      const ws = abrirWS(onMsg, (on) => {
+        if (on) ws.send({ t: 'host', key });
+        else clearInterval(iniciarTimer.id);
+      });
+
+      function onMsg(m) {
+        if (m.t === 'erro') {
+          app.innerHTML = `<div class="card center"><h1 class="titulo">Acesso negado</h1><p class="erro">${esc(m.msg)}</p></div>`;
+          return;
+        }
+        if (m.t === 'state') {
+          st = m;
+          render();
+        }
+      }
+
+      const acao = () => ws.send({ t: 'avancar' });
+      document.addEventListener('keydown', (e) => {
+        if ((e.code === 'Space' || e.key === 'Enter') && st && st.phase !== 'final' && document.activeElement.tagName !== 'BUTTON') {
+          e.preventDefault();
+          acao();
+        }
+      });
+
+      function urlAlunos() {
+        return st.urls.tunnel || st.urls.lan[0] || location.origin;
+      }
+
+      function render() {
+        const chave = st.phase + ':' + st.qi;
+        if (chave === chaveAtual && st.phase === 'lobby') return renderLobby();
+        if (chave === chaveAtual && st.phase === 'question') return atualizarProgresso();
+        chaveAtual = chave;
+        clearInterval(iniciarTimer.id);
+        window.scrollTo(0, 0);
+
+        if (st.phase === 'lobby') return renderLobby(true);
+
+        if (st.phase === 'question') {
+          app.className = 'wrap projetor';
+          app.innerHTML = `
+            <div class="topo">
+              <div class="tempo" style="flex:1;min-width:240px;margin:0"><div class="trilho"><div class="barra" id="barra"></div></div><div class="seg" id="seg"></div></div>
+              <div><b id="prog"></b></div>
+              <button class="btn" id="enc">Encerrar agora (Espaço)</button>
+            </div>
+            <div class="item">${itemHTML(st)}</div>`;
+          document.getElementById('enc').onclick = acao;
+          iniciarTimer(document.getElementById('barra'), document.getElementById('seg'), st.restante, st.tempo);
+          atualizarProgresso();
+        }
+
+        if (st.phase === 'reveal') {
+          app.className = 'wrap projetor';
+          const c = st.contagem;
+          const max = Math.max(1, c.a, c.b, c.c, c.d);
+          app.innerHTML = `
+            <div class="topo"><div class="muted">Resposta correta: <b>${st.correta.toUpperCase()}</b></div>
+              <button class="btn" id="prox">${st.ultima ? 'Ver resultado final' : 'Próxima (Espaço)'}</button></div>
+            <div class="item" id="item">${itemHTML(st)}</div>
+            <div class="card"><b>Como a turma respondeu</b>
+              <div class="dist">${['a', 'b', 'c', 'd']
+                .map((l) => `<div class="col ${l === st.correta ? 'certa' : ''}">${c[l]}<div class="b" style="height:${(c[l] / max) * 100}px"></div>${l.toUpperCase()}</div>`)
+                .join('')}</div>
+              <div class="muted center">Sem resposta: ${c.branco}</div></div>
+            <div class="card"><b>Ranking</b><table class="rank">${st.top
+              .map((r, i) => `<tr><td class="n">${i + 1}º</td><td>${esc(r.nome)}</td><td class="p">${r.pontos}</td></tr>`)
+              .join('')}</table></div>`;
+          marcar(document.getElementById('item'), st.correta, null);
+          document.getElementById('prox').onclick = acao;
+        }
+
+        if (st.phase === 'final') {
+          app.className = 'wrap';
+          const t = st.ranking;
+          const pod = (i, cls) =>
+            t[i] ? `<div class="deg ${cls}"><div class="nm">${esc(t[i].nome)}</div><div>${t[i].pontos} pts</div><div style="font-size:2rem">${i + 1}º</div></div>` : '';
+          app.innerHTML = `
+            <div class="card center"><h1 class="titulo">Resultado final</h1>
+              <div class="podio">${pod(1, 'p2')}${pod(0, 'p1')}${pod(2, 'p3')}</div></div>
+            <div class="card"><table class="rank"><tr><th></th><th>Nome</th><th>Acertos</th><th style="text-align:right">Pontos</th></tr>${t
+              .map((r, i) => `<tr><td class="n">${i + 1}º</td><td>${esc(r.nome)}</td><td>${r.acertos}</td><td class="p">${r.pontos}</td></tr>`)
+              .join('')}</table></div>
+            <div class="center">
+              <a class="btn" style="text-decoration:none;display:inline-block" href="/api/resultados.csv?key=${encodeURIComponent(key)}">Baixar resultados (CSV)</a>
+              <button class="btn sec" id="reset">Nova partida</button></div>`;
+          document.getElementById('reset').onclick = () => confirm('Zerar pontos e voltar ao início?') && ws.send({ t: 'reiniciar' });
+        }
+      }
+
+      function renderLobby(forcar) {
+        app.className = 'wrap projetor';
+        const url = urlAlunos();
+        const outros = [st.urls.tunnel, ...st.urls.lan].filter((u) => u && u !== url);
+        if (forcar || !document.getElementById('chips')) {
+          app.innerHTML = `
+            <div class="card">
+              <h1 class="titulo center">Competição SAEP</h1>
+              <div class="lobby-grid">
+                <div class="center"><img class="qr" alt="QR Code" src="/qr.svg?text=${encodeURIComponent(url)}" /></div>
+                <div>
+                  <p class="muted">Conecte-se ao mesmo Wi-Fi e acesse:</p>
+                  <div class="url">${esc(url)}</div>
+                  ${outros.length ? `<p class="muted" style="margin-top:6px">Outros endereços: ${outros.map(esc).join(' · ')}</p>` : ''}
+                  <p style="margin-top:14px"><b id="cont"></b></p>
+                </div>
+              </div>
+              <div class="chips" id="chips"></div>
+              <div class="center" style="margin-top:18px"><button class="btn" id="ini">Iniciar partida (Espaço)</button></div>
+            </div>`;
+          document.getElementById('ini').onclick = acao;
+        }
+        document.getElementById('cont').textContent = `${st.jogadores.length} jogador(es) na sala`;
+        document.getElementById('chips').innerHTML = st.jogadores
+          .map((j) => `<span class="chip ${j.on ? '' : 'off'}">${esc(j.nome)}</span>`)
+          .join('');
+      }
+
+      function atualizarProgresso() {
+        const p = document.getElementById('prog');
+        if (p) p.textContent = `Respostas: ${st.respondidas} / ${st.online}`;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,3015 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Avaliação Prática – Desenvolvimento de Software
+      (StreamFlix)
+    </title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11pt;
+        color: #000;
+        background: #fff;
+      }
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 15mm;
+      }
+
+      /* ── CABEÇALHO ── */
+      .header-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 14px;
+      }
+      .header-table td,
+      .header-table th {
+        border: 1px solid #000;
+        padding: 3px 6px;
+        vertical-align: middle;
+        font-size: 10pt;
+      }
+      .logo-cell {
+        width: 140px;
+        text-align: center;
+        vertical-align: middle !important;
+        padding: 8px;
+      }
+      .senai-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .senai-brand img {
+        max-width: 120px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+      .title-cell {
+        text-align: center;
+        font-weight: bold;
+        font-size: 13pt;
+        letter-spacing: 1px;
+        padding: 6px;
+      }
+      .desemp-cell {
+        width: 90px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 10pt;
+        vertical-align: top;
+      }
+      .label-bold {
+        font-weight: bold;
+      }
+
+      /* ── CAIXAS ── */
+      .capacidades-header {
+        background: #2e5496;
+        color: #fff;
+        font-weight: bold;
+        font-size: 12pt;
+        padding: 10px;
+        margin-top: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .capacidades-content {
+        border: 1px solid #2e5496;
+        border-top: none;
+        padding: 8px 10px 10px 10px;
+        margin-bottom: 4px;
+      }
+      .capacidades-content p {
+        margin-bottom: 3px;
+      }
+      .capacidades-content p:last-child {
+        margin-bottom: 0;
+      }
+      .section-divider {
+        margin: 28px 0;
+        border-top: 3px solid #2e5496;
+        border-bottom: 3px solid #2e5496;
+        padding: 12px 0 8px 0;
+      }
+      .section-title {
+        font-size: 13pt;
+        font-weight: bold;
+        color: #2e5496;
+        text-align: center;
+        margin-bottom: 4px;
+      }
+      .box {
+        margin-bottom: 20px;
+      }
+      .cc {
+        padding: 12px 14px !important;
+      }
+      .cc p {
+        line-height: 1.5;
+      }
+
+      /* ── TABELAS ── */
+      table.t {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 10pt;
+        background: #fff;
+      }
+      table.t th {
+        background: #2e5496;
+        color: #fff;
+        padding: 8px;
+        border: 1px solid #2e5496;
+        text-align: left;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      table.t td {
+        padding: 7px 8px;
+        border: 1px solid #d0d7de;
+        vertical-align: top;
+        line-height: 1.45;
+      }
+      table.t tr:nth-child(even) td {
+        background: #fcfdfe;
+      }
+      .c {
+        text-align: center !important;
+      }
+      .chk {
+        text-align: center !important;
+        font-size: 14pt;
+        color: #555;
+      }
+      .b {
+        font-weight: bold;
+        color: #2e5496;
+      }
+      .sub {
+        font-weight: bold;
+        color: #2e5496;
+        text-transform: uppercase;
+        margin: 14px 0 8px;
+      }
+      .aviso {
+        border-left: 4px solid #2e5496;
+        background: #f3f6fb;
+        padding: 8px 12px;
+        margin: 10px 0;
+        font-size: 10pt;
+        line-height: 1.5;
+      }
+      tr {
+        break-inside: avoid;
+      }
+      figure {
+        margin: 6px 0 14px;
+        break-inside: avoid;
+      }
+      figcaption {
+        font-size: 9.5pt;
+        font-weight: bold;
+        color: #2e5496;
+        margin: 0 0 4px;
+      }
+
+      /* ── MER ── */
+      .m-e {
+        fill: #fff;
+        stroke: #000;
+        stroke-width: 1.3;
+      }
+      .m-l {
+        stroke: #000;
+        stroke-width: 1.1;
+      }
+      .m-c {
+        fill: #fff;
+        stroke: #000;
+        stroke-width: 1.2;
+      }
+      .m-ck {
+        fill: #000;
+        stroke: #000;
+        stroke-width: 1.2;
+      }
+      .m-d {
+        fill: #fff;
+        stroke: #000;
+        stroke-width: 1.3;
+      }
+      .m-n {
+        font:
+          bold 10.5px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #000;
+      }
+      .m-a {
+        font:
+          10px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #000;
+      }
+      .m-v {
+        font:
+          11px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #000;
+      }
+      .m-k {
+        font:
+          10px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #000;
+      }
+      .m-g {
+        font:
+          9.5px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #000;
+      }
+      .m-lg {
+        fill: #fff;
+        stroke: #d0d7de;
+        stroke-width: 1;
+      }
+
+      /* ── WIREFRAMES (baixa fidelidade) ── */
+      .w-frame {
+        fill: #fff;
+        stroke: #666;
+        stroke-width: 1.2;
+      }
+      .w-box {
+        fill: #efefef;
+        stroke: #8a8a8a;
+        stroke-width: 1;
+      }
+      .w-bg {
+        fill: #fff;
+        stroke: #8a8a8a;
+        stroke-width: 1;
+      }
+      .w-bg2 {
+        fill: #fff;
+        stroke: #222;
+        stroke-width: 1.5;
+      }
+      .w-img {
+        fill: #e4e4e4;
+        stroke: #9a9a9a;
+        stroke-width: 1;
+      }
+      .w-x {
+        stroke: #c2c2c2;
+        stroke-width: 1;
+      }
+      .w-line {
+        stroke: #bdbdbd;
+        stroke-width: 1;
+        fill: none;
+      }
+      .w-btn {
+        fill: #222;
+        stroke: #222;
+      }
+      .w-btnt {
+        font:
+          bold 10px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #fff;
+      }
+      .w-dis {
+        fill: #d6d6d6;
+        stroke: #9a9a9a;
+        stroke-dasharray: 3 2;
+      }
+      .w-dist {
+        font:
+          bold 10px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #8a8a8a;
+      }
+      .w-dark {
+        fill: #2b2b2b;
+        stroke: #2b2b2b;
+      }
+      .w-wt {
+        font:
+          bold 11px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #fff;
+      }
+      .w-wts {
+        font:
+          8px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #fff;
+      }
+      .w-ci {
+        fill: none;
+        stroke: #fff;
+        stroke-width: 1;
+      }
+      .w-txt {
+        font:
+          11px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #222;
+      }
+      .w-b {
+        font:
+          bold 11px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #222;
+      }
+      .w-sm {
+        font:
+          9px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #444;
+      }
+      .w-ph {
+        font:
+          italic 11px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #8a8a8a;
+      }
+      .w-logo {
+        font:
+          bold 18px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #222;
+        letter-spacing: 1px;
+      }
+      .w-h {
+        font:
+          bold 16px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #222;
+      }
+      .w-h2 {
+        font:
+          bold 13px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #222;
+      }
+      .w-big {
+        font:
+          bold 17px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #222;
+      }
+      .w-err {
+        font:
+          9px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #d00;
+      }
+      .w-ov {
+        fill: #000;
+        fill-opacity: 0.45;
+      }
+      .w-tip {
+        fill: #fffbe0;
+        stroke: #8a8a8a;
+      }
+      .w-bd {
+        stroke: #000;
+        stroke-width: 2;
+      }
+      .w-ic {
+        stroke: #222;
+        stroke-width: 1.6;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .w-ic0 {
+        stroke: #222;
+        stroke-width: 1.6;
+        fill: none;
+      }
+      .w-hr {
+        fill: #f00;
+        stroke: #f00;
+        stroke-width: 1;
+        vector-effect: non-scaling-stroke;
+      }
+      .w-ho {
+        fill: none;
+        stroke: #000;
+        stroke-width: 1.3;
+        vector-effect: non-scaling-stroke;
+      }
+      .w-tr {
+        stroke: #f00;
+        stroke-width: 1.6;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .w-tag {
+        fill: #2e5496;
+      }
+      .w-tagt {
+        font:
+          bold 8.5px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #fff;
+      }
+
+      @media print {
+        body {
+          background: #fff;
+        }
+        .page {
+          margin: 0;
+          padding: 12mm 14mm;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <table class="header-table">
+        <tr>
+          <td class="logo-cell" rowspan="7">
+            <div class="senai-brand">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_sfpOEDmPPoL6K0aQL4qg5SsWL_41ZqhyF7zW1509kA&s=10"
+                alt="Logo SENAI"
+              />
+              <span>Serviço Nacional de Aprendizagem</span>
+            </div>
+          </td>
+          <td class="title-cell">AVALIAÇÃO PRÁTICA</td>
+          <td class="desemp-cell" rowspan="7">Desempenho</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-bold">Data:</span>
+            <em style="color: #2e5496; font-weight: bold"
+              >____/____/________</em
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-bold">Docente:</span>
+            <em style="color: #2e5496; font-weight: bold"
+              >Anderson Raulino Dutra</em
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-bold">Curso: </span>
+            <em style="color: #2e5496; font-weight: bold"
+              >Técnico em Informática para Internet</em
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-bold">Unidade Curricular:</span>
+            <em style="color: #2e5496; font-weight: bold"
+              >Projeto de Backend</em
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-bold">Turma:</span>
+            <em style="color: #2e5496; font-weight: bold"
+              >T TIIN 2025/1 M2- 463013
+            </em>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Estudante:</strong></td>
+        </tr>
+      </table>
+
+      <div class="box">
+        <div class="capacidades-header">CAPACIDADES TÉCNICAS</div>
+        <div class="capacidades-content">
+          <p>
+            <strong>CT1:</strong> Aplicar boas práticas de segurança na
+            comunicação entre os sistemas web.
+          </p>
+          <p>
+            <strong>CT2:</strong> Aplicar técnicas de segurança e tratamento de
+            dados..
+          </p>
+          <p>
+            <strong>CT3:</strong> Executar testes de funcionamento da sistemas
+            para web. Instalar e configurar banco de dados.
+          </p>
+          <p>
+            <strong>CT4:</strong> Aplicar boas práticas na execução dos testes.
+          </p>
+          <p>
+            <strong>CT5:</strong> Elaborar plano de testes de sistemas para web.
+          </p>
+          <p>
+            <strong>CT6:</strong> Aplicar boas práticas de segurança da
+            informação na infraestrutura dos ambientes.
+          </p>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="capacidades-header">CAPACIDADES SOCIOEMOCIONAIS</div>
+        <div class="capacidades-content">
+          <p>
+            <strong>CS1:</strong> Reconhecer as exigências requeridas para a
+            resolução de um problema ou necessidade ou para se implantar uma
+            melhoria no seu campo de trabalhoMotivar seus pares para a
+            amabilidade nas relações profissionais, por meio da prática do
+            diálogo, da empatia, da tolerância, do altruísmo, da modéstia e da
+            gratidão.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-divider">
+        <div class="section-title">
+          AVALIAÇÃO PRÁTICA <br />
+          DESENVOLVIMENTO DE SOFTWARE STREAMFLIX
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="capacidades-header">CONTEXTUALIZAÇÃO</div>
+        <div class="capacidades-content cc">
+          <p style="margin-bottom: 10px">
+            Em um mundo onde assistir a filmes e séries sob demanda se tornou
+            parte da rotina, milhares de pessoas procuram uma plataforma simples
+            para descobrir títulos, demonstrar o que gostaram e organizar o que
+            querem assistir depois. A <strong>StreamFlix</strong>, empresa
+            especializada em soluções de entretenimento digital, está
+            desenvolvendo uma plataforma web de streaming voltada para
+            assinantes e para a equipe responsável pela curadoria do catálogo.
+          </p>
+          <p style="margin-bottom: 10px">
+            Atualmente a plataforma está em fase inicial e precisa implementar o
+            módulo essencial de <strong>catálogo e interação</strong>:
+            administradores cadastram os filmes e os usuários podem
+            <strong>curtir</strong> os títulos e montar a sua própria lista
+            (<strong>“Minha Lista”</strong>). Um protótipo foi criado com
+            informações de alguns usuários de teste. Agora, a empresa deseja
+            expandir o alcance da plataforma e agregar novas funcionalidades, e
+            para isso o sistema precisa suportar atualizações contínuas
+            <strong>sem comprometer a integridade</strong> das informações já
+            armazenadas.
+          </p>
+          <p>
+            A equipe da StreamFlix enfatiza a necessidade de um banco de dados
+            bem estruturado, capaz de armazenar e gerenciar os perfis dos
+            usuários, os filmes e as interações (curtidas e listas), e de uma
+            experiência fluida, em que todo o conteúdo seja carregado
+            dinamicamente, <strong>sem recarregar a página</strong>. Os dados do
+            protótipo, incluindo o arquivo <code>usuarios.csv</code>, deverão
+            ser importados para o novo sistema, garantindo a continuidade das
+            informações.
+          </p>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="capacidades-header">DESAFIO</div>
+        <div class="capacidades-content cc">
+          <p>
+            Para ajudar a empresa, você,
+            <strong>desenvolvedor(a) de software</strong>, deverá desenvolver um
+            sistema web onde
+            <strong
+              >TODAS as informações apresentadas aos usuários devem ser
+              extraídas exclusivamente do banco de dados</strong
+            >. O sistema deve carregar todo o conteúdo dinamicamente, sem
+            necessidade de recarregar a página, garantindo uma experiência
+            fluida ao usuário.
+          </p>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="capacidades-header">
+          RESULTADOS ESPERADOS — ESPECIFICAÇÕES DA BASE DE DADOS
+        </div>
+        <div class="capacidades-content cc">
+          <p style="margin-bottom: 10px">
+            Você deve criar a <strong>estrutura física</strong> do banco de
+            dados a partir do Modelo Entidade-Relacionamento (MER) abaixo,
+            respeitando as seguintes especificações de entidades e
+            relacionamentos:
+          </p>
+          <table class="t">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Entidade</th>
+                <th>Especificação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="c"><strong>1</strong></td>
+                <td class="b">
+                  tb_usuario
+                  <span style="font-weight: normal; color: #000"
+                    >(entidade)</span
+                  >
+                </td>
+                <td>
+                  Indivíduos cadastrados na plataforma, do tipo
+                  <code>usuario</code> (comum) ou <code>administrador</code>.
+                  <strong>Todos</strong> podem realizar login.
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>2</strong></td>
+                <td class="b">
+                  tb_filme
+                  <span style="font-weight: normal; color: #000"
+                    >(entidade)</span
+                  >
+                </td>
+                <td>
+                  Filmes do catálogo, cadastrados
+                  <strong>exclusivamente por administradores</strong>
+                  (relacionamento <em>cadastrar</em>, 1:N).
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>3</strong></td>
+                <td class="b">
+                  tb_curtida
+                  <span style="font-weight: normal; color: #000"
+                    >(associativa)</span
+                  >
+                </td>
+                <td>
+                  Usuários comuns e administradores podem
+                  <strong>curtir</strong> os filmes do catálogo. Relação N:N
+                  entre <code>tb_usuario</code> e <code>tb_filme</code>.
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>4</strong></td>
+                <td class="b">
+                  tb_minha_lista
+                  <span style="font-weight: normal; color: #000"
+                    >(associativa)</span
+                  >
+                </td>
+                <td>
+                  Usuários comuns e administradores podem
+                  <strong>salvar</strong> filmes na sua lista pessoal. Relação
+                  N:N entre <code>tb_usuario</code> e <code>tb_filme</code>.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="sub">Modelo Entidade-Relacionamento (MER)</div>
+          <figure>
+            <figcaption>
+              MER — duas entidades (tb_usuario, tb_filme) e duas entidades
+              associativas (tb_curtida, tb_minha_lista)
+            </figcaption>
+            <svg
+              viewBox="0 0 840 620"
+              width="100%"
+              role="img"
+              aria-label="Diagrama MER do banco da StreamFlix: tb_usuario e tb_filme, com as entidades associativas tb_curtida e tb_minha_lista"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect class="m-e" x="20" y="250" width="130" height="90" />
+              <text class="m-n" x="85.0" y="299.0" text-anchor="middle">
+                tb_usuario
+              </text>
+              <line class="m-l" x1="32" y1="250" x2="32" y2="110" />
+              <line class="m-l" x1="32" y1="110" x2="40" y2="110" />
+              <circle class="m-ck" cx="44" cy="110" r="4" />
+              <text class="m-a" x="52" y="113.5">id_usuario</text>
+              <line class="m-l" x1="44" y1="250" x2="44" y2="125" />
+              <line class="m-l" x1="44" y1="125" x2="52" y2="125" />
+              <circle class="m-c" cx="56" cy="125" r="4" />
+              <text class="m-a" x="64" y="128.5">nome</text>
+              <line class="m-l" x1="56" y1="250" x2="56" y2="140" />
+              <line class="m-l" x1="56" y1="140" x2="64" y2="140" />
+              <circle class="m-c" cx="68" cy="140" r="4" />
+              <text class="m-a" x="76" y="143.5">nome_usuario</text>
+              <line class="m-l" x1="68" y1="250" x2="68" y2="155" />
+              <line class="m-l" x1="68" y1="155" x2="76" y2="155" />
+              <circle class="m-c" cx="80" cy="155" r="4" />
+              <text class="m-a" x="88" y="158.5">email</text>
+              <line class="m-l" x1="80" y1="250" x2="80" y2="170" />
+              <line class="m-l" x1="80" y1="170" x2="88" y2="170" />
+              <circle class="m-c" cx="92" cy="170" r="4" />
+              <text class="m-a" x="100" y="173.5">senha</text>
+              <line class="m-l" x1="92" y1="250" x2="92" y2="185" />
+              <line class="m-l" x1="92" y1="185" x2="100" y2="185" />
+              <circle class="m-c" cx="104" cy="185" r="4" />
+              <text class="m-a" x="112" y="188.5">imagem_usuario</text>
+              <line class="m-l" x1="104" y1="250" x2="104" y2="200" />
+              <line class="m-l" x1="104" y1="200" x2="112" y2="200" />
+              <circle class="m-c" cx="116" cy="200" r="4" />
+              <text class="m-a" x="124" y="203.5">tipo</text>
+              <line class="m-l" x1="116" y1="250" x2="116" y2="215" />
+              <line class="m-l" x1="116" y1="215" x2="124" y2="215" />
+              <circle class="m-c" cx="128" cy="215" r="4" />
+              <text class="m-a" x="136" y="218.5">created_at</text>
+              <line class="m-l" x1="128" y1="250" x2="128" y2="230" />
+              <line class="m-l" x1="128" y1="230" x2="136" y2="230" />
+              <circle class="m-c" cx="140" cy="230" r="4" />
+              <text class="m-a" x="148" y="233.5">updated_at</text>
+              <rect class="m-e" x="660" y="250" width="130" height="90" />
+              <text class="m-n" x="725.0" y="299.0" text-anchor="middle">
+                tb_filme
+              </text>
+              <line class="m-l" x1="672" y1="250" x2="672" y2="140" />
+              <line class="m-l" x1="672" y1="140" x2="680" y2="140" />
+              <circle class="m-ck" cx="684" cy="140" r="4" />
+              <text class="m-a" x="692" y="143.5">id_filme</text>
+              <line class="m-l" x1="684" y1="250" x2="684" y2="155" />
+              <line class="m-l" x1="684" y1="155" x2="692" y2="155" />
+              <circle class="m-c" cx="696" cy="155" r="4" />
+              <text class="m-a" x="704" y="158.5">titulo_filme</text>
+              <line class="m-l" x1="696" y1="250" x2="696" y2="170" />
+              <line class="m-l" x1="696" y1="170" x2="704" y2="170" />
+              <circle class="m-c" cx="708" cy="170" r="4" />
+              <text class="m-a" x="716" y="173.5">genero</text>
+              <line class="m-l" x1="708" y1="250" x2="708" y2="185" />
+              <line class="m-l" x1="708" y1="185" x2="716" y2="185" />
+              <circle class="m-ck" cx="720" cy="185" r="4" />
+              <text class="m-a" x="728" y="188.5">id_usuario</text>
+              <line class="m-l" x1="720" y1="250" x2="720" y2="200" />
+              <line class="m-l" x1="720" y1="200" x2="728" y2="200" />
+              <circle class="m-c" cx="732" cy="200" r="4" />
+              <text class="m-a" x="740" y="203.5">url_capa</text>
+              <line class="m-l" x1="732" y1="250" x2="732" y2="215" />
+              <line class="m-l" x1="732" y1="215" x2="740" y2="215" />
+              <circle class="m-c" cx="744" cy="215" r="4" />
+              <text class="m-a" x="752" y="218.5">created_at</text>
+              <line class="m-l" x1="744" y1="250" x2="744" y2="230" />
+              <line class="m-l" x1="744" y1="230" x2="752" y2="230" />
+              <circle class="m-c" cx="756" cy="230" r="4" />
+              <text class="m-a" x="764" y="233.5">updated_at</text>
+              <line class="m-l" x1="150" y1="295" x2="380" y2="295" />
+              <line class="m-l" x1="520" y1="295" x2="660" y2="295" />
+              <polygon class="m-d" points="380,295 450,267 520,295 450,323" />
+              <text class="m-v" x="450" y="298.5" text-anchor="middle">
+                cadastrar
+              </text>
+              <rect class="m-e" x="330" y="130" width="240" height="80" />
+              <line class="m-l" x1="330" y1="149" x2="400" y2="149" />
+              <line class="m-l" x1="400" y1="130" x2="400" y2="149" />
+              <text class="m-n" x="335" y="144">tb_curtida</text>
+              <polygon
+                class="m-d"
+                points="380.0,174.0 450.0,146.0 520.0,174.0 450.0,202.0"
+              />
+              <text class="m-v" x="450.0" y="177.5" text-anchor="middle">
+                curtir
+              </text>
+              <line class="m-l" x1="342" y1="130" x2="342" y2="50" />
+              <line class="m-l" x1="342" y1="50" x2="350" y2="50" />
+              <circle class="m-ck" cx="354" cy="50" r="4" />
+              <text class="m-a" x="362" y="53.5">id_curtida</text>
+              <line class="m-l" x1="354" y1="130" x2="354" y2="65" />
+              <line class="m-l" x1="354" y1="65" x2="362" y2="65" />
+              <circle class="m-ck" cx="366" cy="65" r="4" />
+              <text class="m-a" x="374" y="68.5">id_usuario</text>
+              <line class="m-l" x1="366" y1="130" x2="366" y2="80" />
+              <line class="m-l" x1="366" y1="80" x2="374" y2="80" />
+              <circle class="m-ck" cx="378" cy="80" r="4" />
+              <text class="m-a" x="386" y="83.5">id_filme</text>
+              <line class="m-l" x1="378" y1="130" x2="378" y2="95" />
+              <line class="m-l" x1="378" y1="95" x2="386" y2="95" />
+              <circle class="m-c" cx="390" cy="95" r="4" />
+              <text class="m-a" x="398" y="98.5">created_at</text>
+              <line class="m-l" x1="390" y1="130" x2="390" y2="110" />
+              <line class="m-l" x1="390" y1="110" x2="398" y2="110" />
+              <circle class="m-c" cx="402" cy="110" r="4" />
+              <text class="m-a" x="410" y="113.5">updated_at</text>
+              <line class="m-l" x1="150" y1="265" x2="300" y2="265" />
+              <line class="m-l" x1="300" y1="265" x2="300" y2="174" />
+              <line class="m-l" x1="300" y1="174" x2="380" y2="174" />
+              <line class="m-l" x1="660" y1="265" x2="600" y2="265" />
+              <line class="m-l" x1="600" y1="265" x2="600" y2="174" />
+              <line class="m-l" x1="600" y1="174" x2="520" y2="174" />
+              <rect class="m-e" x="330" y="440" width="240" height="80" />
+              <line class="m-l" x1="330" y1="459" x2="422" y2="459" />
+              <line class="m-l" x1="422" y1="440" x2="422" y2="459" />
+              <text class="m-n" x="335" y="454">tb_minha_lista</text>
+              <polygon
+                class="m-d"
+                points="380.0,484.0 450.0,456.0 520.0,484.0 450.0,512.0"
+              />
+              <text class="m-v" x="450.0" y="487.5" text-anchor="middle">
+                salvar
+              </text>
+              <line class="m-l" x1="342" y1="520" x2="342" y2="600" />
+              <line class="m-l" x1="342" y1="600" x2="350" y2="600" />
+              <circle class="m-ck" cx="354" cy="600" r="4" />
+              <text class="m-a" x="362" y="603.5">id_lista</text>
+              <line class="m-l" x1="354" y1="520" x2="354" y2="585" />
+              <line class="m-l" x1="354" y1="585" x2="362" y2="585" />
+              <circle class="m-ck" cx="366" cy="585" r="4" />
+              <text class="m-a" x="374" y="588.5">id_usuario</text>
+              <line class="m-l" x1="366" y1="520" x2="366" y2="570" />
+              <line class="m-l" x1="366" y1="570" x2="374" y2="570" />
+              <circle class="m-ck" cx="378" cy="570" r="4" />
+              <text class="m-a" x="386" y="573.5">id_filme</text>
+              <line class="m-l" x1="378" y1="520" x2="378" y2="555" />
+              <line class="m-l" x1="378" y1="555" x2="386" y2="555" />
+              <circle class="m-c" cx="390" cy="555" r="4" />
+              <text class="m-a" x="398" y="558.5">created_at</text>
+              <line class="m-l" x1="390" y1="520" x2="390" y2="540" />
+              <line class="m-l" x1="390" y1="540" x2="398" y2="540" />
+              <circle class="m-c" cx="402" cy="540" r="4" />
+              <text class="m-a" x="410" y="543.5">updated_at</text>
+              <line class="m-l" x1="150" y1="325" x2="270" y2="325" />
+              <line class="m-l" x1="270" y1="325" x2="270" y2="484" />
+              <line class="m-l" x1="270" y1="484" x2="380" y2="484" />
+              <line class="m-l" x1="660" y1="325" x2="630" y2="325" />
+              <line class="m-l" x1="630" y1="325" x2="630" y2="484" />
+              <line class="m-l" x1="630" y1="484" x2="520" y2="484" />
+              <text class="m-k" x="155" y="261">(0,n)</text>
+              <text class="m-k" x="655" y="261" text-anchor="end">(0,n)</text>
+              <text class="m-k" x="155" y="291">(0,n)</text>
+              <text class="m-k" x="655" y="291" text-anchor="end">(1,1)</text>
+              <text class="m-k" x="155" y="321">(0,n)</text>
+              <text class="m-k" x="655" y="321" text-anchor="end">(0,n)</text>
+              <rect class="m-lg" x="20" y="500" width="230" height="108" />
+              <text class="m-n" x="30" y="518">Legenda</text>
+              <circle class="m-ck" cx="38" cy="533" r="4" />
+              <text class="m-g" x="48" y="536.5">
+                Atributo-chave (PK ou FK)
+              </text>
+              <circle class="m-c" cx="38" cy="549" r="4" />
+              <text class="m-g" x="48" y="552.5">Atributo comum</text>
+              <text class="m-g" x="30" y="569">
+                (mín,máx): participação da entidade
+              </text>
+              <text class="m-g" x="30" y="582">
+                na associação. Ex.: (1,1) = exatamente 1.
+              </text>
+              <text class="m-g" x="30" y="598">
+                Retângulo + losango = entidade associativa
+              </text>
+            </svg>
+          </figure>
+
+          <div class="aviso">
+            <strong>Regras de integridade do modelo</strong><br />
+            • <code>nome_usuario</code> e <code>email</code> não podem se
+            repetir entre usuários.<br />
+            • O atributo <code>tipo</code> aceita somente
+            <code>usuario</code> ou <code>administrador</code>.<br />
+            • Um filme só pode ser cadastrado por um usuário do tipo
+            <code>administrador</code> (regra validada na aplicação).<br />
+            • Um usuário só pode curtir o mesmo filme <strong>uma vez</strong>,
+            e só pode ter o mesmo filme <strong>uma vez</strong> em Minha
+            Lista.<br />
+            • Ao excluir um filme, suas curtidas e seus registros em Minha Lista
+            devem ser excluídos junto; ao excluir um usuário, suas curtidas, sua
+            lista e (se administrador) seus filmes também.<br />
+            • Os campos <code>created_at</code> e <code>updated_at</code> devem
+            ser preenchidos automaticamente.
+          </div>
+
+          <div class="sub">Carga inicial de dados</div>
+          <p style="margin-bottom: 4px">
+            • Importar o arquivo <code>usuarios.csv</code> (pasta de anexos)
+            para <code>tb_usuario</code>.<br />
+            • Importar o arquivo <code>filmes.csv</code> (pasta de anexos) para
+            <code>tb_filme</code>.<br />
+          </p>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="capacidades-header">
+          ORIENTAÇÕES — FONTES, CORES E ANEXOS
+        </div>
+        <div class="capacidades-content cc">
+          <p style="margin-bottom: 8px">
+            • <strong>Fonte:</strong> <code>Segoe UI</code>.<br />
+            • <strong>Tecnologias:</strong> HTML, CSS e JavaScript no front-end;
+            linguagem de servidor e SGBD conforme o ambiente de avaliação.<br />
+            • <strong>Cores:</strong> as indicadas em cada item
+            (<code>#000</code>, <code>#FFF</code>, <code>#F00</code>); demais
+            cores livres, preservando o contraste e a legibilidade.<br />
+            • <strong>Anexo:</strong> pasta disponível no desktop do computador
+            do ambiente de avaliação, contendo:
+          </p>
+          <table class="t">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Conteúdo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="b">Ícones</td>
+                <td>
+                  <code>lupa.svg</code>, <code>coracao.svg</code>,
+                  <code>mais.svg</code>, <code>check.svg</code>,
+                  <code>lixeira.svg</code>, <code>fechar.svg</code>,
+                  <code>instagram.svg</code>, <code>tiktok.svg</code>,
+                  <code>linkedIn.svg</code>, <code>youtube.svg</code>
+                </td>
+              </tr>
+              <tr>
+                <td class="b">Dados</td>
+                <td>
+                  <code>usuarios.csv</code> (colunas: nome, nome_usuario, email,
+                  senha, imagem_usuario, tipo)
+                </td>
+              </tr>
+              <tr>
+                <td class="b">Imagens</td>
+                <td>capas dos filmes e fotos de perfil dos usuários</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="capacidades-header">WIREFRAMES</div>
+        <div class="capacidades-content cc">
+          <p style="margin-bottom: 10px">
+            Os wireframes abaixo são de <strong>baixa fidelidade</strong>:
+            indicam posição e comportamento dos elementos, não o visual final.
+            As etiquetas em azul (ex.:
+            <span
+              style="
+                background: #2e5496;
+                color: #fff;
+                font-size: 8pt;
+                font-weight: bold;
+                padding: 1px 4px;
+                border-radius: 2px;
+              "
+              >A2.2</span
+            >) remetem ao item correspondente das especificações das próximas
+            seções. Fonte e cores seguem o texto da especificação.
+          </p>
+          <figure>
+            <figcaption>
+              Wireframe 1 — Página index — usuário não logado (Seções A e B)
+            </figcaption>
+            <svg
+              viewBox="-1 -1 762 498"
+              width="100%"
+              role="img"
+              aria-label="Wireframe 1: página index com usuário não logado"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect class="w-frame" x="0" y="0" width="760" height="496" />
+              <rect class="w-box" x="0" y="0" width="760" height="64" />
+              <circle class="w-img" cx="40" cy="32" r="18" />
+              <text class="w-sm" x="40" y="35" text-anchor="middle">foto</text>
+              <text class="w-b" x="68" y="27">@StreamFlix</text>
+              <rect class="w-dis" x="68" y="35" width="64" height="18" rx="2" />
+              <text class="w-dist" x="100" y="47" text-anchor="middle">
+                Ver Perfil
+              </text>
+              <text class="w-logo" x="380" y="40" text-anchor="middle">
+                StreamFlix
+              </text>
+              <rect
+                class="w-btn"
+                x="680"
+                y="21"
+                width="60"
+                height="22"
+                rx="2"
+              />
+              <text class="w-btnt" x="710" y="36" text-anchor="middle">
+                Login
+              </text>
+              <rect
+                class="w-bg"
+                x="180"
+                y="84"
+                width="400"
+                height="32"
+                rx="16"
+              />
+              <text class="w-ph" x="200" y="104">
+                Digite o nome do filme... ex: Interestelar
+              </text>
+              <circle class="w-ic0" cx="554" cy="98" r="5" />
+              <line class="w-ic" x1="558" y1="102" x2="563" y2="107" />
+              <rect class="w-img" x="45" y="146" width="210" height="96" />
+              <line class="w-x" x1="45" y1="146" x2="255" y2="242" />
+              <line class="w-x" x1="45" y1="242" x2="255" y2="146" />
+              <circle class="w-bg" cx="237" cy="164" r="9" />
+              <line class="w-ic" x1="233" y1="164" x2="241" y2="164" />
+              <line class="w-ic" x1="237" y1="160" x2="237" y2="168" />
+              <rect class="w-bg" x="45" y="242" width="210" height="30" />
+              <text class="w-b" x="53" y="261">Interestelar</text>
+              <path
+                class="w-ho"
+                transform="translate(203 250) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="221" y="261">24</text>
+              <rect class="w-img" x="275" y="146" width="210" height="96" />
+              <line class="w-x" x1="275" y1="146" x2="485" y2="242" />
+              <line class="w-x" x1="275" y1="242" x2="485" y2="146" />
+              <circle class="w-bg" cx="467" cy="164" r="9" />
+              <line class="w-ic" x1="463" y1="164" x2="471" y2="164" />
+              <line class="w-ic" x1="467" y1="160" x2="467" y2="168" />
+              <rect class="w-bg" x="275" y="242" width="210" height="30" />
+              <text class="w-b" x="283" y="261">Cidade de Deus</text>
+              <path
+                class="w-ho"
+                transform="translate(433 250) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="451" y="261">18</text>
+              <rect class="w-img" x="505" y="146" width="210" height="96" />
+              <line class="w-x" x1="505" y1="146" x2="715" y2="242" />
+              <line class="w-x" x1="505" y1="242" x2="715" y2="146" />
+              <circle class="w-bg" cx="697" cy="164" r="9" />
+              <line class="w-ic" x1="693" y1="164" x2="701" y2="164" />
+              <line class="w-ic" x1="697" y1="160" x2="697" y2="168" />
+              <rect class="w-bg" x="505" y="242" width="210" height="30" />
+              <text class="w-b" x="513" y="261">Parasita</text>
+              <path
+                class="w-ho"
+                transform="translate(663 250) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="681" y="261">31</text>
+              <rect class="w-img" x="45" y="288" width="210" height="96" />
+              <line class="w-x" x1="45" y1="288" x2="255" y2="384" />
+              <line class="w-x" x1="45" y1="384" x2="255" y2="288" />
+              <circle class="w-bg" cx="237" cy="306" r="9" />
+              <line class="w-ic" x1="233" y1="306" x2="241" y2="306" />
+              <line class="w-ic" x1="237" y1="302" x2="237" y2="310" />
+              <rect class="w-bg" x="45" y="384" width="210" height="30" />
+              <text class="w-b" x="53" y="403">Wall-E</text>
+              <path
+                class="w-ho"
+                transform="translate(203 392) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="221" y="403">12</text>
+              <rect class="w-img" x="275" y="288" width="210" height="96" />
+              <line class="w-x" x1="275" y1="288" x2="485" y2="384" />
+              <line class="w-x" x1="275" y1="384" x2="485" y2="288" />
+              <circle class="w-bg" cx="467" cy="306" r="9" />
+              <line class="w-ic" x1="463" y1="306" x2="471" y2="306" />
+              <line class="w-ic" x1="467" y1="302" x2="467" y2="310" />
+              <rect class="w-bg" x="275" y="384" width="210" height="30" />
+              <text class="w-b" x="283" y="403">Clube da Luta</text>
+              <path
+                class="w-ho"
+                transform="translate(433 392) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="451" y="403">9</text>
+              <rect class="w-img" x="505" y="288" width="210" height="96" />
+              <line class="w-x" x1="505" y1="288" x2="715" y2="384" />
+              <line class="w-x" x1="505" y1="384" x2="715" y2="288" />
+              <circle class="w-bg" cx="697" cy="306" r="9" />
+              <line class="w-ic" x1="693" y1="306" x2="701" y2="306" />
+              <line class="w-ic" x1="697" y1="302" x2="697" y2="310" />
+              <rect class="w-bg" x="505" y="384" width="210" height="30" />
+              <text class="w-b" x="513" y="403">Amélie</text>
+              <path
+                class="w-ho"
+                transform="translate(663 392) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="681" y="403">15</text>
+              <rect class="w-tip" x="300" y="196" width="160" height="40" />
+              <text class="w-sm" x="308" y="212">
+                Cadastrado por: @curador1
+              </text>
+              <text class="w-sm" x="308" y="227">Gênero: Drama</text>
+              <rect class="w-dark" x="0" y="452" width="760" height="44" />
+              <text class="w-wt" x="16" y="478">StreamFlix</text>
+              <text class="w-wt" x="744" y="478" text-anchor="end">
+                Copyright 2026-2027
+              </text>
+              <circle class="w-ci" cx="335" cy="474" r="10" />
+              <text class="w-wts" x="335" y="477" text-anchor="middle">ig</text>
+              <circle class="w-ci" cx="365" cy="474" r="10" />
+              <text class="w-wts" x="365" y="477" text-anchor="middle">tt</text>
+              <circle class="w-ci" cx="395" cy="474" r="10" />
+              <text class="w-wts" x="395" y="477" text-anchor="middle">in</text>
+              <circle class="w-ci" cx="425" cy="474" r="10" />
+              <text class="w-wts" x="425" y="477" text-anchor="middle">yt</text>
+              <rect
+                class="w-tag"
+                x="138"
+                y="37"
+                width="33.6"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="154.8" y="46.5" text-anchor="middle">
+                A1.1
+              </text>
+              <rect
+                class="w-tag"
+                x="447"
+                y="26"
+                width="33.6"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="463.8" y="35.5" text-anchor="middle">
+                A1.2
+              </text>
+              <rect
+                class="w-tag"
+                x="636"
+                y="24"
+                width="33.6"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="652.8" y="33.5" text-anchor="middle">
+                A1.3
+              </text>
+              <rect
+                class="w-tag"
+                x="140"
+                y="92"
+                width="33.6"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="156.8" y="101.5" text-anchor="middle">
+                A2.1
+              </text>
+              <rect
+                class="w-tag"
+                x="4"
+                y="150"
+                width="33.6"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="20.8" y="159.5" text-anchor="middle">
+                A2.2
+              </text>
+              <rect
+                class="w-tag"
+                x="464"
+                y="200"
+                width="33.6"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="480.8" y="209.5" text-anchor="middle">
+                A2.3
+              </text>
+              <rect
+                class="w-tag"
+                x="8"
+                y="436"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="18.4" y="445.5" text-anchor="middle">
+                A3
+              </text>
+            </svg>
+          </figure>
+          <figure>
+            <figcaption>Wireframe 2 — Modal de login (Seção C)</figcaption>
+            <svg
+              viewBox="-1 -1 762 498"
+              width="100%"
+              role="img"
+              aria-label="Wireframe 2: modal de login"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect class="w-frame" x="0" y="0" width="760" height="496" />
+              <rect class="w-box" x="0" y="0" width="760" height="64" />
+              <circle class="w-img" cx="40" cy="32" r="18" />
+              <text class="w-sm" x="40" y="35" text-anchor="middle">foto</text>
+              <text class="w-b" x="68" y="27">@StreamFlix</text>
+              <rect class="w-dis" x="68" y="35" width="64" height="18" rx="2" />
+              <text class="w-dist" x="100" y="47" text-anchor="middle">
+                Ver Perfil
+              </text>
+              <text class="w-logo" x="380" y="40" text-anchor="middle">
+                StreamFlix
+              </text>
+              <rect
+                class="w-btn"
+                x="680"
+                y="21"
+                width="60"
+                height="22"
+                rx="2"
+              />
+              <text class="w-btnt" x="710" y="36" text-anchor="middle">
+                Login
+              </text>
+              <rect
+                class="w-bg"
+                x="180"
+                y="84"
+                width="400"
+                height="32"
+                rx="16"
+              />
+              <text class="w-ph" x="200" y="104">
+                Digite o nome do filme... ex: Interestelar
+              </text>
+              <circle class="w-ic0" cx="554" cy="98" r="5" />
+              <line class="w-ic" x1="558" y1="102" x2="563" y2="107" />
+              <rect class="w-img" x="45" y="146" width="210" height="96" />
+              <line class="w-x" x1="45" y1="146" x2="255" y2="242" />
+              <line class="w-x" x1="45" y1="242" x2="255" y2="146" />
+              <circle class="w-bg" cx="237" cy="164" r="9" />
+              <line class="w-ic" x1="233" y1="164" x2="241" y2="164" />
+              <line class="w-ic" x1="237" y1="160" x2="237" y2="168" />
+              <rect class="w-bg" x="45" y="242" width="210" height="30" />
+              <text class="w-b" x="53" y="261">Interestelar</text>
+              <path
+                class="w-ho"
+                transform="translate(203 250) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="221" y="261">24</text>
+              <rect class="w-img" x="275" y="146" width="210" height="96" />
+              <line class="w-x" x1="275" y1="146" x2="485" y2="242" />
+              <line class="w-x" x1="275" y1="242" x2="485" y2="146" />
+              <circle class="w-bg" cx="467" cy="164" r="9" />
+              <line class="w-ic" x1="463" y1="164" x2="471" y2="164" />
+              <line class="w-ic" x1="467" y1="160" x2="467" y2="168" />
+              <rect class="w-bg" x="275" y="242" width="210" height="30" />
+              <text class="w-b" x="283" y="261">Cidade de Deus</text>
+              <path
+                class="w-ho"
+                transform="translate(433 250) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="451" y="261">18</text>
+              <rect class="w-img" x="505" y="146" width="210" height="96" />
+              <line class="w-x" x1="505" y1="146" x2="715" y2="242" />
+              <line class="w-x" x1="505" y1="242" x2="715" y2="146" />
+              <circle class="w-bg" cx="697" cy="164" r="9" />
+              <line class="w-ic" x1="693" y1="164" x2="701" y2="164" />
+              <line class="w-ic" x1="697" y1="160" x2="697" y2="168" />
+              <rect class="w-bg" x="505" y="242" width="210" height="30" />
+              <text class="w-b" x="513" y="261">Parasita</text>
+              <path
+                class="w-ho"
+                transform="translate(663 250) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="681" y="261">31</text>
+              <rect class="w-img" x="45" y="288" width="210" height="96" />
+              <line class="w-x" x1="45" y1="288" x2="255" y2="384" />
+              <line class="w-x" x1="45" y1="384" x2="255" y2="288" />
+              <circle class="w-bg" cx="237" cy="306" r="9" />
+              <line class="w-ic" x1="233" y1="306" x2="241" y2="306" />
+              <line class="w-ic" x1="237" y1="302" x2="237" y2="310" />
+              <rect class="w-bg" x="45" y="384" width="210" height="30" />
+              <text class="w-b" x="53" y="403">Wall-E</text>
+              <path
+                class="w-ho"
+                transform="translate(203 392) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="221" y="403">12</text>
+              <rect class="w-img" x="275" y="288" width="210" height="96" />
+              <line class="w-x" x1="275" y1="288" x2="485" y2="384" />
+              <line class="w-x" x1="275" y1="384" x2="485" y2="288" />
+              <circle class="w-bg" cx="467" cy="306" r="9" />
+              <line class="w-ic" x1="463" y1="306" x2="471" y2="306" />
+              <line class="w-ic" x1="467" y1="302" x2="467" y2="310" />
+              <rect class="w-bg" x="275" y="384" width="210" height="30" />
+              <text class="w-b" x="283" y="403">Clube da Luta</text>
+              <path
+                class="w-ho"
+                transform="translate(433 392) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="451" y="403">9</text>
+              <rect class="w-img" x="505" y="288" width="210" height="96" />
+              <line class="w-x" x1="505" y1="288" x2="715" y2="384" />
+              <line class="w-x" x1="505" y1="384" x2="715" y2="288" />
+              <circle class="w-bg" cx="697" cy="306" r="9" />
+              <line class="w-ic" x1="693" y1="306" x2="701" y2="306" />
+              <line class="w-ic" x1="697" y1="302" x2="697" y2="310" />
+              <rect class="w-bg" x="505" y="384" width="210" height="30" />
+              <text class="w-b" x="513" y="403">Amélie</text>
+              <path
+                class="w-ho"
+                transform="translate(663 392) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="681" y="403">15</text>
+              <rect class="w-dark" x="0" y="452" width="760" height="44" />
+              <text class="w-wt" x="16" y="478">StreamFlix</text>
+              <text class="w-wt" x="744" y="478" text-anchor="end">
+                Copyright 2026-2027
+              </text>
+              <circle class="w-ci" cx="335" cy="474" r="10" />
+              <text class="w-wts" x="335" y="477" text-anchor="middle">ig</text>
+              <circle class="w-ci" cx="365" cy="474" r="10" />
+              <text class="w-wts" x="365" y="477" text-anchor="middle">tt</text>
+              <circle class="w-ci" cx="395" cy="474" r="10" />
+              <text class="w-wts" x="395" y="477" text-anchor="middle">in</text>
+              <circle class="w-ci" cx="425" cy="474" r="10" />
+              <text class="w-wts" x="425" y="477" text-anchor="middle">yt</text>
+              <rect class="w-ov" x="0" y="0" width="760" height="496" />
+              <rect
+                class="w-bg"
+                x="220"
+                y="80"
+                width="320"
+                height="290"
+                rx="4"
+              />
+              <text class="w-h" x="380" y="112" text-anchor="middle">
+                Login
+              </text>
+              <line class="w-ic" x1="513" y1="95" x2="523" y2="105" />
+              <line class="w-ic" x1="513" y1="105" x2="523" y2="95" />
+              <rect
+                class="w-bg"
+                x="245"
+                y="132"
+                width="270"
+                height="32"
+                rx="3"
+              />
+              <text class="w-ph" x="255" y="152">Digite seu nome_usuario</text>
+              <text class="w-err" x="245" y="178">
+                Informe um nome_usuario com no mínimo 3 caracteres.
+              </text>
+              <rect
+                class="w-bg"
+                x="245"
+                y="192"
+                width="270"
+                height="32"
+                rx="3"
+              />
+              <text class="w-ph" x="255" y="212">Digite sua senha</text>
+              <text class="w-err" x="245" y="238">Informe a senha.</text>
+              <text class="w-err" x="380" y="270" text-anchor="middle">
+                Usuário não encontrado ou senha incorreta
+              </text>
+              <rect
+                class="w-bg2"
+                x="245"
+                y="290"
+                width="125"
+                height="32"
+                rx="3"
+              />
+              <text class="w-txt" x="307" y="310" text-anchor="middle">
+                Cancelar
+              </text>
+              <rect
+                class="w-btn"
+                x="390"
+                y="290"
+                width="125"
+                height="32"
+                rx="3"
+              />
+              <text class="w-btnt" x="452" y="310" text-anchor="middle">
+                Login
+              </text>
+              <rect
+                class="w-tag"
+                x="190"
+                y="84"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="200.4" y="93.5" text-anchor="middle">
+                C1
+              </text>
+              <rect
+                class="w-tag"
+                x="190"
+                y="142"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="200.4" y="151.5" text-anchor="middle">
+                C2
+              </text>
+              <rect
+                class="w-tag"
+                x="190"
+                y="202"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="200.4" y="211.5" text-anchor="middle">
+                C3
+              </text>
+              <rect
+                class="w-tag"
+                x="190"
+                y="297"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="200.4" y="306.5" text-anchor="middle">
+                C4
+              </text>
+              <rect
+                class="w-tag"
+                x="548"
+                y="297"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="558.4" y="306.5" text-anchor="middle">
+                C5
+              </text>
+              <rect
+                class="w-tag"
+                x="548"
+                y="84"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="558.4" y="93.5" text-anchor="middle">
+                B1
+              </text>
+            </svg>
+          </figure>
+          <figure>
+            <figcaption>
+              Wireframe 3 — Administrador logado — menu lateral do perfil (Seção
+              D)
+            </figcaption>
+            <svg
+              viewBox="-1 -1 762 498"
+              width="100%"
+              role="img"
+              aria-label="Wireframe 3: administrador logado com menu lateral de perfil"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect class="w-frame" x="0" y="0" width="760" height="496" />
+              <rect class="w-box" x="0" y="0" width="760" height="64" />
+              <circle class="w-img" cx="40" cy="32" r="18" />
+              <text class="w-sm" x="40" y="35" text-anchor="middle">foto</text>
+              <text class="w-b" x="68" y="27">@curador1</text>
+              <rect class="w-btn" x="68" y="35" width="64" height="18" rx="2" />
+              <text class="w-btnt" x="100" y="47" text-anchor="middle">
+                Ver Perfil
+              </text>
+              <text class="w-logo" x="380" y="40" text-anchor="middle">
+                StreamFlix
+              </text>
+              <rect
+                class="w-btn"
+                x="680"
+                y="21"
+                width="60"
+                height="22"
+                rx="2"
+              />
+              <text class="w-btnt" x="710" y="36" text-anchor="middle">
+                Logout
+              </text>
+              <rect
+                class="w-bg"
+                x="180"
+                y="84"
+                width="400"
+                height="32"
+                rx="16"
+              />
+              <text class="w-ph" x="200" y="104">Digite o nome do filme</text>
+              <circle class="w-ic0" cx="554" cy="98" r="5" />
+              <line class="w-ic" x1="558" y1="102" x2="563" y2="107" />
+              <rect
+                class="w-btn"
+                x="45"
+                y="126"
+                width="88"
+                height="22"
+                rx="11"
+              />
+              <text class="w-btnt" x="89" y="141" text-anchor="middle">
+                Catálogo
+              </text>
+              <rect
+                class="w-bg"
+                x="143"
+                y="126"
+                width="88"
+                height="22"
+                rx="11"
+              />
+              <text class="w-txt" x="187" y="141" text-anchor="middle">
+                Minha Lista
+              </text>
+              <rect class="w-img" x="45" y="160" width="210" height="96" />
+              <line class="w-x" x1="45" y1="160" x2="255" y2="256" />
+              <line class="w-x" x1="45" y1="256" x2="255" y2="160" />
+              <circle class="w-bg" cx="237" cy="178" r="9" />
+              <path class="w-ic" d="M233 178 L236 181 L241 175" />
+              <rect class="w-bg" x="45" y="256" width="210" height="30" />
+              <text class="w-b" x="53" y="275">Interestelar</text>
+              <path
+                class="w-hr"
+                transform="translate(203 264) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="221" y="275">24</text>
+              <rect class="w-img" x="275" y="160" width="210" height="96" />
+              <line class="w-x" x1="275" y1="160" x2="485" y2="256" />
+              <line class="w-x" x1="275" y1="256" x2="485" y2="160" />
+              <circle class="w-bg" cx="467" cy="178" r="9" />
+              <path class="w-ic" d="M463 178 L466 181 L471 175" />
+              <rect class="w-bg" x="275" y="256" width="210" height="30" />
+              <text class="w-b" x="283" y="275">Cidade de Deus</text>
+              <path
+                class="w-ho"
+                transform="translate(433 264) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="451" y="275">18</text>
+              <rect class="w-img" x="505" y="160" width="210" height="96" />
+              <line class="w-x" x1="505" y1="160" x2="715" y2="256" />
+              <line class="w-x" x1="505" y1="256" x2="715" y2="160" />
+              <circle class="w-bg" cx="697" cy="178" r="9" />
+              <line class="w-ic" x1="693" y1="178" x2="701" y2="178" />
+              <line class="w-ic" x1="697" y1="174" x2="697" y2="182" />
+              <rect class="w-bg" x="505" y="256" width="210" height="30" />
+              <text class="w-b" x="513" y="275">Parasita</text>
+              <path
+                class="w-hr"
+                transform="translate(663 264) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="681" y="275">31</text>
+              <rect class="w-img" x="45" y="302" width="210" height="96" />
+              <line class="w-x" x1="45" y1="302" x2="255" y2="398" />
+              <line class="w-x" x1="45" y1="398" x2="255" y2="302" />
+              <circle class="w-bg" cx="237" cy="320" r="9" />
+              <line class="w-ic" x1="233" y1="320" x2="241" y2="320" />
+              <line class="w-ic" x1="237" y1="316" x2="237" y2="324" />
+              <rect class="w-bg" x="45" y="398" width="210" height="30" />
+              <text class="w-b" x="53" y="417">Wall-E</text>
+              <path
+                class="w-ho"
+                transform="translate(203 406) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="221" y="417">12</text>
+              <rect class="w-img" x="275" y="302" width="210" height="96" />
+              <line class="w-x" x1="275" y1="302" x2="485" y2="398" />
+              <line class="w-x" x1="275" y1="398" x2="485" y2="302" />
+              <circle class="w-bg" cx="467" cy="320" r="9" />
+              <line class="w-ic" x1="463" y1="320" x2="471" y2="320" />
+              <line class="w-ic" x1="467" y1="316" x2="467" y2="324" />
+              <rect class="w-bg" x="275" y="398" width="210" height="30" />
+              <text class="w-b" x="283" y="417">Clube da Luta</text>
+              <path
+                class="w-ho"
+                transform="translate(433 406) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="451" y="417">9</text>
+              <rect class="w-img" x="505" y="302" width="210" height="96" />
+              <line class="w-x" x1="505" y1="302" x2="715" y2="398" />
+              <line class="w-x" x1="505" y1="398" x2="715" y2="302" />
+              <circle class="w-bg" cx="697" cy="320" r="9" />
+              <line class="w-ic" x1="693" y1="320" x2="701" y2="320" />
+              <line class="w-ic" x1="697" y1="316" x2="697" y2="324" />
+              <rect class="w-bg" x="505" y="398" width="210" height="30" />
+              <text class="w-b" x="513" y="417">Amélie</text>
+              <path
+                class="w-ho"
+                transform="translate(663 406) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="681" y="417">15</text>
+              <rect class="w-dark" x="0" y="452" width="760" height="44" />
+              <text class="w-wt" x="16" y="478">StreamFlix</text>
+              <text class="w-wt" x="744" y="478" text-anchor="end">
+                Copyright 2026-2027
+              </text>
+              <circle class="w-ci" cx="335" cy="474" r="10" />
+              <text class="w-wts" x="335" y="477" text-anchor="middle">ig</text>
+              <circle class="w-ci" cx="365" cy="474" r="10" />
+              <text class="w-wts" x="365" y="477" text-anchor="middle">tt</text>
+              <circle class="w-ci" cx="395" cy="474" r="10" />
+              <text class="w-wts" x="395" y="477" text-anchor="middle">in</text>
+              <circle class="w-ci" cx="425" cy="474" r="10" />
+              <text class="w-wts" x="425" y="477" text-anchor="middle">yt</text>
+              <rect class="w-ov" x="260" y="64" width="500" height="388" />
+              <rect class="w-bg" x="0" y="64" width="260" height="388" />
+              <line class="w-ic" x1="233" y1="79" x2="243" y2="89" />
+              <line class="w-ic" x1="233" y1="89" x2="243" y2="79" />
+              <circle class="w-img" cx="40" cy="118" r="22" />
+              <text class="w-sm" x="40" y="121" text-anchor="middle">foto</text>
+              <text class="w-b" x="72" y="114">@curador1</text>
+              <text class="w-sm" x="72" y="128">administrador</text>
+              <text class="w-big" x="20" y="186">128 Likes</text>
+              <text class="w-big" x="20" y="224">7 Filmes</text>
+              <line class="w-bd" x1="20" y1="250" x2="240" y2="250" />
+              <line class="w-bd" x1="20" y1="292" x2="240" y2="292" />
+              <text class="w-b" x="130" y="276" text-anchor="middle">
+                Seus filmes
+              </text>
+              <rect
+                class="w-tag"
+                x="140"
+                y="13"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="150.4" y="22.5" text-anchor="middle">
+                D1
+              </text>
+              <rect
+                class="w-tag"
+                x="644"
+                y="24"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="654.4" y="33.5" text-anchor="middle">
+                D3
+              </text>
+              <rect
+                class="w-tag"
+                x="590"
+                y="92"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="600.4" y="101.5" text-anchor="middle">
+                D4
+              </text>
+              <rect
+                class="w-tag"
+                x="268"
+                y="129"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="278.4" y="138.5" text-anchor="middle">
+                D5
+              </text>
+              <rect
+                class="w-tag"
+                x="385"
+                y="266"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="395.4" y="275.5" text-anchor="middle">
+                D6
+              </text>
+              <rect
+                class="w-tag"
+                x="430"
+                y="164"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="440.4" y="173.5" text-anchor="middle">
+                D7
+              </text>
+              <rect
+                class="w-tag"
+                x="6"
+                y="70"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="16.4" y="79.5" text-anchor="middle">
+                D2
+              </text>
+            </svg>
+          </figure>
+          <figure>
+            <figcaption>
+              Wireframe 4 — Administrador — “Seus filmes”: cadastro e lista
+              (Seção E)
+            </figcaption>
+            <svg
+              viewBox="-1 -1 762 498"
+              width="100%"
+              role="img"
+              aria-label="Wireframe 4: área Seus filmes com cadastro e lista de filmes"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect class="w-frame" x="0" y="0" width="760" height="496" />
+              <rect class="w-box" x="0" y="0" width="760" height="64" />
+              <circle class="w-img" cx="40" cy="32" r="18" />
+              <text class="w-sm" x="40" y="35" text-anchor="middle">foto</text>
+              <text class="w-b" x="68" y="27">@curador1</text>
+              <rect class="w-btn" x="68" y="35" width="64" height="18" rx="2" />
+              <text class="w-btnt" x="100" y="47" text-anchor="middle">
+                Ver Perfil
+              </text>
+              <text class="w-logo" x="380" y="40" text-anchor="middle">
+                StreamFlix
+              </text>
+              <rect
+                class="w-btn"
+                x="680"
+                y="21"
+                width="60"
+                height="22"
+                rx="2"
+              />
+              <text class="w-btnt" x="710" y="36" text-anchor="middle">
+                Logout
+              </text>
+              <rect class="w-bg" x="45" y="76" width="88" height="22" rx="11" />
+              <text class="w-txt" x="89" y="91" text-anchor="middle">
+                Catálogo
+              </text>
+              <rect
+                class="w-bg"
+                x="143"
+                y="76"
+                width="88"
+                height="22"
+                rx="11"
+              />
+              <text class="w-txt" x="187" y="91" text-anchor="middle">
+                Minha Lista
+              </text>
+              <rect
+                class="w-bg"
+                x="40"
+                y="112"
+                width="330"
+                height="300"
+                rx="3"
+              />
+              <text class="w-h2" x="56" y="136">Cadastro de Filme</text>
+              <text class="w-b" x="56" y="160">Título do Filme</text>
+              <rect
+                class="w-bg"
+                x="56"
+                y="166"
+                width="298"
+                height="28"
+                rx="3"
+              />
+              <text class="w-ph" x="64" y="184">Ex.: Interestelar</text>
+              <text class="w-err" x="56" y="208">Campo obrigatório.</text>
+              <text class="w-b" x="56" y="228">Gênero</text>
+              <rect
+                class="w-bg"
+                x="56"
+                y="234"
+                width="298"
+                height="28"
+                rx="3"
+              />
+              <text class="w-ph" x="64" y="252">Ex.: Ficção Científica</text>
+              <text class="w-err" x="56" y="276">Campo obrigatório.</text>
+              <text class="w-b" x="56" y="296">Capa</text>
+              <rect
+                class="w-bg2"
+                x="56"
+                y="302"
+                width="110"
+                height="26"
+                rx="3"
+              />
+              <text class="w-txt" x="111" y="319" text-anchor="middle">
+                Escolher arquivo
+              </text>
+              <text class="w-sm" x="176" y="319">Nenhum arquivo escolhido</text>
+              <text class="w-err" x="56" y="344">
+                Selecione uma imagem JPG, JPEG, PNG, GIF ou WEBP.
+              </text>
+              <rect
+                class="w-btn"
+                x="56"
+                y="366"
+                width="298"
+                height="30"
+                rx="3"
+              />
+              <text class="w-btnt" x="205" y="386" text-anchor="middle">
+                Cadastrar
+              </text>
+              <rect
+                class="w-bg"
+                x="400"
+                y="112"
+                width="320"
+                height="300"
+                rx="3"
+              />
+              <text class="w-h2" x="416" y="136">Filmes cadastrados</text>
+              <line class="w-line" x1="400" y1="150" x2="720" y2="150" />
+              <text class="w-b" x="416" y="179">Interestelar</text>
+              <path
+                class="w-tr"
+                d="M690 170 h14 M694 170 v-3 h6 v3 M692 170 l1 13 h8 l1 -13 M695 173 v7 M699 173 v7"
+              />
+              <line class="w-line" x1="400" y1="200" x2="720" y2="200" />
+              <text class="w-b" x="416" y="229">Cidade de Deus</text>
+              <path
+                class="w-tr"
+                d="M690 220 h14 M694 220 v-3 h6 v3 M692 220 l1 13 h8 l1 -13 M695 223 v7 M699 223 v7"
+              />
+              <line class="w-line" x1="400" y1="250" x2="720" y2="250" />
+              <text class="w-b" x="416" y="279">Parasita</text>
+              <path
+                class="w-tr"
+                d="M690 270 h14 M694 270 v-3 h6 v3 M692 270 l1 13 h8 l1 -13 M695 273 v7 M699 273 v7"
+              />
+              <line class="w-line" x1="400" y1="300" x2="720" y2="300" />
+              <text class="w-b" x="416" y="329">Wall-E</text>
+              <path
+                class="w-tr"
+                d="M690 320 h14 M694 320 v-3 h6 v3 M692 320 l1 13 h8 l1 -13 M695 323 v7 M699 323 v7"
+              />
+              <line class="w-line" x1="400" y1="350" x2="720" y2="350" />
+              <text class="w-b" x="416" y="379">Clube da Luta</text>
+              <path
+                class="w-tr"
+                d="M690 370 h14 M694 370 v-3 h6 v3 M692 370 l1 13 h8 l1 -13 M695 373 v7 M699 373 v7"
+              />
+              <rect class="w-dark" x="0" y="452" width="760" height="44" />
+              <text class="w-wt" x="16" y="478">StreamFlix</text>
+              <text class="w-wt" x="744" y="478" text-anchor="end">
+                Copyright 2026-2027
+              </text>
+              <circle class="w-ci" cx="335" cy="474" r="10" />
+              <text class="w-wts" x="335" y="477" text-anchor="middle">ig</text>
+              <circle class="w-ci" cx="365" cy="474" r="10" />
+              <text class="w-wts" x="365" y="477" text-anchor="middle">tt</text>
+              <circle class="w-ci" cx="395" cy="474" r="10" />
+              <text class="w-wts" x="395" y="477" text-anchor="middle">in</text>
+              <circle class="w-ci" cx="425" cy="474" r="10" />
+              <text class="w-wts" x="425" y="477" text-anchor="middle">yt</text>
+              <rect
+                class="w-tag"
+                x="140"
+                y="13"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="150.4" y="22.5" text-anchor="middle">
+                D1
+              </text>
+              <rect
+                class="w-tag"
+                x="644"
+                y="24"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="654.4" y="33.5" text-anchor="middle">
+                D3
+              </text>
+              <rect
+                class="w-tag"
+                x="240"
+                y="79"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="250.4" y="88.5" text-anchor="middle">
+                D5
+              </text>
+              <rect
+                class="w-tag"
+                x="14"
+                y="166"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="24.4" y="175.5" text-anchor="middle">
+                E1
+              </text>
+              <rect
+                class="w-tag"
+                x="14"
+                y="234"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="24.4" y="243.5" text-anchor="middle">
+                E2
+              </text>
+              <rect
+                class="w-tag"
+                x="14"
+                y="302"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="24.4" y="311.5" text-anchor="middle">
+                E3
+              </text>
+              <rect
+                class="w-tag"
+                x="14"
+                y="372"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="24.4" y="381.5" text-anchor="middle">
+                E4
+              </text>
+              <rect
+                class="w-tag"
+                x="724"
+                y="120"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="734.4" y="129.5" text-anchor="middle">
+                E5
+              </text>
+            </svg>
+          </figure>
+          <figure>
+            <figcaption>
+              Wireframe 5 — Usuário comum logado — aba “Minha Lista” (Seção D)
+            </figcaption>
+            <svg
+              viewBox="-1 -1 762 498"
+              width="100%"
+              role="img"
+              aria-label="Wireframe 5: usuário comum logado na aba Minha Lista"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect class="w-frame" x="0" y="0" width="760" height="496" />
+              <rect class="w-box" x="0" y="0" width="760" height="64" />
+              <circle class="w-img" cx="40" cy="32" r="18" />
+              <text class="w-sm" x="40" y="35" text-anchor="middle">foto</text>
+              <text class="w-b" x="68" y="27">@usuario1</text>
+              <rect class="w-dis" x="68" y="35" width="64" height="18" rx="2" />
+              <text class="w-dist" x="100" y="47" text-anchor="middle">
+                Ver Perfil
+              </text>
+              <text class="w-logo" x="380" y="40" text-anchor="middle">
+                StreamFlix
+              </text>
+              <rect
+                class="w-btn"
+                x="680"
+                y="21"
+                width="60"
+                height="22"
+                rx="2"
+              />
+              <text class="w-btnt" x="710" y="36" text-anchor="middle">
+                Logout
+              </text>
+              <rect
+                class="w-bg"
+                x="180"
+                y="84"
+                width="400"
+                height="32"
+                rx="16"
+              />
+              <text class="w-ph" x="200" y="104">Digite o nome do filme</text>
+              <circle class="w-ic0" cx="554" cy="98" r="5" />
+              <line class="w-ic" x1="558" y1="102" x2="563" y2="107" />
+              <rect
+                class="w-bg"
+                x="45"
+                y="126"
+                width="88"
+                height="22"
+                rx="11"
+              />
+              <text class="w-txt" x="89" y="141" text-anchor="middle">
+                Catálogo
+              </text>
+              <rect
+                class="w-btn"
+                x="143"
+                y="126"
+                width="88"
+                height="22"
+                rx="11"
+              />
+              <text class="w-btnt" x="187" y="141" text-anchor="middle">
+                Minha Lista
+              </text>
+              <rect class="w-img" x="45" y="160" width="210" height="96" />
+              <line class="w-x" x1="45" y1="160" x2="255" y2="256" />
+              <line class="w-x" x1="45" y1="256" x2="255" y2="160" />
+              <circle class="w-bg" cx="237" cy="178" r="9" />
+              <path class="w-ic" d="M233 178 L236 181 L241 175" />
+              <rect class="w-bg" x="45" y="256" width="210" height="30" />
+              <text class="w-b" x="53" y="275">Interestelar</text>
+              <path
+                class="w-hr"
+                transform="translate(203 264) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="221" y="275">24</text>
+              <rect class="w-img" x="275" y="160" width="210" height="96" />
+              <line class="w-x" x1="275" y1="160" x2="485" y2="256" />
+              <line class="w-x" x1="275" y1="256" x2="485" y2="160" />
+              <circle class="w-bg" cx="467" cy="178" r="9" />
+              <path class="w-ic" d="M463 178 L466 181 L471 175" />
+              <rect class="w-bg" x="275" y="256" width="210" height="30" />
+              <text class="w-b" x="283" y="275">Parasita</text>
+              <path
+                class="w-ho"
+                transform="translate(433 264) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="451" y="275">31</text>
+              <rect class="w-img" x="505" y="160" width="210" height="96" />
+              <line class="w-x" x1="505" y1="160" x2="715" y2="256" />
+              <line class="w-x" x1="505" y1="256" x2="715" y2="160" />
+              <circle class="w-bg" cx="697" cy="178" r="9" />
+              <path class="w-ic" d="M693 178 L696 181 L701 175" />
+              <rect class="w-bg" x="505" y="256" width="210" height="30" />
+              <text class="w-b" x="513" y="275">Clube da Luta</text>
+              <path
+                class="w-hr"
+                transform="translate(663 264) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="681" y="275">9</text>
+              <rect class="w-img" x="45" y="302" width="210" height="96" />
+              <line class="w-x" x1="45" y1="302" x2="255" y2="398" />
+              <line class="w-x" x1="45" y1="398" x2="255" y2="302" />
+              <circle class="w-bg" cx="237" cy="320" r="9" />
+              <path class="w-ic" d="M233 320 L236 323 L241 317" />
+              <rect class="w-bg" x="45" y="398" width="210" height="30" />
+              <text class="w-b" x="53" y="417">Amélie</text>
+              <path
+                class="w-ho"
+                transform="translate(203 406) scale(0.5833)"
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+              />
+              <text class="w-txt" x="221" y="417">15</text>
+              <rect class="w-dark" x="0" y="452" width="760" height="44" />
+              <text class="w-wt" x="16" y="478">StreamFlix</text>
+              <text class="w-wt" x="744" y="478" text-anchor="end">
+                Copyright 2026-2027
+              </text>
+              <circle class="w-ci" cx="335" cy="474" r="10" />
+              <text class="w-wts" x="335" y="477" text-anchor="middle">ig</text>
+              <circle class="w-ci" cx="365" cy="474" r="10" />
+              <text class="w-wts" x="365" y="477" text-anchor="middle">tt</text>
+              <circle class="w-ci" cx="395" cy="474" r="10" />
+              <text class="w-wts" x="395" y="477" text-anchor="middle">in</text>
+              <circle class="w-ci" cx="425" cy="474" r="10" />
+              <text class="w-wts" x="425" y="477" text-anchor="middle">yt</text>
+              <rect
+                class="w-tag"
+                x="140"
+                y="13"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="150.4" y="22.5" text-anchor="middle">
+                D1
+              </text>
+              <rect
+                class="w-tag"
+                x="138"
+                y="37"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="148.4" y="46.5" text-anchor="middle">
+                D2
+              </text>
+              <rect
+                class="w-tag"
+                x="644"
+                y="24"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="654.4" y="33.5" text-anchor="middle">
+                D3
+              </text>
+              <rect
+                class="w-tag"
+                x="140"
+                y="92"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="150.4" y="101.5" text-anchor="middle">
+                D4
+              </text>
+              <rect
+                class="w-tag"
+                x="240"
+                y="129"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="250.4" y="138.5" text-anchor="middle">
+                D5
+              </text>
+              <rect
+                class="w-tag"
+                x="150"
+                y="266"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="160.4" y="275.5" text-anchor="middle">
+                D6
+              </text>
+              <rect
+                class="w-tag"
+                x="150"
+                y="164"
+                width="20.8"
+                height="13"
+                rx="2"
+              />
+              <text class="w-tagt" x="160.4" y="173.5" text-anchor="middle">
+                D7
+              </text>
+            </svg>
+          </figure>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="capacidades-header">ESPECIFICAÇÕES FUNCIONAIS</div>
+        <div class="capacidades-content cc">
+          <div class="sub" style="margin-top: 0">
+            A — Especificação da página index
+          </div>
+          <table class="t">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Elemento</th>
+                <th>Requisitos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="c"><strong>A1.1</strong></td>
+                <td class="b">Cabeçalho — Seção usuário</td>
+                <td>
+                  • Foto de perfil <strong>arredondada</strong>.<br />• Nome do
+                  usuário <code>@StreamFlix</code> (exibido enquanto não houver
+                  login).<br />• Botão <strong>“Ver Perfil”</strong>: fundo
+                  <code>#000</code>, texto <code>#FFF</code>,
+                  <strong>desabilitado</strong>.
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>A1.2</strong></td>
+                <td class="b">Cabeçalho — Seção empresa</td>
+                <td>• Nome <strong>“StreamFlix”</strong>, centralizado.</td>
+              </tr>
+              <tr>
+                <td class="c"><strong>A1.3</strong></td>
+                <td class="b">Cabeçalho — Botão de login</td>
+                <td>
+                  • Fundo <code>#000</code>; texto <code>#FFF</code>.<br />• Ao
+                  clicar, abre o popup/modal de autenticação (Seção C).
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>A2.1</strong></td>
+                <td class="b">Corpo — Campo de busca</td>
+                <td>
+                  • Placeholder:
+                  <em>“Digite o nome do filme... ex: Interestelar”</em>.<br />•
+                  Ícone <code>lupa.svg</code> à direita.
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>A2.2</strong></td>
+                <td class="b">Corpo — Galeria de filmes</td>
+                <td>
+                  • Carregamento dinâmico das capas e informações associadas.<br />•
+                  <strong>Três colunas</strong> por linha.<br />• Cada filme
+                  exibe: capa; título do filme; contador de curtidas com ícone
+                  <code>coracao.svg</code> (quantidade consultada e atualizada
+                  em tempo real); botão <code>mais.svg</code> (Minha Lista)
+                  sobre o canto superior direito da capa.
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>A2.3</strong></td>
+                <td class="b">Corpo — Efeito hover (tooltip)</td>
+                <td>
+                  • Ao passar o mouse sobre a capa, exibir:<br />&nbsp;&nbsp;–
+                  Administrador responsável pelo cadastro (exemplo:
+                  <em>“Cadastrado por: @curador1”</em>);<br />&nbsp;&nbsp;–
+                  Gênero do filme (exemplo:
+                  <em>“Gênero: Ficção Científica”</em>).
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>A3</strong></td>
+                <td class="b">Rodapé</td>
+                <td>
+                  • Fundo <code>#000</code>; texto <code>#FFF</code>.<br />•
+                  Nome da empresa <strong>“StreamFlix”</strong> à esquerda.<br />•
+                  Texto <strong>“Copyright 2026-2027”</strong> à direita.<br />•
+                  Ícones de redes sociais (<code>instagram.svg</code>,
+                  <code>tiktok.svg</code>, <code>linkedIn.svg</code>,
+                  <code>youtube.svg</code>) ao centro.
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>A4</strong></td>
+                <td class="b">Carregamento de página</td>
+                <td>
+                  • Atualização automática: nenhuma ação do usuário pode exigir
+                  o recarregamento da página.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="sub">B — Especificação do usuário não logado</div>
+          <table class="t">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Elemento</th>
+                <th>Requisitos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="c"><strong>B1</strong></td>
+                <td class="b">Popup/modal de login</td>
+                <td>
+                  • O modal de login (Seção C) será exibido quando o usuário
+                  <strong>não autenticado</strong> clicar em:<br />&nbsp;&nbsp;–
+                  botão <strong>“Ver Perfil”</strong>;<br />&nbsp;&nbsp;– botão
+                  de <strong>curtida</strong> (coração);<br />&nbsp;&nbsp;–
+                  botão de
+                  <strong>Minha Lista</strong>
+                  (<code>mais.svg</code>);<br />&nbsp;&nbsp;–
+                  <strong>campo de pesquisa</strong> de filmes.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="sub">C — Especificação do login</div>
+          <table class="t">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Elemento</th>
+                <th>Requisitos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="c"><strong>C1</strong></td>
+                <td class="b">Formulário de login</td>
+                <td>
+                  • Centralizado na tela e <strong>sobreposto</strong> ao
+                  restante da interface.<br />• Título
+                  <strong>“Login”</strong> centralizado no topo.<br />• Ícone de
+                  fechar (X) no canto superior direito (fecha o modal).
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>C2</strong></td>
+                <td class="b">Campo Nome de usuário</td>
+                <td>
+                  • Placeholder: <em>“Digite seu nome_usuario”</em>.<br />•
+                  Validação: obrigatório, mínimo de
+                  <strong>3 caracteres</strong>, sem espaços.<br />• Feedback de
+                  erro (vazio ou menor que 3 caracteres):
+                  <em>“Informe um nome_usuario com no mínimo 3 caracteres.”</em>
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>C3</strong></td>
+                <td class="b">Campo Senha</td>
+                <td>
+                  • Placeholder: <em>“Digite sua senha”</em>.<br />• Campo do
+                  tipo <code>password</code>.<br />• Validação: obrigatória, não
+                  pode estar vazia.<br />• Feedback de erro:
+                  <em>“Informe a senha.”</em>
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>C4</strong></td>
+                <td class="b">Botão “Cancelar”</td>
+                <td>
+                  • Sem cor de fundo; bordas na cor <code>#000</code>.<br />• Ao
+                  clicar, o modal é fechado.
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>C5</strong></td>
+                <td class="b">Botão “Login”</td>
+                <td>
+                  • Fundo <code>#000</code>; texto <code>#FFF</code>.<br />•
+                  Validação das credenciais
+                  <strong>no banco de dados</strong>:<br />&nbsp;&nbsp;–
+                  Inválidas: mensagem
+                  <em>“Usuário não encontrado ou senha incorreta”</em
+                  >.<br />&nbsp;&nbsp;– Válidas: o modal fecha automaticamente e
+                  a interface é atualizada exibindo o usuário autenticado (Seção
+                  D).
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="sub">D — Especificação do usuário logado</div>
+          <table class="t">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Elemento</th>
+                <th>Requisitos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="c"><strong>D1</strong></td>
+                <td class="b">Sessão do usuário</td>
+                <td>
+                  • Cabeçalho atualizado com
+                  <strong>nome</strong> (<code>@nome_usuario</code>) e
+                  <strong>fotografia</strong> do usuário logado.<br />• O botão
+                  “Login” é substituído pelo botão <strong>“Logout”</strong>.
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>D2</strong></td>
+                <td class="b">Botão “Ver Perfil”</td>
+                <td>
+                  • Usuário tipo <code>usuario</code>: botão
+                  <strong>desabilitado</strong>.<br />• Usuário tipo
+                  <code>administrador</code>: botão
+                  <strong>habilitado</strong>.<br />&nbsp;&nbsp;– Ao clicar,
+                  aparece um
+                  <strong>menu LATERAL</strong>
+                  com:<br />&nbsp;&nbsp;&nbsp;&nbsp;· Número total de curtidas
+                  recebidas pelos filmes do administrador, seguido da palavra
+                  <strong>“Likes”</strong>;<br />&nbsp;&nbsp;&nbsp;&nbsp;·
+                  Número total de filmes cadastrados pelo administrador, seguido
+                  da palavra
+                  <strong>“Filmes”</strong>;<br />&nbsp;&nbsp;&nbsp;&nbsp;·
+                  Ícone de fechar (X) no canto superior direito;<br />&nbsp;&nbsp;&nbsp;&nbsp;·
+                  Botão <strong>“Seus filmes”</strong>: destacado com bordas
+                  superior e inferior; ao clicar, carrega os filmes do
+                  administrador logado e o formulário de cadastro (Seção E).
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>D3</strong></td>
+                <td class="b">Botão “Logout”</td>
+                <td>
+                  • Redireciona para a página inicial (usuário volta ao estado
+                  não logado).
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>D4</strong></td>
+                <td class="b">Campo de busca</td>
+                <td>
+                  • Placeholder: <em>“Digite o nome do filme”</em>.<br />•
+                  Validação: obrigatório, mínimo de 2 caracteres.<br />• Filme
+                  não existente: mensagem
+                  <em>“Filme não encontrado”</em>.<br />• Filme existente:
+                  galeria atualizada exibindo os filmes cujo título contém o
+                  termo pesquisado.
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>D5</strong></td>
+                <td class="b">Filtro Catálogo / Minha Lista</td>
+                <td>
+                  • Dois botões abaixo da busca, visíveis
+                  <strong>somente</strong> para usuário logado:
+                  <strong>“Catálogo”</strong> (padrão) e
+                  <strong>“Minha Lista”</strong>.<br />• “Minha Lista” carrega
+                  apenas os filmes salvos pelo usuário logado; se vazia:
+                  <em>“Sua lista está vazia”</em>.<br />• “Catálogo” retorna à
+                  galeria geral (inclusive a partir da visão “Seus filmes”).
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>D6</strong></td>
+                <td class="b">Interação com curtida</td>
+                <td>
+                  • Já curtido: ícone <code>coracao.svg</code> na cor
+                  <code>#F00</code>.<br />• Nova curtida: ícone
+                  <code>#F00</code> e contador incrementado em 1;
+                  <strong>máximo de 1 curtida por filme</strong> para cada
+                  usuário.<br />• Remoção de curtida (novo clique): ícone
+                  <code>#000</code> e contador decrementado em 1;
+                  <strong>somente</strong> curtidas do próprio usuário.
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>D7</strong></td>
+                <td class="b">Interação com Minha Lista</td>
+                <td>
+                  • Filme fora da lista: ícone <code>mais.svg</code>. Filme na
+                  lista: ícone <code>check.svg</code>.<br />• Clique alterna
+                  entre adicionar e remover;
+                  <strong>máximo de 1 registro por filme</strong> na lista de
+                  cada usuário; remoção <strong>somente</strong> de itens do
+                  próprio usuário.<br />• Na visão “Minha Lista”, ao remover um
+                  item o card desaparece da galeria imediatamente.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="sub">
+            E — Especificação do registro de filmes (administrador)
+          </div>
+          <table class="t">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Elemento</th>
+                <th>Requisitos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="c"><strong>E1</strong></td>
+                <td class="b">Campo “Título do Filme”</td>
+                <td>
+                  • Rótulo: <strong>“Título do Filme”</strong>.<br />•
+                  Placeholder: entrada de texto livre (ex.:
+                  <em>Interestelar</em>).<br />• Validação: campo obrigatório.
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>E2</strong></td>
+                <td class="b">Campo “Gênero”</td>
+                <td>
+                  • Rótulo: <strong>“Gênero”</strong>.<br />• Placeholder:
+                  entrada de texto livre (ex.:
+                  <em>Ficção Científica</em>).<br />• Validação: campo
+                  obrigatório.
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>E3</strong></td>
+                <td class="b">Campo “Capa”</td>
+                <td>
+                  • Rótulo: <strong>“Capa”</strong>.<br />• Botão de upload com
+                  o texto <strong>“Escolher arquivo”</strong>.<br />• Validação:
+                  obrigatório; formatos aceitos
+                  <strong>JPG, JPEG, PNG, GIF e WEBP</strong>.<br />• Sem
+                  arquivo selecionado: mensagem
+                  <em>“Nenhum arquivo escolhido”</em>. Com arquivo: o nome do
+                  arquivo no lugar da mensagem.<br />• Formato inválido:
+                  mensagem de erro específica para o campo.
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>E4</strong></td>
+                <td class="b">Botão “Cadastrar”</td>
+                <td>
+                  • Todos os campos válidos: cadastrar o filme no banco de
+                  dados, vinculado ao administrador logado, e atualizar a lista
+                  sem recarregar a página.<br />• Algum campo inválido:
+                  <strong>mensagens de erro específicas</strong> para cada
+                  campo.
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>E5</strong></td>
+                <td class="b">Filmes cadastrados</td>
+                <td>
+                  • Exibir o título de cada filme cadastrado pelo administrador
+                  (ex.: <em>“Interestelar”</em>) e um
+                  <strong>ícone de lixeira vermelha</strong>
+                  (<code>lixeira.svg</code>).<br />• Ao clicar na lixeira, o
+                  filme é excluído do banco de dados — incluindo as curtidas e
+                  os itens de Minha Lista que o referenciam — e a lista, bem
+                  como os contadores do menu lateral, são atualizados.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="margin-top: 12px; font-size: 10pt">
+            <strong>Fim da prova.</strong> Teste o sistema do início ao fim, com
+            usuário comum e com administrador, e entregue conforme as regras
+            abaixo.
+          </p>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="capacidades-header">REGRAS DA ENTREGA</div>
+        <div class="capacidades-content cc">
+          <div class="aviso">
+            <strong>Regras da entrega</strong><br />
+            • Entregar a pasta do projeto compactada:
+            <code>StreamFlix_NomeSobrenome.zip</code>, com o código-fonte
+            (front-end e back-end).<br />
+            • Incluir o script <code>streamflix_NomeSobrenome.sql</code> com a
+            criação do banco, das tabelas e das constraints e a carga inicial.
+          </div>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="capacidades-header">
+          LISTA DE VERIFICAÇÃO — CRITÉRIOS DE AVALIAÇÃO
+        </div>
+        <div class="capacidades-content" style="padding: 0">
+          <table class="t">
+            <thead>
+              <tr>
+                <th>Critério de Avaliação</th>
+                <th>Capacidade Avaliada</th>
+                <th><div class="c">Atingiu</div></th>
+                <th><div class="c">Parcialmente</div></th>
+                <th><div class="c">Não Atingiu</div></th>
+                <th>Obs.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- CT1 -->
+              <tr>
+                <td>
+                  Implementou a comunicação entre front-end e back-end por
+                  requisições HTTP com métodos adequados (<code>GET</code> para
+                  consulta; <code>POST</code>, <code>PUT</code> e
+                  <code>DELETE</code> para alteração), sem expor dados sensíveis
+                  na URL.
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT1): Aplicar boas práticas de segurança na
+                    comunicação entre os sistemas web.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Restringiu a API a origens e métodos necessários (cabeçalhos
+                  configurados), evitando liberação irrestrita.
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT1): Aplicar boas práticas de segurança na
+                    comunicação entre os sistemas web.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Verificou autenticação e autorização (tipo
+                  <code>usuario</code> ou <code>administrador</code>) em cada
+                  requisição no servidor, e não apenas na interface.
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT1): Aplicar boas práticas de segurança na
+                    comunicação entre os sistemas web.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+
+              <!-- CT2 -->
+              <tr>
+                <td>
+                  Validou e tratou no servidor todos os dados recebidos (login,
+                  busca, cadastro de filme e upload), considerando campos
+                  vazios, tamanhos, formatos e tipos de arquivo permitidos.
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT2): Aplicar técnicas de segurança e tratamento
+                    de dados.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Preveniu <code>SQL Injection</code> utilizando consultas
+                  parametrizadas (<em>prepared statements</em>) em todas as
+                  operações com o banco de dados.
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT2): Aplicar técnicas de segurança e tratamento
+                    de dados.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Protegeu informações sensíveis: a senha não é enviada ao
+                  front-end nem exibida em respostas ou logs, e as mensagens de
+                  erro não revelam detalhes internos do sistema.
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT2): Aplicar técnicas de segurança e tratamento
+                    de dados.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+
+              <!-- CT3 -->
+              <tr>
+                <td>
+                  Executou testes de funcionamento dos fluxos principais (login
+                  válido e inválido, curtir, Minha Lista, busca, cadastro e
+                  exclusão de filme) com usuário comum e com administrador.
+                  <em>(avaliado por observação)</em>
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT3): Executar testes de funcionamento de sistemas
+                    para web. Instalar e configurar banco de dados.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Testou cenários de erro (campos vazios, arquivo inválido,
+                  filme inexistente, credenciais incorretas) e confirmou as
+                  mensagens especificadas. <em>(avaliado por observação)</em>
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT3): Executar testes de funcionamento de sistemas
+                    para web. Instalar e configurar banco de dados.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Instalou e configurou o SGBD (criação do banco, usuário de
+                  acesso e conexão com a aplicação) e executou o script
+                  <code>.sql</code> e a importação dos arquivos
+                  <code>.csv</code> sem erros.
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT3): Executar testes de funcionamento de sistemas
+                    para web. Instalar e configurar banco de dados.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+
+              <!-- CT4 -->
+              <tr>
+                <td>
+                  Executou os testes de forma sistemática, em ordem lógica e a
+                  partir de dados de teste conhecidos (<code>usuarios.csv</code>
+                  e <code>filmes.csv</code>) em um banco recém-criado.
+                  <em>(avaliado por observação)</em>
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT4): Aplicar boas práticas na execução dos
+                    testes.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Comparou o resultado esperado com o obtido e conferiu o efeito
+                  no banco de dados após cada teste (contadores de curtidas,
+                  registros de Minha Lista, exclusão em cascata).
+                  <em>(avaliado por observação)</em>
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT4): Aplicar boas práticas na execução dos
+                    testes.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Repetiu os testes após cada correção (reteste), evitando que
+                  um ajuste quebrasse funcionalidades que já funcionavam.
+                  <em>(avaliado por observação)</em>
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT4): Aplicar boas práticas na execução dos
+                    testes.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+
+              <!-- CT5 -->
+              <tr>
+                <td>
+                  Definiu, antes de testar, quais funcionalidades (Seções A a E)
+                  seriam verificadas, ainda que em anotações simples ou de forma
+                  não documentada. <em>(avaliado por observação)</em>
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT5): Elaborar plano de testes de sistemas para
+                    web.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Previu, para cada cenário, o resultado esperado conforme a
+                  especificação, incluindo cenários positivos e negativos.
+                  <em>(avaliado por observação)</em>
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT5): Elaborar plano de testes de sistemas para
+                    web.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Organizou a ordem de verificação priorizando o essencial
+                  (login, catálogo, curtida e lista, cadastro) e a adaptou
+                  conforme as falhas encontradas.
+                  <em>(avaliado por observação)</em>
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT5): Elaborar plano de testes de sistemas para
+                    web.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+
+              <!-- CT6 -->
+              <tr>
+                <td>
+                  Configurou o acesso da aplicação ao banco com usuário de
+                  privilégios mínimos e senha própria, sem utilizar o
+                  superusuário do SGBD.
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT6): Aplicar boas práticas de segurança da
+                    informação na infraestrutura dos ambientes.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Separou as configurações sensíveis (credenciais do banco,
+                  chaves) do código-fonte, usando variáveis de ambiente ou
+                  arquivo de configuração não exposto ao front-end.
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT6): Aplicar boas práticas de segurança da
+                    informação na infraestrutura dos ambientes.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Protegeu o ambiente de execução: expôs apenas os serviços e
+                  portas necessários, restringiu a pasta de upload (sem execução
+                  de arquivos enviados) e preservou uma cópia de segurança do
+                  banco (script <code>.sql</code>).
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Técnica (CT6): Aplicar boas práticas de segurança da
+                    informação na infraestrutura dos ambientes.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+
+              <!-- CS1 -->
+              <tr>
+                <td>
+                  Identificou e interpretou corretamente as exigências da
+                  especificação (funcionalidades, regras de integridade, textos
+                  e cores), buscando esclarecimento quando algo estava ambíguo.
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Socioemocional (CS1): Reconhecer as exigências requeridas
+                    para a resolução de um problema ou necessidade ou para se
+                    implantar uma melhoria no seu campo de trabalho. Motivar
+                    seus pares para a amabilidade nas relações profissionais,
+                    por meio da prática do diálogo, da empatia, da tolerância,
+                    do altruísmo, da modéstia e da gratidão.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Identificou problemas e necessidades de melhoria durante o
+                  desenvolvimento (tratamento de erros, mensagens claras ao
+                  usuário) e os implantou sem desviar do que foi solicitado.
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Socioemocional (CS1): Reconhecer as exigências requeridas
+                    para a resolução de um problema ou necessidade ou para se
+                    implantar uma melhoria no seu campo de trabalho. Motivar
+                    seus pares para a amabilidade nas relações profissionais,
+                    por meio da prática do diálogo, da empatia, da tolerância,
+                    do altruísmo, da modéstia e da gratidão.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Manteve postura respeitosa e ética durante a avaliação,
+                  seguindo as regras da prova: trabalhou de forma individual,
+                  sem conversar com colegas, sem consultar a internet, material
+                  de apoio ou ferramentas de inteligência artificial, e tratou o
+                  docente com cordialidade ao pedir esclarecimentos.
+                </td>
+                <td style="font-size: 9.5pt">
+                  <strong
+                    >Socioemocional (CS1): Reconhecer as exigências requeridas
+                    para a resolução de um problema ou necessidade ou para se
+                    implantar uma melhoria no seu campo de trabalho. Motivar
+                    seus pares para a amabilidade nas relações profissionais,
+                    por meio da prática do diálogo, da empatia, da tolerância,
+                    do altruísmo, da modéstia e da gratidão.</strong
+                  >
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

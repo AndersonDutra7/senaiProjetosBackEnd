@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prova de Recuperação SAEP - Módulo 01 - Técnico em Informática para Internet</title>
+    <style>
+      :root {
+        --azul: #2e5496;
+        --azul-claro: #e8eef9;
+        --azul-borda: #9bb0d6;
+        --cinza-borda: #d0d7de;
+        --cinza-fundo: #f3f4f6;
+        --alternativa: #c00000;
+        --facil: #28a745;
+        --medio: #f0a500;
+        --dificil: #d9534f;
+        --fonte: Arial, Helvetica, sans-serif;
+        --mono: 'DM Mono', Consolas, 'Courier New', monospace;
+      }
+
+      .prova *,
+      .prova *::before,
+      .prova *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body.prova {
+        font-family: var(--fonte);
+        font-size: 11pt;
+        color: #000;
+        background: #fff;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 15mm;
+      }
+
+      .header-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 14px;
+      }
+      .header-table td {
+        border: 1px solid #000;
+        padding: 3px 6px;
+        vertical-align: middle;
+        font-size: 10pt;
+      }
+      .logo-cell {
+        width: 140px;
+        text-align: center;
+        padding: 8px !important;
+      }
+      .senai-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .senai-brand img {
+        max-width: 120px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+      .senai-brand span {
+        display: block;
+        font-size: 9pt;
+      }
+      .title-cell {
+        text-align: center;
+        font-weight: bold;
+        font-size: 13pt !important;
+        letter-spacing: 1px;
+        padding: 6px !important;
+      }
+      .desemp-cell {
+        width: 90px;
+        text-align: center;
+        font-weight: bold;
+        vertical-align: top !important;
+      }
+      .estudante-row td {
+        font-weight: bold;
+        font-size: 10.5pt !important;
+      }
+      .rotulo {
+        font-weight: bold;
+      }
+      .campo {
+        color: var(--azul);
+        font-style: italic;
+      }
+      .campo.negrito {
+        font-weight: bold;
+      }
+
+      .capacidades-header,
+      .item-header,
+      .gabarito-titulo {
+        background: var(--azul);
+        color: #fff;
+        font-weight: bold;
+        font-size: 12pt;
+        padding: 10px;
+        margin-top: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .capacidades-content,
+      .item-box {
+        border: 1px solid var(--azul);
+        border-top: none;
+        padding: 8px 10px 10px;
+        margin-bottom: 4px;
+      }
+      .capacidades-content p {
+        margin-bottom: 5px;
+        line-height: 1.35;
+      }
+      .capacidades-content p:last-child {
+        margin-bottom: 0;
+      }
+
+      .section-divider {
+        margin: 20px 0;
+        border-top: 3px solid var(--azul);
+        border-bottom: 3px solid var(--azul);
+        padding: 10px 0 8px;
+      }
+      .section-title {
+        font-size: 12.5pt;
+        font-weight: bold;
+        color: var(--azul);
+        text-align: center;
+        line-height: 1.3;
+      }
+
+      .badge {
+        font-size: 8.5pt;
+        font-weight: bold;
+        padding: 3px 10px;
+        border-radius: 4px;
+        color: #fff;
+        line-height: 1;
+        letter-spacing: 0.3px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+      }
+      .badge-facil {
+        background: var(--facil);
+      }
+      .badge-medio {
+        background: var(--medio);
+      }
+      .badge-dificil {
+        background: var(--dificil);
+      }
+
+      .item {
+        break-inside: avoid;
+      }
+      .capacidade,
+      .contexto,
+      .comando,
+      .alternativas {
+        font-size: 10.5pt;
+        line-height: 1.45;
+      }
+      .capacidade,
+      .contexto,
+      .comando {
+        margin-bottom: 8px;
+      }
+      .capacidade::before,
+      .contexto::before,
+      .comando::before,
+      .alternativas::before {
+        display: block;
+        font-weight: bold;
+        font-style: italic;
+        text-decoration: underline;
+        margin: 6px 0 3px;
+      }
+      .capacidade::before {
+        content: 'CAPACIDADE:';
+        margin-top: 0;
+        margin-bottom: 2px;
+      }
+      .contexto::before {
+        content: 'Contexto:';
+      }
+      .comando::before {
+        content: 'Comando:';
+      }
+      .alternativas::before {
+        content: 'Alternativas:';
+        margin-bottom: 6px;
+      }
+
+      .alternativas {
+        list-style: none;
+        counter-reset: alt;
+      }
+      .alternativas > li {
+        counter-increment: alt;
+        color: var(--alternativa);
+        margin: 5px 0 5px 16px;
+        line-height: 1.5;
+      }
+      .alternativas > li::before {
+        content: counter(alt, lower-alpha) ') ';
+        font-weight: bold;
+      }
+      .item code {
+        font-family: var(--mono);
+        font-weight: bold;
+      }
+
+      .afirmativas {
+        list-style: upper-roman;
+        margin: 6px 0 6px 34px !important;
+      }
+      .afirmativas > li {
+        margin-bottom: 3px;
+      }
+
+      .figura {
+        margin: 10px 0 14px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--cinza-borda);
+        background: #fff;
+      }
+      .figura-cab {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 12px;
+        background: var(--cinza-fundo);
+        border-bottom: 1px solid var(--cinza-borda);
+      }
+      .pontos {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #f85149;
+        box-shadow:
+          14px 0 #e3b341,
+          28px 0 #39d353;
+        margin-right: 28px;
+      }
+      .figura-titulo {
+        font-family: var(--mono);
+        font-size: 9pt;
+        color: #333;
+      }
+      .figura-corpo {
+        padding: 8px;
+        overflow-x: auto;
+      }
+      .figura-corpo svg {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+      }
+
+      .figura-codigo {
+        background: #0d1117;
+        border-color: #0d1117;
+      }
+      .figura-codigo .figura-cab {
+        background: #0d1117;
+        border-bottom-color: #f1f1f1;
+      }
+      .figura-codigo .figura-titulo {
+        color: #f1f1f1;
+        font-size: 1rem;
+      }
+      .figura-codigo .figura-corpo {
+        padding: 12px 14px;
+      }
+      .figura-codigo pre {
+        font-family: var(--mono);
+        font-size: 0.95rem;
+        line-height: 1.5;
+        white-space: pre;
+        color: #f1f1f1;
+      }
+      .figura-codigo .kw { color: #ff7b72; }
+      .figura-codigo .fn { color: #d2a8ff; }
+      .figura-codigo .str { color: #a5d6ff; }
+      .figura-codigo .num { color: #6087f2; }
+      .figura-codigo .cmt { color: #8b949e; }
+      .figura-codigo .prop { color: #79c0ff; }
+      .figura-codigo .var { color: #ffa657; }
+
+      .tabela-dados {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 10pt;
+      }
+      .tabela-dados th {
+        background: var(--azul-claro);
+        border: 1px solid var(--azul);
+        padding: 5px 8px;
+        text-align: left;
+      }
+      .tabela-dados td {
+        border: 1px solid var(--azul-borda);
+        padding: 4px 8px;
+      }
+
+      .dg-e { fill: #fff; stroke: var(--azul); stroke-width: 1.2; }
+      .dg-h { fill: var(--azul); }
+      .dg-t { font: bold 12px var(--fonte); fill: #fff; text-anchor: middle; }
+      .dg-a { font: 10px var(--fonte); fill: #000; }
+      .dg-k { font: bold 10px var(--fonte); fill: #000; }
+      .dg-s { stroke: var(--cinza-borda); stroke-width: 1; }
+      .dg-l { stroke: var(--azul); stroke-width: 1.5; fill: none; }
+      .dg-c { fill: #fff; stroke: var(--azul); stroke-width: 1.5; }
+
+      .gabarito-section {
+        margin-top: 28px;
+      }
+      .gabarito-section .gabarito-titulo {
+        margin-top: 0;
+      }
+      .gabarito-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid var(--azul);
+      }
+      .gabarito-table th {
+        background: var(--azul-claro);
+        border: 1px solid var(--azul);
+        padding: 6px;
+        font-size: 10pt;
+        text-align: center;
+      }
+      .gabarito-table td {
+        border: 1px solid var(--azul-borda);
+        padding: 5px;
+        text-align: center;
+        font-size: 10.5pt;
+      }
+      .gabarito-table th:nth-child(1) { width: 15%; }
+      .gabarito-table th:nth-child(2) { width: 25%; }
+      .gabarito-table th:nth-child(3),
+      .gabarito-table th:nth-child(4) { width: 30%; }
+      .resposta-correta {
+        display: inline-block;
+        min-width: 28px;
+        padding: 2px 8px;
+        border: 2px solid var(--azul);
+        border-radius: 50%;
+        font-weight: bold;
+        color: var(--azul);
+      }
+
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      @media print {
+        .page {
+          width: 100%;
+          min-height: 0;
+          margin: 0;
+          padding: 12mm 14mm;
+        }
+        .gabarito-section {
+          break-before: page;
+          margin-top: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="prova">
+    <div class="page">
+      <table class="header-table">
+        <tr>
+          <td class="logo-cell" rowspan="6">
+            <div class="senai-brand">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_sfpOEDmPPoL6K0aQL4qg5SsWL_41ZqhyF7zW1509kA&s=10"
+                alt="Logo SENAI"
+              />
+              <span>Serviço Nacional de Aprendizagem</span>
+            </div>
+          </td>
+          <td class="title-cell">AVALIAÇÃO OBJETIVA — RECUPERAÇÃO</td>
+          <td class="desemp-cell" rowspan="6">Desempenho</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Data:</span>
+            <em class="campo negrito">___/___/______</em>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Avaliador / Docente:</span>
+            <em class="campo negrito">Anderson Raulino Dutra</em>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Curso: </span>
+            <em class="campo negrito">Técnico em Informática para Internet</em>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Unidade Curricular:</span>
+            <em class="campo negrito">Projeto de Back-End</em>
+          </td>
+        </tr>
+        <tr class="estudante-row">
+          <td>Profissional / Candidato:</td>
+        </tr>
+      </table>
+
+      <div class="section-divider">
+        <div class="section-title">
+          PROVA DE RECUPERAÇÃO<br />
+          Módulo 01: Planejamento Ágil, Arquitetura e Governança de Código
+        </div>
+      </div>
+
+      <div class="capacidades-box">
+        <div class="capacidades-header">CAPACIDADES AVALIADAS</div>
+        <div class="capacidades-content">
+          <p><strong>C1:</strong> Correlacionar as demandas do cliente.</p>
+          <p><strong>C2:</strong> Aplicar técnicas de levantamento de requisitos de armazenamento de dados.</p>
+          <p><strong>C3:</strong> Aplicar técnicas de modelagem de dados.</p>
+          <p><strong>C4:</strong> Aplicar técnicas de levantamento de requisitos.</p>
+          <p><strong>C5:</strong> Seguir recomendações técnicas na aplicação da linguagem de definição e manipulação de dados.</p>
+        </div>
+      </div>
+
+      <!-- ══════════ C1 ══════════ -->
+      <section class="item" data-ct="C1" data-dif="facil" data-resp="a">
+        <div class="contexto">
+          Em uma distribuidora de autopeças, a gerência comercial informou à equipe de TI que o sistema de vendas precisa bloquear a emissão de pedidos para clientes com títulos vencidos há mais de 30 dias.
+        </div>
+        <div class="comando">
+          Com base no contexto apresentado, essa solicitação deve ser classificada pela equipe de desenvolvimento como:
+        </div>
+        <ol class="alternativas">
+          <li>Uma regra de negócio apresentada pelo cliente, que deve ser registrada como requisito funcional do sistema.</li>
+          <li>Uma restrição de infraestrutura, que define o sistema operacional exigido para o servidor de aplicação.</li>
+          <li>Um requisito de portabilidade, que determina quais navegadores serão homologados para o acesso.</li>
+          <li>Uma preferência de layout, que orienta a paleta de cores usada nas telas de pedido.</li>
+        </ol>
+      </section>
+
+      <section class="item" data-ct="C1" data-dif="medio" data-resp="b">
+        <div class="contexto">
+          Uma operadora de planos de saúde relatou que os atendentes demoram para localizar o histórico de um beneficiário, pois as informações estão distribuídas em três sistemas distintos, o que gera retrabalho e divergência de dados.
+        </div>
+        <div class="comando">
+          Considerando a demanda relatada, a ação mais adequada para correlacioná-la a uma especificação técnica consiste em:
+        </div>
+        <ol class="alternativas">
+          <li>Ampliar a capacidade de processamento dos servidores atuais para reduzir o tempo de resposta de cada sistema isolado.</li>
+          <li>Especificar um requisito funcional de visão única do histórico do beneficiário, integrando as fontes existentes.</li>
+          <li>Criar uma tela de login com autenticação em dois fatores para todos os atendentes da operadora.</li>
+          <li>Substituir os sistemas por planilhas compartilhadas, mantidas manualmente pela equipe.</li>
+        </ol>
+      </section>
+
+      <section class="item" data-ct="C1" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Para atender à demanda de uma empresa de representação comercial, que precisa calcular a comissão de cada vendedor conforme a faixa de vendas atingida, um analista aplicou uma fórmula de busca aproximada em planilha. A célula B2 contém o valor 12500.
+        </div>
+        <figure class="figura figura-tabela">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📊 Planilha de comissões</span>
+          </div>
+          <div class="figura-corpo">
+            <table class="tabela-dados">
+              <thead>
+                <tr>
+                  <th>&nbsp;</th>
+                  <th>E</th>
+                  <th>F</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1</strong></td>
+                  <td><strong>Vendas a partir de (R$)</strong></td>
+                  <td><strong>Comissão</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>2</strong></td>
+                  <td>0</td>
+                  <td>2%</td>
+                </tr>
+                <tr>
+                  <td><strong>3</strong></td>
+                  <td>5000</td>
+                  <td>3%</td>
+                </tr>
+                <tr>
+                  <td><strong>4</strong></td>
+                  <td>10000</td>
+                  <td>5%</td>
+                </tr>
+                <tr>
+                  <td><strong>5</strong></td>
+                  <td>20000</td>
+                  <td>8%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </figure>
+        <div class="contexto" style="margin-top:0">
+          A fórmula inserida na célula C2 foi <code>=PROCV(B2; E2:F5; 2; VERDADEIRO)</code>.
+        </div>
+        <div class="comando">
+          Considerando a fórmula aplicada para atender à demanda do cliente, o resultado exibido na célula C2 corresponde a:
+        </div>
+        <ol class="alternativas">
+          <li>8%, pois a busca aproximada sempre retorna a faixa de maior percentual cadastrada na tabela de comissões.</li>
+          <li>2%, pois a busca aproximada retorna a primeira faixa da tabela, independentemente do valor pesquisado.</li>
+          <li>5%, pois a busca aproximada retorna a maior faixa cujo limite mínimo não ultrapassa 12500.</li>
+          <li>#N/D, pois 12500 não existe como valor exato na primeira coluna da tabela.</li>
+        </ol>
+      </section>
+
+      <!-- ══════════ C2 ══════════ -->
+      <section class="item" data-ct="C2" data-dif="facil" data-resp="d">
+        <div class="contexto">
+          Uma rede de clínicas vai armazenar digitalizações de documentos com cerca de 4 MB cada e prevê o recebimento de aproximadamente 5.000 novos documentos por mês.
+        </div>
+        <div class="comando">
+          Para dimensionar a capacidade de armazenamento necessária nos servidores, a equipe técnica deve aplicar a seguinte técnica de levantamento de requisitos:
+        </div>
+        <ol class="alternativas">
+          <li>Análise do contraste de cores entre texto e fundo nas telas de consulta aos documentos digitalizados.</li>
+          <li>Aplicação de testes de carga para medir o tempo de resposta do servidor em horários de pico de uso.</li>
+          <li>Revisão da cardinalidade dos relacionamentos entre as tabelas do modelo lógico de dados da clínica.</li>
+          <li>Cálculo de volumetria com projeção de crescimento mensal dos documentos armazenados.</li>
+        </ol>
+      </section>
+
+      <section class="item" data-ct="C2" data-dif="medio" data-resp="a">
+        <div class="contexto">
+          Uma seguradora precisa guardar apólices em formato PDF por 10 anos e, ao mesmo tempo, garantir consulta rápida aos dados cadastrais dos segurados.
+        </div>
+        <div class="comando">
+          Considerando os requisitos de armazenamento descritos, a arquitetura mais adequada para atender ao cenário consiste em:
+        </div>
+        <ol class="alternativas">
+          <li>Banco relacional para os dados cadastrais e armazenamento de objetos com política de retenção para os PDFs.</li>
+          <li>Banco relacional único, com os PDFs gravados em coluna de texto e sem política de retenção definida.</li>
+          <li>Arquivos PDF em pasta de uma estação de trabalho, com cópia manual semanal para outro disco.</li>
+          <li>Memória volátil do servidor de aplicação, com reinicialização periódica para liberar espaço.</li>
+        </ol>
+      </section>
+
+      <section class="item" data-ct="C2" data-dif="dificil" data-resp="b">
+        <div class="contexto">
+          Em um sistema de reservas de passagens aéreas, duas operações simultâneas tentaram reservar o último assento de um voo. O requisito de armazenamento estabelece que cada transação deve ser executada como se fosse a única em andamento, sem enxergar dados intermediários de outras.
+        </div>
+        <div class="comando">
+          Com base no requisito descrito, a propriedade do modelo ACID que o banco de dados deve garantir para esse comportamento é:
+        </div>
+        <ol class="alternativas">
+          <li>Atomicidade, que garante a execução integral da transação ou o desfazimento completo de todas as suas operações.</li>
+          <li>Isolamento, que impede que transações simultâneas enxerguem ou alterem os dados intermediários umas das outras.</li>
+          <li>Consistência, que assegura que cada transação leve o banco de um estado válido para outro válido.</li>
+          <li>Durabilidade, que preserva os dados confirmados mesmo após falhas de energia ou reinicialização.</li>
+        </ol>
+      </section>
+
+      <!-- ══════════ C3 ══════════ -->
+      <section class="item" data-ct="C3" data-dif="facil" data-resp="c">
+        <div class="contexto">
+          Na modelagem conceitual de um sistema de controle de frota, identificou-se que cada veículo possui placa, chassi e modelo, e que a placa o identifica de forma única na empresa.
+        </div>
+        <div class="comando">
+          Considerando o modelo de dados descrito, a placa do veículo deve ser classificada, tecnicamente, como:
+        </div>
+        <ol class="alternativas">
+          <li>Entidade, pois representa um objeto do negócio com atributos próprios e relacionamentos com outras tabelas.</li>
+          <li>Relacionamento, pois descreve a associação entre o veículo e o motorista responsável pelo seu uso.</li>
+          <li>Atributo identificador, pois diferencia cada veículo e será a chave primária da tabela no modelo lógico.</li>
+          <li>Chave estrangeira, pois referencia o registro de outra tabela para manter a integridade.</li>
+        </ol>
+      </section>
+
+      <section class="item" data-ct="C3" data-dif="medio" data-resp="d">
+        <div class="contexto">
+          Em uma indústria, cada ordem de produção utiliza vários insumos e cada insumo pode ser utilizado em várias ordens, sendo necessário registrar a quantidade consumida de cada insumo em cada ordem.
+        </div>
+        <div class="comando">
+          Na transformação do modelo conceitual para o modelo lógico relacional, a solução adequada para esse relacionamento consiste em:
+        </div>
+        <ol class="alternativas">
+          <li>Uma coluna na tabela de insumo contendo a lista de ordens de produção separadas por vírgula em um único campo.</li>
+          <li>Duas tabelas independentes, sem chaves em comum, repetindo o nome do insumo em cada ordem de produção registrada.</li>
+          <li>A chave primária de insumo replicada na tabela de ordem de produção, limitando cada ordem a um único insumo.</li>
+          <li>Uma tabela associativa com as chaves das duas entidades e a coluna de quantidade consumida.</li>
+        </ol>
+      </section>
+
+      <section class="item" data-ct="C3" data-dif="dificil" data-resp="a">
+        <div class="contexto">
+          Uma empresa de comércio eletrônico modelou o módulo de vendas. A figura apresenta o Diagrama de Entidade-Relacionamento (DER) lógico em notação pé de galinha.
+        </div>
+        <figure class="figura figura-diagrama">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📐 DER Lógico — Módulo de Vendas</span>
+          </div>
+          <div class="figura-corpo">
+            <svg viewBox="0 0 620 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DER lógico com tabelas pedido, item_pedido e produto">
+              <rect class="dg-e" x="10" y="10" width="170" height="78" />
+              <rect class="dg-h" x="10" y="10" width="170" height="24" />
+              <text class="dg-t" x="95" y="27">pedido</text>
+              <line class="dg-s" x1="10" y1="52" x2="180" y2="52" />
+              <line class="dg-s" x1="10" y1="70" x2="180" y2="70" />
+              <text class="dg-k" x="18" y="47">PK id_pedido</text>
+              <text class="dg-a" x="18" y="65">data_pedido</text>
+              <text class="dg-a" x="18" y="83">status</text>
+
+              <rect class="dg-e" x="225" y="10" width="170" height="78" />
+              <rect class="dg-h" x="225" y="10" width="170" height="24" />
+              <text class="dg-t" x="310" y="27">item_pedido</text>
+              <line class="dg-s" x1="225" y1="52" x2="395" y2="52" />
+              <line class="dg-s" x1="225" y1="70" x2="395" y2="70" />
+              <text class="dg-k" x="233" y="47">PK, FK id_pedido</text>
+              <text class="dg-k" x="233" y="65">PK, FK id_produto</text>
+              <text class="dg-a" x="233" y="83">quantidade</text>
+
+              <rect class="dg-e" x="440" y="10" width="170" height="78" />
+              <rect class="dg-h" x="440" y="10" width="170" height="24" />
+              <text class="dg-t" x="525" y="27">produto</text>
+              <line class="dg-s" x1="440" y1="52" x2="610" y2="52" />
+              <line class="dg-s" x1="440" y1="70" x2="610" y2="70" />
+              <text class="dg-k" x="448" y="47">PK id_produto</text>
+              <text class="dg-a" x="448" y="65">descricao</text>
+              <text class="dg-a" x="448" y="83">preco_unitario</text>
+
+              <line class="dg-l" x1="180" y1="43" x2="225" y2="43" />
+              <path class="dg-l" d="M188 36V50M194 36V50" />
+              <path class="dg-l" d="M213 43L225 36M213 43L225 43M213 43L225 50" />
+              <circle class="dg-c" cx="206" cy="43" r="4" />
+
+              <line class="dg-l" x1="395" y1="43" x2="440" y2="43" />
+              <path class="dg-l" d="M432 36V50M426 36V50" />
+              <path class="dg-l" d="M407 43L395 36M407 43L395 43M407 43L395 50" />
+              <circle class="dg-c" cx="414" cy="43" r="4" />
+            </svg>
+          </div>
+        </figure>
+        <div class="comando">
+          Com base no DER apresentado, a afirmação tecnicamente correta sobre o comportamento esperado da modelagem é:
+        </div>
+        <ol class="alternativas">
+          <li>A inserção em item_pedido de um id_produto inexistente em produto é rejeitada pela restrição de chave estrangeira.</li>
+          <li>Um mesmo produto não pode constar em pedidos diferentes, pois id_produto compõe a chave primária de item_pedido.</li>
+          <li>A tabela item_pedido é redundante e pode ser removida do modelo físico sem perda de informação do negócio.</li>
+          <li>Cada pedido admite um único produto, pois a cardinalidade entre as duas tabelas é 1:1.</li>
+        </ol>
+      </section>
+
+      <!-- ══════════ C4 ══════════ -->
+      <section class="item" data-ct="C4" data-dif="facil" data-resp="b">
+        <div class="contexto">
+          Na especificação de um portal de atendimento corporativo, foram registradas duas declarações:<br />
+          I. "As senhas dos usuários devem ser armazenadas com hash criptográfico."<br />
+          II. "O sistema deve permitir a exportação de relatórios em formato PDF."
+        </div>
+        <div class="comando">
+          Considerando as técnicas de levantamento de requisitos, a classificação correta das declarações I e II é, respectivamente:
+        </div>
+        <ol class="alternativas">
+          <li>Funcional e funcional, pois ambas descrevem comportamentos que o sistema deve executar para o usuário final.</li>
+          <li>Não funcional e funcional, pois a primeira define um atributo de segurança e a segunda, uma função do sistema.</li>
+          <li>Funcional e não funcional, pois a primeira descreve uma ação e a segunda, um critério de desempenho.</li>
+          <li>Não funcional e não funcional, pois ambas tratam de atributos de qualidade.</li>
+        </ol>
+      </section>
+
+      <section class="item" data-ct="C4" data-dif="medio" data-resp="c">
+        <div class="contexto">
+          Em entrevistas de levantamento de requisitos, usuários de um sistema de gestão de contratos relataram ter apagado registros por engano, pois o botão "Excluir" executa a ação imediatamente, sem confirmação e sem possibilidade de desfazer.
+        </div>
+        <div class="comando">
+          Com base no relato dos usuários, a heurística de usabilidade de Nielsen mais diretamente violada nessa situação é:
+        </div>
+        <ol class="alternativas">
+          <li>Consistência e padronização, pois a exclusão deveria seguir o mesmo padrão visual dos demais botões do sistema.</li>
+          <li>Reconhecimento em vez de memorização, pois o sistema exige que o usuário lembre os dados antes de excluí-los.</li>
+          <li>Prevenção de erros, pois o sistema executa uma ação destrutiva sem confirmação nem opção de desfazer.</li>
+          <li>Estética e design minimalista, pois a tela exibe elementos em excesso ao redor do botão de exclusão.</li>
+        </ol>
+      </section>
+
+      <section class="item" data-ct="C4" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          Em uma auditoria de acessibilidade com base na WCAG 2.1 nível AA, constatou-se que os formulários da intranet corporativa usam apenas o texto de placeholder para identificar cada campo, e os leitores de tela não anunciam a finalidade dos campos.
+        </div>
+        <div class="comando">
+          Diante da constatação da auditoria, a especificação de correção que atende às diretrizes de acessibilidade consiste em:
+        </div>
+        <ol class="alternativas">
+          <li>Manter apenas o placeholder como identificação visual e reforçar o contraste de cor do texto de exemplo exibido.</li>
+          <li>Substituir os campos de texto por imagens com o nome de cada campo e descrição genérica no atributo alt.</li>
+          <li>Incluir o texto de orientação em comentários HTML próximos aos campos, ocultos para os leitores de tela.</li>
+          <li>Associar cada campo a um rótulo programático, usando label com o atributo for correspondente ao id.</li>
+        </ol>
+      </section>
+
+      <!-- ══════════ C5 ══════════ -->
+      <section class="item" data-ct="C5" data-dif="facil" data-resp="a">
+        <div class="contexto">
+          Uma pessoa desenvolvedora de back-end precisa criar a tabela <code>fornecedor</code>, com a coluna <code>id</code> do tipo inteiro como chave primária e a coluna <code>razao_social</code> de texto com até 120 caracteres, de preenchimento obrigatório.
+        </div>
+        <div class="comando">
+          Seguindo as recomendações da linguagem de definição de dados, a instrução SQL que cria essa estrutura corretamente é:
+        </div>
+        <ol class="alternativas">
+          <li><code>CREATE TABLE fornecedor (id INT PRIMARY KEY, razao_social VARCHAR(120) NOT NULL);</code></li>
+          <li><code>INSERT INTO fornecedor (id, razao_social) VALUES (1, 'VARCHAR(120) NOT NULL');</code></li>
+          <li><code>UPDATE TABLE fornecedor (id INT PRIMARY KEY, razao_social VARCHAR(120));</code></li>
+          <li><code>NEW TABLE fornecedor (id INT, razao_social VARCHAR(120) NOT NULL);</code></li>
+        </ol>
+      </section>
+
+      <section class="item" data-ct="C5" data-dif="medio" data-resp="b">
+        <div class="contexto">
+          A equipe de suporte de uma loja virtual precisa reduzir em 10% o preço de todos os produtos da categoria 'perifericos' na tabela <code>produto</code>, sem afetar os demais produtos.
+        </div>
+        <div class="comando">
+          Seguindo as recomendações da linguagem de manipulação de dados, o comando SQL que executa essa alteração corretamente é:
+        </div>
+        <ol class="alternativas">
+          <li><code>ALTER TABLE produto SET preco = preco * 0.90 WHERE categoria = 'perifericos';</code></li>
+          <li><code>UPDATE produto SET preco = preco * 0.90 WHERE categoria = 'perifericos';</code></li>
+          <li><code>INSERT INTO produto (preco) VALUES (preco * 0.90) WHERE categoria = 'perifericos';</code></li>
+          <li><code>UPDATE produto SET preco = 0.90 WHERE categoria = 'perifericos';</code></li>
+        </ol>
+      </section>
+
+      <section class="item" data-ct="C5" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Em um sistema de gestão de contratos, a tabela <code>contrato</code> possui a coluna <code>id_cliente</code>, que aceita valores nulos, e a restrição de chave estrangeira abaixo foi criada na definição dos dados.
+        </div>
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 fk_contrato.sql</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="kw">ALTER TABLE</span> <span class="var">contrato</span>
+<span class="kw">ADD CONSTRAINT</span> <span class="prop">fk_cliente</span>
+<span class="kw">FOREIGN KEY</span> (<span class="prop">id_cliente</span>) <span class="kw">REFERENCES</span> <span class="var">cliente</span>(<span class="prop">id_cliente</span>)
+<span class="kw">ON DELETE SET NULL</span>;</pre>
+          </div>
+        </figure>
+        <div class="comando">
+          Ao executar o comando <code>DELETE FROM cliente WHERE id_cliente = 7;</code>, o comportamento esperado do banco de dados é:
+        </div>
+        <ol class="alternativas">
+          <li>O comando é rejeitado com erro de integridade referencial, pois há contratos vinculados ao cliente excluído.</li>
+          <li>O cliente e todos os contratos vinculados a ele são removidos automaticamente na mesma operação.</li>
+          <li>O cliente é removido e o id_cliente dos contratos vinculados passa a armazenar NULL, preservando-os.</li>
+          <li>Somente os contratos vinculados são excluídos, e o registro do cliente permanece intacto.</li>
+        </ol>
+      </section>
+
+      <div class="gabarito-section" id="gabarito"></div>
+    </div>
+
+    <script>
+      (function () {
+        var DIF = {
+          facil: { item: 'Fácil', gab: 'Fácil', cls: 'badge-facil' },
+          medio: { item: 'Média', gab: 'Médio', cls: 'badge-medio' },
+          dificil: { item: 'Difícil', gab: 'Difícil', cls: 'badge-dificil' },
+        };
+        var linhas = '';
+
+        document.querySelectorAll('.item').forEach(function (item, i) {
+          var num = i + 1;
+          var nn = (num < 10 ? '0' : '') + num;
+          var ct = item.getAttribute('data-ct') || '?';
+          var dif = DIF[item.getAttribute('data-dif')];
+          var resp = (item.getAttribute('data-resp') || '').toUpperCase();
+
+          if (!dif) console.warn('Item ' + nn + ': data-dif inválido.');
+          if (!/^[A-D]$/.test(resp)) console.warn('Item ' + nn + ': data-resp inválido.');
+          if (item.querySelectorAll('.alternativas > li').length !== 4)
+            console.warn('Item ' + nn + ': esperado exatamente 4 alternativas.');
+
+          var cab = document.createElement('div');
+          cab.className = 'item-header';
+          cab.innerHTML =
+            '<span>ITEM ' + nn + '</span>' +
+            '<span class="badge ' + (dif ? dif.cls : '') + '">' + (dif ? dif.item : '?') + '</span>';
+
+          var box = document.createElement('div');
+          box.className = 'item-box';
+          box.innerHTML = '<div class="capacidade">' + ct + '</div>';
+          while (item.firstChild) box.appendChild(item.firstChild);
+          item.appendChild(cab);
+          item.appendChild(box);
+
+          linhas +=
+            '<tr><td><strong>' + num + '</strong></td><td>' + ct + '</td>' +
+            '<td><span class="badge ' + (dif ? dif.cls : '') + '">' + (dif ? dif.gab : '?') + '</span></td>' +
+            '<td><span class="resposta-correta">' + resp + '</span></td></tr>';
+        });
+
+        document.getElementById('gabarito').innerHTML =
+          '<div class="gabarito-titulo">RESPOSTAS CORRETAS</div>' +
+          '<table class="gabarito-table"><thead><tr>' +
+          '<th>Questão</th><th>Capacidade</th><th>Dificuldade</th><th>Resposta Correta</th>' +
+          '</tr></thead><tbody>' + linhas + '</tbody></table>';
+      })();
+    </script>
+  </body>
+</html>

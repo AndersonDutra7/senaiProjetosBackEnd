@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+
+<question type="category">
+  <category><text>$course$/top/SAEP - Módulo 01 - Projeto de Back-End</text></category>
+</question>
+
+<!-- ═════════════ QUESTÃO 01 - C1 - Fácil ═════════════ -->
+<question type="multichoice">
+  <name><text>Q01 - C1 - Fácil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C1</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Durante a reunião de alinhamento de um novo projeto de e-commerce, o cliente solicitou explicitamente que o sistema envie uma notificação automática por e-mail ao comprador sempre que o status do pedido for alterado.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Essa solicitação do cliente representa qual conceito no desenvolvimento de software?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="100" format="html"><text><![CDATA[Um requisito funcional de software que especifica um comportamento ativo que o sistema deve executar para o cliente.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Um requisito não funcional de desempenho que define a taxa máxima de e-mails enviados por segundo no servidor.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Uma restrição física de infraestrutura de rede que limita o tráfego de dados na hospedagem da aplicação web.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Uma regra de modelagem conceitual que determina a cardinalidade entre as tabelas de pedidos e de clientes.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 02 - C1 - Fácil ═════════════ -->
+<question type="multichoice">
+  <name><text>Q02 - C1 - Fácil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C1</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Um analista de sistemas elaborou um protótipo de alta fidelidade das telas do sistema e apresentou ao cliente antes de iniciar a codificação das funcionalidades.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual é o objetivo principal de validar protótipos de tela diretamente com o cliente na fase inicial do projeto?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="100" format="html"><text><![CDATA[Garantir o alinhamento antecipado das expectativas e demandas do cliente antes da implementação do código.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Substituir a necessidade de realização de testes unitários e testes de integração no desenvolvimento.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Gerar automaticamente o código da camada de persistência e a estrutura de tabelas do banco de dados.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Definir o endereço IP estático e as portas de comunicação dos servidores de aplicação em produção.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 03 - C1 - Médio ═════════════ -->
+<question type="multichoice">
+  <name><text>Q03 - C1 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C1</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Em uma empresa de logística, o cliente relatou que o sistema atual não consegue calcular o valor do frete com base na região geográfica e no peso da encomenda, gerando atrasos comerciais.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Como a equipe de desenvolvimento deve correlacionar essa demanda do cliente às especificações técnicas do sistema?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[Desabilitar a validação de campos nos formulários do front-end para agilizar o envio das informações das encomendas.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[Mapear a regra de negócio de cálculo de frete e especificá-la formalmente como um requisito funcional prioritário.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Alterar o tipo do campo de chave primária na tabela de clientes do banco de dados para a opção de autoincremento.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Migrar a arquitetura do servidor web para um ambiente sem banco de dados relacional e sem persistência física.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 04 - C1 - Médio ═════════════ -->
+<question type="multichoice">
+  <name><text>Q04 - C1 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C1</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Uma planilha de avaliação de desempenho atende à demanda do cliente para classificar a nota dos colaboradores. A célula B2 possui o valor 78.</p>
+<div style="background:#0d1117;border:1px solid #0d1117;border-radius:8px;margin:10px 0 14px;overflow:hidden;">
+  <div style="padding:6px 12px;background:#0d1117;border-bottom:1px solid #f1f1f1;color:#f1f1f1;font-family:Consolas,'Courier New',monospace;font-size:1rem;"><span style="color:#f85149;">●</span> <span style="color:#e3b341;">●</span> <span style="color:#39d353;">●</span> &nbsp;&nbsp;📊 Célula C2</div>
+  <div style="padding:12px 14px;"><pre style="margin:0;padding:0;border:0;background:#0d1117;font-family:Consolas,'Courier New',monospace;font-size:0.95rem;line-height:1.5;white-space:pre;color:#f1f1f1;">=<span class="fn" style="color:#d2a8ff;">SE</span>(<span class="prop" style="color:#79c0ff;">B2</span>&gt;=<span class="num" style="color:#6087f2;">90</span>; <span class="str" style="color:#a5d6ff;">"Excelente"</span>; <span class="fn" style="color:#d2a8ff;">SE</span>(<span class="prop" style="color:#79c0ff;">B2</span>&gt;=<span class="num" style="color:#6087f2;">70</span>; <span class="str" style="color:#a5d6ff;">"Atende"</span>; <span class="str" style="color:#a5d6ff;">"Abaixo"</span>))</pre></div>
+</div>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual texto será exibido na célula C2 para atender ao requisito do cliente?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[O texto "Abaixo", pois a nota 78 não alcança o limite superior do parâmetro estabelecido na planilha.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[O erro "#VALOR!", pois a função SE exige que todas as condições sejam avaliadas em células separadas.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[O texto "Excelente", pois a nota 78 atinge o nível máximo de desempenho estabelecido pelo cliente.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[O texto "Atende", pois o valor 78 satisfaz a segunda condição lógica da fórmula encadeada.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 05 - C1 - Difícil ═════════════ -->
+<question type="multichoice">
+  <name><text>Q05 - C1 - Difícil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C1</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Em um painel corporativo desenvolvido em planilha para atender à demanda de busca rápida de preços pelo cliente, um analista inseriu a fórmula <code><strong>=PROCV(103; A2:C5; 3; FALSO)</strong></code>.</p>
+<div style="border:1px solid #d0d7de;border-radius:8px;margin:10px 0 14px;overflow:hidden;background:#fff;">
+  <div style="padding:6px 12px;background:#f3f4f6;border-bottom:1px solid #d0d7de;color:#333;font-family:Consolas,'Courier New',monospace;font-size:9pt;"><span style="color:#f85149;">●</span> <span style="color:#e3b341;">●</span> <span style="color:#39d353;">●</span> &nbsp;&nbsp;📊 Tabela Excel (A1:C5)</div>
+  <div style="padding:8px;">
+    <table style="width:100%;border-collapse:collapse;font-size:10pt;">
+      <thead><tr>
+        <th style="background:#e8eef9;border:1px solid #2e5496;padding:5px 8px;text-align:left;">&nbsp;</th>
+        <th style="background:#e8eef9;border:1px solid #2e5496;padding:5px 8px;text-align:left;">A</th>
+        <th style="background:#e8eef9;border:1px solid #2e5496;padding:5px 8px;text-align:left;">B</th>
+        <th style="background:#e8eef9;border:1px solid #2e5496;padding:5px 8px;text-align:left;">C</th>
+      </tr></thead>
+      <tbody>
+        <tr><td style="border:1px solid #9bb0d6;padding:4px 8px;"><strong>1</strong></td><td style="border:1px solid #9bb0d6;padding:4px 8px;"><strong>Código</strong></td><td style="border:1px solid #9bb0d6;padding:4px 8px;"><strong>Item</strong></td><td style="border:1px solid #9bb0d6;padding:4px 8px;"><strong>Valor (R$)</strong></td></tr>
+        <tr><td style="border:1px solid #9bb0d6;padding:4px 8px;"><strong>2</strong></td><td style="border:1px solid #9bb0d6;padding:4px 8px;">101</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">Servidor</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">15000</td></tr>
+        <tr><td style="border:1px solid #9bb0d6;padding:4px 8px;"><strong>3</strong></td><td style="border:1px solid #9bb0d6;padding:4px 8px;">102</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">Switch</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">3200</td></tr>
+        <tr><td style="border:1px solid #9bb0d6;padding:4px 8px;"><strong>4</strong></td><td style="border:1px solid #9bb0d6;padding:4px 8px;">103</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">Roteador</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">1800</td></tr>
+        <tr><td style="border:1px solid #9bb0d6;padding:4px 8px;"><strong>5</strong></td><td style="border:1px solid #9bb0d6;padding:4px 8px;">104</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">Firewall</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">8500</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual valor numérico será retornado por essa célula?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[O valor 3200, correspondente ao preço localizado na linha do código de equipamento imediatamente anterior.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[O erro "#N/D", indicando que a busca exata orientada pelo parâmetro FALSO não encontrou correspondência.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[O valor 1800, correspondente ao preço localizado na terceira coluna para o código de equipamento 103.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[O valor 103, correspondente ao próprio valor do código pesquisado no primeiro parâmetro da função.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 06 - C2 - Fácil ═════════════ -->
+<question type="multichoice">
+  <name><text>Q06 - C2 - Fácil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C2</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Durante o levantamento de requisitos de armazenamento para um portal de e-commerce, a equipe identificou a necessidade de salvar imagens de produtos em alta definição e guardar o histórico de compras dos últimos 5 anos.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual técnica de levantamento de requisitos de armazenamento deve ser aplicada para estimar a capacidade necessária dos servidores de dados?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[Análise da especificidade das regras e seletores encadeados nas folhas de estilo em cascata (CSS).]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Avaliação heurística de usabilidade baseada nos princípios de interface com o usuário de Nielsen.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[Cálculo de volumetria de dados e estimativa da taxa de crescimento do armazenamento do servidor.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Aplicação de regras de formatação condicional em tabelas dinâmicas do Microsoft Excel.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 07 - C2 - Médio ═════════════ -->
+<question type="multichoice">
+  <name><text>Q07 - C2 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C2</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Um sistema hospitalar precisa armazenar dados cadastrais estruturados e arquivos pesados não estruturados (exames de raios-X e ressonâncias) com requisito de retenção por 20 anos.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Ao analisar os requisitos de armazenamento de dados desse sistema, qual arquitetura atende melhor às exigências?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="100" format="html"><text><![CDATA[Combinar armazenamento de objetos (Object Storage) para os arquivos pesados de imagem com banco de dados relacional para os dados cadastrais.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Armazenar todas as imagens codificadas em formato base64 diretamente na memória RAM do servidor principal da aplicação web.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Gravar os dados de exames dentro de arquivos de texto no formato CSV divididos em pastas locais do servidor web.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Utilizar apenas tabelas temporárias em memória que são automaticamente reinicializadas ao desligar o servidor.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 08 - C2 - Médio ═════════════ -->
+<question type="multichoice">
+  <name><text>Q08 - C2 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C2</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Uma equipe de banco de dados está levantando os requisitos de persistência para uma aplicação financeira que exige integridade absoluta nas transações de pagamento e retenção histórica confiável.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual conjunto de propriedades de armazenamento de dados deve ser garantido pelo banco de dados selecionado?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="100" format="html"><text><![CDATA[Garantia das propriedades ACID, assegurando Atomicidade, Consistência, Isolamento e Durabilidade nas transações.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Gravação temporária dos dados das transações bancárias no armazenamento local do navegador via LocalStorage.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Armazenamento exclusivo das informações em arquivos estáticos no formato HTML armazenados no servidor.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Ausência total de chaves primárias e de relacionamentos entre as tabelas do banco de dados relacional.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 09 - C2 - Difícil ═════════════ -->
+<question type="multichoice">
+  <name><text>Q09 - C2 - Difícil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C2</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Em um sistema bancário, o levantamento de requisitos de armazenamento determinou que, caso ocorra uma falha elétrica durante a transferência de valores entre duas contas, nenhuma das contas pode sofrer alteração parcial.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual propriedade do modelo ACID para armazenamento de dados garante este comportamento de "tudo ou nada"?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[Isolamento, que impede que transações executadas concorrentemente interfiram nos resultados intermediários de outras.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[Atomicidade, que garante que todas as operações da transação sejam executadas com sucesso ou nenhuma seja efetuada.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Consistência, que assegura que o banco de dados transite de um estado válido para outro estado igualmente válido.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Durabilidade, que garante que os dados gravados permaneçam salvos mesmo em cenários de falhas físicas de energia.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 10 - C3 - Fácil ═════════════ -->
+<question type="multichoice">
+  <name><text>Q10 - C3 - Fácil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C3</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Na etapa de modelagem conceitual de dados para um sistema de biblioteca, identificou-se a entidade <code><strong>LIVRO</strong></code> e suas características <code><strong>titulo</strong></code>, <code><strong>isbn</strong></code> e <code><strong>ano_publicacao</strong></code>.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>No Diagrama de Entidade-Relacionamento (DER), como são classificados <code><strong>LIVRO</strong></code> e <code><strong>titulo</strong></code>, respectivamente?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[Atributo e Entidade, pois LIVRO representa uma propriedade da biblioteca e titulo guarda o conjunto principal de dados.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Chave Estrangeira e Relacionamento, pois LIVRO estabelece a ligação entre tabelas e titulo define a restrição de dados.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[Entidade e Atributo, pois LIVRO representa o objeto do mundo real e titulo é uma de suas propriedades características.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Processo e Requisito, pois LIVRO descreve o fluxo de trabalho do sistema e titulo define a regra de negócio aplicável.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 11 - C3 - Médio ═════════════ -->
+<question type="multichoice">
+  <name><text>Q11 - C3 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C3</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Ao aplicar técnicas de modelagem de dados para um sistema acadêmico, observou-se que um <code><strong>ALUNO</strong></code> pode se matricular em várias <code><strong>TURMAS</strong></code>, e cada <code><strong>TURMA</strong></code> possui vários <code><strong>ALUNOS</strong></code>.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual é a cardinalidade desse relacionamento e como ele deve ser implementado no modelo lógico relacional?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="100" format="html"><text><![CDATA[Relacionamento N:N, resolvido por uma tabela associativa contendo as chaves estrangeiras provenientes de ambas as entidades.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Relacionamento 1:1, resolvido pela criação de uma única coluna descritiva contendo todos os dados na tabela do Aluno.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Relacionamento 1:N, resolvido pela inclusão do identificador único do Aluno como chave primária na tabela da Turma.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Relacionamento sem cardinalidade definida, dispensando o uso de chaves primárias e estrangeiras no banco de dados.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 12 - C3 - Difícil ═════════════ -->
+<question type="multichoice">
+  <name><text>Q12 - C3 - Difícil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C3</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Uma empresa de tecnologia modelou seu sistema de alocação de projetos. A figura abaixo ilustra o Diagrama de Entidade-Relacionamento (DER) lógico do sistema em notação pé de galinha.</p>
+<div style="border:1px solid #d0d7de;border-radius:8px;margin:10px 0 14px;overflow:hidden;background:#fff;">
+  <div style="padding:6px 12px;background:#f3f4f6;border-bottom:1px solid #d0d7de;color:#333;font-family:Consolas,'Courier New',monospace;font-size:9pt;"><span style="color:#f85149;">●</span> <span style="color:#e3b341;">●</span> <span style="color:#39d353;">●</span> &nbsp;&nbsp;📐 DER Lógico — Gestão de Alocações</div>
+  <div style="padding:8px;">
+    <svg viewBox="0 0 620 100" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DER lógico com tabelas desenvolvedor, alocacao e projeto" style="display:block;max-width:100%;height:auto;">
+      <rect x="10" y="10" width="170" height="78" fill="#fff" stroke="#2e5496" stroke-width="1.2"/>
+      <rect x="10" y="10" width="170" height="24" fill="#2e5496"/>
+      <text x="95" y="27" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="bold" fill="#fff">desenvolvedor</text>
+      <line x1="10" y1="52" x2="180" y2="52" stroke="#d0d7de" stroke-width="1"/>
+      <line x1="10" y1="70" x2="180" y2="70" stroke="#d0d7de" stroke-width="1"/>
+      <text x="18" y="47" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="bold" fill="#000">PK id_dev</text>
+      <text x="18" y="65" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000">nome</text>
+      <text x="18" y="83" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000">cargo</text>
+
+      <rect x="225" y="10" width="170" height="78" fill="#fff" stroke="#2e5496" stroke-width="1.2"/>
+      <rect x="225" y="10" width="170" height="24" fill="#2e5496"/>
+      <text x="310" y="27" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="bold" fill="#fff">alocacao</text>
+      <line x1="225" y1="52" x2="395" y2="52" stroke="#d0d7de" stroke-width="1"/>
+      <line x1="225" y1="70" x2="395" y2="70" stroke="#d0d7de" stroke-width="1"/>
+      <text x="233" y="47" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="bold" fill="#000">PK, FK id_dev</text>
+      <text x="233" y="65" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="bold" fill="#000">PK, FK id_proj</text>
+      <text x="233" y="83" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000">horas_semana</text>
+
+      <rect x="440" y="10" width="170" height="78" fill="#fff" stroke="#2e5496" stroke-width="1.2"/>
+      <rect x="440" y="10" width="170" height="24" fill="#2e5496"/>
+      <text x="525" y="27" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="bold" fill="#fff">projeto</text>
+      <line x1="440" y1="52" x2="610" y2="52" stroke="#d0d7de" stroke-width="1"/>
+      <line x1="440" y1="70" x2="610" y2="70" stroke="#d0d7de" stroke-width="1"/>
+      <text x="448" y="47" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="bold" fill="#000">PK id_proj</text>
+      <text x="448" y="65" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000">nome_projeto</text>
+      <text x="448" y="83" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000">orcamento</text>
+
+      <line x1="180" y1="43" x2="225" y2="43" stroke="#2e5496" stroke-width="1.5" fill="none"/>
+      <path d="M188 36V50M194 36V50" stroke="#2e5496" stroke-width="1.5" fill="none"/>
+      <path d="M213 43L225 36M213 43L225 43M213 43L225 50" stroke="#2e5496" stroke-width="1.5" fill="none"/>
+      <circle cx="206" cy="43" r="4" fill="#fff" stroke="#2e5496" stroke-width="1.5"/>
+
+      <line x1="395" y1="43" x2="440" y2="43" stroke="#2e5496" stroke-width="1.5" fill="none"/>
+      <path d="M432 36V50M426 36V50" stroke="#2e5496" stroke-width="1.5" fill="none"/>
+      <path d="M407 43L395 36M407 43L395 43M407 43L395 50" stroke="#2e5496" stroke-width="1.5" fill="none"/>
+      <circle cx="414" cy="43" r="4" fill="#fff" stroke="#2e5496" stroke-width="1.5"/>
+    </svg>
+  </div>
+</div>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual afirmação descreve corretamente a modelagem apresentada?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="100" format="html"><text><![CDATA[O relacionamento N:N entre desenvolvedor e projeto foi resolvido pela tabela associativa alocacao com chave primária composta.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Trata-se de um relacionamento 1:1 estrito onde cada desenvolvedor só pode participar de um único projeto por vez.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[A tabela alocacao é conceitualmente redundante e deve ser eliminada durante a criação do esquema físico de dados.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Um projeto só pode ter no máximo um único desenvolvedor associado a ele no modelo lógico apresentado.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 13 - C4 - Fácil ═════════════ -->
+<question type="multichoice">
+  <name><text>Q13 - C4 - Fácil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C4</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Na fase de levantamento de requisitos de um sistema web, foram documentadas duas declarações:<br>I. "O sistema deve permitir que o usuário recupere sua senha via e-mail."<br>II. "A página inicial deve ser carregada em menos de 1,5 segundo."</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Como são classificados os requisitos I e II, respectivamente?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="100" format="html"><text><![CDATA[Requisito Funcional e Requisito Não Funcional, pois o primeiro descreve uma funcionalidade e o segundo um atributo de qualidade.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Requisito de Hardware e Requisito de Banco de Dados, pois o primeiro exige servidores de e-mail e o segundo tabelas de banco.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Requisito Não Funcional e Regra de Layout, pois o primeiro trata de segurança da conta e o segundo do visual da tela.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Atributo de Qualidade e Caso de Uso, pois o primeiro define a velocidade da aplicação e o segundo a ação do usuário.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 14 - C4 - Médio ═════════════ -->
+<question type="multichoice">
+  <name><text>Q14 - C4 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C4</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Ao realizar entrevistas no levantamento de requisitos de uma plataforma web, os usuários relataram que ao clicar no botão "Processar Relatório", a tela não exibe nenhum indicador visual de carregamento por 10 segundos, fazendo-os clicar repetidamente.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual heurística de usabilidade de Nielsen está sendo violada nessa especificação?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="100" format="html"><text><![CDATA[Visibilidade do status do sistema, pois o sistema deve sempre manter o usuário informado sobre o que está acontecendo.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Prevenção de erros, pois o sistema não exibe caixas de diálogo de confirmação antes de executar ações irreversíveis.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Flexibilidade e eficiência de uso, pois a plataforma não disponibiliza atalhos avançados para usuários experientes.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Design minimalista e estético, pois a tela apresenta excesso de elementos gráficos desnecessários durante a busca.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 15 - C4 - Difícil ═════════════ -->
+<question type="multichoice">
+  <name><text>Q15 - C4 - Difícil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C4</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Para adequar os requisitos de interface às diretrizes de acessibilidade WCAG 2.1 nível AA, a equipe precisa especificar a inserção de uma imagem informativa que contém o gráfico de vendas do trimestre.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual é a especificação correta do elemento segundo as normas de acessibilidade?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="100" format="html"><text><![CDATA[Fornecer uma descrição textual clara e equivalente no atributo alt ou associar um texto explicativo via aria-describedby.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Carregar o gráfico utilizando a propriedade CSS background-image sem incluir código descritivo na estrutura HTML.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Deixar a tag de imagem sem o atributo alt para que os softwares leitores de tela ignorem o elemento totalmente.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Inserir a imagem com a marcação alt="imagem do grafico" sem detalhar as informações contidas na ilustração.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 16 - C5 - Médio ═════════════ -->
+<question type="multichoice">
+  <name><text>Q16 - C5 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C5</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Um desenvolvedor backend precisa criar uma nova tabela chamada <code><strong>CLIENTE</strong></code> no banco de dados relacional para o sistema web.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual instrução da Linguagem de Definição de Dados (DDL) do SQL realiza essa operação corretamente?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong><span class="kw" style="color:inherit;">ALTER</span> <span class="kw" style="color:inherit;">TABLE</span> funcionario MODIFY salario = 4500.00 WHERE id_func = 12;</strong></code>]]></text></answer>  <answer fraction="0" format="html"><text><![CDATA[<code><strong>INSERT INTO CLIENTE (id, nome, email) VALUES (1, "Carlos Silva", "carlos@empresa.com");</strong></code>]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>UPDATE TABLE CLIENTE SET nome = "VARCHAR(100)", email = "VARCHAR(100)" WHERE id = 1;</strong></code>]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[<code><strong>CREATE TABLE CLIENTE (id INT PRIMARY KEY, nome VARCHAR(100), email VARCHAR(100));</strong></code>]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 17 - C5 - Médio ═════════════ -->
+<question type="multichoice">
+  <name><text>Q17 - C5 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C5</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Para registrar um novo produto no banco de dados, o desenvolvedor deve utilizar a Linguagem de Manipulação de Dados (DML).</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual comando SQL DML insere corretamente o produto "Teclado" com o preço <code><strong>150.00</strong></code> na tabela <code><strong>PRODUTO</strong></code>?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>UPDATE PRODUTO SET nome = 'Teclado', preco = 150.00 WHERE id = 1;</strong></code>]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[<code><strong>INSERT INTO PRODUTO (nome, preco) VALUES ('Teclado', 150.00);</strong></code>]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>SELECT INTO PRODUTO (nome, preco) VALUES ('Teclado', 150.00);</strong></code>]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>ADD RECORD TO PRODUTO VALUES ('Teclado', 150.00);</strong></code>]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 18 - C5 - Médio ═════════════ -->
+<question type="multichoice">
+  <name><text>Q18 - C5 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C5</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>A tabela <code><strong>item_pedido</strong></code> possui uma chave estrangeira apontando para <code><strong>pedido</strong></code> configurada com a cláusula <code><strong>ON DELETE CASCADE</strong></code> na definição de dados.</p>
+<div style="background:#0d1117;border:1px solid #0d1117;border-radius:8px;margin:10px 0 14px;overflow:hidden;">
+  <div style="padding:6px 12px;background:#0d1117;border-bottom:1px solid #f1f1f1;color:#f1f1f1;font-family:Consolas,'Courier New',monospace;font-size:1rem;"><span style="color:#f85149;">●</span> <span style="color:#e3b341;">●</span> <span style="color:#39d353;">●</span> &nbsp;&nbsp;📁 fk.sql</div>
+  <div style="padding:12px 14px;"><pre style="margin:0;padding:0;border:0;background:#0d1117;font-family:Consolas,'Courier New',monospace;font-size:0.95rem;line-height:1.5;white-space:pre;color:#f1f1f1;"><span class="kw" style="color:#ff7b72;">ALTER</span> <span class="kw" style="color:#ff7b72;">TABLE</span> <span class="var" style="color:#ffa657;">item_pedido</span>
+<span class="kw" style="color:#ff7b72;">ADD</span> <span class="kw" style="color:#ff7b72;">CONSTRAINT</span> <span class="prop" style="color:#79c0ff;">fk_pedido</span>
+<span class="kw" style="color:#ff7b72;">FOREIGN</span> <span class="kw" style="color:#ff7b72;">KEY</span> (<span class="prop" style="color:#79c0ff;">id_pedido</span>) <span class="kw" style="color:#ff7b72;">REFERENCES</span> <span class="var" style="color:#ffa657;">pedido</span>(<span class="prop" style="color:#79c0ff;">id_pedido</span>)
+<span class="kw" style="color:#ff7b72;">ON</span> <span class="kw" style="color:#ff7b72;">DELETE</span> <span class="kw" style="color:#ff7b72;">CASCADE</span>;</pre></div>
+</div>
+<p><strong><em><u>Comando:</u></em></strong><br>O que ocorre ao executar o comando DML <code><strong>DELETE FROM pedido WHERE id_pedido = 50;</strong></code>?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="100" format="html"><text><![CDATA[O registro do pedido é removido e todos os seus itens associados em item_pedido são excluídos automaticamente.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Apenas os itens do pedido são excluídos, mantendo o registro do pedido original intacto no banco de dados.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[O comando falha com erro de restrição de integridade referencial caso existam itens associados ao pedido.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[O pedido é excluído e o campo de chave estrangeira id_pedido na tabela de itens passa a armazenar NULL.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 19 - C5 - Médio ═════════════ -->
+<question type="multichoice">
+  <name><text>Q19 - C5 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C5</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Um analista precisa atualizar o valor do campo <code><strong>salario</strong></code> do colaborador com <code><strong>id_func = 12</strong></code> para <code><strong>4500.00</strong></code> na tabela <code><strong>funcionario</strong></code>.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual comando DML do SQL realiza essa alteração de forma correta?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>INSERT INTO funcionario (salario) VALUES (4500.00) WHERE id_func = 12;</strong></code>]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong><span class="kw" style="color:inherit;">ALTER</span> <span class="kw" style="color:inherit;">TABLE</span> funcionario MODIFY salario = 4500.00 WHERE id_func = 12;</strong></code>]]></text></answer>  <answer fraction="100" format="html"><text><![CDATA[<code><strong>UPDATE funcionario SET salario = 4500.00 WHERE id_func = 12;</strong></code>]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>UPDATE funcionario SET salario = 4500.00;</strong></code>]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 20 - C5 - Difícil ═════════════ -->
+<question type="multichoice">
+  <name><text>Q20 - C5 - Difícil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C5</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Durante a manutenção de um banco de dados, o DBA precisa incluir um novo campo chamado <code><strong>data_nascimento</strong></code> do tipo <code><strong>DATE</strong></code> na tabela <code><strong>usuario</strong></code> já existente.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual instrução SQL DDL modifica a estrutura da tabela inserindo a nova coluna?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>MODIFY TABLE usuario ADD COLUMN data_nascimento DATE;</strong></code>]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>UPDATE TABLE usuario ADD data_nascimento DATE;</strong></code>]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>CREATE COLUMN data_nascimento DATE ON usuario;</strong></code>]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[<code><strong><span class="kw" style="color:inherit;">ALTER</span> <span class="kw" style="color:inherit;">TABLE</span> usuario ADD data_nascimento DATE;</strong></code>]]></text></answer></question>
+
+</quiz>

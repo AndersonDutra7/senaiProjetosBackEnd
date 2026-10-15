@@ -1,0 +1,1832 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avaliação Objetiva - Módulo 02</title>
+    <style>
+      /* ══════════════════════════════════════════════════════════
+         FRAMEWORK DE AVALIAÇÃO OBJETIVA - SAEP SENAI
+         Tudo escopado em body.prova.
+         ══════════════════════════════════════════════════════════ */
+      :root {
+        --azul: #2e5496;
+        --azul-claro: #e8eef9;
+        --azul-borda: #9bb0d6;
+        --cinza-borda: #d0d7de;
+        --cinza-fundo: #f3f4f6;
+        --alternativa: #c00000;
+        --facil: #28a745;
+        --medio: #f0a500;
+        --dificil: #d9534f;
+        --fonte: Arial, Helvetica, sans-serif;
+        --mono: 'DM Mono', Consolas, 'Courier New', monospace;
+      }
+
+      /* ── BASE ── */
+      .prova *,
+      .prova *::before,
+      .prova *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body.prova {
+        font-family: var(--fonte);
+        font-size: 11pt;
+        color: #000;
+        background: #fff;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 15mm;
+      }
+
+      /* ── CABEÇALHO ── */
+      .header-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 14px;
+      }
+      .header-table td {
+        border: 1px solid #000;
+        padding: 3px 6px;
+        vertical-align: middle;
+        font-size: 10pt;
+      }
+      .logo-cell {
+        width: 140px;
+        text-align: center;
+        padding: 8px !important;
+      }
+      .senai-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .senai-brand img {
+        max-width: 120px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+      .senai-brand span {
+        display: block;
+        font-size: 9pt;
+      }
+      .title-cell {
+        text-align: center;
+        font-weight: bold;
+        font-size: 13pt !important;
+        letter-spacing: 1px;
+        padding: 6px !important;
+      }
+      .desemp-cell {
+        width: 90px;
+        text-align: center;
+        font-weight: bold;
+        vertical-align: top !important;
+      }
+      .estudante-row td {
+        font-weight: bold;
+        font-size: 10.5pt !important;
+      }
+      .rotulo {
+        font-weight: bold;
+      }
+      .campo {
+        color: var(--azul);
+        font-style: italic;
+      }
+      .campo.negrito {
+        font-weight: bold;
+      }
+
+      /* ── FAIXAS AZUIS ── */
+      .capacidades-header,
+      .item-header,
+      .gabarito-titulo {
+        background: var(--azul);
+        color: #fff;
+        font-weight: bold;
+        font-size: 12pt;
+        padding: 10px;
+        margin-top: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .capacidades-content,
+      .item-box {
+        border: 1px solid var(--azul);
+        border-top: none;
+        padding: 8px 10px 10px;
+        margin-bottom: 4px;
+      }
+      .capacidades-content p {
+        margin-bottom: 5px;
+        line-height: 1.35;
+      }
+      .capacidades-content p:last-child {
+        margin-bottom: 0;
+      }
+
+      .section-divider {
+        margin: 20px 0;
+        border-top: 3px solid var(--azul);
+        border-bottom: 3px solid var(--azul);
+        padding: 10px 0 8px;
+      }
+      .section-title {
+        font-size: 12.5pt;
+        font-weight: bold;
+        color: var(--azul);
+        text-align: center;
+        line-height: 1.3;
+      }
+
+      /* ── SELOS DE DIFICULDADE ── */
+      .badge {
+        font-size: 8.5pt;
+        font-weight: bold;
+        padding: 3px 10px;
+        border-radius: 4px;
+        color: #fff;
+        line-height: 1;
+        letter-spacing: 0.3px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+      }
+      .badge-facil {
+        background: var(--facil);
+      }
+      .badge-medio {
+        background: var(--medio);
+      }
+      .badge-dificil {
+        background: var(--dificil);
+      }
+
+      /* ── ITEM ── */
+      .item {
+        break-inside: avoid;
+      }
+      .capacidade,
+      .contexto,
+      .comando,
+      .alternativas {
+        font-size: 10.5pt;
+        line-height: 1.45;
+      }
+      .capacidade,
+      .contexto,
+      .comando {
+        margin-bottom: 8px;
+      }
+      .capacidade::before,
+      .contexto::before,
+      .comando::before,
+      .alternativas::before {
+        display: block;
+        font-weight: bold;
+        font-style: italic;
+        text-decoration: underline;
+        margin: 6px 0 3px;
+      }
+      .capacidade::before {
+        content: 'CAPACIDADE:';
+        margin-top: 0;
+        margin-bottom: 2px;
+      }
+      .contexto::before {
+        content: 'Contexto:';
+      }
+      .comando::before {
+        content: 'Comando:';
+      }
+      .alternativas::before {
+        content: 'Alternativas:';
+        margin-bottom: 6px;
+      }
+
+      /* ── ALTERNATIVAS ── */
+      .alternativas {
+        list-style: none;
+        counter-reset: alt;
+      }
+      .alternativas > li {
+        counter-increment: alt;
+        color: var(--alternativa);
+        margin: 5px 0 5px 16px;
+        line-height: 1.5;
+      }
+      .alternativas > li::before {
+        content: counter(alt, lower-alpha) ') ';
+        font-weight: bold;
+      }
+      .item code {
+        font-family: var(--mono);
+        font-weight: bold;
+      }
+
+      /* ── AFIRMATIVAS I, II, III ── */
+      .afirmativas {
+        list-style: upper-roman;
+        margin: 6px 0 6px 34px !important;
+      }
+      .afirmativas > li {
+        margin-bottom: 3px;
+      }
+
+      /* ── FIGURAS ── */
+      .figura {
+        margin: 10px 0 14px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--cinza-borda);
+        background: #fff;
+      }
+      .figura-cab {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 12px;
+        background: var(--cinza-fundo);
+        border-bottom: 1px solid var(--cinza-borda);
+      }
+      .pontos {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #f85149;
+        box-shadow:
+          14px 0 #e3b341,
+          28px 0 #39d353;
+        margin-right: 28px;
+      }
+      .figura-titulo {
+        font-family: var(--mono);
+        font-size: 9pt;
+        color: #333;
+      }
+      .figura-corpo {
+        padding: 8px;
+        overflow-x: auto;
+      }
+      .figura-corpo svg {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* variante: código */
+      .figura-codigo {
+        background: #0d1117;
+        border-color: #0d1117;
+      }
+      .figura-codigo .figura-cab {
+        background: #0d1117;
+        border-bottom-color: #f1f1f1;
+      }
+      .figura-codigo .figura-titulo {
+        color: #f1f1f1;
+        font-size: 1rem;
+      }
+      .figura-codigo .figura-corpo {
+        padding: 12px 14px;
+      }
+      .figura-codigo pre {
+        font-family: var(--mono);
+        font-size: 0.95rem;
+        line-height: 1.5;
+        white-space: pre;
+        color: #f1f1f1;
+      }
+      .figura-codigo .kw {
+        color: #ff7b72;
+      }
+      .figura-codigo .fn {
+        color: #d2a8ff;
+      }
+      .figura-codigo .str {
+        color: #a5d6ff;
+      }
+      .figura-codigo .num {
+        color: #6087f2;
+      }
+      .figura-codigo .cmt {
+        color: #8b949e;
+      }
+      .figura-codigo .prop {
+        color: #79c0ff;
+      }
+      .figura-codigo .var {
+        color: #ffa657;
+      }
+
+      /* variante: tabela de dados */
+      .tabela-dados {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 10pt;
+      }
+      .tabela-dados th {
+        background: var(--azul-claro);
+        border: 1px solid var(--azul);
+        padding: 5px 8px;
+        text-align: left;
+      }
+      .tabela-dados td {
+        border: 1px solid var(--azul-borda);
+        padding: 4px 8px;
+      }
+
+      /* ── SVG: DER pé de galinha ── */
+      .dg-e {
+        fill: #fff;
+        stroke: var(--azul);
+        stroke-width: 1.2;
+      }
+      .dg-h {
+        fill: var(--azul);
+      }
+      .dg-t {
+        font: bold 12px var(--fonte);
+        fill: #fff;
+        text-anchor: middle;
+      }
+      .dg-a {
+        font: 10px var(--fonte);
+        fill: #000;
+      }
+      .dg-k {
+        font: bold 10px var(--fonte);
+        fill: #000;
+      }
+      .dg-s {
+        stroke: var(--cinza-borda);
+        stroke-width: 1;
+      }
+      .dg-l {
+        stroke: var(--azul);
+        stroke-width: 1.5;
+        fill: none;
+      }
+      .dg-c {
+        fill: #fff;
+        stroke: var(--azul);
+        stroke-width: 1.5;
+      }
+
+      /* ── SVG: FLUXOGRAMA ── */
+      .fc-p {
+        fill: #fff;
+        stroke: var(--azul);
+        stroke-width: 1.3;
+      }
+      .fc-d {
+        fill: var(--azul-claro);
+        stroke: var(--azul);
+        stroke-width: 1.3;
+      }
+      .fc-t {
+        fill: var(--azul);
+        stroke: var(--azul);
+        stroke-width: 1.3;
+      }
+      .fc-tx {
+        font: 10px var(--fonte);
+        fill: #000;
+        text-anchor: middle;
+      }
+      .fc-tw {
+        font: bold 10px var(--fonte);
+        fill: #fff;
+        text-anchor: middle;
+      }
+      .fc-lb {
+        font: italic bold 9px var(--fonte);
+        fill: var(--azul);
+      }
+      .fc-l {
+        stroke: var(--azul);
+        stroke-width: 1.5;
+        fill: none;
+      }
+
+      /* ── GABARITO ── */
+      .gabarito-section {
+        margin-top: 28px;
+      }
+      .gabarito-section .gabarito-titulo {
+        margin-top: 0;
+      }
+      .gabarito-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid var(--azul);
+      }
+      .gabarito-table th {
+        background: var(--azul-claro);
+        border: 1px solid var(--azul);
+        padding: 6px;
+        font-size: 10pt;
+        text-align: center;
+      }
+      .gabarito-table td {
+        border: 1px solid var(--azul-borda);
+        padding: 5px;
+        text-align: center;
+        font-size: 10.5pt;
+      }
+      .gabarito-table th:nth-child(1) {
+        width: 15%;
+      }
+      .gabarito-table th:nth-child(2) {
+        width: 25%;
+      }
+      .gabarito-table th:nth-child(3),
+      .gabarito-table th:nth-child(4) {
+        width: 30%;
+      }
+      .resposta-correta {
+        display: inline-block;
+        min-width: 28px;
+        padding: 2px 8px;
+        border: 2px solid var(--azul);
+        border-radius: 50%;
+        font-weight: bold;
+        color: var(--azul);
+      }
+
+      /* ── IMPRESSÃO ── */
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      @media print {
+        .page {
+          width: 100%;
+          min-height: 0;
+          margin: 0;
+          padding: 12mm 14mm;
+        }
+        .gabarito-section {
+          break-before: page;
+          margin-top: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="prova">
+    <div class="page">
+      <!-- ══════════════════ CABEÇALHO ══════════════════ -->
+      <table class="header-table">
+        <tr>
+          <td class="logo-cell" rowspan="7">
+            <div class="senai-brand">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_sfpOEDmPPoL6K0aQL4qg5SsWL_41ZqhyF7zW1509kA&s=10"
+                alt="Logo SENAI"
+              />
+              <span>Serviço Nacional de Aprendizagem</span>
+            </div>
+          </td>
+          <td class="title-cell">AVALIAÇÃO OBJETIVA SAEP - PARTE 2</td>
+          <td class="desemp-cell" rowspan="7">Desempenho</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Data:</span>
+            <em class="campo negrito">___/___/______</em>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Avaliador / Docente:</span>
+            <em class="campo negrito">Anderson Raulino Dutra</em>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Curso:</span>
+            <em class="campo negrito"> Técnico em Informática para Internet</em>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Unidade Curricular:</span>
+            <em class="campo negrito">Projeto de Backend</em>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Turma:</span>
+            <em class="campo negrito">T TIIN 2025/1 M2- 463013</em>
+          </td>
+        </tr>
+        <tr class="estudante-row">
+          <td>Profissional / Candidato:</td>
+        </tr>
+      </table>
+
+      <div class="section-divider">
+        <div class="section-title">
+          AVALIAÇÃO OBJETIVA<br />
+          Módulo 02: Parametrização, Frameworks e Construção do Core
+        </div>
+      </div>
+
+      <!-- ══════════════════ CAPACIDADES ══════════════════ -->
+      <div class="capacidades-box">
+        <div class="capacidades-header">CAPACIDADES AVALIADAS</div>
+        <div class="capacidades-content">
+          <p>
+            <strong>C1:</strong> Considerar o escopo do projeto na escolha dos
+            protocolos de comunicação de sistemas web.
+          </p>
+          <p>
+            <strong>C2:</strong> Aplicar técnicas para garantir o tratamento das
+            requisições de sistemas web.
+          </p>
+          <p>
+            <strong>C3:</strong> Determinar técnicas de manipulação de dados
+            requeridas pelo projeto / Determinar o tipo do banco de dados
+            empregado.
+          </p>
+          <p>
+            <strong>C4:</strong> Aplicar técnicas de normalização e padronização
+            de dados.
+          </p>
+          <p>
+            <strong>C5:</strong> Executar testes de funcionamento de sistemas
+            para web / Instalar e configurar banco de dados
+          </p>
+          <p>
+            <strong>C6:</strong>Aplicar as configurações e parametrizações do
+            sistema para web Definir as configurações e parametrizações do
+            sistema para web.
+          </p>
+        </div>
+      </div>
+
+      <!-- ══════════════════ ITENS ══════════════════ -->
+      <section class="item" data-ct="C6" data-dif="facil" data-resp="b">
+        <div class="contexto">
+          Um desenvolvedor iniciou a criação de um projeto web em sua máquina
+          local e deseja começar a rastrear o histórico de alterações dos
+          arquivos utilizando a ferramenta Git.
+        </div>
+        <div class="comando">
+          Qual comando do Git deve ser executado na pasta do projeto para
+          inicializar um repositório local?
+        </div>
+        <ol class="alternativas">
+          <li>
+            <code>git push origin main</code>, que envia os commits locais já
+            registrados para o repositório remoto chamado origin.
+          </li>
+          <li>
+            <code>git init</code>, que cria o repositório local e a pasta oculta
+            .git dentro da pasta do projeto.
+          </li>
+          <li>
+            <code>git commit -m "Inicial"</code>, que registra uma versão com a
+            mensagem informada.
+          </li>
+          <li><code>git clone</code>, que copia um repositório remoto.</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C6" data-dif="medio" data-resp="d">
+        <div class="contexto">
+          Ao realizar o comando <code>git merge feature/login</code> na branch
+          <code>main</code>, o Git reportou um conflito de integração no arquivo
+          <code>src/auth.js</code>.
+        </div>
+        <div class="comando">
+          Qual é a sequência correta de comandos para resolver o conflito de
+          forma segura?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Executar <code>git push --force</code> imediatamente para
+            sobrescrever o histórico do repositório remoto com a versão local da
+            branch.
+          </li>
+          <li>
+            Executar <code>git reset --hard</code> e excluir a branch
+            <code>feature/login</code>, descartando todo o trabalho feito nela.
+          </li>
+          <li>
+            Apagar o diretório <code>.git</code> local e clonar o repositório
+            novamente.
+          </li>
+          <li>
+            Editar o arquivo, usar <code>git add</code> e
+            <code>git commit</code>.
+          </li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="a">
+        <div class="contexto">
+          Um <em>commit</em> contendo um erro crítico de produção já foi
+          publicado na branch remota pública compartilhada pela equipe. É
+          necessário desfazer as alterações mantendo a integridade do histórico
+          público.
+        </div>
+        <div class="comando">Qual é o procedimento recomendado no Git?</div>
+        <ol class="alternativas">
+          <li>
+            Utilizar <code>git revert &lt;hash_do_commit&gt;</code>, que gera um
+            novo commit desfazendo as alterações sem reescrever o histórico
+            público.
+          </li>
+          <li>
+            Executar <code>git reset --hard HEAD~1</code> seguido de
+            <code>git push --force</code> para apagar o commit do remoto.
+          </li>
+          <li>
+            Remover o arquivo afetado manualmente do disco sem registrar commit.
+          </li>
+          <li>Utilizar <code>git clean -fd</code> no servidor.</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C1" data-dif="facil" data-resp="c">
+        <div class="contexto">
+          Na arquitetura de sistemas web, o protocolo HTTP utiliza verbos para
+          indicar a ação a ser realizada nos recursos do servidor.
+        </div>
+        <div class="comando">
+          Qual método HTTP é o padrão recomendado para submeter formulários que
+          criam um novo registro no servidor?
+        </div>
+        <ol class="alternativas">
+          <li>
+            GET, método usado para consultar e recuperar recursos já existentes,
+            sem criar novos registros no servidor.
+          </li>
+          <li>
+            OPTIONS, método que informa ao cliente quais operações o servidor
+            aceita para o recurso.
+          </li>
+          <li>POST, método usado para enviar dados e criar um novo recurso.</li>
+          <li>DELETE, método que remove um recurso.</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C1" data-dif="medio" data-resp="a">
+        <div class="contexto">
+          Na arquitetura de APIs RESTful, a idempotência garante que requisições
+          múltiplas idênticas produzam o mesmo efeito no estado do servidor.
+        </div>
+        <div class="comando">
+          Quais métodos HTTP são originalmente idempotentes pela especificação
+          do protocolo web?
+        </div>
+        <ol class="alternativas">
+          <li>
+            GET, PUT e DELETE, pois repetir a mesma requisição várias vezes não
+            altera o estado do servidor além da primeira.
+          </li>
+          <li>
+            GET, POST e PUT, pois os três apenas consultam ou substituem dados
+            já existentes.
+          </li>
+          <li>POST e PATCH, pois ambos criam novos recursos.</li>
+          <li>POST e DELETE.</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C1" data-dif="medio" data-resp="d">
+        <div class="contexto">
+          Uma API REST precisa responder a uma requisição onde um cliente
+          autenticado tenta acessar um recurso sem possuir o papel
+          (<em>role</em>) de permissão necessário no sistema web.
+        </div>
+        <div class="comando">
+          Qual código de status HTTP deve ser retornado por essa rota para
+          indicar falta de autorização de acesso?
+        </div>
+        <ol class="alternativas">
+          <li>
+            401 (Unauthorized), pois indica que a credencial do usuário é
+            inválida ou não foi informada na requisição.
+          </li>
+          <li>
+            404 (Not Found), pois o recurso solicitado não existe no servidor ou
+            foi movido.
+          </li>
+          <li>
+            400 (Bad Request), pois o formato da requisição está inválido.
+          </li>
+          <li>403 (Forbidden), pois o acesso é negado.</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C2" data-dif="facil" data-resp="b">
+        <div class="contexto">
+          Em uma aplicação backend em Node.js/Express, a equipe precisa
+          interceptar as requisições HTTP antes de chegarem às rotas finais para
+          verificar credenciais e registrar logs.
+        </div>
+        <div class="comando">
+          Como é chamado o componente de software encarregado de intermediar o
+          tratamento de requisições web?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Repositório Git remoto, que armazena o histórico de versões e
+            permite o trabalho colaborativo da equipe.
+          </li>
+          <li>
+            Middleware, função que intermedia a requisição antes de ela chegar à
+            rota final.
+          </li>
+          <li>Seletor CSS, que define o estilo dos elementos da página.</li>
+          <li>SGBD Relacional.</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C2" data-dif="medio" data-resp="c">
+        <div class="contexto">
+          Uma aplicação Single Page Application (SPA) rodando em
+          <code>http://localhost:5173</code> realiza uma chamada
+          <code>fetch</code> para uma API Node.js em
+          <code>http://api.empresa.com</code> e é bloqueada pelo navegador
+          devido à política de mesma origem.
+        </div>
+        <div class="comando">
+          Qual cabeçalho HTTP a API deve enviar na resposta para liberar o
+          acesso da SPA?
+        </div>
+        <ol class="alternativas">
+          <li>
+            <code>Content-Type: application/json</code>, que apenas informa o
+            formato JSON do corpo da resposta enviada.
+          </li>
+          <li>
+            <code>Cache-Control: no-store</code>, que impede o navegador de
+            guardar a resposta em cache.
+          </li>
+          <li>
+            <code>Access-Control-Allow-Origin: http://localhost:5173</code>
+          </li>
+          <li><code>X-Frame-Options: SAMEORIGIN</code></li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C2" data-dif="medio" data-resp="b">
+        <div class="contexto">
+          Em uma aplicação Node.js utilizando o driver SQL <code>pg</code>, um
+          analista de segurança identificou o trecho vulnerável a
+          <em>SQL Injection</em> no tratamento de requisições web apresentado
+          abaixo.
+        </div>
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 buscaUsuario.js</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="cmt">// Trecho vulnerável</span>
+<span class="kw">const</span> <span class="var">query</span> = <span class="str">`SELECT * FROM usuarios WHERE email = '`</span> + <span class="var">req</span>.<span class="prop">body</span>.<span class="prop">email</span> + <span class="str">`'`</span>;
+<span class="kw">const</span> <span class="var">resultado</span> = <span class="kw">await</span> <span class="var">db</span>.<span class="fn">query</span>(<span class="var">query</span>);</pre>
+          </div>
+        </figure>
+        <div class="comando">
+          Qual refatoração em JavaScript elimina corretamente essa
+          vulnerabilidade no tratamento das requisições?
+        </div>
+        <ol class="alternativas">
+          <li>
+            <code
+              >const query = 'SELECT * FROM usuarios WHERE email = ?'; const
+              resultado = await db.query(query,
+              [req.body.email.trim().toLowerCase()]);</code
+            >
+          </li>
+          <li>
+            <code
+              >const query = 'SELECT * FROM usuarios WHERE email = $1'; const
+              resultado = await db.query(query, [req.body.email]);</code
+            >
+          </li>
+          <li>
+            <code
+              >const query = `SELECT * FROM usuarios WHERE email =
+              '${encodeURIComponent(req.body.email.trim())}'`;</code
+            >
+          </li>
+          <li>
+            <code
+              >const query = `SELECT * FROM usuarios WHERE email =
+              '${req.body.email.replace(/'/g, "")}'`;</code
+            >
+          </li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C2" data-dif="dificil" data-resp="a">
+        <div class="contexto">
+          Uma aplicação web insere conteúdo enviado pelos usuários diretamente
+          no DOM através da propriedade <code>innerHTML</code> sem a devida
+          higienização, permitindo que scripts maliciosos sejam executados no
+          navegador dos visitantes.
+        </div>
+        <div class="comando">
+          Como é classificada essa vulnerabilidade e qual a boa prática para
+          prevenção?
+        </div>
+        <ol class="alternativas">
+          <li>
+            XSS (Cross-Site Scripting); prevenido utilizando
+            <code>textContent</code> ou bibliotecas de sanitização como
+            <code>DOMPurify</code>.
+          </li>
+          <li>
+            CSRF (Cross-Site Request Forgery); prevenido com tokens anti-CSRF
+            nos cabeçalhos HTTP.
+          </li>
+          <li>
+            RCE (Remote Code Execution); prevenido bloqueando o uso do Node.js.
+          </li>
+          <li>SQL Injection; prevenido com sanitização no banco de dados.</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C2" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Uma API Node.js/Express utiliza JSON Web Tokens (JWT) para
+          autenticação <em>stateless</em>. Para mitigar riscos de sequestro de
+          sessão por vazamento de <em>Access Tokens</em> com longo período de
+          validade, a arquitetura de requisições deve ser aprimorada.
+        </div>
+        <div class="comando">
+          Qual estratégia de arquitetura atende a essa exigência de segurança?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Armazenar o <em>Access Token</em> no <code>localStorage</code> do
+            navegador com expiração infinita, evitando que o usuário precise
+            autenticar novamente a cada acesso.
+          </li>
+          <li>
+            Enviar o token JWT por parâmetros da URL em todas as requisições,
+            para que fique registrado nos logs do servidor e facilite a
+            auditoria.
+          </li>
+          <li>
+            Utilizar <em>Access Tokens</em> de vida curta em memória e
+            <em>Refresh Tokens</em> de vida longa em cookies
+            <code>HttpOnly</code> e <code>Secure</code>.
+          </li>
+          <li>Desabilitar a verificação da assinatura do token no servidor.</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C3" data-dif="facil" data-resp="d">
+        <div class="contexto">
+          Para exibir a lista completa de alunos cadastrados em um painel
+          administrativo web, o sistema necessita realizar uma consulta SQL no
+          banco de dados relacional.
+        </div>
+        <div class="comando">
+          Qual instrução SQL realiza a busca de todas as colunas e linhas da
+          tabela <code>ALUNO</code>?
+        </div>
+        <ol class="alternativas">
+          <li><code>FETCH ALL ROWS AND COLUMNS FROM TABLE ALUNO;</code></li>
+          <li><code>RETRIEVE ALL DATA FROM TABLE ALUNO;</code></li>
+          <li><code>SHOW ALL ROWS FROM ALUNO;</code></li>
+          <li><code>SELECT * FROM ALUNO;</code></li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C3" data-dif="medio" data-resp="b">
+        <div class="contexto">
+          Um analista de dados consultou as tabelas <code>desenvolvedor</code> e
+          <code>projeto</code> de um sistema corporativo utilizando a instrução
+          SQL abaixo.
+        </div>
+        <figure class="figura figura-tabela">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo"
+              >🗂️ Tabelas desenvolvedor e projeto</span
+            >
+          </div>
+          <div class="figura-corpo">
+            <table class="tabela-dados">
+              <thead>
+                <tr>
+                  <th colspan="2">desenvolvedor</th>
+                  <th colspan="2">projeto</th>
+                </tr>
+                <tr>
+                  <th>id_dev</th>
+                  <th>nome</th>
+                  <th>id_proj</th>
+                  <th>id_dev</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Carlos</td>
+                  <td>101</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Diana</td>
+                  <td>102</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Eduardo</td>
+                  <td>103</td>
+                  <td>3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </figure>
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 relatorio.sql</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="kw">SELECT</span> <span class="prop">d.nome</span>, <span class="fn">COUNT</span>(<span class="prop">p.id_proj</span>) <span class="kw">AS</span> <span class="prop">total</span>
+<span class="kw">FROM</span> <span class="var">desenvolvedor</span> d
+<span class="kw">LEFT JOIN</span> <span class="var">projeto</span> p <span class="kw">ON</span> <span class="prop">p.id_dev</span> = <span class="prop">d.id_dev</span>
+<span class="kw">GROUP BY</span> <span class="prop">d.nome</span>;</pre>
+          </div>
+        </figure>
+        <div class="comando">
+          Qual será o resultado retornado por essa consulta SQL?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Carlos 2 e Eduardo 1, pois o LEFT JOIN descarta os desenvolvedores
+            que não possuem nenhum projeto.
+          </li>
+          <li>
+            Carlos 2, Diana 0 e Eduardo 1, pois o LEFT JOIN mantém Diana mesmo
+            sem projetos.
+          </li>
+          <li>Carlos 2, Diana 1 e Eduardo 1, pois o COUNT conta as linhas.</li>
+          <li>Carlos 3, Diana 0 e Eduardo 0.</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C3" data-dif="medio" data-resp="c">
+        <div class="contexto">
+          Uma empresa de software precisa filtrar registros agrupados, exibindo
+          apenas os projetos cuja soma de horas trabalhadas seja superior a 100
+          horas na tabela <code>apontamento</code>.
+        </div>
+        <div class="comando">
+          Qual estrutura SQL realiza essa filtragem agregada corretamente?
+        </div>
+        <ol class="alternativas">
+          <li>
+            <code
+              >SELECT id_projeto, SUM(horas) FROM apontamento WHERE SUM(horas)
+              &gt; 100 GROUP BY id_projeto ORDER BY id_projeto;</code
+            >
+          </li>
+          <li>
+            <code
+              >SELECT id_projeto, SUM(horas) AS total FROM apontamento HAVING
+              SUM(horas) &gt; 100 GROUP BY id_projeto;</code
+            >
+          </li>
+          <li>
+            <code
+              >SELECT id_projeto, SUM(horas) FROM apontamento GROUP BY
+              id_projeto HAVING SUM(horas) &gt; 100;</code
+            >
+          </li>
+          <li>
+            <code
+              >SELECT id_projeto FROM apontamento WHERE horas &gt; 100 GROUP BY
+              id_projeto;</code
+            >
+          </li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C3" data-dif="dificil" data-resp="a">
+        <div class="contexto">
+          Um analista de sistemas precisa listar todos os colaboradores da
+          tabela <code>funcionario</code> cujo salário seja superior à média
+          salarial de toda a empresa.
+        </div>
+        <div class="comando">
+          Qual subconsulta SQL resolve corretamente esse problema de manipulação
+          de dados?
+        </div>
+        <ol class="alternativas">
+          <li>
+            <code
+              >SELECT * FROM funcionario WHERE salario &gt; (SELECT AVG(salario)
+              FROM funcionario);</code
+            >
+          </li>
+          <li>
+            <code
+              >SELECT AVG(salario) FROM funcionario WHERE salario &gt;
+              AVG(salario);</code
+            >
+          </li>
+          <li>
+            <code
+              >SELECT * FROM funcionario WHERE salario &gt; AVG(salario);</code
+            >
+          </li>
+          <li><code>SELECT AVG(salario) FROM funcionario;</code></li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C4" data-dif="facil" data-resp="d">
+        <div class="contexto">
+          Na fase de normalização de dados para o banco de dados de um sistema
+          web, exige-se que todos os atributos de uma tabela contenham apenas
+          valores atômicos (indivisíveis).
+        </div>
+        <div class="comando">
+          A eliminação de grupos repetidos e valores multivalorados atende às
+          regras de qual Forma Normal?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Forma Normal de Boyce-Codd (BCNF), que trata dependências em que um
+            determinante não é chave candidata.
+          </li>
+          <li>
+            Terceira Forma Normal (3FN), que elimina dependências transitivas
+            entre atributos não chave.
+          </li>
+          <li>
+            Segunda Forma Normal (2FN), que elimina dependências parciais da
+            chave primária.
+          </li>
+          <li>Primeira Forma Normal (1FN).</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C4" data-dif="dificil" data-resp="b">
+        <div class="contexto">
+          Um arquiteto de banco de dados encontrou a tabela
+          <code>desenvolvedor</code> armazenando múltiplas competências técnicas
+          separadas por vírgula no mesmo campo.
+        </div>
+        <figure class="figura figura-tabela">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">🗂️ Tabela desnormalizada</span>
+          </div>
+          <div class="figura-corpo">
+            <table class="tabela-dados">
+              <thead>
+                <tr>
+                  <th>id_dev</th>
+                  <th>nome</th>
+                  <th>competencias</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Alice</td>
+                  <td>JavaScript, SQL, HTML</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Bernardo</td>
+                  <td>CSS, React</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </figure>
+        <div class="comando">
+          Qual Forma Normal está sendo violada e qual a solução adequada para a
+          padronização dos dados?
+        </div>
+        <ol class="alternativas">
+          <li>
+            2FN; devendo-se criar colunas adicionais como
+            <code>competencia1</code> e <code>competencia2</code>, uma para cada
+            habilidade do desenvolvedor.
+          </li>
+          <li>
+            1FN; devendo-se criar uma tabela associativa
+            <code>dev_competencia</code> garantindo a atomicidade dos dados.
+          </li>
+          <li>
+            3FN; devendo-se mover a coluna <code>nome</code> para uma tabela
+            independente de desenvolvedores.
+          </li>
+          <li>
+            BCNF; adicionando um índice composto na coluna
+            <code>competencias</code>.
+          </li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C5" data-dif="medio" data-resp="a">
+        <div class="contexto">
+          Ao instalar e configurar um servidor de banco de dados PostgreSQL para
+          conectar a um sistema web backend em Node.js, o desenvolvedor precisa
+          definir a porta TCP padrão de conexão.
+        </div>
+        <div class="comando">
+          Qual é a porta padrão utilizada pelas parametrizações do SGBD
+          PostgreSQL?
+        </div>
+        <ol class="alternativas">
+          <li>
+            5432, porta padrão do PostgreSQL para conexões TCP dos clientes e
+            das aplicações.
+          </li>
+          <li>
+            3306, porta padrão do MySQL e do MariaDB para conexões de clientes.
+          </li>
+          <li>27017, porta padrão do MongoDB.</li>
+          <li>80, porta do HTTP.</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C5" data-dif="medio" data-resp="c">
+        <div class="contexto">
+          Após realizar ajustes nas parametrizações de um sistema para web, a
+          equipe precisa rodar uma suíte de testes de funcionamento para
+          garantir que nenhuma funcionalidade anteriormente em produção tenha
+          sido quebrada.
+        </div>
+        <div class="comando">
+          Qual tipo de teste atende a esse propósito específico?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Teste de Usabilidade, que avalia a facilidade com que as pessoas
+            utilizam a interface do sistema.
+          </li>
+          <li>
+            Teste de Carga, que mede o comportamento do sistema sob um volume
+            esperado de acessos.
+          </li>
+          <li>
+            Teste de Regressão, que verifica se funcionalidades antigas
+            continuam operando.
+          </li>
+          <li>Teste de Estresse, que leva o sistema além do limite.</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C5" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          Para garantir o funcionamento correto do sistema web, a equipe de
+          desenvolvimento adotou TDD (<em>Test-Driven Development</em>) na
+          execução dos testes de software.
+        </div>
+        <div class="comando">
+          Qual é a ordem correta do ciclo iterativo do TDD?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Implementar o código completo da funcionalidade, escrever os testes
+            automatizados depois e, por fim, refatorar.
+          </li>
+          <li>
+            Escrever o teste que já passa, implementar o código e criar testes
+            manuais ao final.
+          </li>
+          <li>
+            Refatorar o sistema, criar os testes de integração e publicar em
+            produção.
+          </li>
+          <li>Escrever teste que falha (Red), passar (Green) e refatorar.</li>
+        </ol>
+      </section>
+
+      <section class="item" data-ct="C2" data-dif="medio" data-resp="b">
+        <div class="contexto">
+          O fluxograma a seguir representa o tratamento de uma requisição
+          <code>POST /usuarios</code> em uma API de cadastro de usuários.
+        </div>
+        <figure class="figura figura-diagrama">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo"
+              >📐 Fluxograma — Cadastro de usuário</span
+            >
+          </div>
+          <div class="figura-corpo">
+            <svg
+              viewBox="0 0 640 190"
+              xmlns="http://www.w3.org/2000/svg"
+              role="img"
+              aria-label="Fluxograma de cadastro de usuário com validação de e-mail"
+            >
+              <defs>
+                <marker
+                  id="seta1"
+                  viewBox="0 0 10 10"
+                  refX="9"
+                  refY="5"
+                  markerWidth="7"
+                  markerHeight="7"
+                  orient="auto"
+                >
+                  <path d="M0 0L10 5L0 10z" fill="#2e5496" />
+                </marker>
+              </defs>
+              <rect class="fc-t" x="8" y="45" width="74" height="30" rx="15" />
+              <text class="fc-tw" x="45" y="64">Início</text>
+              <line
+                class="fc-l"
+                x1="82"
+                y1="60"
+                x2="100"
+                y2="60"
+                marker-end="url(#seta1)"
+              />
+
+              <rect class="fc-p" x="100" y="40" width="100" height="40" />
+              <text class="fc-tx" x="150" y="57">Receber</text>
+              <text class="fc-tx" x="150" y="71">POST /usuarios</text>
+              <line
+                class="fc-l"
+                x1="200"
+                y1="60"
+                x2="235"
+                y2="60"
+                marker-end="url(#seta1)"
+              />
+
+              <polygon class="fc-d" points="290,22 345,60 290,98 235,60" />
+              <text class="fc-tx" x="290" y="57">E-mail</text>
+              <text class="fc-tx" x="290" y="70">válido?</text>
+              <line
+                class="fc-l"
+                x1="345"
+                y1="60"
+                x2="383"
+                y2="60"
+                marker-end="url(#seta1)"
+              />
+              <text class="fc-lb" x="354" y="53">Sim</text>
+              <line
+                class="fc-l"
+                x1="290"
+                y1="98"
+                x2="290"
+                y2="140"
+                marker-end="url(#seta1)"
+              />
+              <text class="fc-lb" x="296" y="121">Não</text>
+
+              <polygon class="fc-d" points="445,22 507,60 445,98 383,60" />
+              <text class="fc-tx" x="445" y="57">E-mail já</text>
+              <text class="fc-tx" x="445" y="70">cadastrado?</text>
+              <line
+                class="fc-l"
+                x1="507"
+                y1="60"
+                x2="530"
+                y2="60"
+                marker-end="url(#seta1)"
+              />
+              <text class="fc-lb" x="509" y="52">Não</text>
+              <line
+                class="fc-l"
+                x1="445"
+                y1="98"
+                x2="445"
+                y2="140"
+                marker-end="url(#seta1)"
+              />
+              <text class="fc-lb" x="451" y="121">Sim</text>
+
+              <rect class="fc-p" x="530" y="40" width="102" height="40" />
+              <text class="fc-tx" x="581" y="57">Salvar usuário</text>
+              <text class="fc-tx" x="581" y="71">no banco</text>
+              <line
+                class="fc-l"
+                x1="581"
+                y1="80"
+                x2="581"
+                y2="140"
+                marker-end="url(#seta1)"
+              />
+
+              <rect
+                class="fc-t"
+                x="240"
+                y="140"
+                width="100"
+                height="32"
+                rx="16"
+              />
+              <text class="fc-tw" x="290" y="160">Responder 400</text>
+              <rect
+                class="fc-t"
+                x="395"
+                y="140"
+                width="100"
+                height="32"
+                rx="16"
+              />
+              <text class="fc-tw" x="445" y="160">Responder 409</text>
+              <rect
+                class="fc-t"
+                x="531"
+                y="140"
+                width="100"
+                height="32"
+                rx="16"
+              />
+              <text class="fc-tw" x="581" y="160">Responder 201</text>
+            </svg>
+          </div>
+        </figure>
+        <div class="comando">
+          Uma requisição chega com um e-mail em formato válido, mas já
+          cadastrado no banco. Qual é o caminho percorrido no fluxograma?
+        </div>
+        <ol class="alternativas">
+          <li>
+            O fluxo passa pelas duas decisões, salva o usuário no banco de dados
+            e responde 201 ao cliente, pois o formato do e-mail é válido.
+          </li>
+          <li>
+            O fluxo segue pelo caminho Sim na primeira decisão, também pelo Sim
+            na segunda e termina com a resposta 409.
+          </li>
+          <li>
+            O fluxo é encerrado na primeira decisão com a resposta 400, pois o
+            e-mail foi rejeitado.
+          </li>
+          <li>O fluxo termina sem resposta ao cliente.</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C2" data-dif="dificil" data-resp="a">
+        <div class="contexto">
+          Um desenvolvedor Node.js analisa a ordem de execução de um trecho
+          assíncrono para entender como o servidor trata as tarefas de uma
+          requisição.
+        </div>
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 ordem.js</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="var">console</span>.<span class="fn">log</span>(<span class="str">'A'</span>);
+<span class="fn">setTimeout</span>(() =&gt; <span class="var">console</span>.<span class="fn">log</span>(<span class="str">'B'</span>), <span class="num">0</span>);
+<span class="var">Promise</span>.<span class="fn">resolve</span>().<span class="fn">then</span>(() =&gt; <span class="var">console</span>.<span class="fn">log</span>(<span class="str">'C'</span>));
+<span class="var">console</span>.<span class="fn">log</span>(<span class="str">'D'</span>);</pre>
+          </div>
+        </figure>
+        <div class="comando">
+          Qual será a ordem das letras exibidas no console?
+        </div>
+        <ol class="alternativas">
+          <li>
+            A, D, C, B, pois o código síncrono executa primeiro, depois as
+            microtarefas das Promises e só então os callbacks do
+            <code>setTimeout</code>.
+          </li>
+          <li>
+            A, B, C, D, pois o JavaScript sempre executa as instruções
+            exatamente na ordem em que foram escritas no arquivo.
+          </li>
+          <li>
+            A, D, B, C, pois o <code>setTimeout</code> com zero milissegundo tem
+            prioridade sobre as Promises.
+          </li>
+          <li>A, C, D, B, pois a Promise é resolvida antes.</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C2" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          Um desenvolvedor criou a rota abaixo em Express. Ao testar, enviou uma
+          requisição POST sem o campo <code>email</code>.
+        </div>
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 rotaUsuarios.js</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="var">app</span>.<span class="fn">post</span>(<span class="str">'/usuarios'</span>, (<span class="var">req</span>, <span class="var">res</span>) =&gt; {
+  <span class="kw">const</span> { <span class="var">email</span> } = <span class="var">req</span>.<span class="prop">body</span>;
+  <span class="kw">if</span> (!<span class="var">email</span>) {
+    <span class="var">res</span>.<span class="fn">status</span>(<span class="num">400</span>).<span class="fn">json</span>({ <span class="prop">erro</span>: <span class="str">'E-mail obrigatório'</span> });
+  }
+  <span class="fn">salvarUsuario</span>(<span class="var">email</span>);
+  <span class="var">res</span>.<span class="fn">status</span>(<span class="num">201</span>).<span class="fn">json</span>({ <span class="prop">ok</span>: <span class="kw">true</span> });
+});</pre>
+          </div>
+        </figure>
+        <div class="comando">
+          Qual é o problema nesse código e como corrigi-lo?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Não há problema, pois o Express interrompe a função automaticamente
+            assim que o método <code>res.json()</code> é chamado pela primeira
+            vez.
+          </li>
+          <li>
+            O <code>if</code> deve ser trocado por um <code>while</code>, pois o
+            Express não aceita estruturas condicionais dentro de rotas.
+          </li>
+          <li>
+            O status 400 é inválido para erros de validação e deve ser
+            substituído por 500.
+          </li>
+          <li>
+            Falta o <code>return</code> no <code>if</code>; a rota responde duas
+            vezes.
+          </li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C3" data-dif="medio" data-resp="c">
+        <div class="contexto">
+          Um desenvolvedor backend calcula o valor total de um pedido a partir
+          do array de itens recebido na requisição, conforme o código abaixo.
+        </div>
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 totalPedido.js</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="kw">const</span> <span class="var">itens</span> = [
+  { <span class="prop">nome</span>: <span class="str">'Teclado'</span>, <span class="prop">preco</span>: <span class="num">150</span>, <span class="prop">qtd</span>: <span class="num">2</span> },
+  { <span class="prop">nome</span>: <span class="str">'Mouse'</span>,   <span class="prop">preco</span>: <span class="num">80</span>,  <span class="prop">qtd</span>: <span class="num">1</span> },
+  { <span class="prop">nome</span>: <span class="str">'Cabo'</span>,    <span class="prop">preco</span>: <span class="num">20</span>,  <span class="prop">qtd</span>: <span class="num">5</span> }
+];
+<span class="kw">const</span> <span class="var">total</span> = <span class="var">itens</span>.<span class="fn">reduce</span>((<span class="var">acc</span>, <span class="var">i</span>) =&gt; <span class="var">acc</span> + <span class="var">i</span>.<span class="prop">preco</span> * <span class="var">i</span>.<span class="prop">qtd</span>, <span class="num">0</span>);
+<span class="var">console</span>.<span class="fn">log</span>(<span class="var">total</span>);</pre>
+          </div>
+        </figure>
+        <div class="comando">Qual valor será exibido no console?</div>
+        <ol class="alternativas">
+          <li>
+            O valor 250, pois o <code>reduce</code> soma somente os preços
+            unitários e ignora o campo <code>qtd</code> de cada item do pedido.
+          </li>
+          <li>
+            Um array [300, 80, 100], pois o <code>reduce</code> devolve um novo
+            valor para cada item, como faz o <code>map</code>.
+          </li>
+          <li>
+            O valor 480, pois cada preço é multiplicado pela quantidade e
+            acumulado.
+          </li>
+          <li>O valor 0, pois o acumulador inicial não é alterado.</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C5" data-dif="facil" data-resp="b">
+        <div class="contexto">
+          Para realizar o teste de mesa de um trecho de código JavaScript, o
+          desenvolvedor acompanhou o valor das variáveis a cada repetição do
+          laço abaixo.
+        </div>
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 laco.js</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="kw">let</span> <span class="var">soma</span> = <span class="num">0</span>;
+<span class="kw">for</span> (<span class="kw">let</span> <span class="var">i</span> = <span class="num">1</span>; <span class="var">i</span> &lt;= <span class="num">6</span>; <span class="var">i</span>++) {
+  <span class="kw">if</span> (<span class="var">i</span> % <span class="num">3</span> === <span class="num">0</span>) <span class="kw">continue</span>;
+  <span class="var">soma</span> += <span class="var">i</span>;
+}
+<span class="var">console</span>.<span class="fn">log</span>(<span class="var">soma</span>);</pre>
+          </div>
+        </figure>
+        <div class="comando">
+          Qual valor será exibido no console ao final da execução?
+        </div>
+        <ol class="alternativas">
+          <li>
+            O valor 21, pois o <code>continue</code> apenas registra o número no
+            console e todos os valores de 1 a 6 são somados normalmente.
+          </li>
+          <li>
+            O valor 12, pois o <code>continue</code> ignora os múltiplos de 3 (3
+            e 6) e soma apenas 1, 2, 4 e 5.
+          </li>
+          <li>
+            O valor 3, pois o <code>continue</code> encerra o laço no primeiro
+            múltiplo de 3.
+          </li>
+          <li>O valor 9, pois só os múltiplos de 3 são somados.</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C5" data-dif="medio" data-resp="c">
+        <div class="contexto">
+          Um desenvolvedor testou o comportamento dos operadores de igualdade do
+          JavaScript no trecho abaixo.
+        </div>
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 igualdade.js</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="var">console</span>.<span class="fn">log</span>(<span class="num">0</span> == <span class="str">'0'</span>);
+<span class="var">console</span>.<span class="fn">log</span>(<span class="num">0</span> === <span class="str">'0'</span>);
+<span class="var">console</span>.<span class="fn">log</span>(<span class="kw">null</span> == <span class="kw">undefined</span>);</pre>
+          </div>
+        </figure>
+        <div class="comando">
+          Quais valores serão exibidos no console, na ordem das três linhas?
+        </div>
+        <ol class="alternativas">
+          <li>
+            true, true e true, pois o JavaScript converte os tipos antes de
+            qualquer comparação, inclusive no operador <code>===</code>.
+          </li>
+          <li>
+            false, false e true, pois o operador <code>==</code> compara tipos e
+            valores, enquanto o <code>===</code> só compara valores.
+          </li>
+          <li>
+            true, false e true, pois o <code>==</code> converte os tipos e o
+            <code>===</code> exige o mesmo tipo.
+          </li>
+          <li>true, false e false.</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C5" data-dif="dificil" data-resp="a">
+        <div class="contexto">
+          O fluxograma a seguir representa um algoritmo que percorre números
+          inteiros e acumula alguns deles na variável <code>soma</code>.
+        </div>
+        <figure class="figura figura-diagrama">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo"
+              >📐 Fluxograma — Acumulador com laço</span
+            >
+          </div>
+          <div class="figura-corpo">
+            <svg
+              viewBox="0 0 600 255"
+              xmlns="http://www.w3.org/2000/svg"
+              role="img"
+              aria-label="Fluxograma de um laço que acumula valores pares na variável soma"
+            >
+              <defs>
+                <marker
+                  id="seta2"
+                  viewBox="0 0 10 10"
+                  refX="9"
+                  refY="5"
+                  markerWidth="7"
+                  markerHeight="7"
+                  orient="auto"
+                >
+                  <path d="M0 0L10 5L0 10z" fill="#2e5496" />
+                </marker>
+              </defs>
+              <rect class="fc-t" x="8" y="35" width="70" height="30" rx="15" />
+              <text class="fc-tw" x="43" y="54">Início</text>
+              <line
+                class="fc-l"
+                x1="78"
+                y1="50"
+                x2="100"
+                y2="50"
+                marker-end="url(#seta2)"
+              />
+
+              <rect class="fc-p" x="100" y="30" width="90" height="40" />
+              <text class="fc-tx" x="145" y="47">soma ← 0</text>
+              <text class="fc-tx" x="145" y="61">i ← 1</text>
+              <line
+                class="fc-l"
+                x1="190"
+                y1="50"
+                x2="225"
+                y2="50"
+                marker-end="url(#seta2)"
+              />
+
+              <polygon class="fc-d" points="275,18 325,50 275,82 225,50" />
+              <text class="fc-tx" x="275" y="54">i ≤ 5?</text>
+              <line
+                class="fc-l"
+                x1="325"
+                y1="50"
+                x2="360"
+                y2="50"
+                marker-end="url(#seta2)"
+              />
+              <text class="fc-lb" x="331" y="43">Não</text>
+              <line
+                class="fc-l"
+                x1="275"
+                y1="82"
+                x2="275"
+                y2="108"
+                marker-end="url(#seta2)"
+              />
+              <text class="fc-lb" x="281" y="99">Sim</text>
+
+              <rect class="fc-p" x="360" y="32" width="90" height="36" />
+              <text class="fc-tx" x="405" y="54">Exibir soma</text>
+              <line
+                class="fc-l"
+                x1="450"
+                y1="50"
+                x2="485"
+                y2="50"
+                marker-end="url(#seta2)"
+              />
+              <rect
+                class="fc-t"
+                x="485"
+                y="35"
+                width="60"
+                height="30"
+                rx="15"
+              />
+              <text class="fc-tw" x="515" y="54">Fim</text>
+
+              <polygon class="fc-d" points="275,108 325,140 275,172 225,140" />
+              <text class="fc-tx" x="275" y="144">i é par?</text>
+              <line
+                class="fc-l"
+                x1="325"
+                y1="140"
+                x2="350"
+                y2="140"
+                marker-end="url(#seta2)"
+              />
+              <text class="fc-lb" x="329" y="133">Sim</text>
+              <line
+                class="fc-l"
+                x1="275"
+                y1="172"
+                x2="275"
+                y2="198"
+                marker-end="url(#seta2)"
+              />
+              <text class="fc-lb" x="281" y="190">Não</text>
+
+              <rect class="fc-p" x="350" y="122" width="110" height="36" />
+              <text class="fc-tx" x="405" y="144">soma ← soma + i</text>
+              <path
+                class="fc-l"
+                d="M405 158V216H330"
+                marker-end="url(#seta2)"
+              />
+
+              <rect class="fc-p" x="220" y="198" width="110" height="36" />
+              <text class="fc-tx" x="275" y="220">i ← i + 1</text>
+              <path
+                class="fc-l"
+                d="M220 216H205V50H225"
+                marker-end="url(#seta2)"
+              />
+            </svg>
+          </div>
+        </figure>
+        <div class="comando">
+          Qual valor será exibido ao final da execução do algoritmo?
+        </div>
+        <ol class="alternativas">
+          <li>
+            6, pois somente os valores pares de i (2 e 4) são acumulados antes
+            de o laço terminar quando i chega a 6.
+          </li>
+          <li>
+            15, pois todos os valores de i entre 1 e 5 passam pela caixa de
+            acumulação sem restrição.
+          </li>
+          <li>
+            9, pois somente os valores ímpares de i (1, 3 e 5) são acumulados no
+            fluxo.
+          </li>
+          <li>0, pois o fluxo nunca entra no laço.</li>
+        </ol>
+      </section>
+      <section class="item" data-ct="C6" data-dif="medio" data-resp="d">
+        <div class="contexto">
+          Em um projeto Node.js, o arquivo <code>.env</code> não existe e a
+          variável de ambiente <code>PORT</code> não está definida no sistema
+          operacional. O servidor é iniciado com o código abaixo.
+        </div>
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 server.js</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="fn">require</span>(<span class="str">'dotenv'</span>).<span class="fn">config</span>();
+<span class="kw">const</span> <span class="var">PORT</span> = <span class="var">process</span>.<span class="prop">env</span>.<span class="prop">PORT</span> || <span class="num">3000</span>;
+<span class="var">app</span>.<span class="fn">listen</span>(<span class="var">PORT</span>);</pre>
+          </div>
+        </figure>
+        <div class="comando">Em qual porta o servidor irá escutar?</div>
+        <ol class="alternativas">
+          <li>
+            Na porta 80, pois é a porta padrão do protocolo HTTP e será assumida
+            quando nenhuma outra for informada.
+          </li>
+          <li>
+            Em nenhuma porta, pois a falta do <code>.env</code> gera um erro e
+            interrompe a aplicação.
+          </li>
+          <li>
+            Na porta <code>undefined</code>, pois o operador <code>||</code> não
+            substitui valores.
+          </li>
+          <li>Na porta 3000, valor padrão do operador <code>||</code>.</li>
+        </ol>
+      </section>
+
+      <!-- ══════════════════ GABARITO (gerado pelo script) ══════════════════ -->
+      <div class="gabarito-section" id="gabarito"></div>
+    </div>
+
+    <script>
+      /* Monta, a partir dos atributos data-* de cada section.item:
+         cabeçalho "ITEM NN" com selo de dificuldade, linha CAPACIDADE e gabarito. */
+      (function () {
+        var DIF = {
+          facil: { item: 'Fácil', gab: 'Fácil', cls: 'badge-facil' },
+          medio: { item: 'Média', gab: 'Médio', cls: 'badge-medio' },
+          dificil: { item: 'Difícil', gab: 'Difícil', cls: 'badge-dificil' },
+        };
+        var linhas = '';
+
+        document.querySelectorAll('.item').forEach(function (item, i) {
+          var num = i + 1;
+          var nn = (num < 10 ? '0' : '') + num;
+          var ct = item.getAttribute('data-ct') || '?';
+          var dif = DIF[item.getAttribute('data-dif')];
+          var resp = (item.getAttribute('data-resp') || '').toUpperCase();
+
+          if (!dif)
+            console.warn(
+              'Item ' +
+                nn +
+                ': data-dif inválido (use facil, medio ou dificil).',
+            );
+          if (!/^[A-D]$/.test(resp))
+            console.warn(
+              'Item ' + nn + ': data-resp inválido (use a, b, c ou d).',
+            );
+          if (item.querySelectorAll('.alternativas > li').length !== 4)
+            console.warn(
+              'Item ' + nn + ': esperado exatamente 4 alternativas.',
+            );
+
+          var cab = document.createElement('div');
+          cab.className = 'item-header';
+          cab.innerHTML =
+            '<span>ITEM ' +
+            nn +
+            '</span>' +
+            '<span class="badge ' +
+            (dif ? dif.cls : '') +
+            '">' +
+            (dif ? dif.item : '?') +
+            '</span>';
+
+          var box = document.createElement('div');
+          box.className = 'item-box';
+          box.innerHTML = '<div class="capacidade">' + ct + '</div>';
+          while (item.firstChild) box.appendChild(item.firstChild);
+          item.appendChild(cab);
+          item.appendChild(box);
+
+          linhas +=
+            '<tr><td><strong>' +
+            num +
+            '</strong></td><td>' +
+            ct +
+            '</td>' +
+            '<td><span class="badge ' +
+            (dif ? dif.cls : '') +
+            '">' +
+            (dif ? dif.gab : '?') +
+            '</span></td>' +
+            '<td><span class="resposta-correta">' +
+            resp +
+            '</span></td></tr>';
+        });
+
+        document.getElementById('gabarito').innerHTML =
+          '<div class="gabarito-titulo">RESPOSTAS CORRETAS</div>' +
+          '<table class="gabarito-table"><thead><tr>' +
+          '<th>Questão</th><th>Capacidade</th><th>Dificuldade</th><th>Resposta Correta</th>' +
+          '</tr></thead><tbody>' +
+          linhas +
+          '</tbody></table>';
+      })();
+    </script>
+  </body>
+</html>

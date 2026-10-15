@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+
+<question type="category">
+  <category><text>$course$/top/SAEP - Módulo 02 - Projeto de Back-End</text></category>
+</question>
+
+<!-- ═════════════ QUESTÃO 01 - C6 - Fácil (item 01 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q01 - C6 - Fácil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C6</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Um desenvolvedor iniciou a criação de um projeto web em sua máquina local e deseja começar a rastrear o histórico de alterações dos arquivos utilizando a ferramenta Git.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual comando do Git deve ser executado na pasta do projeto para inicializar um repositório local?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>git push origin main</strong></code>, que envia os commits locais já registrados para o repositório remoto chamado origin.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[<code><strong>git init</strong></code>, que cria o repositório local e a pasta oculta .git dentro da pasta do projeto.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>git commit -m "Inicial"</strong></code>, que registra uma versão com a mensagem informada.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>git clone</strong></code>, que copia um repositório remoto.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 02 - C6 - Difícil (item 03 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q02 - C6 - Difícil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C6</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Um <em>commit</em> contendo um erro crítico de produção já foi publicado na branch remota pública compartilhada pela equipe. É necessário desfazer as alterações mantendo a integridade do histórico público.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual é o procedimento recomendado no Git?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="100" format="html"><text><![CDATA[Utilizar <code><strong>git revert &lt;hash_do_commit&gt;</strong></code>, que gera um novo commit desfazendo as alterações sem reescrever o histórico público.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Executar <code><strong>git reset --hard HEAD~1</strong></code> seguido de <code><strong>git push --force</strong></code> para apagar o commit do remoto.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Remover o arquivo afetado manualmente do disco sem registrar commit.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Utilizar <code><strong>git clean -fd</strong></code> no servidor.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 03 - C1 - Fácil (item 04 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q03 - C1 - Fácil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C1</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Na arquitetura de sistemas web, o protocolo HTTP utiliza verbos para indicar a ação a ser realizada nos recursos do servidor.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual método HTTP é o padrão recomendado para submeter formulários que criam um novo registro no servidor?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[GET, método usado para consultar e recuperar recursos já existentes, sem criar novos registros no servidor.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[OPTIONS, método que informa ao cliente quais operações o servidor aceita para o recurso.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[POST, método usado para enviar dados e criar um novo recurso.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[DELETE, método que remove um recurso.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 04 - C1 - Médio (item 05 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q04 - C1 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C1</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Na arquitetura de APIs RESTful, a idempotência garante que requisições múltiplas idênticas produzam o mesmo efeito no estado do servidor.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Quais métodos HTTP são originalmente idempotentes pela especificação do protocolo web?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="100" format="html"><text><![CDATA[GET, PUT e DELETE, pois repetir a mesma requisição várias vezes não altera o estado do servidor além da primeira.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[GET, POST e PUT, pois os três apenas consultam ou substituem dados já existentes.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[POST e PATCH, pois ambos criam novos recursos.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[POST e DELETE.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 05 - C1 - Médio (item 06 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q05 - C1 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C1</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Uma API REST precisa responder a uma requisição onde um cliente autenticado tenta acessar um recurso sem possuir o papel (<em>role</em>) de permissão necessário no sistema web.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual código de status HTTP deve ser retornado por essa rota para indicar falta de autorização de acesso?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[401 (Unauthorized), pois indica que a credencial do usuário é inválida ou não foi informada na requisição.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[404 (Not Found), pois o recurso solicitado não existe no servidor ou foi movido.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[400 (Bad Request), pois o formato da requisição está inválido.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[403 (Forbidden), pois o acesso é negado.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 06 - C2 - Médio (item 09 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q06 - C2 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C2</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Em uma aplicação Node.js utilizando o driver SQL <code><strong>pg</strong></code>, um analista de segurança identificou o trecho vulnerável a <em>SQL Injection</em> no tratamento de requisições web apresentado abaixo.</p>
+<div style="background:#0d1117;border:1px solid #0d1117;border-radius:8px;margin:10px 0 14px;overflow:hidden;">
+  <div style="padding:6px 12px;background:#0d1117;border-bottom:1px solid #f1f1f1;color:#f1f1f1;font-family:Consolas,'Courier New',monospace;font-size:1rem;"><span style="color:#f85149;">●</span> <span style="color:#e3b341;">●</span> <span style="color:#39d353;">●</span> &nbsp;&nbsp;📁 buscaUsuario.js</div>
+  <div style="padding:12px 14px;"><pre style="margin:0;padding:0;border:0;background:#0d1117;font-family:Consolas,'Courier New',monospace;font-size:0.95rem;line-height:1.5;white-space:pre;color:#f1f1f1;"><span class="cmt" style="color:#8b949e;">// Trecho vulnerável</span>
+<span class="kw" style="color:#ff7b72;">const</span> <span class="var" style="color:#ffa657;">query</span> = <span class="str" style="color:#a5d6ff;">`SELECT * FROM usuarios WHERE email = '`</span> + <span class="var" style="color:#ffa657;">req</span>.<span class="prop" style="color:#79c0ff;">body</span>.<span class="prop" style="color:#79c0ff;">email</span> + <span class="str" style="color:#a5d6ff;">`'`</span>;
+<span class="kw" style="color:#ff7b72;">const</span> <span class="var" style="color:#ffa657;">resultado</span> = <span class="kw" style="color:#ff7b72;">await</span> <span class="var" style="color:#ffa657;">db</span>.<span class="fn" style="color:#d2a8ff;">query</span>(<span class="var" style="color:#ffa657;">query</span>);</pre></div>
+</div>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual refatoração em JavaScript elimina corretamente essa vulnerabilidade no tratamento das requisições?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>const query = 'SELECT * FROM usuarios WHERE email = ?'; const resultado = await db.query(query, [req.body.email.trim().toLowerCase()]);</strong></code>]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[<code><strong>const query = 'SELECT * FROM usuarios WHERE email = $1'; const resultado = await db.query(query, [req.body.email]);</strong></code>]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>const query = `SELECT * FROM usuarios WHERE email = '${encodeURIComponent(req.body.email.trim())}'`;</strong></code>]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>const query = `SELECT * FROM usuarios WHERE email = '${req.body.email.replace(/'/g, "")}'`;</strong></code>]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 07 - C2 - Difícil (item 10 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q07 - C2 - Difícil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C2</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Uma aplicação web insere conteúdo enviado pelos usuários diretamente no DOM através da propriedade <code><strong>innerHTML</strong></code> sem a devida higienização, permitindo que scripts maliciosos sejam executados no navegador dos visitantes.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Como é classificada essa vulnerabilidade e qual a boa prática para prevenção?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="100" format="html"><text><![CDATA[XSS (Cross-Site Scripting); prevenido utilizando <code><strong>textContent</strong></code> ou bibliotecas de sanitização como <code><strong>DOMPurify</strong></code>.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[CSRF (Cross-Site Request Forgery); prevenido com tokens anti-CSRF nos cabeçalhos HTTP.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[RCE (Remote Code Execution); prevenido bloqueando o uso do Node.js.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[SQL Injection; prevenido com sanitização no banco de dados.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 08 - C3 - Médio (item 13 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q08 - C3 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C3</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Um analista de dados consultou as tabelas <code><strong>desenvolvedor</strong></code> e <code><strong>projeto</strong></code> de um sistema corporativo utilizando a instrução SQL abaixo.</p>
+<div style="border:1px solid #d0d7de;border-radius:8px;margin:10px 0 14px;overflow:hidden;background:#fff;">
+  <div style="padding:6px 12px;background:#f3f4f6;border-bottom:1px solid #d0d7de;color:#333;font-family:Consolas,'Courier New',monospace;font-size:9pt;"><span style="color:#f85149;">●</span> <span style="color:#e3b341;">●</span> <span style="color:#39d353;">●</span> &nbsp;&nbsp;🗂️ Tabelas desenvolvedor e projeto</div>
+  <div style="padding:8px;"><table style="width:100%;border-collapse:collapse;font-size:10pt;"><thead><tr><th colspan="2" style="background:#e8eef9;border:1px solid #2e5496;padding:5px 8px;text-align:left;">desenvolvedor</th><th colspan="2" style="background:#e8eef9;border:1px solid #2e5496;padding:5px 8px;text-align:left;">projeto</th></tr><tr><th style="background:#e8eef9;border:1px solid #2e5496;padding:5px 8px;text-align:left;">id_dev</th><th style="background:#e8eef9;border:1px solid #2e5496;padding:5px 8px;text-align:left;">nome</th><th style="background:#e8eef9;border:1px solid #2e5496;padding:5px 8px;text-align:left;">id_proj</th><th style="background:#e8eef9;border:1px solid #2e5496;padding:5px 8px;text-align:left;">id_dev</th></tr></thead><tbody><tr><td style="border:1px solid #9bb0d6;padding:4px 8px;">1</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">Carlos</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">101</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">1</td></tr><tr><td style="border:1px solid #9bb0d6;padding:4px 8px;">2</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">Diana</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">102</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">1</td></tr><tr><td style="border:1px solid #9bb0d6;padding:4px 8px;">3</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">Eduardo</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">103</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">3</td></tr></tbody></table></div>
+</div>
+<div style="background:#0d1117;border:1px solid #0d1117;border-radius:8px;margin:10px 0 14px;overflow:hidden;">
+  <div style="padding:6px 12px;background:#0d1117;border-bottom:1px solid #f1f1f1;color:#f1f1f1;font-family:Consolas,'Courier New',monospace;font-size:1rem;"><span style="color:#f85149;">●</span> <span style="color:#e3b341;">●</span> <span style="color:#39d353;">●</span> &nbsp;&nbsp;📁 relatorio.sql</div>
+  <div style="padding:12px 14px;"><pre style="margin:0;padding:0;border:0;background:#0d1117;font-family:Consolas,'Courier New',monospace;font-size:0.95rem;line-height:1.5;white-space:pre;color:#f1f1f1;"><span class="kw" style="color:#ff7b72;">SELECT</span> <span class="prop" style="color:#79c0ff;">d.nome</span>, <span class="fn" style="color:#d2a8ff;">COUNT</span>(<span class="prop" style="color:#79c0ff;">p.id_proj</span>) <span class="kw" style="color:#ff7b72;">AS</span> <span class="prop" style="color:#79c0ff;">total</span>
+<span class="kw" style="color:#ff7b72;">FROM</span> <span class="var" style="color:#ffa657;">desenvolvedor</span> d
+<span class="kw" style="color:#ff7b72;">LEFT JOIN</span> <span class="var" style="color:#ffa657;">projeto</span> p <span class="kw" style="color:#ff7b72;">ON</span> <span class="prop" style="color:#79c0ff;">p.id_dev</span> = <span class="prop" style="color:#79c0ff;">d.id_dev</span>
+<span class="kw" style="color:#ff7b72;">GROUP BY</span> <span class="prop" style="color:#79c0ff;">d.nome</span>;</pre></div>
+</div>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual será o resultado retornado por essa consulta SQL?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[Carlos 2 e Eduardo 1, pois o LEFT JOIN descarta os desenvolvedores que não possuem nenhum projeto.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[Carlos 2, Diana 0 e Eduardo 1, pois o LEFT JOIN mantém Diana mesmo sem projetos.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Carlos 2, Diana 1 e Eduardo 1, pois o COUNT conta as linhas.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Carlos 3, Diana 0 e Eduardo 0.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 09 - C3 - Difícil (item 15 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q09 - C3 - Difícil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C3</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Um analista de sistemas precisa listar todos os colaboradores da tabela <code><strong>funcionario</strong></code> cujo salário seja superior à média salarial de toda a empresa.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual subconsulta SQL resolve corretamente esse problema de manipulação de dados?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="100" format="html"><text><![CDATA[<code><strong>SELECT * FROM funcionario WHERE salario &gt; (SELECT AVG(salario) FROM funcionario);</strong></code>]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>SELECT AVG(salario) FROM funcionario WHERE salario &gt; AVG(salario);</strong></code>]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>SELECT * FROM funcionario WHERE salario &gt; AVG(salario);</strong></code>]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[<code><strong>SELECT AVG(salario) FROM funcionario;</strong></code>]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 10 - C4 - Fácil (item 16 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q10 - C4 - Fácil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C4</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Na fase de normalização de dados para o banco de dados de um sistema web, exige-se que todos os atributos de uma tabela contenham apenas valores atômicos (indivisíveis).</p>
+<p><strong><em><u>Comando:</u></em></strong><br>A eliminação de grupos repetidos e valores multivalorados atende às regras de qual Forma Normal?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[Forma Normal de Boyce-Codd (BCNF), que trata dependências em que um determinante não é chave candidata.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Terceira Forma Normal (3FN), que elimina dependências transitivas entre atributos não chave.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Segunda Forma Normal (2FN), que elimina dependências parciais da chave primária.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[Primeira Forma Normal (1FN).]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 11 - C4 - Difícil (item 17 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q11 - C4 - Difícil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C4</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Um arquiteto de banco de dados encontrou a tabela <code><strong>desenvolvedor</strong></code> armazenando múltiplas competências técnicas separadas por vírgula no mesmo campo.</p>
+<div style="border:1px solid #d0d7de;border-radius:8px;margin:10px 0 14px;overflow:hidden;background:#fff;">
+  <div style="padding:6px 12px;background:#f3f4f6;border-bottom:1px solid #d0d7de;color:#333;font-family:Consolas,'Courier New',monospace;font-size:9pt;"><span style="color:#f85149;">●</span> <span style="color:#e3b341;">●</span> <span style="color:#39d353;">●</span> &nbsp;&nbsp;🗂️ Tabela desnormalizada</div>
+  <div style="padding:8px;"><table style="width:100%;border-collapse:collapse;font-size:10pt;"><thead><tr><th style="background:#e8eef9;border:1px solid #2e5496;padding:5px 8px;text-align:left;">id_dev</th><th style="background:#e8eef9;border:1px solid #2e5496;padding:5px 8px;text-align:left;">nome</th><th style="background:#e8eef9;border:1px solid #2e5496;padding:5px 8px;text-align:left;">competencias</th></tr></thead><tbody><tr><td style="border:1px solid #9bb0d6;padding:4px 8px;">1</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">Alice</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">JavaScript, SQL, HTML</td></tr><tr><td style="border:1px solid #9bb0d6;padding:4px 8px;">2</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">Bernardo</td><td style="border:1px solid #9bb0d6;padding:4px 8px;">CSS, React</td></tr></tbody></table></div>
+</div>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual Forma Normal está sendo violada e qual a solução adequada para a padronização dos dados?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[2FN; devendo-se criar colunas adicionais como <code><strong>competencia1</strong></code> e <code><strong>competencia2</strong></code>, uma para cada habilidade do desenvolvedor.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[1FN; devendo-se criar uma tabela associativa <code><strong>dev_competencia</strong></code> garantindo a atomicidade dos dados.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[3FN; devendo-se mover a coluna <code><strong>nome</strong></code> para uma tabela independente de desenvolvedores.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[BCNF; adicionando um índice composto na coluna <code><strong>competencias</strong></code>.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 12 - C5 - Médio (item 19 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q12 - C5 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C5</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Após realizar ajustes nas parametrizações de um sistema para web, a equipe precisa rodar uma suíte de testes de funcionamento para garantir que nenhuma funcionalidade anteriormente em produção tenha sido quebrada.</p>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual tipo de teste atende a esse propósito específico?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[Teste de Usabilidade, que avalia a facilidade com que as pessoas utilizam a interface do sistema.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Teste de Carga, que mede o comportamento do sistema sob um volume esperado de acessos.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[Teste de Regressão, que verifica se funcionalidades antigas continuam operando.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Teste de Estresse, que leva o sistema além do limite.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 13 - C2 - Médio (item 21 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q13 - C2 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C2</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>O fluxograma a seguir representa o tratamento de uma requisição <code><strong>POST /usuarios</strong></code> em uma API de cadastro de usuários.</p>
+<div style="border:1px solid #d0d7de;border-radius:8px;margin:10px 0 14px;overflow:hidden;background:#fff;">
+  <div style="padding:6px 12px;background:#f3f4f6;border-bottom:1px solid #d0d7de;color:#333;font-family:Consolas,'Courier New',monospace;font-size:9pt;"><span style="color:#f85149;">●</span> <span style="color:#e3b341;">●</span> <span style="color:#39d353;">●</span> &nbsp;&nbsp;📐 Fluxograma — Cadastro de usuário</div>
+  <div style="padding:8px;"><svg width="100%" style="display:block;max-width:100%;height:auto;" viewBox="0 0 640 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fluxograma de cadastro de usuário com validação de e-mail">
+              <defs>
+                <marker id="seta1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                  <path d="M0 0L10 5L0 10z" fill="#2e5496" />
+                </marker>
+              </defs>
+              <rect fill="#2e5496" stroke="#2e5496" stroke-width="1.3" x="8" y="45" width="74" height="30" rx="15" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="bold" fill="#fff" text-anchor="middle" x="45" y="64">Início</text>
+              <line stroke="#2e5496" stroke-width="1.5" fill="none" x1="82" y1="60" x2="100" y2="60" marker-end="url(#seta1)" />
+              <rect fill="#fff" stroke="#2e5496" stroke-width="1.3" x="100" y="40" width="100" height="40" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000" text-anchor="middle" x="150" y="57">Receber</text>
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000" text-anchor="middle" x="150" y="71">POST /usuarios</text>
+              <line stroke="#2e5496" stroke-width="1.5" fill="none" x1="200" y1="60" x2="235" y2="60" marker-end="url(#seta1)" />
+              <polygon fill="#e8eef9" stroke="#2e5496" stroke-width="1.3" points="290,22 345,60 290,98 235,60" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000" text-anchor="middle" x="290" y="57">E-mail</text>
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000" text-anchor="middle" x="290" y="70">válido?</text>
+              <line stroke="#2e5496" stroke-width="1.5" fill="none" x1="345" y1="60" x2="383" y2="60" marker-end="url(#seta1)" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="bold" font-style="italic" fill="#2e5496" x="354" y="53">Sim</text>
+              <line stroke="#2e5496" stroke-width="1.5" fill="none" x1="290" y1="98" x2="290" y2="140" marker-end="url(#seta1)" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="bold" font-style="italic" fill="#2e5496" x="296" y="121">Não</text>
+              <polygon fill="#e8eef9" stroke="#2e5496" stroke-width="1.3" points="445,22 507,60 445,98 383,60" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000" text-anchor="middle" x="445" y="57">E-mail já</text>
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000" text-anchor="middle" x="445" y="70">cadastrado?</text>
+              <line stroke="#2e5496" stroke-width="1.5" fill="none" x1="507" y1="60" x2="530" y2="60" marker-end="url(#seta1)" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="bold" font-style="italic" fill="#2e5496" x="509" y="52">Não</text>
+              <line stroke="#2e5496" stroke-width="1.5" fill="none" x1="445" y1="98" x2="445" y2="140" marker-end="url(#seta1)" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="bold" font-style="italic" fill="#2e5496" x="451" y="121">Sim</text>
+              <rect fill="#fff" stroke="#2e5496" stroke-width="1.3" x="530" y="40" width="102" height="40" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000" text-anchor="middle" x="581" y="57">Salvar usuário</text>
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000" text-anchor="middle" x="581" y="71">no banco</text>
+              <line stroke="#2e5496" stroke-width="1.5" fill="none" x1="581" y1="80" x2="581" y2="140" marker-end="url(#seta1)" />
+              <rect fill="#2e5496" stroke="#2e5496" stroke-width="1.3" x="240" y="140" width="100" height="32" rx="16" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="bold" fill="#fff" text-anchor="middle" x="290" y="160">Responder 400</text>
+              <rect fill="#2e5496" stroke="#2e5496" stroke-width="1.3" x="395" y="140" width="100" height="32" rx="16" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="bold" fill="#fff" text-anchor="middle" x="445" y="160">Responder 409</text>
+              <rect fill="#2e5496" stroke="#2e5496" stroke-width="1.3" x="531" y="140" width="100" height="32" rx="16" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="bold" fill="#fff" text-anchor="middle" x="581" y="160">Responder 201</text>
+            </svg></div>
+</div>
+<p><strong><em><u>Comando:</u></em></strong><br>Uma requisição chega com um e-mail em formato válido, mas já cadastrado no banco. Qual é o caminho percorrido no fluxograma?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[O fluxo passa pelas duas decisões, salva o usuário no banco de dados e responde 201 ao cliente, pois o formato do e-mail é válido.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[O fluxo segue pelo caminho Sim na primeira decisão, também pelo Sim na segunda e termina com a resposta 409.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[O fluxo é encerrado na primeira decisão com a resposta 400, pois o e-mail foi rejeitado.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[O fluxo termina sem resposta ao cliente.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 14 - C2 - Difícil (item 22 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q14 - C2 - Difícil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C2</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Um desenvolvedor Node.js analisa a ordem de execução de um trecho assíncrono para entender como o servidor trata as tarefas de uma requisição.</p>
+<div style="background:#0d1117;border:1px solid #0d1117;border-radius:8px;margin:10px 0 14px;overflow:hidden;">
+  <div style="padding:6px 12px;background:#0d1117;border-bottom:1px solid #f1f1f1;color:#f1f1f1;font-family:Consolas,'Courier New',monospace;font-size:1rem;"><span style="color:#f85149;">●</span> <span style="color:#e3b341;">●</span> <span style="color:#39d353;">●</span> &nbsp;&nbsp;📁 ordem.js</div>
+  <div style="padding:12px 14px;"><pre style="margin:0;padding:0;border:0;background:#0d1117;font-family:Consolas,'Courier New',monospace;font-size:0.95rem;line-height:1.5;white-space:pre;color:#f1f1f1;"><span class="var" style="color:#ffa657;">console</span>.<span class="fn" style="color:#d2a8ff;">log</span>(<span class="str" style="color:#a5d6ff;">'A'</span>);
+<span class="fn" style="color:#d2a8ff;">setTimeout</span>(() =&gt; <span class="var" style="color:#ffa657;">console</span>.<span class="fn" style="color:#d2a8ff;">log</span>(<span class="str" style="color:#a5d6ff;">'B'</span>), <span class="num" style="color:#6087f2;">0</span>);
+<span class="var" style="color:#ffa657;">Promise</span>.<span class="fn" style="color:#d2a8ff;">resolve</span>().<span class="fn" style="color:#d2a8ff;">then</span>(() =&gt; <span class="var" style="color:#ffa657;">console</span>.<span class="fn" style="color:#d2a8ff;">log</span>(<span class="str" style="color:#a5d6ff;">'C'</span>));
+<span class="var" style="color:#ffa657;">console</span>.<span class="fn" style="color:#d2a8ff;">log</span>(<span class="str" style="color:#a5d6ff;">'D'</span>);</pre></div>
+</div>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual será a ordem das letras exibidas no console?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="100" format="html"><text><![CDATA[A, D, C, B, pois o código síncrono executa primeiro, depois as microtarefas das Promises e só então os callbacks do <code><strong>setTimeout</strong></code>.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[A, B, C, D, pois o JavaScript sempre executa as instruções exatamente na ordem em que foram escritas no arquivo.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[A, D, B, C, pois o <code><strong>setTimeout</strong></code> com zero milissegundo tem prioridade sobre as Promises.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[A, C, D, B, pois a Promise é resolvida antes.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 15 - C2 - Difícil (item 23 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q15 - C2 - Difícil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C2</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Um desenvolvedor criou a rota abaixo em Express. Ao testar, enviou uma requisição POST sem o campo <code><strong>email</strong></code>.</p>
+<div style="background:#0d1117;border:1px solid #0d1117;border-radius:8px;margin:10px 0 14px;overflow:hidden;">
+  <div style="padding:6px 12px;background:#0d1117;border-bottom:1px solid #f1f1f1;color:#f1f1f1;font-family:Consolas,'Courier New',monospace;font-size:1rem;"><span style="color:#f85149;">●</span> <span style="color:#e3b341;">●</span> <span style="color:#39d353;">●</span> &nbsp;&nbsp;📁 rotaUsuarios.js</div>
+  <div style="padding:12px 14px;"><pre style="margin:0;padding:0;border:0;background:#0d1117;font-family:Consolas,'Courier New',monospace;font-size:0.95rem;line-height:1.5;white-space:pre;color:#f1f1f1;"><span class="var" style="color:#ffa657;">app</span>.<span class="fn" style="color:#d2a8ff;">post</span>(<span class="str" style="color:#a5d6ff;">'/usuarios'</span>, (<span class="var" style="color:#ffa657;">req</span>, <span class="var" style="color:#ffa657;">res</span>) =&gt; {
+  <span class="kw" style="color:#ff7b72;">const</span> { <span class="var" style="color:#ffa657;">email</span> } = <span class="var" style="color:#ffa657;">req</span>.<span class="prop" style="color:#79c0ff;">body</span>;
+  <span class="kw" style="color:#ff7b72;">if</span> (!<span class="var" style="color:#ffa657;">email</span>) {
+    <span class="var" style="color:#ffa657;">res</span>.<span class="fn" style="color:#d2a8ff;">status</span>(<span class="num" style="color:#6087f2;">400</span>).<span class="fn" style="color:#d2a8ff;">json</span>({ <span class="prop" style="color:#79c0ff;">erro</span>: <span class="str" style="color:#a5d6ff;">'E-mail obrigatório'</span> });
+  }
+  <span class="fn" style="color:#d2a8ff;">salvarUsuario</span>(<span class="var" style="color:#ffa657;">email</span>);
+  <span class="var" style="color:#ffa657;">res</span>.<span class="fn" style="color:#d2a8ff;">status</span>(<span class="num" style="color:#6087f2;">201</span>).<span class="fn" style="color:#d2a8ff;">json</span>({ <span class="prop" style="color:#79c0ff;">ok</span>: <span class="kw" style="color:#ff7b72;">true</span> });
+});</pre></div>
+</div>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual é o problema nesse código e como corrigi-lo?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[Não há problema, pois o Express interrompe a função automaticamente assim que o método <code><strong>res.json()</strong></code> é chamado pela primeira vez.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[O <code><strong>if</strong></code> deve ser trocado por um <code><strong>while</strong></code>, pois o Express não aceita estruturas condicionais dentro de rotas.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[O status 400 é inválido para erros de validação e deve ser substituído por 500.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[Falta o <code><strong>return</strong></code> no <code><strong>if</strong></code>; a rota responde duas vezes.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 16 - C3 - Médio (item 24 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q16 - C3 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C3</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Um desenvolvedor backend calcula o valor total de um pedido a partir do array de itens recebido na requisição, conforme o código abaixo.</p>
+<div style="background:#0d1117;border:1px solid #0d1117;border-radius:8px;margin:10px 0 14px;overflow:hidden;">
+  <div style="padding:6px 12px;background:#0d1117;border-bottom:1px solid #f1f1f1;color:#f1f1f1;font-family:Consolas,'Courier New',monospace;font-size:1rem;"><span style="color:#f85149;">●</span> <span style="color:#e3b341;">●</span> <span style="color:#39d353;">●</span> &nbsp;&nbsp;📁 totalPedido.js</div>
+  <div style="padding:12px 14px;"><pre style="margin:0;padding:0;border:0;background:#0d1117;font-family:Consolas,'Courier New',monospace;font-size:0.95rem;line-height:1.5;white-space:pre;color:#f1f1f1;"><span class="kw" style="color:#ff7b72;">const</span> <span class="var" style="color:#ffa657;">itens</span> = [
+  { <span class="prop" style="color:#79c0ff;">nome</span>: <span class="str" style="color:#a5d6ff;">'Teclado'</span>, <span class="prop" style="color:#79c0ff;">preco</span>: <span class="num" style="color:#6087f2;">150</span>, <span class="prop" style="color:#79c0ff;">qtd</span>: <span class="num" style="color:#6087f2;">2</span> },
+  { <span class="prop" style="color:#79c0ff;">nome</span>: <span class="str" style="color:#a5d6ff;">'Mouse'</span>,   <span class="prop" style="color:#79c0ff;">preco</span>: <span class="num" style="color:#6087f2;">80</span>,  <span class="prop" style="color:#79c0ff;">qtd</span>: <span class="num" style="color:#6087f2;">1</span> },
+  { <span class="prop" style="color:#79c0ff;">nome</span>: <span class="str" style="color:#a5d6ff;">'Cabo'</span>,    <span class="prop" style="color:#79c0ff;">preco</span>: <span class="num" style="color:#6087f2;">20</span>,  <span class="prop" style="color:#79c0ff;">qtd</span>: <span class="num" style="color:#6087f2;">5</span> }
+];
+<span class="kw" style="color:#ff7b72;">const</span> <span class="var" style="color:#ffa657;">total</span> = <span class="var" style="color:#ffa657;">itens</span>.<span class="fn" style="color:#d2a8ff;">reduce</span>((<span class="var" style="color:#ffa657;">acc</span>, <span class="var" style="color:#ffa657;">i</span>) =&gt; <span class="var" style="color:#ffa657;">acc</span> + <span class="var" style="color:#ffa657;">i</span>.<span class="prop" style="color:#79c0ff;">preco</span> * <span class="var" style="color:#ffa657;">i</span>.<span class="prop" style="color:#79c0ff;">qtd</span>, <span class="num" style="color:#6087f2;">0</span>);
+<span class="var" style="color:#ffa657;">console</span>.<span class="fn" style="color:#d2a8ff;">log</span>(<span class="var" style="color:#ffa657;">total</span>);</pre></div>
+</div>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual valor será exibido no console?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[O valor 250, pois o <code><strong>reduce</strong></code> soma somente os preços unitários e ignora o campo <code><strong>qtd</strong></code> de cada item do pedido.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Um array [300, 80, 100], pois o <code><strong>reduce</strong></code> devolve um novo valor para cada item, como faz o <code><strong>map</strong></code>.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[O valor 480, pois cada preço é multiplicado pela quantidade e acumulado.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[O valor 0, pois o acumulador inicial não é alterado.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 17 - C5 - Fácil (item 25 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q17 - C5 - Fácil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C5</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Para realizar o teste de mesa de um trecho de código JavaScript, o desenvolvedor acompanhou o valor das variáveis a cada repetição do laço abaixo.</p>
+<div style="background:#0d1117;border:1px solid #0d1117;border-radius:8px;margin:10px 0 14px;overflow:hidden;">
+  <div style="padding:6px 12px;background:#0d1117;border-bottom:1px solid #f1f1f1;color:#f1f1f1;font-family:Consolas,'Courier New',monospace;font-size:1rem;"><span style="color:#f85149;">●</span> <span style="color:#e3b341;">●</span> <span style="color:#39d353;">●</span> &nbsp;&nbsp;📁 laco.js</div>
+  <div style="padding:12px 14px;"><pre style="margin:0;padding:0;border:0;background:#0d1117;font-family:Consolas,'Courier New',monospace;font-size:0.95rem;line-height:1.5;white-space:pre;color:#f1f1f1;"><span class="kw" style="color:#ff7b72;">let</span> <span class="var" style="color:#ffa657;">soma</span> = <span class="num" style="color:#6087f2;">0</span>;
+<span class="kw" style="color:#ff7b72;">for</span> (<span class="kw" style="color:#ff7b72;">let</span> <span class="var" style="color:#ffa657;">i</span> = <span class="num" style="color:#6087f2;">1</span>; <span class="var" style="color:#ffa657;">i</span> &lt;= <span class="num" style="color:#6087f2;">6</span>; <span class="var" style="color:#ffa657;">i</span>++) {
+  <span class="kw" style="color:#ff7b72;">if</span> (<span class="var" style="color:#ffa657;">i</span> % <span class="num" style="color:#6087f2;">3</span> === <span class="num" style="color:#6087f2;">0</span>) <span class="kw" style="color:#ff7b72;">continue</span>;
+  <span class="var" style="color:#ffa657;">soma</span> += <span class="var" style="color:#ffa657;">i</span>;
+}
+<span class="var" style="color:#ffa657;">console</span>.<span class="fn" style="color:#d2a8ff;">log</span>(<span class="var" style="color:#ffa657;">soma</span>);</pre></div>
+</div>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual valor será exibido no console ao final da execução?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[O valor 21, pois o <code><strong>continue</strong></code> apenas registra o número no console e todos os valores de 1 a 6 são somados normalmente.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[O valor 12, pois o <code><strong>continue</strong></code> ignora os múltiplos de 3 (3 e 6) e soma apenas 1, 2, 4 e 5.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[O valor 3, pois o <code><strong>continue</strong></code> encerra o laço no primeiro múltiplo de 3.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[O valor 9, pois só os múltiplos de 3 são somados.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 18 - C5 - Médio (item 26 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q18 - C5 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C5</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Um desenvolvedor testou o comportamento dos operadores de igualdade do JavaScript no trecho abaixo.</p>
+<div style="background:#0d1117;border:1px solid #0d1117;border-radius:8px;margin:10px 0 14px;overflow:hidden;">
+  <div style="padding:6px 12px;background:#0d1117;border-bottom:1px solid #f1f1f1;color:#f1f1f1;font-family:Consolas,'Courier New',monospace;font-size:1rem;"><span style="color:#f85149;">●</span> <span style="color:#e3b341;">●</span> <span style="color:#39d353;">●</span> &nbsp;&nbsp;📁 igualdade.js</div>
+  <div style="padding:12px 14px;"><pre style="margin:0;padding:0;border:0;background:#0d1117;font-family:Consolas,'Courier New',monospace;font-size:0.95rem;line-height:1.5;white-space:pre;color:#f1f1f1;"><span class="var" style="color:#ffa657;">console</span>.<span class="fn" style="color:#d2a8ff;">log</span>(<span class="num" style="color:#6087f2;">0</span> == <span class="str" style="color:#a5d6ff;">'0'</span>);
+<span class="var" style="color:#ffa657;">console</span>.<span class="fn" style="color:#d2a8ff;">log</span>(<span class="num" style="color:#6087f2;">0</span> === <span class="str" style="color:#a5d6ff;">'0'</span>);
+<span class="var" style="color:#ffa657;">console</span>.<span class="fn" style="color:#d2a8ff;">log</span>(<span class="kw" style="color:#ff7b72;">null</span> == <span class="kw" style="color:#ff7b72;">undefined</span>);</pre></div>
+</div>
+<p><strong><em><u>Comando:</u></em></strong><br>Quais valores serão exibidos no console, na ordem das três linhas?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[true, true e true, pois o JavaScript converte os tipos antes de qualquer comparação, inclusive no operador <code><strong>===</strong></code>.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[false, false e true, pois o operador <code><strong>==</strong></code> compara tipos e valores, enquanto o <code><strong>===</strong></code> só compara valores.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[true, false e true, pois o <code><strong>==</strong></code> converte os tipos e o <code><strong>===</strong></code> exige o mesmo tipo.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[true, false e false.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 19 - C5 - Difícil (item 27 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q19 - C5 - Difícil</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C5</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>O fluxograma a seguir representa um algoritmo que percorre números inteiros e acumula alguns deles na variável <code><strong>soma</strong></code>.</p>
+<div style="border:1px solid #d0d7de;border-radius:8px;margin:10px 0 14px;overflow:hidden;background:#fff;">
+  <div style="padding:6px 12px;background:#f3f4f6;border-bottom:1px solid #d0d7de;color:#333;font-family:Consolas,'Courier New',monospace;font-size:9pt;"><span style="color:#f85149;">●</span> <span style="color:#e3b341;">●</span> <span style="color:#39d353;">●</span> &nbsp;&nbsp;📐 Fluxograma — Acumulador com laço</div>
+  <div style="padding:8px;"><svg width="100%" style="display:block;max-width:100%;height:auto;" viewBox="0 0 600 255" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fluxograma de um laço que acumula valores pares na variável soma">
+              <defs>
+                <marker id="seta2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                  <path d="M0 0L10 5L0 10z" fill="#2e5496" />
+                </marker>
+              </defs>
+              <rect fill="#2e5496" stroke="#2e5496" stroke-width="1.3" x="8" y="35" width="70" height="30" rx="15" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="bold" fill="#fff" text-anchor="middle" x="43" y="54">Início</text>
+              <line stroke="#2e5496" stroke-width="1.5" fill="none" x1="78" y1="50" x2="100" y2="50" marker-end="url(#seta2)" />
+              <rect fill="#fff" stroke="#2e5496" stroke-width="1.3" x="100" y="30" width="90" height="40" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000" text-anchor="middle" x="145" y="47">soma ← 0</text>
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000" text-anchor="middle" x="145" y="61">i ← 1</text>
+              <line stroke="#2e5496" stroke-width="1.5" fill="none" x1="190" y1="50" x2="225" y2="50" marker-end="url(#seta2)" />
+              <polygon fill="#e8eef9" stroke="#2e5496" stroke-width="1.3" points="275,18 325,50 275,82 225,50" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000" text-anchor="middle" x="275" y="54">i ≤ 5?</text>
+              <line stroke="#2e5496" stroke-width="1.5" fill="none" x1="325" y1="50" x2="360" y2="50" marker-end="url(#seta2)" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="bold" font-style="italic" fill="#2e5496" x="331" y="43">Não</text>
+              <line stroke="#2e5496" stroke-width="1.5" fill="none" x1="275" y1="82" x2="275" y2="108" marker-end="url(#seta2)" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="bold" font-style="italic" fill="#2e5496" x="281" y="99">Sim</text>
+              <rect fill="#fff" stroke="#2e5496" stroke-width="1.3" x="360" y="32" width="90" height="36" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000" text-anchor="middle" x="405" y="54">Exibir soma</text>
+              <line stroke="#2e5496" stroke-width="1.5" fill="none" x1="450" y1="50" x2="485" y2="50" marker-end="url(#seta2)" />
+              <rect fill="#2e5496" stroke="#2e5496" stroke-width="1.3" x="485" y="35" width="60" height="30" rx="15" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="bold" fill="#fff" text-anchor="middle" x="515" y="54">Fim</text>
+              <polygon fill="#e8eef9" stroke="#2e5496" stroke-width="1.3" points="275,108 325,140 275,172 225,140" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000" text-anchor="middle" x="275" y="144">i é par?</text>
+              <line stroke="#2e5496" stroke-width="1.5" fill="none" x1="325" y1="140" x2="350" y2="140" marker-end="url(#seta2)" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="bold" font-style="italic" fill="#2e5496" x="329" y="133">Sim</text>
+              <line stroke="#2e5496" stroke-width="1.5" fill="none" x1="275" y1="172" x2="275" y2="198" marker-end="url(#seta2)" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="bold" font-style="italic" fill="#2e5496" x="281" y="190">Não</text>
+              <rect fill="#fff" stroke="#2e5496" stroke-width="1.3" x="350" y="122" width="110" height="36" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000" text-anchor="middle" x="405" y="144">soma ← soma + i</text>
+              <path stroke="#2e5496" stroke-width="1.5" fill="none" d="M405 158V216H330" marker-end="url(#seta2)" />
+              <rect fill="#fff" stroke="#2e5496" stroke-width="1.3" x="220" y="198" width="110" height="36" />
+              <text font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#000" text-anchor="middle" x="275" y="220">i ← i + 1</text>
+              <path stroke="#2e5496" stroke-width="1.5" fill="none" d="M220 216H205V50H225" marker-end="url(#seta2)" />
+            </svg></div>
+</div>
+<p><strong><em><u>Comando:</u></em></strong><br>Qual valor será exibido ao final da execução do algoritmo?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="100" format="html"><text><![CDATA[6, pois somente os valores pares de i (2 e 4) são acumulados antes de o laço terminar quando i chega a 6.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[15, pois todos os valores de i entre 1 e 5 passam pela caixa de acumulação sem restrição.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[9, pois somente os valores ímpares de i (1, 3 e 5) são acumulados no fluxo.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[0, pois o fluxo nunca entra no laço.]]></text></answer>
+</question>
+
+<!-- ═════════════ QUESTÃO 20 - C6 - Médio (item 28 do HTML) ═════════════ -->
+<question type="multichoice">
+  <name><text>Q20 - C6 - Médio</text></name>
+  <questiontext format="html">
+    <text><![CDATA[<p><strong><em><u>CAPACIDADE:</u></em></strong> C6</p>
+<p><strong><em><u>Contexto:</u></em></strong><br>Em um projeto Node.js, o arquivo <code><strong>.env</strong></code> não existe e a variável de ambiente <code><strong>PORT</strong></code> não está definida no sistema operacional. O servidor é iniciado com o código abaixo.</p>
+<div style="background:#0d1117;border:1px solid #0d1117;border-radius:8px;margin:10px 0 14px;overflow:hidden;">
+  <div style="padding:6px 12px;background:#0d1117;border-bottom:1px solid #f1f1f1;color:#f1f1f1;font-family:Consolas,'Courier New',monospace;font-size:1rem;"><span style="color:#f85149;">●</span> <span style="color:#e3b341;">●</span> <span style="color:#39d353;">●</span> &nbsp;&nbsp;📁 server.js</div>
+  <div style="padding:12px 14px;"><pre style="margin:0;padding:0;border:0;background:#0d1117;font-family:Consolas,'Courier New',monospace;font-size:0.95rem;line-height:1.5;white-space:pre;color:#f1f1f1;"><span class="fn" style="color:#d2a8ff;">require</span>(<span class="str" style="color:#a5d6ff;">'dotenv'</span>).<span class="fn" style="color:#d2a8ff;">config</span>();
+<span class="kw" style="color:#ff7b72;">const</span> <span class="var" style="color:#ffa657;">PORT</span> = <span class="var" style="color:#ffa657;">process</span>.<span class="prop" style="color:#79c0ff;">env</span>.<span class="prop" style="color:#79c0ff;">PORT</span> || <span class="num" style="color:#6087f2;">3000</span>;
+<span class="var" style="color:#ffa657;">app</span>.<span class="fn" style="color:#d2a8ff;">listen</span>(<span class="var" style="color:#ffa657;">PORT</span>);</pre></div>
+</div>
+<p><strong><em><u>Comando:</u></em></strong><br>Em qual porta o servidor irá escutar?</p>]]></text>
+  </questiontext>
+  <defaultgrade>1</defaultgrade><penalty>0</penalty><hidden>0</hidden>
+  <single>true</single><shuffleanswers>false</shuffleanswers><answernumbering>abc</answernumbering>
+  <answer fraction="0" format="html"><text><![CDATA[Na porta 80, pois é a porta padrão do protocolo HTTP e será assumida quando nenhuma outra for informada.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Em nenhuma porta, pois a falta do <code><strong>.env</strong></code> gera um erro e interrompe a aplicação.]]></text></answer>
+  <answer fraction="0" format="html"><text><![CDATA[Na porta <code><strong>undefined</strong></code>, pois o operador <code><strong>||</strong></code> não substitui valores.]]></text></answer>
+  <answer fraction="100" format="html"><text><![CDATA[Na porta 3000, valor padrão do operador <code><strong>||</strong></code>.]]></text></answer>
+</question>
+
+</quiz>

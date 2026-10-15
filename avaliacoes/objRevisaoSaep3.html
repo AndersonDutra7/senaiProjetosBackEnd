@@ -1,0 +1,1792 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avaliação Objetiva – Técnico em Informática para Internet</title>
+    <style>
+      /* ══════════════════════════════════════════════════════════
+         FRAMEWORK DE AVALIAÇÃO OBJETIVA
+         Tudo escopado em body.prova.
+         ══════════════════════════════════════════════════════════ */
+      :root {
+        --azul: #2e5496;
+        --azul-claro: #e8eef9;
+        --azul-borda: #9bb0d6;
+        --cinza-borda: #d0d7de;
+        --cinza-fundo: #f3f4f6;
+        --alternativa: #c00000;
+        --facil: #28a745;
+        --medio: #f0a500;
+        --dificil: #d9534f;
+        --fonte: Arial, Helvetica, sans-serif;
+        --mono: 'DM Mono', Consolas, 'Courier New', monospace;
+      }
+
+      /* ── BASE ── */
+      .prova *,
+      .prova *::before,
+      .prova *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body.prova {
+        font-family: var(--fonte);
+        font-size: 11pt;
+        color: #000;
+        background: #fff;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 15mm;
+      }
+
+      /* ── CABEÇALHO ── */
+      .header-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 14px;
+      }
+      .header-table td {
+        border: 1px solid #000;
+        padding: 3px 6px;
+        vertical-align: middle;
+        font-size: 10pt;
+      }
+      .logo-cell {
+        width: 140px;
+        text-align: center;
+        padding: 8px !important;
+      }
+      .senai-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .senai-brand img {
+        max-width: 120px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+      .senai-brand span {
+        display: block;
+        font-size: 9pt;
+      }
+      .title-cell {
+        text-align: center;
+        font-weight: bold;
+        font-size: 13pt !important;
+        letter-spacing: 1px;
+        padding: 6px !important;
+      }
+      .desemp-cell {
+        width: 90px;
+        text-align: center;
+        font-weight: bold;
+        vertical-align: top !important;
+      }
+      .estudante-row td {
+        font-weight: bold;
+        font-size: 10.5pt !important;
+      }
+      .rotulo {
+        font-weight: bold;
+      }
+      .campo {
+        color: var(--azul);
+        font-style: italic;
+      }
+      .campo.negrito {
+        font-weight: bold;
+      }
+
+      /* ── FAIXAS AZUIS ── */
+      .capacidades-header,
+      .item-header,
+      .gabarito-titulo {
+        background: var(--azul);
+        color: #fff;
+        font-weight: bold;
+        font-size: 12pt;
+        padding: 10px;
+        margin-top: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .capacidades-content,
+      .item-box {
+        border: 1px solid var(--azul);
+        border-top: none;
+        padding: 8px 10px 10px;
+        margin-bottom: 4px;
+      }
+      .capacidades-content p {
+        margin-bottom: 3px;
+      }
+      .capacidades-content p:last-child {
+        margin-bottom: 0;
+      }
+
+      .section-divider {
+        margin: 28px 0;
+        border-top: 3px solid var(--azul);
+        border-bottom: 3px solid var(--azul);
+        padding: 12px 0 8px;
+      }
+      .section-title {
+        font-size: 13pt;
+        font-weight: bold;
+        color: var(--azul);
+        text-align: center;
+        margin-bottom: 4px;
+      }
+
+      /* ── SELOS DE DIFICULDADE ── */
+      .badge {
+        font-size: 8.5pt;
+        font-weight: bold;
+        padding: 3px 10px;
+        border-radius: 4px;
+        color: #fff;
+        line-height: 1;
+        letter-spacing: 0.3px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+      }
+      .badge-facil {
+        background: var(--facil);
+      }
+      .badge-medio {
+        background: var(--medio);
+      }
+      .badge-dificil {
+        background: var(--dificil);
+      }
+
+      /* ── ITEM ── */
+      .item {
+        break-inside: avoid;
+      }
+      .capacidade,
+      .contexto,
+      .comando,
+      .alternativas {
+        font-size: 10.5pt;
+        line-height: 1.45;
+      }
+      .capacidade,
+      .contexto,
+      .comando {
+        margin-bottom: 8px;
+      }
+      .capacidade::before,
+      .contexto::before,
+      .comando::before,
+      .alternativas::before {
+        display: block;
+        font-weight: bold;
+        font-style: italic;
+        text-decoration: underline;
+        margin: 6px 0 3px;
+      }
+      .capacidade::before {
+        content: 'CAPACIDADE:';
+        margin-top: 0;
+        margin-bottom: 2px;
+      }
+      .contexto::before {
+        content: 'Contexto:';
+      }
+      .comando::before {
+        content: 'Comando:';
+      }
+      .alternativas::before {
+        content: 'Alternativas:';
+        margin-bottom: 6px;
+      }
+
+      /* ── ALTERNATIVAS ── */
+      .alternativas {
+        list-style: none;
+        counter-reset: alt;
+      }
+      .alternativas > li {
+        counter-increment: alt;
+        color: var(--alternativa);
+        margin: 5px 0 5px 16px;
+        line-height: 1.5;
+      }
+      .alternativas > li::before {
+        content: counter(alt, lower-alpha) ') ';
+        font-weight: bold;
+      }
+      .item code {
+        font-family: var(--mono);
+        font-weight: bold;
+      }
+
+      /* ── AFIRMATIVAS I, II, III ── */
+      .afirmativas {
+        list-style: upper-roman;
+        margin: 6px 0 6px 34px !important;
+      }
+      .afirmativas > li {
+        margin-bottom: 3px;
+      }
+
+      /* ── FIGURAS ── */
+      .figura {
+        margin: 10px 0 14px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--cinza-borda);
+        background: #fff;
+      }
+      .figura-cab {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 12px;
+        background: var(--cinza-fundo);
+        border-bottom: 1px solid var(--cinza-borda);
+      }
+      .pontos {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #f85149;
+        box-shadow:
+          14px 0 #e3b341,
+          28px 0 #39d353;
+        margin-right: 28px;
+      }
+      .figura-titulo {
+        font-family: var(--mono);
+        font-size: 9pt;
+        color: #333;
+      }
+      .figura-corpo {
+        padding: 8px;
+        overflow-x: auto;
+      }
+      .figura-corpo svg {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* variante: código */
+      .figura-codigo {
+        background: #0d1117;
+        border-color: #0d1117;
+      }
+      .figura-codigo .figura-cab {
+        background: #0d1117;
+        border-bottom-color: #f1f1f1;
+      }
+      .figura-codigo .figura-titulo {
+        color: #f1f1f1;
+        font-size: 1rem;
+      }
+      .figura-codigo .figura-corpo {
+        padding: 12px 14px;
+      }
+      .figura-codigo pre {
+        font-family: var(--mono);
+        font-size: 1rem;
+        line-height: 1.55;
+        white-space: pre;
+        color: #f1f1f1;
+      }
+      .figura-codigo .kw { color: #ff7b72; }
+      .figura-codigo .fn { color: #d2a8ff; }
+      .figura-codigo .str { color: #a5d6ff; }
+      .figura-codigo .num { color: #6087f2; }
+      .figura-codigo .cmt { color: #8b949e; }
+      .figura-codigo .prop { color: #79c0ff; }
+      .figura-codigo .var { color: #ffa657; }
+
+      /* variante: tabela de dados */
+      .tabela-dados {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 10pt;
+      }
+      .tabela-dados th {
+        background: var(--azul-claro);
+        border: 1px solid var(--azul);
+        padding: 5px 8px;
+        text-align: left;
+      }
+      .tabela-dados td {
+        border: 1px solid var(--azul-borda);
+        padding: 4px 8px;
+      }
+
+      /* ── SVG: DER pé de galinha ── */
+      .dg-e { fill: #fff; stroke: var(--azul); stroke-width: 1.2; }
+      .dg-h { fill: var(--azul); }
+      .dg-t { font: bold 12px var(--fonte); fill: #fff; text-anchor: middle; }
+      .dg-a { font: 10px var(--fonte); fill: #000; }
+      .dg-k { font: bold 10px var(--fonte); fill: #000; }
+      .dg-s { stroke: var(--cinza-borda); stroke-width: 1; }
+      .dg-l { stroke: var(--azul); stroke-width: 1.5; fill: none; }
+      .dg-c { fill: #fff; stroke: var(--azul); stroke-width: 1.5; }
+
+      /* ── GABARITO ── */
+      .gabarito-section {
+        margin-top: 28px;
+      }
+      .gabarito-section .gabarito-titulo {
+        margin-top: 0;
+      }
+      .gabarito-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid var(--azul);
+      }
+      .gabarito-table th {
+        background: var(--azul-claro);
+        border: 1px solid var(--azul);
+        padding: 6px;
+        font-size: 10pt;
+        text-align: center;
+      }
+      .gabarito-table td {
+        border: 1px solid var(--azul-borda);
+        padding: 5px;
+        text-align: center;
+        font-size: 10.5pt;
+      }
+      .gabarito-table th:nth-child(1) { width: 15%; }
+      .gabarito-table th:nth-child(2) { width: 25%; }
+      .gabarito-table th:nth-child(3),
+      .gabarito-table th:nth-child(4) { width: 30%; }
+      .resposta-correta {
+        display: inline-block;
+        min-width: 28px;
+        padding: 2px 8px;
+        border: 2px solid var(--azul);
+        border-radius: 50%;
+        font-weight: bold;
+        color: var(--azul);
+      }
+
+      /* ── IMPRESSÃO ── */
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      @media print {
+        .page {
+          width: 100%;
+          min-height: 0;
+          margin: 0;
+          padding: 12mm 14mm;
+        }
+        .gabarito-section {
+          break-before: page;
+          margin-top: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="prova">
+    <div class="page">
+      <!-- ══════════════════ CABEÇALHO ══════════════════ -->
+      <table class="header-table">
+        <tr>
+          <td class="logo-cell" rowspan="7">
+            <div class="senai-brand">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_sfpOEDmPPoL6K0aQL4qg5SsWL_41ZqhyF7zW1509kA&s=10"
+                alt="Logo SENAI"
+              />
+              <span>Serviço Nacional de Aprendizagem</span>
+            </div>
+          </td>
+          <td class="title-cell">AVALIAÇÃO OBJETIVA</td>
+          <td class="desemp-cell" rowspan="7">Desempenho</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Data:</span>
+            <em class="campo negrito">___/___/______</em>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Avaliador / Docente:</span>
+            <em class="campo negrito">Anderson Raulino Dutra</em>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Curso Técnico em:</span>
+            <em class="campo negrito">Informática para Internet</em>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Unidade Curricular:</span>
+            <em class="campo negrito"
+              >Projeto de Backend</em
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="rotulo">Turma:</span>
+            <em class="campo negrito">T TIIN 2025/1 M2- 463013</em>
+          </td>
+        </tr>
+        <tr class="estudante-row">
+          <td>Profissional / Candidato:</td>
+        </tr>
+      </table>
+
+      <div class="section-divider">
+        <div class="section-title">
+          AVALIAÇÃO OBJETIVA – NÍVEL AVANÇADO <br />
+          Técnico em Informática para Internet <br />
+          Lógica, Web, JavaScript, Segurança, Banco de Dados, Testes e Ofimática
+        </div>
+      </div>
+
+      <!-- ══════════════════ CAPACIDADES ══════════════════ -->
+      <div class="capacidades-box">
+        <div class="capacidades-header">CAPACIDADES</div>
+        <div class="capacidades-content">
+          <p>
+            <strong>C1:</strong> Utilizar ferramentas de ofimática (planilhas e
+            editores de texto) para produtividade e automação corporativa.
+          </p>
+          <p>
+            <strong>C2:</strong> Aplicar princípios de design de interação,
+            usabilidade e acessibilidade (WCAG) no desenvolvimento de interfaces.
+          </p>
+          <p>
+            <strong>C3:</strong> Aplicar lógica de programação e algoritmos na
+            resolução de problemas em JavaScript.
+          </p>
+          <p>
+            <strong>C4:</strong> Interpretar a modelagem de dados e a
+            arquitetura de aplicações web.
+          </p>
+          <p>
+            <strong>C5:</strong> Desenvolver interfaces web dinâmicas com HTML,
+            CSS e JavaScript (ES6+).
+          </p>
+          <p>
+            <strong>C6:</strong> Desenvolver aplicações seguras, APIs REST e
+            utilizar controle de versão com Git e JavaScript/Node.js.
+          </p>
+          <p>
+            <strong>C7:</strong> Aplicar linguagem SQL e conceitos de bancos de
+            dados para consulta e manipulação de dados.
+          </p>
+          <p>
+            <strong>C8:</strong> Aplicar técnicas e práticas de testes
+            automatizados de software.
+          </p>
+        </div>
+      </div>
+
+      <!-- ══════════════════ ITENS ══════════════════ -->
+
+      <!-- ITEM 01 -->
+      <section class="item" data-ct="C3" data-dif="medio" data-resp="b">
+        <div class="contexto">
+          Um engenheiro de software está analisando uma função recursiva criada
+          em JavaScript para calcular o somatório regressivo com decremento de
+          duas unidades.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 recursao.js</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="kw">function</span> <span class="fn">processar</span>(<span class="var">n</span>) {
+    <span class="kw">if</span> (<span class="var">n</span> &lt;= <span class="num">1</span>) <span class="kw">return</span> <span class="num">1</span>;
+    <span class="kw">return</span> <span class="var">n</span> + <span class="fn">processar</span>(<span class="var">n</span> - <span class="num">2</span>);
+}
+<span class="var">console</span>.<span class="fn">log</span>(<span class="fn">processar</span>(<span class="num">7</span>));</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual valor será impresso no console após a execução dessa função?
+        </div>
+        <ol class="alternativas">
+          <li>12</li>
+          <li>16</li>
+          <li>28</li>
+          <li>15</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 02 -->
+      <section class="item" data-ct="C3" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Uma equipe de desenvolvimento precisa calcular a soma acumulada
+          apenas dos elementos pares de uma lista, dobrando seus valores durante
+          o processamento.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 acumulador.js</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="kw">const</span> <span class="var">nums</span> = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>, <span class="num">5</span>];
+<span class="kw">const</span> <span class="var">res</span> = <span class="var">nums</span>.<span class="fn">reduce</span>((<span class="var">acc</span>, <span class="var">curr</span>) =&gt; {
+    <span class="kw">return</span> <span class="var">curr</span> % <span class="num">2</span> === <span class="num">0</span> ? <span class="var">acc</span> + (<span class="var">curr</span> * <span class="num">2</span>) : <span class="var">acc</span>;
+}, <span class="num">0</span>);
+<span class="var">console</span>.<span class="fn">log</span>(<span class="var">res</span>);</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual será o resultado retornado pela execução do código?
+        </div>
+        <ol class="alternativas">
+          <li>6</li>
+          <li>10</li>
+          <li>12</li>
+          <li>24</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 03 -->
+      <section class="item" data-ct="C3" data-dif="dificil" data-resp="a">
+        <div class="contexto">
+          Durante a otimização de uma rotina de ordenação de dados em
+          JavaScript, um desenvolvedor escolheu o algoritmo <em>QuickSort</em>.
+        </div>
+        <div class="comando">
+          Qual é a complexidade temporal de pior caso e caso médio para este
+          algoritmo, respectivamente?
+        </div>
+        <ol class="alternativas">
+          <li>Pior caso O(n²) e Caso Médio O(n log n).</li>
+          <li>Pior caso O(n log n) e Caso Médio O(n).</li>
+          <li>Pior caso O(n) e Caso Médio O(1).</li>
+          <li>Pior caso O(log n) e Caso Médio O(n²).</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 04 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Um arquiteto de software projetou uma estrutura baseada em Orientação a
+          Objetos usando classes ES6 em JavaScript para gerenciar notificações
+          de um sistema.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 notificacao.js</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="kw">class</span> <span class="fn">Notificacao</span> {
+    <span class="fn">enviar</span>() { <span class="kw">return</span> <span class="str">"Padrao"</span>; }
+}
+<span class="kw">class</span> <span class="fn">Email</span> <span class="kw">extends</span> <span class="fn">Notificacao</span> {
+    <span class="fn">enviar</span>() { <span class="kw">return</span> <span class="str">"Email"</span>; }
+}
+<span class="kw">class</span> <span class="fn">SMS</span> <span class="kw">extends</span> <span class="fn">Notificacao</span> {
+    <span class="fn">enviar</span>() { <span class="kw">return</span> <span class="str">"SMS"</span>; }
+}
+
+<span class="kw">const</span> <span class="var">fila</span> = [<span class="kw">new</span> <span class="fn">SMS</span>(), <span class="kw">new</span> <span class="fn">Email</span>(), <span class="kw">new</span> <span class="fn">Notificacao</span>()];
+<span class="kw">const</span> <span class="var">saida</span> = <span class="var">fila</span>.<span class="fn">map</span>(<span class="var">item</span> =&gt; <span class="var">item</span>.<span class="fn">enviar</span>()).<span class="fn">join</span>(<span class="str">" - "</span>);
+<span class="var">console</span>.<span class="fn">log</span>(<span class="var">saida</span>);</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual saída será exibida no console do ambiente Node.js?
+        </div>
+        <ol class="alternativas">
+          <li><code>Padrao - Padrao - Padrao</code></li>
+          <li><code>SMS - SMS - SMS</code></li>
+          <li><code>SMS - Email - Padrao</code></li>
+          <li><code>TypeError: item.enviar is not a function</code></li>
+        </ol>
+      </section>
+
+      <!-- ITEM 05 -->
+      <section class="item" data-ct="C5" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          Durante uma auditoria de código JavaScript, a equipe avaliou o
+          comportamento de coerção de tipos e verificação de valores especiais.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 tipos.js</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="var">console</span>.<span class="fn">log</span>(<span class="kw">typeof</span> <span class="num">NaN</span>);
+<span class="var">console</span>.<span class="fn">log</span>(<span class="kw">null</span> == <span class="kw">undefined</span>);
+<span class="var">console</span>.<span class="fn">log</span>([] == <span class="kw">false</span>);
+<span class="var">console</span>.<span class="fn">log</span>(<span class="kw">typeof</span> []);</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Quais valores serão impressos, na ordem correta, ao executar o script?
+        </div>
+        <ol class="alternativas">
+          <li><code>"undefined", false, false, "array"</code></li>
+          <li><code>"number", false, true, "array"</code></li>
+          <li><code>"nan", true, false, "object"</code></li>
+          <li><code>"number", true, true, "object"</code></li>
+        </ol>
+      </section>
+
+      <!-- ITEM 06 -->
+      <section class="item" data-ct="C5" data-dif="dificil" data-resp="b">
+        <div class="contexto">
+          Um desenvolvedor front-end está tratando uma lista de transações
+          financeiras usando encadeamento de métodos funcionais em JavaScript.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 transacoes.js</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="kw">const</span> <span class="var">dados</span> = [
+  { <span class="prop">v</span>: <span class="num">100</span>, <span class="prop">t</span>: <span class="str">"credito"</span> },
+  { <span class="prop">v</span>: <span class="num">50</span>,  <span class="prop">t</span>: <span class="str">"debito"</span> },
+  { <span class="prop">v</span>: <span class="num">200</span>, <span class="prop">t</span>: <span class="str">"credito"</span> }
+];
+<span class="kw">const</span> <span class="var">total</span> = <span class="var">dados</span>
+  .<span class="fn">filter</span>(<span class="var">x</span> =&gt; <span class="var">x</span>.<span class="prop">t</span> === <span class="str">"credito"</span>)
+  .<span class="fn">map</span>(<span class="var">x</span> =&gt; <span class="var">x</span>.<span class="prop">v</span> * <span class="num">1.1</span>)
+  .<span class="fn">reduce</span>((<span class="var">acc</span>, <span class="var">v</span>) =&gt; <span class="var">acc</span> + <span class="var">v</span>, <span class="num">0</span>);
+<span class="var">console</span>.<span class="fn">log</span>(<span class="var">total</span>);</pre>
+          </div>
+        </figure>
+
+        <div class="comando">Qual será o valor impresso no console?</div>
+        <ol class="alternativas">
+          <li>300</li>
+          <li>330</li>
+          <li>275</li>
+          <li>350</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 07 -->
+      <section class="item" data-ct="C5" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Um profissional de engenharia de software testou a ordem de execução do
+          <em>Event Loop</em> no JavaScript, considerando a pilha de chamadas, a
+          fila de microtarefas (Promises) e a fila de macrotarefas (Timers).
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 eventloop.js</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="var">console</span>.<span class="fn">log</span>(<span class="str">"1"</span>);
+<span class="fn">setTimeout</span>(() =&gt; <span class="var">console</span>.<span class="fn">log</span>(<span class="str">"2"</span>), <span class="num">0</span>);
+<span class="var">Promise</span>.<span class="fn">resolve</span>().<span class="fn">then</span>(() =&gt; <span class="var">console</span>.<span class="fn">log</span>(<span class="str">"3"</span>));
+<span class="var">console</span>.<span class="fn">log</span>(<span class="str">"4"</span>);</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual será a sequência exata mostrada no console?
+        </div>
+        <ol class="alternativas">
+          <li><code>1, 2, 3, 4</code></li>
+          <li><code>1, 3, 4, 2</code></li>
+          <li><code>1, 4, 3, 2</code></li>
+          <li><code>1, 4, 2, 3</code></li>
+        </ol>
+      </section>
+
+      <!-- ITEM 08 -->
+      <section class="item" data-ct="C5" data-dif="dificil" data-resp="a">
+        <div class="contexto">
+          Um projeto web possui múltiplos estilos CSS competindo para definir a
+          cor de fundo de um botão.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 estilo.css / index.html</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="cmt">/* Regras CSS */</span>
+<span class="prop">#painel .btn</span> { <span class="prop">background-color</span>: <span class="str">blue</span>; }
+<span class="prop">button.btn</span>   { <span class="prop">background-color</span>: <span class="str">red</span>; }
+<span class="prop">#btn-salvar</span>  { <span class="prop">background-color</span>: <span class="str">green</span>; }
+
+<span class="cmt">&lt;!-- Estrutura HTML --&gt;</span>
+&lt;<span class="kw">div</span> <span class="prop">id</span>=<span class="str">"painel"</span>&gt;
+  &lt;<span class="kw">button</span> <span class="prop">id</span>=<span class="str">"btn-salvar"</span> <span class="prop">class</span>=<span class="str">"btn"</span>&gt;Confirmar&lt;/<span class="kw">button</span>&gt;
+&lt;/<span class="kw">div</span>&gt;</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual cor será aplicada ao botão "Confirmar" e qual o motivo?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Verde, pois o seletor de ID único (<code>#btn-salvar</code>) possui
+            especificidade (0,1,0,0), superando seletores combinados sem ID
+            direto no elemento.
+          </li>
+          <li>
+            Azul, pois a combinação de ID com classe (<code>#painel .btn</code>)
+            gera uma especificidade superior.
+          </li>
+          <li>
+            Vermelha, pois o seletor de elemento com classe é mais específico
+            para a tag <code>button</code>.
+          </li>
+          <li>
+            Verde, apenas porque a regra está escrita por último no arquivo
+            CSS.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 09 -->
+      <section class="item" data-ct="C5" data-dif="medio" data-resp="c">
+        <div class="contexto">
+          Um layout web declarou a classe abaixo utilizando a propriedade
+          <code>box-sizing: border-box</code>.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 caixa.css</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="prop">.box</span> {
+  <span class="prop">box-sizing</span>: <span class="str">border-box</span>;
+  <span class="prop">width</span>: <span class="num">300px</span>;
+  <span class="prop">padding</span>: <span class="num">25px</span>;
+  <span class="prop">border</span>: <span class="num">5px</span> <span class="str">solid</span> <span class="str">#000</span>;
+}</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual será a largura total renderizada para esse elemento no navegador?
+        </div>
+        <ol class="alternativas">
+          <li>360px</li>
+          <li>330px</li>
+          <li>300px</li>
+          <li>240px</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 10 -->
+      <section class="item" data-ct="C5" data-dif="dificil" data-resp="b">
+        <div class="contexto">
+          Um desenvolvedor criou uma grade responsiva com CSS Grid conforme o
+          código a seguir.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 grid.css</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="prop">.container</span> {
+  <span class="prop">display</span>: <span class="str">grid</span>;
+  <span class="prop">grid-template-columns</span>: <span class="fn">repeat</span>(<span class="str">auto-fit</span>, <span class="fn">minmax</span>(<span class="num">200px</span>, <span class="num">1fr</span>));
+  <span class="prop">gap</span>: <span class="num">20px</span>;
+}</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual é o comportamento resultante dessa configuração?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Cria colunas com largura fixa de 200px e gera rolagem horizontal caso
+            a tela seja menor.
+          </li>
+          <li>
+            Ajusta automaticamente o número de colunas, garantindo que cada uma
+            tenha no mínimo 200px e distribua proporcionalmente o espaço sobressalente.
+          </li>
+          <li>
+            Força a criação de apenas uma coluna responsiva que varia de 200px a
+            100% da largura.
+          </li>
+          <li>
+            Define que o contêiner aceitará no máximo 200 itens em grade antes
+            de quebrar a linha.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 11 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Em uma aplicação Node.js utilizando o driver SQL <code>pg</code>, um
+          analista de segurança identificou o trecho vulnerável a *SQL
+          Injection* apresentado abaixo.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 buscaUsuario.js</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="cmt">// Trecho vulnerável</span>
+<span class="kw">const</span> <span class="var">query</span> = <span class="str">`SELECT * FROM usuarios WHERE email = '`</span> + <span class="var">req</span>.<span class="prop">body</span>.<span class="prop">email</span> + <span class="str">`'`</span>;
+<span class="kw">const</span> <span class="var">resultado</span> = <span class="kw">await</span> <span class="var">db</span>.<span class="fn">query</span>(<span class="var">query</span>);</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual refatoração em JavaScript elimina corretamente essa
+          vulnerabilidade?
+        </div>
+        <ol class="alternativas">
+          <li>
+            <code>const query = `SELECT * FROM usuarios WHERE email = '${encodeURIComponent(req.body.email)}'`;</code>
+          </li>
+          <li>
+            <code>const query = `SELECT * FROM usuarios WHERE email = '${req.body.email.replace(/'/g, "")}'`;</code>
+          </li>
+          <li>
+            <code>const query = 'SELECT * FROM usuarios WHERE email = $1'; const resultado = await db.query(query, [req.body.email]);</code>
+          </li>
+          <li>
+            <code>const query = 'SELECT * FROM usuarios WHERE email = ?'; const resultado = await db.query(query, req.body.email);</code>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 12 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="a">
+        <div class="contexto">
+          Para garantir a segurança de credenciais em uma API desenvolvida em
+          Node.js, a equipe necessita armazenar as senhas dos usuários de forma
+          segura contra ataques de *rainbow table* e vazamentos de banco de dados.
+        </div>
+        <div class="comando">
+          Qual técnica e biblioteca do ecossistema JavaScript atendem a essas
+          recomendações?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Utilizar Hashing de senha unidirecional com *salt* dinâmico por meio da
+            biblioteca <code>bcrypt</code> ou <code>argon2</code>.
+          </li>
+          <li>
+            Criptografar as senhas em formato reversível com <code>CryptoJS.AES</code>
+            e salvar a chave no banco de dados.
+          </li>
+          <li>
+            Codificar a senha usando <code>Buffer.from(senha).toString('base64')</code>.
+          </li>
+          <li>
+            Aplicar o algoritmo <code>MD5</code> sem salt, pois ele garante alta
+            velocidade de validação.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 13 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          Uma aplicação web insere conteúdo enviado pelos usuários diretamente no
+          DOM através da propriedade <code>innerHTML</code> sem a devida
+          higienização, permitindo que scripts maliciosos sejam executados no
+          navegador dos visitantes.
+        </div>
+        <div class="comando">
+          Como é classificada essa vulnerabilidade e qual a boa prática para
+          prevenção?
+        </div>
+        <ol class="alternativas">
+          <li>
+            CSRF (Cross-Site Request Forgery); prevenido com tokens anti-CSRF nos
+            cabeçalhos HTTP.
+          </li>
+          <li>
+            SQL Injection; prevenido com sanitização no banco de dados.
+          </li>
+          <li>
+            RCE (Remote Code Execution); prevenido bloqueando o uso do Node.js.
+          </li>
+          <li>
+            XSS (Cross-Site Scripting); prevenido utilizando
+            <code>textContent</code> ou bibliotecas de sanitização como
+            <code>DOMPurify</code>.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 14 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="b">
+        <div class="contexto">
+          Uma API Node.js/Express utiliza JSON Web Tokens (JWT) para
+          autenticação *stateless*. Para mitigar riscos de sequestro de sessão
+          por vazamento de *Access Tokens* com longo período de validade, a
+          arquitetura deve ser aprimorada.
+        </div>
+        <div class="comando">
+          Qual estratégia de arquitetura atende a essa exigência de segurança?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Armazenar o *Access Token* no `localStorage` do navegador com tempo
+            de expiração infinito.
+          </li>
+          <li>
+            Utilizar *Access Tokens* de vida curta armazenados em memória e
+            *Refresh Tokens* de vida longa gravados em cookies `HttpOnly` e
+            `Secure`.
+          </li>
+          <li>
+            Enviar o token JWT via parâmetros da URL em todas as requisições
+            GET.
+          </li>
+          <li>
+            Desabilitar a verificação da assinatura do token no lado do servidor
+            para acelerar as requisições.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 15 -->
+      <section class="item" data-ct="C7" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Um analista de dados consultou as tabelas <code>desenvolvedor</code> e
+          <code>projeto</code> de um sistema corporativo utilizando a instrução
+          SQL abaixo.
+        </div>
+
+        <figure class="figura figura-tabela">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">🗂️ Tabelas desenvolvedor e projeto</span>
+          </div>
+          <div class="figura-corpo">
+            <table class="tabela-dados">
+              <thead>
+                <tr>
+                  <th colspan="2">desenvolvedor</th>
+                  <th colspan="2">projeto</th>
+                </tr>
+                <tr>
+                  <th>id_dev</th>
+                  <th>nome</th>
+                  <th>id_proj</th>
+                  <th>id_dev</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Carlos</td>
+                  <td>101</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Diana</td>
+                  <td>102</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Eduardo</td>
+                  <td>103</td>
+                  <td>3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </figure>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 relatorio.sql</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="kw">SELECT</span> <span class="prop">d.nome</span>, <span class="fn">COUNT</span>(<span class="prop">p.id_proj</span>) <span class="kw">AS</span> <span class="prop">total</span>
+<span class="kw">FROM</span> <span class="var">desenvolvedor</span> d
+<span class="kw">LEFT JOIN</span> <span class="var">projeto</span> p <span class="kw">ON</span> <span class="prop">p.id_dev</span> = <span class="prop">d.id_dev</span>
+<span class="kw">GROUP BY</span> <span class="prop">d.nome</span>;</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual será o resultado retornado por essa consulta SQL?
+        </div>
+        <ol class="alternativas">
+          <li>Carlos 2 e Eduardo 1 (Diana é omitida).</li>
+          <li>Carlos 2, Diana 1 e Eduardo 1.</li>
+          <li>Carlos 2, Diana 0 e Eduardo 1.</li>
+          <li>Carlos 3, Diana 0 e Eduardo 0.</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 16 -->
+      <section class="item" data-ct="C7" data-dif="dificil" data-resp="b">
+        <div class="contexto">
+          Uma empresa de software precisa filtrar registros agrupados, exibindo
+          apenas os projetos cuja soma de horas trabalhadas seja superior a 100
+          horas na tabela <code>apontamento</code>.
+        </div>
+        <div class="comando">
+          Qual estrutura SQL realiza essa filtragem agregada corretamente?
+        </div>
+        <ol class="alternativas">
+          <li>
+            <code>SELECT id_projeto, SUM(horas) FROM apontamento WHERE SUM(horas) > 100 GROUP BY id_projeto;</code>
+          </li>
+          <li>
+            <code>SELECT id_projeto, SUM(horas) FROM apontamento GROUP BY id_projeto HAVING SUM(horas) > 100;</code>
+          </li>
+          <li>
+            <code>SELECT id_projeto, SUM(horas) FROM apontamento HAVING SUM(horas) > 100;</code>
+          </li>
+          <li>
+            <code>SELECT id_projeto FROM apontamento WHERE horas > 100 GROUP BY id_projeto;</code>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 17 -->
+      <section class="item" data-ct="C7" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          Um arquiteto de banco de dados encontrou a tabela
+          <code>desenvolvedor</code> armazenando múltiplas competências técnicas
+          separadas por vírgula no mesmo campo.
+        </div>
+
+        <figure class="figura figura-tabela">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">🗂️ Tabela desnormalizada</span>
+          </div>
+          <div class="figura-corpo">
+            <table class="tabela-dados">
+              <thead>
+                <tr>
+                  <th>id_dev</th>
+                  <th>nome</th>
+                  <th>competencias</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Alice</td>
+                  <td>JavaScript, SQL, HTML</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Bernardo</td>
+                  <td>CSS, React</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual Forma Normal está sendo violada e qual a solução adequada?
+        </div>
+        <ol class="alternativas">
+          <li>
+            2FN; devendo-se criar colunas adicionais como
+            <code>competencia1</code>, <code>competencia2</code>.
+          </li>
+          <li>
+            3FN; devendo-se mover a coluna <code>nome</code> para uma tabela
+            independente.
+          </li>
+          <li>
+            BCNF; adicionando um índice composto na coluna
+            <code>competencias</code>.
+          </li>
+          <li>
+            1FN; devendo-se criar uma tabela associativa
+            <code>dev_competencia</code> garantindo a atomicidade dos dados.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 18 -->
+      <section class="item" data-ct="C7" data-dif="medio" data-resp="a">
+        <div class="contexto">
+          Um gateway de pagamento executa a debitagem de uma conta e o crédito em
+          outra dentro de um bloco transacional SQL. Caso ocorra uma queda de
+          energia durante o processo, o banco de dados desfaz a transação
+          incompleta.
+        </div>
+        <div class="comando">
+          Qual propriedade do modelo ACID garante este comportamento de "tudo
+          ou nada"?
+        </div>
+        <ol class="alternativas">
+          <li>Atomicidade</li>
+          <li>Isolamento</li>
+          <li>Durabilidade</li>
+          <li>Consistência</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 19 -->
+      <section class="item" data-ct="C7" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Em uma tabela de registros de *logs* com milhões de linhas, as consultas
+          pela coluna <code>cpf</code> estavam levando vários segundos para
+          responder. A equipe criou um índice B-Tree nessa coluna.
+        </div>
+        <div class="comando">
+          Qual é o impacto técnico dessa alteração no banco de dados?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Acelera as consultas de busca (SELECT), sem nenhum impacto no uso de
+            disco ou em operações de escrita.
+          </li>
+          <li>
+            Reduz o tamanho físico da tabela no disco e acelera operações de
+            INSERT.
+          </li>
+          <li>
+            Acelera expressivamente as consultas de busca por CPF, porém aumenta
+            o uso de armazenamento e pode impactar o desempenho de INSERTs e
+            UPDATEs.
+          </li>
+          <li>
+            Elimina automaticamente a necessidade de chaves primárias na tabela.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 20 -->
+      <section class="item" data-ct="C7" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          Um analista de sistemas precisa listar todos os colaboradores da
+          tabela <code>funcionario</code> cujo salário seja superior à média
+          salarial de toda a empresa.
+        </div>
+        <div class="comando">
+          Qual subconsulta SQL resolve corretamente esse problema?
+        </div>
+        <ol class="alternativas">
+          <li>
+            <code>SELECT * FROM funcionario WHERE salario > AVG(salario);</code>
+          </li>
+          <li>
+            <code>SELECT * FROM funcionario HAVING salario > AVG(salario);</code>
+          </li>
+          <li>
+            <code>SELECT AVG(salario) FROM funcionario WHERE salario > AVG(salario);</code>
+          </li>
+          <li>
+            <code>SELECT * FROM funcionario WHERE salario > (SELECT AVG(salario) FROM funcionario);</code>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 21 -->
+      <section class="item" data-ct="C7" data-dif="dificil" data-resp="b">
+        <div class="contexto">
+          A tabela <code>item_pedido</code> possui uma chave estrangeira
+          apontando para <code>pedido</code> configurada com a cláusula
+          <code>ON DELETE CASCADE</code>.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📁 fk.sql</span>
+          </div>
+          <div class="figura-corpo">
+            <pre><span class="kw">ALTER TABLE</span> <span class="var">item_pedido</span>
+<span class="kw">ADD CONSTRAINT</span> <span class="prop">fk_pedido</span>
+<span class="kw">FOREIGN KEY</span> (<span class="prop">id_pedido</span>) <span class="kw">REFERENCES</span> <span class="var">pedido</span>(<span class="prop">id_pedido</span>)
+<span class="kw">ON DELETE CASCADE</span>;</pre>
+          </div>
+        </figure>
+
+        <div class="comando">
+          O que ocorre ao executar <code>DELETE FROM pedido WHERE id_pedido = 50;</code>?
+        </div>
+        <ol class="alternativas">
+          <li>
+            O comando falha com erro de restrição de integridade caso existam
+            itens associados.
+          </li>
+          <li>
+            O registro do pedido é removido e todos os seus itens associados em
+            <code>item_pedido</code> são excluídos automaticamente.
+          </li>
+          <li>
+            O pedido é excluído e o campo <code>id_pedido</code> nos itens
+            passa a ser NULL.
+          </li>
+          <li>
+            Apenas os itens são excluídos, mantendo o pedido original intacto.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 22 -->
+      <section class="item" data-ct="C4" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Uma empresa de tecnologia modelou seu sistema de alocação de projetos.
+          A figura abaixo ilustra o Diagrama de Entidade-Relacionamento (DER)
+          lógico do sistema em notação pé de galinha.
+        </div>
+
+        <figure class="figura figura-diagrama">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📐 DER Lógico — Gestão de Alocações</span>
+          </div>
+          <div class="figura-corpo">
+            <svg
+              viewBox="0 0 620 100"
+              xmlns="http://www.w3.org/2000/svg"
+              role="img"
+              aria-label="DER lógico com tabelas desenvolvedor, alocacao e projeto"
+            >
+              <!-- desenvolvedor -->
+              <rect class="dg-e" x="10" y="10" width="170" height="78" />
+              <rect class="dg-h" x="10" y="10" width="170" height="24" />
+              <text class="dg-t" x="95" y="27">desenvolvedor</text>
+              <line class="dg-s" x1="10" y1="52" x2="180" y2="52" />
+              <line class="dg-s" x1="10" y1="70" x2="180" y2="70" />
+              <text class="dg-k" x="18" y="47">PK id_dev</text>
+              <text class="dg-a" x="18" y="65">nome</text>
+              <text class="dg-a" x="18" y="83">cargo</text>
+
+              <!-- alocacao -->
+              <rect class="dg-e" x="225" y="10" width="170" height="78" />
+              <rect class="dg-h" x="225" y="10" width="170" height="24" />
+              <text class="dg-t" x="310" y="27">alocacao</text>
+              <line class="dg-s" x1="225" y1="52" x2="395" y2="52" />
+              <line class="dg-s" x1="225" y1="70" x2="395" y2="70" />
+              <text class="dg-k" x="233" y="47">PK, FK id_dev</text>
+              <text class="dg-k" x="233" y="65">PK, FK id_proj</text>
+              <text class="dg-a" x="233" y="83">horas_semana</text>
+
+              <!-- projeto -->
+              <rect class="dg-e" x="440" y="10" width="170" height="78" />
+              <rect class="dg-h" x="440" y="10" width="170" height="24" />
+              <text class="dg-t" x="525" y="27">projeto</text>
+              <line class="dg-s" x1="440" y1="52" x2="610" y2="52" />
+              <line class="dg-s" x1="440" y1="70" x2="610" y2="70" />
+              <text class="dg-k" x="448" y="47">PK id_proj</text>
+              <text class="dg-a" x="448" y="65">nome_projeto</text>
+              <text class="dg-a" x="448" y="83">orcamento</text>
+
+              <!-- rel 1 -->
+              <line class="dg-l" x1="180" y1="43" x2="225" y2="43" />
+              <path class="dg-l" d="M188 36V50M194 36V50" />
+              <path class="dg-l" d="M213 43L225 36M213 43L225 43M213 43L225 50" />
+              <circle class="dg-c" cx="206" cy="43" r="4" />
+
+              <!-- rel 2 -->
+              <line class="dg-l" x1="395" y1="43" x2="440" y2="43" />
+              <path class="dg-l" d="M432 36V50M426 36V50" />
+              <path class="dg-l" d="M407 43L395 36M407 43L395 43M407 43L395 50" />
+              <circle class="dg-c" cx="414" cy="43" r="4" />
+            </svg>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual afirmação descreve corretamente a modelagem apresentada?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Trata-se de um relacionamento 1:1 estrito entre desenvolvedor e
+            projeto.
+          </li>
+          <li>
+            A tabela <code>alocacao</code> é redundante e deve ser eliminada do
+            projeto físico.
+          </li>
+          <li>
+            O relacionamento N:N entre <code>desenvolvedor</code> e
+            <code>projeto</code> foi resolvido pela tabela associativa
+            <code>alocacao</code>, cuja chave primária composta evita
+            duplicações.
+          </li>
+          <li>
+            Um projeto só pode ter no máximo um desenvolvedor associado a ele.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 23 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="a">
+        <div class="contexto">
+          Uma API REST precisa responder a uma requisição onde um cliente
+          autenticado tenta acessar um recurso sem possuir o papel (*role*) de
+          permissão necessário.
+        </div>
+        <div class="comando">
+          Qual código de status HTTP deve ser retornado por essa rota?
+        </div>
+        <ol class="alternativas">
+          <li>403 (Forbidden)</li>
+          <li>401 (Unauthorized)</li>
+          <li>400 (Bad Request)</li>
+          <li>404 (Not Found)</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 24 -->
+      <section class="item" data-ct="C6" data-dif="medio" data-resp="d">
+        <div class="contexto">
+          Na arquitetura de APIs RESTful, a idempotência garante que requisições
+          múltiplas idênticas produzam o mesmo efeito no estado do servidor.
+        </div>
+        <div class="comando">
+          Quais métodos HTTP são originalmente idempotentes pela especificação?
+        </div>
+        <ol class="alternativas">
+          <li>POST e PATCH</li>
+          <li>POST e DELETE</li>
+          <li>GET e POST</li>
+          <li>GET, PUT e DELETE</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 25 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="b">
+        <div class="contexto">
+          Uma aplicação Single Page Application (SPA) rodando em
+          <code>http://localhost:5173</code> realiza uma chamada `fetch` para uma
+          API Node.js em <code>http://api.empresa.com</code> e é bloqueada pelo
+          navegador devido à política de mesma origem.
+        </div>
+        <div class="comando">
+          Qual cabeçalho HTTP a API deve enviar na resposta para liberar o acesso?
+        </div>
+        <ol class="alternativas">
+          <li><code>Content-Type: application/json</code></li>
+          <li><code>Access-Control-Allow-Origin: http://localhost:5173</code></li>
+          <li><code>X-Frame-Options: SAMEORIGIN</code></li>
+          <li><code>Cache-Control: no-store</code></li>
+        </ol>
+      </section>
+
+      <!-- ITEM 26 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Ao realizar o comando <code>git merge feature/login</code> na branch
+          <code>main</code>, o Git reportou um conflito de integração no arquivo
+          <code>src/auth.js</code>.
+        </div>
+        <div class="comando">
+          Qual é a sequência correta de comandos para resolver o conflito de
+          forma segura?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Executar <code>git push --force</code> imediatamente para sobrescrever o
+            remoto.
+          </li>
+          <li>
+            Executar <code>git reset --hard</code> e excluir a branch
+            <code>feature/login</code>.
+          </li>
+          <li>
+            Editar o arquivo manualmente resolvendo as marcações de conflito,
+            executar <code>git add src/auth.js</code> e finalizar com
+            <code>git commit</code>.
+          </li>
+          <li>
+            Apagar o diretório <code>.git</code> local e clonar o repositório novamente.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 27 -->
+      <section class="item" data-ct="C6" data-dif="dificil" data-resp="a">
+        <div class="contexto">
+          Um *commit* contendo um erro crítico de produção já foi publicado na
+          branch remota pública compartilhada pela equipe. É necessário desfazer
+          as alterações mantendo a integridade do histórico público.
+        </div>
+        <div class="comando">
+          Qual é o procedimento recomendado no Git?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Utilizar <code>git revert &lt;hash_do_commit&gt;</code>, que gera um novo
+            commit revertendo as alterações de forma segura.
+          </li>
+          <li>
+            Executar <code>git reset --hard HEAD~1</code> seguido de um
+            <code>git push --force</code>.
+          </li>
+          <li>
+            Utilizar o comando <code>git clean -fd</code> no servidor.
+          </li>
+          <li>
+            Remover o arquivo afetado manualmente do disco sem registrar
+            commit.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 28 -->
+      <section class="item" data-ct="C8" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          Uma equipe de desenvolvimento adotou TDD (*Test-Driven Development*)
+          no ciclo de vida de desenvolvimento do projeto.
+        </div>
+        <div class="comando">
+          Qual é a ordem correta do ciclo iterativo do TDD?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Implementar o código, escrever os testes automatizados e refatorar.
+          </li>
+          <li>
+            Escrever o teste que passa, implementar o código e criar testes
+            manuais.
+          </li>
+          <li>
+            Refatorar o sistema, criar os testes de integração e publicar em
+            produção.
+          </li>
+          <li>
+            Escrever um teste que falha (Red), implementar o código mínimo para o
+            teste passar (Green) e refatorar o código (Refactor).
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 29 -->
+      <section class="item" data-ct="C8" data-dif="dificil" data-resp="b">
+        <div class="contexto">
+          Ao estruturar testes unitários com Jest em uma aplicação JavaScript, um
+          desenvolvedor precisa isolar a unidade sob teste de dependências
+          externas de rede ou banco de dados. Analise as afirmativas:
+          <ol class="afirmativas">
+            <li>
+              *Mocks* e *Stubs* permitem simular respostas previsíveis de serviços
+              externos sem realizar chamadas reais de rede.
+            </li>
+            <li>
+              Testes unitários que dependem de bancos de dados reais em execução
+              são mais rápidos e isolados.
+            </li>
+            <li>
+              O isolamento de dependências através de dublês de teste evita que
+              falhas externas afetem a validação da unidade.
+            </li>
+          </ol>
+        </div>
+        <div class="comando">Estão corretas as afirmativas:</div>
+        <ol class="alternativas">
+          <li>Apenas I.</li>
+          <li>Apenas I e III.</li>
+          <li>Apenas II e III.</li>
+          <li>I, II e III.</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 30 -->
+      <section class="item" data-ct="C8" data-dif="medio" data-resp="c">
+        <div class="contexto">
+          Após uma atualização na biblioteca de cálculo de tributos de um
+          sistema web, a equipe precisa rodar uma suíte de testes para garantir
+          que nenhuma funcionalidade anteriormente funcionando tenha sido
+          quebrada.
+        </div>
+        <div class="comando">
+          Qual tipo de teste atende a esse propósito específico?
+        </div>
+        <ol class="alternativas">
+          <li>Teste de Estresse</li>
+          <li>Teste de Usabilidade</li>
+          <li>Teste de Regressão</li>
+          <li>Teste de Carga</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 31 -->
+      <section class="item" data-ct="C2" data-dif="medio" data-resp="a">
+        <div class="contexto">
+          Em uma plataforma web de relatórios, ao acionar o processamento de um
+          arquivo extenso, a tela permanece estática sem nenhum indicador visual
+          de carregamento por 10 segundos, fazendo com que o usuário clique
+          múltiplas vezes.
+        </div>
+        <div class="comando">
+          Qual heurística de usabilidade de Nielsen está sendo violada?
+        </div>
+        <ol class="alternativas">
+          <li>Visibilidade do status do sistema</li>
+          <li>Flexibilidade e eficiência de uso</li>
+          <li>Design minimalista</li>
+          <li>Prevenção de erros</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 32 -->
+      <section class="item" data-ct="C2" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          Para adequar uma aplicação web às diretrizes de acessibilidade WCAG 2.1
+          nível AA, uma equipe precisa tratar uma imagem informativa que exibe o
+          gráfico de faturamento anual.
+        </div>
+        <div class="comando">
+          Qual é a implementação correta segundo as normas de acessibilidade?
+        </div>
+        <ol class="alternativas">
+          <li>
+            Inserir a imagem com <code>alt="imagem do grafico"</code>.
+          </li>
+          <li>
+            Deixar a tag sem o atributo <code>alt</code> para o leitor ignorar.
+          </li>
+          <li>
+            Carregar a imagem via CSS com <code>background-image</code>.
+          </li>
+          <li>
+            Fornecer uma descrição textual clara e equivalente no atributo
+            <code>alt</code> ou associar um elemento via <code>aria-describedby</code>.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ITEM 33 -->
+      <section class="item" data-ct="C1" data-dif="dificil" data-resp="c">
+        <div class="contexto">
+          Em um painel corporativo do Microsoft Excel, um analista inseriu a
+          fórmula <code>=PROCV(103; A2:C5; 3; FALSO)</code> conforme a planilha
+          abaixo.
+        </div>
+
+        <figure class="figura figura-tabela">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📊 Tabela Excel (A1:C5)</span>
+          </div>
+          <div class="figura-corpo">
+            <table class="tabela-dados">
+              <thead>
+                <tr>
+                  <th>&nbsp;</th>
+                  <th>A</th>
+                  <th>B</th>
+                  <th>C</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1</strong></td>
+                  <td><strong>Código</strong></td>
+                  <td><strong>Item</strong></td>
+                  <td><strong>Valor (R$)</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>2</strong></td>
+                  <td>101</td>
+                  <td>Servidor</td>
+                  <td>15000</td>
+                </tr>
+                <tr>
+                  <td><strong>3</strong></td>
+                  <td>102</td>
+                  <td>Switch</td>
+                  <td>3200</td>
+                </tr>
+                <tr>
+                  <td><strong>4</strong></td>
+                  <td>103</td>
+                  <td>Roteador</td>
+                  <td>1800</td>
+                </tr>
+                <tr>
+                  <td><strong>5</strong></td>
+                  <td>104</td>
+                  <td>Firewall</td>
+                  <td>8500</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </figure>
+
+        <div class="comando">
+          Qual valor numérico será retornado por essa célula?
+        </div>
+        <ol class="alternativas">
+          <li>103</li>
+          <li>Roteador</li>
+          <li>1800</li>
+          <li>#N/D</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 34 -->
+      <section class="item" data-ct="C1" data-dif="medio" data-resp="b">
+        <div class="contexto">
+          Uma planilha de avaliação de desempenho utiliza a fórmula abaixo na
+          célula C2, sabendo-se que a célula B2 possui o valor 78.
+        </div>
+
+        <figure class="figura figura-codigo">
+          <div class="figura-cab">
+            <span class="pontos"></span>
+            <span class="figura-titulo">📊 Célula C2</span>
+          </div>
+          <div class="figura-corpo">
+            <pre>=<span class="fn">SE</span>(<span class="prop">B2</span>&gt;=<span class="num">90</span>; <span class="str">"Excelente"</span>; <span class="fn">SE</span>(<span class="prop">B2</span>&gt;=<span class="num">70</span>; <span class="str">"Atende"</span>; <span class="str">"Abaixo"</span>))</pre>
+          </div>
+        </figure>
+
+        <div class="comando">Qual texto será exibido na célula C2?</div>
+        <ol class="alternativas">
+          <li>Excelente</li>
+          <li>Atende</li>
+          <li>Abaixo</li>
+          <li>#VALOR!</li>
+        </ol>
+      </section>
+
+      <!-- ITEM 35 -->
+      <section class="item" data-ct="C1" data-dif="dificil" data-resp="d">
+        <div class="contexto">
+          Em uma planilha de controle financeiro, a célula C2 possui a fórmula
+          <code>=$A2*B$1</code>. Um analista copiou a célula C2 e a colou na
+          célula D4 (uma coluna para a direita e duas linhas para baixo).
+        </div>
+        <div class="comando">
+          Qual fórmula estará gravada na célula D4?
+        </div>
+        <ol class="alternativas">
+          <li><code>=$A2*B$1</code></li>
+          <li><code>=A4*C1</code></li>
+          <li><code>=$A2*C$1</code></li>
+          <li><code>=$A4*C$1</code></li>
+        </ol>
+      </section>
+
+      <!-- ══════════════════ GABARITO (gerado pelo script) ══════════════════ -->
+      <div class="gabarito-section" id="gabarito"></div>
+    </div>
+
+    <script>
+      /* Monta, a partir dos atributos data-* de cada section.item:
+         cabeçalho "ITEM NN" com selo de dificuldade, linha CAPACIDADE e gabarito. */
+      (function () {
+        var DIF = {
+          facil: { item: 'Fácil', gab: 'Fácil', cls: 'badge-facil' },
+          medio: { item: 'Média', gab: 'Médio', cls: 'badge-medio' },
+          dificil: { item: 'Difícil', gab: 'Difícil', cls: 'badge-dificil' },
+        };
+        var linhas = '';
+
+        document.querySelectorAll('.item').forEach(function (item, i) {
+          var num = i + 1;
+          var nn = (num < 10 ? '0' : '') + num;
+          var ct = item.getAttribute('data-ct') || '?';
+          var dif = DIF[item.getAttribute('data-dif')];
+          var resp = (item.getAttribute('data-resp') || '').toUpperCase();
+
+          if (!dif)
+            console.warn(
+              'Item ' +
+                nn +
+                ': data-dif inválido (use facil, medio ou dificil).',
+            );
+          if (!/^[A-D]$/.test(resp))
+            console.warn(
+              'Item ' + nn + ': data-resp inválido (use a, b, c ou d).',
+            );
+          if (item.querySelectorAll('.alternativas > li').length !== 4)
+            console.warn(
+              'Item ' + nn + ': esperado exatamente 4 alternativas.',
+            );
+
+          var cab = document.createElement('div');
+          cab.className = 'item-header';
+          cab.innerHTML =
+            '<span>ITEM ' +
+            nn +
+            '</span>' +
+            '<span class="badge ' +
+            (dif ? dif.cls : '') +
+            '">' +
+            (dif ? dif.item : '?') +
+            '</span>';
+
+          var box = document.createElement('div');
+          box.className = 'item-box';
+          box.innerHTML = '<div class="capacidade">' + ct + '</div>';
+          while (item.firstChild) box.appendChild(item.firstChild);
+          item.appendChild(cab);
+          item.appendChild(box);
+
+          linhas +=
+            '<tr><td><strong>' +
+            num +
+            '</strong></td><td>' +
+            ct +
+            '</td>' +
+            '<td><span class="badge ' +
+            (dif ? dif.cls : '') +
+            '">' +
+            (dif ? dif.gab : '?') +
+            '</span></td>' +
+            '<td><span class="resposta-correta">' +
+            resp +
+            '</span></td></tr>';
+        });
+
+        document.getElementById('gabarito').innerHTML =
+          '<div class="gabarito-titulo">RESPOSTAS CORRETAS</div>' +
+          '<table class="gabarito-table"><thead><tr>' +
+          '<th>Questão</th><th>Capacidade</th><th>Dificuldade</th><th>Resposta Correta</th>' +
+          '</tr></thead><tbody>' +
+          linhas +
+          '</tbody></table>';
+      })();
+    </script>
+  </body>
+</html>

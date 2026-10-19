@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StreamFlix</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- CABEÇALHO -->
+  <header class="topo">
+    <div class="topo-usuario">
+      <img id="foto-usuario" class="foto" src="logo/logo.jpg" alt="Foto do usuário" />
+      <div class="topo-usuario-info">
+        <span id="nome-usuario" class="nome-usuario">@StreamFlix</span>
+        <button id="btn-perfil" class="btn btn-preto btn-pequeno" disabled>Ver Perfil</button>
+      </div>
+    </div>
+    <h1 class="marca">StreamFlix</h1>
+    <div class="topo-acao">
+      <button id="btn-auth" class="btn btn-preto">Login</button>
+    </div>
+  </header>
+
+  <main class="corpo">
+    <!-- BUSCA -->
+    <form id="form-busca" class="busca" autocomplete="off">
+      <input id="campo-busca" type="text" placeholder="Digite o nome do filme... ex: Interestelar" />
+      <button type="submit" class="busca-btn" aria-label="Buscar"><img src="icones/lupa.svg" alt="" /></button>
+    </form>
+    <p id="msg-busca" class="msg-erro msg-centro" hidden></p>
+
+    <!-- FILTRO (somente logado) -->
+    <nav id="filtro" class="filtro" hidden>
+      <button id="btn-catalogo" class="pilula ativa" type="button">Catálogo</button>
+      <button id="btn-minha-lista" class="pilula" type="button">Minha Lista</button>
+    </nav>
+
+    <!-- GALERIA -->
+    <section id="galeria" class="galeria"></section>
+    <p id="msg-galeria" class="msg-vazio" hidden></p>
+
+    <!-- SEUS FILMES (admin) -->
+    <section id="painel-admin" class="painel-admin" hidden>
+      <div class="cartao">
+        <h2>Cadastro de Filme</h2>
+        <form id="form-filme" novalidate>
+          <label for="f-titulo">Título do Filme</label>
+          <input id="f-titulo" type="text" placeholder="Ex.: Interestelar" />
+          <p class="msg-erro" id="e-titulo" hidden></p>
+
+          <label for="f-genero">Gênero</label>
+          <input id="f-genero" type="text" placeholder="Ex.: Ficção Científica" />
+          <p class="msg-erro" id="e-genero" hidden></p>
+
+          <label>Capa</label>
+          <div class="upload">
+            <button type="button" id="btn-arquivo" class="btn btn-borda btn-pequeno">Escolher arquivo</button>
+            <span id="nome-arquivo" class="nome-arquivo">Nenhum arquivo escolhido</span>
+            <input id="f-capa" type="file" accept=".jpg,.jpeg,.png,.gif,.webp" hidden />
+          </div>
+          <p class="msg-erro" id="e-capa" hidden></p>
+
+          <button type="submit" class="btn btn-preto btn-bloco">Cadastrar</button>
+        </form>
+      </div>
+      <div class="cartao">
+        <h2>Filmes cadastrados</h2>
+        <ul id="lista-admin" class="lista-admin"></ul>
+        <p id="msg-lista-admin" class="msg-vazio" hidden>Nenhum filme cadastrado.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="rodape">
+    <span class="rodape-marca">StreamFlix</span>
+    <div class="rodape-redes">
+      <span class="ico ico-branco" style="--i:url(icones/instagram.svg)" title="Instagram"></span>
+      <span class="ico ico-branco" style="--i:url(icones/tiktok.svg)" title="TikTok"></span>
+      <span class="ico ico-branco" style="--i:url(icones/linkedIn.svg)" title="LinkedIn"></span>
+      <span class="ico ico-branco" style="--i:url(icones/youtube.svg)" title="YouTube"></span>
+    </div>
+    <span class="rodape-copy">Copyright 2026-2027</span>
+  </footer>
+
+  <!-- MODAL DE LOGIN -->
+  <div id="modal-login" class="modal" hidden>
+    <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="titulo-login">
+      <button id="login-fechar" class="fechar" type="button" aria-label="Fechar"><img src="icones/fechar.svg" alt="" /></button>
+      <h2 id="titulo-login">Login</h2>
+      <form id="form-login" novalidate>
+        <input id="l-usuario" type="text" placeholder="Digite seu nome_usuario" autocomplete="username" />
+        <p class="msg-erro" id="e-usuario" hidden></p>
+        <input id="l-senha" type="password" placeholder="Digite sua senha" autocomplete="current-password" />
+        <p class="msg-erro" id="e-senha" hidden></p>
+        <p class="msg-erro msg-centro" id="e-login" hidden></p>
+        <div class="login-botoes">
+          <button type="button" id="login-cancelar" class="btn btn-borda">Cancelar</button>
+          <button type="submit" class="btn btn-preto">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MENU LATERAL (admin) -->
+  <div id="fundo-menu" class="fundo-menu" hidden></div>
+  <aside id="menu-lateral" class="menu-lateral" aria-hidden="true">
+    <button id="menu-fechar" class="fechar" type="button" aria-label="Fechar"><img src="icones/fechar.svg" alt="" /></button>
+    <div class="menu-perfil">
+      <img id="menu-foto" class="foto foto-grande" src="logo/logo.jpg" alt="" />
+      <div>
+        <strong id="menu-nome">@admin</strong><br />
+        <small>administrador</small>
+      </div>
+    </div>
+    <p class="menu-numero"><span id="menu-likes">0</span> Likes</p>
+    <p class="menu-numero"><span id="menu-filmes">0</span> Filmes</p>
+    <button id="btn-seus-filmes" class="menu-destaque" type="button">Seus filmes</button>
+  </aside>
+
+  <script src="app.js"></script>
+</body>
+</html>

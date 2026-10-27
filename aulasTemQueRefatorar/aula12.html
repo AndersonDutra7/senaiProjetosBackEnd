@@ -1,0 +1,972 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aula 12 – Segurança de Dados e Conexão Node.js–PostgreSQL</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+      :root {
+        --bg-main: #0b0f19;
+        --bg-card: #111827;
+        --bg-card-hover: #1f2937;
+        --border-color: #1f2937;
+        --border-highlight: #374151;
+        --primary: #38bdf8;
+        --primary-glow: rgba(56, 189, 248, 0.15);
+        --secondary: #818cf8;
+        --accent: #f43f5e;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --text-main: #f3f4f6;
+        --text-muted: #9ca3af;
+        --text-dim: #6b7280;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        line-height: 1.6;
+        padding: 2rem 1rem;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      /* HEADER */
+      header {
+        background: linear-gradient(
+          135deg,
+          rgba(17, 24, 39, 0.9) 0%,
+          rgba(31, 41, 55, 0.5) 100%
+        );
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 6px;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          var(--primary),
+          var(--secondary)
+        );
+      }
+
+      .header-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--primary-glow);
+        color: var(--primary);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #ffffff;
+        margin-bottom: 0.75rem;
+      }
+
+      .header-info {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .info-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* SECTION CARDS */
+      .section-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        transition: border-color 0.3s ease;
+        position: relative;
+      }
+
+      .section-card:hover {
+        border-color: var(--border-highlight);
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .section-number {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: #000;
+        font-weight: 800;
+        font-size: 1.1rem;
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .section-title-group h2 {
+        font-size: 1.4rem;
+        color: #ffffff;
+        font-weight: 700;
+      }
+
+      .section-title-group .time-tag {
+        font-size: 0.8rem;
+        color: var(--primary);
+        font-weight: 500;
+      }
+
+      /* CONTENT STYLING */
+      p {
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+
+      p strong {
+        color: var(--text-main);
+      }
+
+      code {
+        font-family: 'Fira Code', monospace;
+        background: rgba(56, 189, 248, 0.1);
+        color: var(--primary);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+
+      pre {
+        background: #090d16;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+      }
+
+      pre code {
+        background: transparent;
+        padding: 0;
+        color: #e5e7eb;
+        font-size: 0.88rem;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.25rem;
+        margin: 1.5rem 0;
+      }
+
+      .sub-card {
+        background: rgba(31, 41, 55, 0.4);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.25rem;
+      }
+
+      .sub-card h3 {
+        font-size: 1.05rem;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .sub-card p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+
+      /* TABLES */
+      .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.25rem 0;
+        font-size: 0.92rem;
+        background: rgba(17, 24, 39, 0.6);
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+      }
+
+      .custom-table th {
+        background: rgba(31, 41, 55, 0.8);
+        color: var(--primary);
+        text-align: left;
+        padding: 0.75rem 1rem;
+        font-weight: 600;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .custom-table td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+        color: var(--text-muted);
+      }
+
+      .custom-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .custom-table td strong {
+        color: var(--text-main);
+      }
+
+      /* BADGES & TAGS */
+      .badge {
+        display: inline-block;
+        font-family: 'Fira Code', monospace;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+      }
+      .badge-sec {
+        background: rgba(244, 63, 94, 0.2);
+        color: #f43f5e;
+        border: 1px solid #f43f5e;
+      }
+      .badge-node {
+        background: rgba(52, 211, 153, 0.2);
+        color: #34d399;
+        border: 1px solid #34d399;
+      }
+      .badge-pool {
+        background: rgba(56, 189, 248, 0.2);
+        color: #38bdf8;
+        border: 1px solid #38bdf8;
+      }
+
+      /* HIGHLIGHTS */
+      .highlight-box {
+        background: rgba(56, 189, 248, 0.05);
+        border-left: 4px solid var(--primary);
+        padding: 1rem 1.25rem;
+        border-radius: 0 10px 10px 0;
+        margin: 1.25rem 0;
+        font-size: 0.95rem;
+      }
+
+      .highlight-box.warning {
+        background: rgba(251, 191, 36, 0.05);
+        border-left-color: var(--warning);
+      }
+
+      .highlight-box.success {
+        background: rgba(52, 211, 153, 0.05);
+        border-left-color: var(--success);
+      }
+
+      .highlight-box.danger {
+        background: rgba(244, 63, 94, 0.05);
+        border-left-color: var(--accent);
+      }
+
+      .highlight-box strong {
+        color: #fff;
+      }
+
+      /* STEPS / WORKFLOW */
+      .step-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+
+      .step-item {
+        display: flex;
+        gap: 1rem;
+        background: rgba(17, 24, 39, 0.8);
+        border: 1px solid var(--border-color);
+        padding: 1rem;
+        border-radius: 10px;
+      }
+
+      .step-badge {
+        background: var(--border-highlight);
+        color: var(--primary);
+        font-weight: 700;
+        font-family: 'Fira Code', monospace;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .step-content h4 {
+        color: #fff;
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .step-content p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+
+      /* QUIZ STYLING */
+      .quiz-card {
+        background: rgba(17, 24, 39, 0.9);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .quiz-question {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 0.75rem;
+      }
+
+      .quiz-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .quiz-option {
+        background: rgba(31, 41, 55, 0.5);
+        border: 1px solid var(--border-color);
+        padding: 0.6rem 1rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      .quiz-answer {
+        background: rgba(52, 211, 153, 0.1);
+        border-left: 4px solid var(--success);
+        padding: 0.75rem 1rem;
+        border-radius: 0 8px 8px 0;
+        font-size: 0.88rem;
+        color: var(--text-main);
+      }
+
+      /* WORKSHOP BOX */
+      .workshop-box {
+        background: linear-gradient(
+          135deg,
+          rgba(129, 140, 248, 0.1) 0%,
+          rgba(56, 189, 248, 0.05) 100%
+        );
+        border: 1px solid rgba(129, 140, 248, 0.3);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-top: 3rem;
+      }
+
+      .workshop-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--secondary);
+        font-weight: 700;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem 0;
+        color: var(--text-dim);
+        font-size: 0.85rem;
+        border-top: 1px solid var(--border-color);
+        margin-top: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- HEADER DE APRESENTAÇÃO -->
+      <header>
+        <div class="header-badge">
+          <span>📖 Guia Didático da Aula</span>
+        </div>
+        <h1>Segurança de Dados e Conexão Node.js–PostgreSQL</h1>
+        <p
+          style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0"
+        >
+          Princípios de segurança em bancos de dados (RBAC, imunização a SQL
+          Injection via Prepared Statements), arquitetura de conexão assíncrona
+          com Node.js (driver <code>pg</code>, Connection Pool e variáveis de
+          ambiente) e Entrega Parcial 2 do projeto.
+        </p>
+
+        <div class="header-info">
+          <div class="info-item">
+            <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+          </div>
+          <div class="info-item">
+            <span
+              >🎯 <strong>Foco:</strong> SQL Injection, Prepared Statements,
+              Driver `pg`, Pool, dotenv & Entrega Parcial 2</span
+            >
+          </div>
+          <div class="info-item">
+            <span>🚀 <strong>Módulo:</strong> Banco de Dados & Back-End</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- SEÇÃO 1 -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">01</div>
+          <div class="section-title-group">
+            <h2>
+              Boas Práticas de Segurança e Tratamento de Dados no Banco de Dados
+            </h2>
+            <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+          </div>
+        </div>
+
+        <p>
+          A segurança em bancos de dados relacionais envolve duas frentes
+          críticas: o **Gerenciamento de Acessos e Permissões (RBAC - Role-Based
+          Access Control)** e a **Proteção contra Injeção de Código SQL (SQL
+          Injection)** na camada de integração da API.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          1. Princípio do Menor Privilégio e Gestão de Roles no PostgreSQL
+        </h3>
+
+        <p>
+          A aplicação Node.js **jamais deve se conectar ao banco de dados
+          utilizando o usuário superadministrador (`postgres`)**. Cada serviço
+          deve possuir um usuário (Role) com privilégios restritos apenas ao
+          esquema e tabelas necessárias.
+        </p>
+
+        <pre><code>-- Criação de um Role específico para a aplicação Back-End
+CREATE ROLE app_b2b_user WITH LOGIN PASSWORD 'senha_forte_env';
+
+-- Concessão de privilégios mínimos apenas nas tabelas do esquema público
+GRANT CONNECT ON DATABASE portal_b2b TO app_b2b_user;
+GRANT USAGE ON SCHEMA public TO app_b2b_user;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app_b2b_user;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO app_b2b_user;</code></pre>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          2. Vulnerabilidade de SQL Injection: O Perigo da Concatenação
+        </h3>
+
+        <p>
+          <strong>SQL Injection (SQLi)</strong> ocorre quando dados não
+          sanitizados inseridos pelo usuário são concatenados diretamente na
+          string de consulta SQL, permitindo que um atacante altere a semântica
+          da query.
+        </p>
+
+        <div class="content-grid">
+          <div class="sub-card">
+            <h3 style="color: var(--accent)">
+              <span class="badge badge-sec">VULNERÁVEL</span> Concatenação
+              Direta
+            </h3>
+            <p>
+              O atacante envia o e-mail: <code>' OR '1'='1' --</code><br />
+              A query resultante ignora o filtro e retorna todos os registros ou
+              altera dados indevidamente.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3 style="color: var(--success)">
+              <span class="badge badge-node">PROTEGIDO</span> Consultas
+              Parametrizadas
+            </h3>
+            <p>
+              Uso de <strong>Prepared Statements</strong> com marcadores de
+              posição (<code>$1</code>, <code>$2</code>). Os parâmetros são
+              enviados separadamente e tratados estritamente como literais de
+              dados pelo PostgreSQL.
+            </p>
+          </div>
+        </div>
+
+        <div class="highlight-box danger">
+          <strong>🚨 Código Vulnerável (NUNCA UTILIZE):</strong><br />
+          <code
+            >const query = `SELECT * FROM clientes_b2b WHERE email =
+            '${req.body.email}'`;</code
+          ><br />
+          Se <code>email</code> for <code>admin@b2b.com' --</code>, o restante
+          da verificação é anulado!
+        </div>
+
+        <div class="highlight-box success">
+          <strong>✅ Código Seguro e Imunizado (Prepared Statement):</strong
+          ><br />
+          <code
+            >const query = 'SELECT * FROM clientes_b2b WHERE email = $1';</code
+          ><br />
+          <code>const values = [req.body.email];</code><br />
+          <code>const result = await db.query(query, values);</code>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 2 -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">02</div>
+          <div class="section-title-group">
+            <h2>
+              Conexão do Node.js ao PostgreSQL: Driver `pg`, Pool e Variables de
+              Ambiente
+            </h2>
+            <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+          </div>
+        </div>
+
+        <p>
+          Para integrar uma aplicação Node.js ao banco PostgreSQL, utilizamos o
+          driver oficial de alta performance
+          <strong>`pg` (node-postgres)</strong> configurado com **Pool de
+          Conexões** e gerenciamento seguro de credenciais via **`dotenv`**.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          1. Por que utilizar Pool de Conexões em vez de Client Único?
+        </h3>
+
+        <p>
+          Abrir e fechar uma conexão física com o banco de dados a cada
+          requisição HTTP é uma operação custosa que consome memória e CPU. O
+          <strong>Connection Pool (Pool de Conexões)</strong> mantém um grupo de
+          conexões abertas e reutilizáveis na memória, distribuindo-as de forma
+          concorrente conforme as requisições chegam à API.
+        </p>
+
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Estratégia</th>
+              <th>Mecanismo</th>
+              <th>Desempenho & Escalabilidade</th>
+              <th>Recomendação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>new Client()</code></td>
+              <td>
+                Abre 1 conexão dedicada manualmente. Deve ser aberta e encerrada
+                explicitamente.
+              </td>
+              <td>
+                Baixo. Sofre gargalo grave sob múltiplas requisições
+                simultâneas.
+              </td>
+              <td>Apenas para scripts de migração DDL isolados.</td>
+            </tr>
+            <tr>
+              <td><code>new Pool()</code></td>
+              <td>
+                Gerencia um conjunto dinâmico de conexões reutilizáveis
+                automaticamente.
+              </td>
+              <td>
+                Altíssimo. Suporta milhares de requisições paralelas
+                reutilizando soquetes.
+              </td>
+              <td>
+                <strong>Padrão obrigatório para aplicações Web / APIs.</strong>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          2. Configuração Completa do Módulo de Conexão no Projeto
+        </h3>
+
+        <p><strong>A. Instalação das Dependências no Terminal:</strong></p>
+        <pre><code>npm install pg dotenv</code></pre>
+
+        <p>
+          <strong
+            >B. Variáveis de Ambiente no arquivo `.env` (NUNCA comitadas no
+            Git!):</strong
+          >
+        </p>
+        <pre><code>DB_HOST=localhost
+DB_PORT=5432
+DB_USER=app_b2b_user
+DB_PASSWORD=senha_segura_123
+DB_NAME=portal_b2b
+DB_POOL_MAX=20</code></pre>
+
+        <p>
+          <strong
+            >C. Módulo de Conexão Centralizado (`src/config/db.js`):</strong
+          >
+        </p>
+        <pre><code>import pkg from 'pg';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const { Pool } = pkg;
+
+// Instanciação do Pool reutilizável com variáveis de ambiente
+const pool = new Pool({
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT) || 5432,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  max: Number(process.env.DB_POOL_MAX) || 10,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 2000,
+});
+
+// Evento para monitorar erros inesperados em clientes inativos do pool
+pool.on('error', (err) => {
+  console.error('❌ Erro inesperado no Pool de Conexões do PostgreSQL:', err);
+});
+
+// Função auxiliar genérica exportada para execução de queries parametrizadas
+export const query = (text, params) => pool.query(text, params);
+
+export default pool;</code></pre>
+
+        <p>
+          <strong>D. Script de Teste de Conexão (`src/test-db.js`):</strong>
+        </p>
+        <pre><code>import { query } from './config/db.js';
+
+async function testarConexao() {
+  try {
+    const res = await query('SELECT NOW() AS data_atual, current_database() AS banco_conectado');
+    console.log('✅ Conexão estabelecida com sucesso!');
+    console.log('📅 Data/Hora no PostgreSQL:', res.rows[0].data_atual);
+    console.log('🗄️ Banco de Dados:', res.rows[0].banco_conectado);
+  } catch (err) {
+    console.error('❌ Falha na conexão com o banco de dados:', err.message);
+  }
+}
+
+testarConexao();</code></pre>
+      </section>
+
+      <!-- SEÇÃO 3 (DESAFIO PRÁTICO) -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">03</div>
+          <div class="section-title-group">
+            <h2>
+              Desafio Prático — Entrega Parcial 2: Consolidação e Apresentação
+            </h2>
+            <span class="time-tag">⏱️ Duração Estimada: 45 min</span>
+          </div>
+        </div>
+
+        <p>
+          A <strong>Entrega Parcial 2</strong> consolida toda a camada de
+          persistência de dados do projeto de bloco do
+          <strong>Portal Comercial B2B</strong>. Cada equipe realizará a
+          apresentação presencial da sua estrutura perante a turma e o
+          instrutor.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          Checklist de Avaliação da Entrega Parcial 2:
+        </h3>
+
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-badge">1</div>
+            <div class="step-content">
+              <h4>Diagrama ER Lógico Relacional (DER) Atualizado</h4>
+              <p>
+                Diagrama visual (PDF/PNG/Mermaid) contemplando todas as
+                entidades normalizadas em 3FN com chaves primárias, estrangeiras
+                e cardinalidades explícitas.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">2</div>
+            <div class="step-content">
+              <h4>
+                Script DDL de Criação de Esquema (`src/config/schema.sql`)
+              </h4>
+              <p>
+                Arquivo SQL executável sem erros, contendo `CREATE TABLE`, `NOT
+                NULL`, `UNIQUE`, `CHECK` e regras de integridade `ON DELETE` /
+                `ON UPDATE`.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">3</div>
+            <div class="step-content">
+              <h4>
+                Script DML de Povoamento e Consultas (`seeds.sql` e
+                `queries.sql`)
+              </h4>
+              <p>
+                Massa de dados de teste coerente e as 3 consultas de relatórios
+                de negócio com `JOINs`, agrupamentos (`GROUP BY`) e funções de
+                agregação.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">4</div>
+            <div class="step-content">
+              <h4>Módulo de Conexão Funcional Node.js–PostgreSQL</h4>
+              <p>
+                Execução em tempo real do script `node src/test-db.js`
+                conectando-se com sucesso ao PostgreSQL local usando `pg.Pool` e
+                `.env` sem expor senhas no código fonte.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 4 (ENCERRAMENTO) -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">04</div>
+          <div class="section-title-group">
+            <h2>Encerramento: Glossário da Aula + Quiz Final de Fixação</h2>
+            <span class="time-tag">⏱️ Duração Estimada: 30 min</span>
+          </div>
+        </div>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem">
+          📚 Glossário Técnico da Aula
+        </h3>
+
+        <div class="content-grid" style="margin-bottom: 2rem">
+          <div class="sub-card">
+            <h3>SQL Injection (SQLi)</h3>
+            <p>
+              Ataque de injeção de código em que comandos SQL maliciosos são
+              inseridos nos campos de entrada da aplicação para manipular o
+              banco.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>Prepared Statement</h3>
+            <p>
+              Instrução SQL pré-compilada no banco onde parâmetros são separados
+              do comando, imunizando o código contra SQL Injection.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>Connection Pool</h3>
+            <p>
+              Gerenciador de um grupo mantido de conexões ativas reutilizáveis
+              com a base de dados, otimizando recursos do servidor.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>dotenv</h3>
+            <p>
+              Módulo Node.js que carrega variáveis de ambiente de um arquivo
+              `.env` para o objeto `process.env`, protegendo credenciais
+              sensíveis.
+            </p>
+          </div>
+        </div>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem">
+          ❓ Quiz Final de Fixação
+        </h3>
+
+        <!-- QUESTÃO 1 -->
+        <div class="quiz-card">
+          <div class="quiz-question">
+            1. Por que a instrução `db.query('SELECT * FROM clientes WHERE email
+            = ' + email)` é considerada uma grave falha de segurança?
+          </div>
+          <div class="quiz-options">
+            <div class="quiz-option">
+              A) Porque reduz a velocidade do banco de dados em até 50%.
+            </div>
+            <div class="quiz-option">
+              B) Porque abre brecha para ataques de SQL Injection, pois
+              concatena dados enviados pelo usuário diretamente na instrução
+              SQL.
+            </div>
+            <div class="quiz-option">
+              C) Porque impede o uso de índices de chave primária.
+            </div>
+            <div class="quiz-option">
+              D) Porque obriga o encerramento do Pool de Conexões.
+            </div>
+          </div>
+          <div class="quiz-answer">
+            <strong
+              >✅ Resposta Correta: B) Porque abre brecha para ataques de SQL
+              Injection.</strong
+            ><br />
+            <em>Justificativa:</em> Concatenar strings no código SQL permite que
+            entradas maliciosas modifiquem a lógica da consulta. O correto é
+            usar consultas parametrizadas (`$1`, `$2`).
+          </div>
+        </div>
+
+        <!-- QUESTÃO 2 -->
+        <div class="quiz-card">
+          <div class="quiz-question">
+            2. Qual é a principal vantagem de utilizar um `Pool` de conexões em
+            vez de instanciar um `Client` individual a cada requisição em uma
+            API Node.js?
+          </div>
+          <div class="quiz-options">
+            <div class="quiz-option">
+              A) O Pool criptografa automaticamente as senhas no arquivo `.env`.
+            </div>
+            <div class="quiz-option">
+              B) O Pool elimina a necessidade de definir chaves primárias nas
+              tabelas.
+            </div>
+            <div class="quiz-option">
+              C) O Pool reutiliza conexões abertas, evitando o alto custo de
+              abrir e fechar conexões físicas para cada requisição HTTP.
+            </div>
+            <div class="quiz-option">
+              D) O Pool substitui as rotas do Express.js por rotas automáticas
+              de banco.
+            </div>
+          </div>
+          <div class="quiz-answer">
+            <strong
+              >✅ Resposta Correta: C) O Pool reutiliza conexões
+              abertas.</strong
+            ><br />
+            <em>Justificativa:</em> Abrir e fechar conexões físicas gera
+            latência e alto consumo de recursos. O Pool otimiza o desempenho
+            mantendo um conjunto de conexões prontas para uso.
+          </div>
+        </div>
+
+        <!-- QUESTÃO 3 -->
+        <div class="quiz-card">
+          <div class="quiz-question">
+            3. Onde devem ser armazenadas credenciais sensíveis como senhas de
+            banco de dados e portas em uma aplicação Node.js profissional?
+          </div>
+          <div class="quiz-options">
+            <div class="quiz-option">
+              A) Diretamente no código fonte no arquivo `db.js` e comitadas no
+              GitHub.
+            </div>
+            <div class="quiz-option">
+              B) Em comentários no topo do arquivo `schema.sql`.
+            </div>
+            <div class="quiz-option">
+              C) Em variáveis de ambiente no arquivo `.env`, o qual deve estar
+              incluído no arquivo `.gitignore`.
+            </div>
+            <div class="quiz-option">
+              D) No arquivo `package.json` dentro do campo `scripts`.
+            </div>
+          </div>
+          <div class="quiz-answer">
+            <strong
+              >✅ Resposta Correta: C) Em variáveis de ambiente no arquivo
+              `.env`, o qual deve estar no `.gitignore`.</strong
+            ><br />
+            <em>Justificativa:</em> Credenciais nunca devem ser expostas em
+            repositórios. O arquivo `.env` mantém as configurações locais e é
+            ignorado pelo Git via `.gitignore`.
+          </div>
+        </div>
+      </section>
+
+      <!-- WORKSHOP INTEGRADO -->
+      <div class="workshop-box">
+        <div class="workshop-header">
+          <span
+            >🏆 Entregável Oficial — Entrega Parcial 2 (Bloco de Banco de
+            Dados)</span
+          >
+        </div>
+
+        <p style="color: #e5e7eb; margin-bottom: 1rem">
+          Todas as equipes devem realizar o commit final das atualizações no
+          GitHub e enviar a URL do repositório no ambiente de aprendizagem:<br />
+          <code
+            >git commit -m "feat: entrega parcial 2 - conexao nodejs postgresql
+            e persistencia b2b concluida"</code
+          >
+        </p>
+      </div>
+
+      <footer>
+        Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados /
+        Back-End
+      </footer>
+    </div>
+  </body>
+</html>

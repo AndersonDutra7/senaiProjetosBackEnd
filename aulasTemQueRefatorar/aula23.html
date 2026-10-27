@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 23 – Manutenção e Documentação do Sistema</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+    :root {
+      --bg-main: #0b0f19;
+      --bg-card: #111827;
+      --bg-card-hover: #1f2937;
+      --border-color: #1f2937;
+      --border-highlight: #374151;
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.15);
+      --secondary: #818cf8;
+      --accent: #f43f5e;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(31, 41, 55, 0.5) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-glow);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .header-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* SECTION CARDS */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: border-color 0.3s ease;
+      position: relative;
+    }
+
+    .section-card:hover {
+      border-color: var(--border-highlight);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #000;
+      font-weight: 800;
+      font-size: 1.1rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-title-group h2 {
+      font-size: 1.4rem;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .section-title-group .time-tag {
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* CONTENT STYLING */
+    p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    p strong {
+      color: var(--text-main);
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e5e7eb;
+      font-size: 0.88rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .sub-card {
+      background: rgba(31, 41, 55, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .sub-card h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sub-card p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* TABLES */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.92rem;
+      background: rgba(17, 24, 39, 0.6);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .custom-table th {
+      background: rgba(31, 41, 55, 0.8);
+      color: var(--primary);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .custom-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+      color: var(--text-muted);
+    }
+
+    .custom-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .custom-table td strong {
+      color: var(--text-main);
+    }
+
+    /* BADGES & TAGS */
+    .badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    .badge-fix { background: rgba(244, 63, 94, 0.2); color: #f43f5e; border: 1px solid #f43f5e; }
+    .badge-prev { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid #34d399; }
+    .badge-doc { background: rgba(129, 140, 248, 0.2); color: #818cf8; border: 1px solid #818cf8; }
+    .badge-ops { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid #fbbf24; }
+
+    /* HIGHLIGHTS */
+    .highlight-box {
+      background: rgba(56, 189, 248, 0.05);
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0 10px 10px 0;
+      margin: 1.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .highlight-box.warning {
+      background: rgba(251, 191, 36, 0.05);
+      border-left-color: var(--warning);
+    }
+
+    .highlight-box.success {
+      background: rgba(52, 211, 153, 0.05);
+      border-left-color: var(--success);
+    }
+
+    .highlight-box.danger {
+      background: rgba(244, 63, 94, 0.05);
+      border-left-color: var(--accent);
+    }
+
+    .highlight-box strong {
+      color: #fff;
+    }
+
+    /* STEPS / WORKFLOW */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1rem;
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .step-badge {
+      background: var(--border-highlight);
+      color: var(--primary);
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* QUIZ STYLING */
+    .quiz-card {
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .quiz-question {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-option {
+      background: rgba(31, 41, 55, 0.5);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .quiz-answer {
+      background: rgba(52, 211, 153, 0.1);
+      border-left: 4px solid var(--success);
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    /* WORKSHOP BOX */
+    .workshop-box {
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .workshop-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- HEADER DE APRESENTAÇÃO -->
+    <header>
+      <div class="header-badge">
+        <span>📖 Guia Didático da Aula</span>
+      </div>
+      <h1>Manutenção e Documentação do Sistema</h1>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0;">
+        Gestão de incidentes em ambiente de produção, práticas de manutenção corretiva e preventiva, rastreabilidade via logs centralizados, planejamento de roadmaps de atualização e estruturação do Runbook técnico do sistema.
+      </p>
+      
+      <div class="header-info">
+        <div class="info-item">
+          <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+        </div>
+        <div class="info-item">
+          <span>🎯 <strong>Foco:</strong> Manutenção Corretiva, Manutenção Preventiva, Logging/Observabilidade, Roadmap de Atualizações & Runbook de Implantação</span>
+        </div>
+        <div class="info-item">
+          <span>🚀 <strong>Módulo:</strong> Testes, Implantação, Manutenção e Entrega Final</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- SEÇÃO 1 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div class="section-title-group">
+          <h2>Manutenção Corretiva — Identificação e Correção de Falhas Pós-Implantação</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 45 min</span>
+        </div>
+      </div>
+
+      <p>
+        A <strong>Manutenção Corretiva</strong> engloba as ações reativas executadas para diagnosticar e reparar falhas, bugs ou indisponibilidades identificadas após a publicação do software em produção. Para que a correção seja rápida e segura, a equipe deve contar com mecanismos eficientes de <strong>observabilidade e rastreamento de logs</strong>.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Diagnóstico de Incidentes Comuns em Produção</h3>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Tipo de Incidente</th>
+            <th>Sintoma em Produção</th>
+            <th>Ferramenta / Método de Diagnóstico</th>
+            <th>Ação Corretiva Imediata</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-fix">Vazamento de Conexão</span></td>
+            <td>Requisições travam com timeout após determinado tempo de uso.</td>
+            <td>Logs da aplicação com erro <code>timeout exceeded when connecting to database</code>.</td>
+            <td>Garantir o uso obrigatório de <code>try/finally</code> com <code>client.release()</code> nas consultas ao PostgreSQL.</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-fix">Unhandled Rejection</span></td>
+            <td>Instância do Node.js cai ou reinicia de forma inesperada.</td>
+            <td>Monitor de processos (ex.: PM2) ou logs da nuvem registrando erro não capturado.</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-fix">Estouro de Memória</span></td>
+            <td>O consumo de RAM cresce continuamente até causar crash do contêiner.</td>
+            <td>Métricas do painel PaaS e heap dumps do Node.js Inspector.</td>
+            <td>Otimizar queries SQL utilizando paginação (<code>LIMIT/OFFSET</code>) em vez de carregar milhões de linhas na memória.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Tratamento Global de Exceções Críticas no Node.js</h3>
+
+      <p>
+        Para impedir que exceções não tratadas derrubem silenciosamente o servidor em produção, a aplicação deve registrar ouvintes globais de processo para fins de log e encerramento gracioso (<strong>Graceful Shutdown</strong>):
+      </p>
+
+      <pre><code>// src/server.js
+const app = require('./app');
+
+const PORT = process.env.PORT || 3000;
+
+const server = app.listen(PORT, () => {
+  console.log(`[INFO] Servidor rodando em modo ${process.env.NODE_ENV} na porta ${PORT}`);
+});
+
+// Captura de rejeições assíncronas não tratadas
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('[CRÍTICO] Unhandled Rejection detectada:', reason);
+  // Logar em serviço externo (ex: Sentry/Datadog) antes de encerrar
+});
+
+// Captura de exceções síncronas não tratadas
+process.on('uncaughtException', (error) => {
+  console.error('[FATAL] Uncaught Exception lançada:', error.message);
+  server.close(() => process.exit(1));
+});</code></pre>
+
+      <div class="highlight-box danger">
+        <strong>⚠️ Análise de Causa Raiz (RCA — Root Cause Analysis):</strong> Resolver um bug em produção não se resume a aplicar um "patch" rápido. É obrigatório registrar o relatório <i>Post-Mortem</i> identificando por que a falha passou pelos testes, criar um novo teste automatizado que reproduza o bug e aplicar a correção definitiva na branch principal.
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div class="section-title-group">
+          <h2>Manutenção Preventiva — Rotinas de Verificação e Roadmap de Atualização</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 45 min</span>
+        </div>
+      </div>
+
+      <p>
+        Diferente das correções emergenciais, a <strong>Manutenção Preventiva e Adaptativa</strong> planeja ações contínuas para preservar a saúde do sistema, prevenir degradações de desempenho e manter o ecossistema atualizado contra vulnerabilidades de segurança conhecidas.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Os 4 Pilares da Manutenção Preventiva</h3>
+
+      <div class="content-grid">
+        <div class="sub-card">
+          <h3><span class="badge badge-prev">1. AUDITORIA DE DEPENDÊNCIAS</span></h3>
+          <p>Execução periódica de <code>npm audit</code> e atualizações de pacotes via ferramentas como Dependabot para corrigir brechas de segurança em bibliotecas terceirizadas.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-prev">2. MANUTENÇÃO DO BANCO</span></h3>
+          <p>Rotinas de otimização no PostgreSQL: verificação do tamanho dos índices, limpeza de dados obsoletos, análise de fragmentação e validação diária de backups automáticos.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-prev">3. MONITORAMENTO DE RECURSOS</span></h3>
+          <p>Acompanhamento de métricas de hardware (CPU, memória RAM, uso de disco) e tempo médio de resposta das rotas HTTP para prever a necessidade de escalonamento.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-prev">4. ROADMAP DE ATUALIZAÇÃO</span></h3>
+          <p>Planejamento das versões do runtime Node.js (migração entre versões LTS) e atualização gradual do SGBD PostgreSQL e frameworks.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Exemplo de Estrutura de Roadmap de Atualização Tecnológica</h3>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-badge">Q1</div>
+          <div class="step-content">
+            <h4>Curto Prazo (Próximos 3 meses)</h4>
+            <p>Atualização de patch das dependências do <code>package.json</code>, correção de alertas de segurança do <code>npm audit</code> e implementação de paginação nos endpoints do CRUD.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">Q2</div>
+          <div class="step-content">
+            <h4>Médio Prazo (3 a 6 meses)</h4>
+            <p>Atualização do runtime Node.js para a nova versão LTS estável, migração de rotas antigas para novos contratos REST e refatoração de consultas SQL complexas.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">Q3</div>
+          <div class="step-content">
+            <h4>Longo Prazo (6 a 12 meses)</h4>
+            <p>Implementação de camada de cache em memória (ex.: Redis) para consultas frequentes de leitura e transição do modelo monolítico para microsserviços se necessário.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 3 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div class="section-title-group">
+          <h2>Documentação Técnica do Processo de Implantação do Sistema</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 45 min</span>
+        </div>
+      </div>
+
+      <p>
+        A <strong>Documentação de Implantação e Operação (Runbook)</strong> é o manual técnico indispensável que permite a qualquer desenvolvedor ou equipe de suporte provisionar, configurar, publicar, monitorar e manter a aplicação em funcionamento sem depender de conhecimento tácito.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Estrutura do Runbook de Implantação (`docs/DOCUMENTACAO_DE_IMPLANTACAO.md`)</h3>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-badge">1</div>
+          <div class="step-content">
+            <h4>Visão Geral da Arquitetura & Mapeamento de Serviços</h4>
+            <p>Diagrama e descrição dos componentes (Front-End HTML/CSS/JS, Back-End Node.js/Express e Banco de Dados PostgreSQL), apontando as URLs públicas e domínios ativos.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">2</div>
+          <div class="step-content">
+            <h4>Dicionário de Variáveis de Ambiente</h4>
+            <p>Tabela detalhada especificando o nome de cada variável (ex.: <code>DATABASE_URL</code>, <code>JWT_SECRET</code>, <code>PORT</code>), o tipo de dado, a finalidade e um valor de exemplo fictício.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">3</div>
+          <div class="step-content">
+            <h4>Guia Passo a Passo de Deploy e Inicialização</h4>
+            <p>Comandos exatos do terminal necessários para clonar o repositório, instalar dependências (<code>npm install</code>), executar scripts DDL no PostgreSQL e iniciar o servidor em produção.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">4</div>
+          <div class="step-content">
+            <h4>Procedimentos de Backup, Restauração e Contingência</h4>
+            <p>Instruções detalhadas sobre como gerar dumps do PostgreSQL (<code>pg_dump</code>), como restaurar o banco de dados (<code>pg_restore</code>) e como executar o Rollback de versão no Git/PaaS.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-box success">
+        <strong>💡 Boa Prática de Documentação:</strong> Mantenha toda a documentação técnica no próprio repositório Git do projeto utilizando arquivos Markdown (<code>.md</code>). Isso garante que o código e a documentação evoluam e sejam versionados juntos a cada Pull Request.
+      </div>
+    </section>
+
+    <!-- SEÇÃO 4 (DESAFIO PRÁTICO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div class="section-title-group">
+          <h2>Desafio Prático — Plano de Manutenção e Documentação de Implantação</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 45 min</span>
+        </div>
+      </div>
+
+      <p>
+        As equipes irão consolidar os documentos técnicos finais do projeto Full Stack, produzindo o **Plano de Manutenção** e o **Runbook de Implantação**, preparando a aplicação para a apresentação final e homologação na Aula 24.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Roteiro de Atividades em Equipe</h3>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-badge">A</div>
+          <div class="step-content">
+            <h4>Elaboração do Plano de Manutenção (`docs/PLANO_DE_MANUTENCAO.md`)</h4>
+            <p>Definir o protocolo de atendimento a chamados de bugs corretivos, as rotinas semanais de backup/auditoria e o roadmap de atualização tecnológica do sistema para os próximos 6 meses.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">B</div>
+          <div class="step-content">
+            <h4>Finalização da Documentação de Implantação (`docs/DOCUMENTACAO_DE_IMPLANTACAO.md`)</h4>
+            <p>Registrar as URLs públicas oficiais do projeto publicado na nuvem, o dicionário de variáveis de ambiente, os procedimentos de instalação local/nuvem e os passos de Rollback.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">C</div>
+          <div class="step-content">
+            <h4>Atualização do README.md Principal do Repositório</h4>
+            <p>Adicionar badges de status do projeto, descrição comercial da solução, instruções rápidas para execução e links para os documentos detalhados da pasta <code>docs/</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Checklist de Entregáveis da Documentação Técnica</h3>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Arquivo de Documentação</th>
+            <th>Conteúdo Principal</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>README.md</code></td>
+            <td>Apresentação do projeto, arquitetura, stack tecnológica e guia rápido de início.</td>
+            <td><span class="badge badge-doc">CONCLUÍDO</span></td>
+          </tr>
+          <tr>
+            <td><code>docs/PLANO_DE_TESTES.md</code></td>
+            <td>Mapeamento do escopo e especificação dos casos de teste (Aula 20).</td>
+            <td><span class="badge badge-doc">CONCLUÍDO</span></td>
+          </tr>
+          <tr>
+            <td><code>docs/RELATORIO_DE_TESTES.md</code></td>
+            <td>Evidências de execução e métricas de cobertura de código (Aula 21).</td>
+            <td><span class="badge badge-doc">CONCLUÍDO</span></td>
+          </tr>
+          <tr>
+            <td><code>docs/DOCUMENTACAO_DE_IMPLANTACAO.md</code></td>
+            <td>Runbook com guia de deploy, URLs em nuvem e variáveis de ambiente (Aulas 22 e 23).</td>
+            <td><span class="badge badge-doc">CONCLUÍDO</span></td>
+          </tr>
+          <tr>
+            <td><code>docs/PLANO_DE_MANUTENCAO.md</code></td>
+            <td>Rotinas preventivas, protocolo corretivo e roadmap de atualizações (Aula 23).</td>
+            <td><span class="badge badge-doc">CONCLUÍDO</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SEÇÃO 5 (ENCERRAMENTO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div class="section-title-group">
+          <h2>Encerramento: Glossário da Aula + Quiz Final de Fixação</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 30 min</span>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">📚 Glossário Técnico da Aula</h3>
+
+      <div class="content-grid" style="margin-bottom: 2rem;">
+        <div class="sub-card">
+          <h3>Manutenção Corretiva</h3>
+          <p>Intervenção realizada após a detecção de uma falha ou bug em ambiente de produção para reestabelecer o funcionamento normal do sistema.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Manutenção Preventiva</h3>
+          <p>Ações planejadas de monitoramento, auditoria e atualização de código/banco de dados para evitar a ocorrência de futuras falhas ou gargalos.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Runbook</h3>
+          <p>Documento de procedimentos operacionais padrão que orienta a equipe técnica na instalação, configuração, deploy, backup e resolução de falhas do sistema.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Root Cause Analysis (RCA)</h3>
+          <p>Metodologia de investigação de incidentes focada em descobrir a causa primária de uma falha crítica para aplicar correções definitivas.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">❓ Quiz Final de Fixação</h3>
+
+      <!-- QUESTÃO 1 -->
+      <div class="quiz-card">
+        <div class="quiz-question">1. Qual é a principal diferença conceitual entre a Manutenção Corretiva e a Manutenção Preventiva em um sistema de software publicado em produção?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) A manutenção corretiva reescreve a aplicação em HTML, enquanto a preventiva altera o banco PostgreSQL.</div>
+          <div class="quiz-option">B) A manutenção corretiva é reativa e repara bugs já ocorridos em produção, enquanto a preventiva é proativa e busca evitar falhas futuras por meio de auditorias e atualizações.</div>
+          <div class="quiz-option">C) A manutenção preventiva só pode ser feita por clientes externos.</div>
+          <div class="quiz-option">D) Não há diferença; ambas referem-se à mesma atividade de desligar o servidor de hospedagem.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Corretiva é reativa para reparar bugs ocorridos; Preventiva é proativa para evitar falhas futuras.</strong><br>
+          <em>Justificativa:</em> A corretiva atua na solução imediata de problemas existentes, enquanto a preventiva atua na atualização contínua e mitigação de riscos.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 2 -->
+      <div class="quiz-card">
+        <div class="quiz-question">2. Por que a inclusão de ouvintes globais para `unhandledRejection` e `uncaughtException` no Node.js é considerada uma boa prática de manutenção corretiva?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Porque impede que o banco de dados PostgreSQL execute comandos de exclusão `DROP TABLE`.</div>
+          <div class="quiz-option">B) Porque permite capturar e registrar detalhadamente exceções não tratadas no log da aplicação antes que o processo caia de forma catastrófica e silenciosa.</div>
+          <div class="quiz-option">C) Porque substitui a necessidade de utilizar variáveis de ambiente `.env`.</div>
+          <div class="quiz-option">D) Porque compila automaticamente o código para JavaScript estático no navegador.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Permite capturar e registrar detalhes de exceções não tratadas antes do encerramento do processo.</strong><br>
+          <em>Justificativa:</em> O tratamento global garante rastreabilidade e log adequado dos erros críticos, facilitando o diagnóstico rápido pela equipe de desenvolvimento.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 3 -->
+      <div class="quiz-card">
+        <div class="quiz-question">3. Qual é a principal finalidade de manter uma Documentação de Implantação (Runbook) atualizada no repositório do projeto?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Permitir que qualquer membro da equipe consiga provisionar, configurar, publicar e operar a aplicação de forma padronizada e sem dependências individuais.</div>
+          <div class="quiz-option">B) Aumentar o tamanho do repositório Git para acelerar o tempo de download no terminal.</div>
+          <div class="quiz-option">C) Impedir o acesso de novos desenvolvedores ao código-fonte do sistema.</div>
+          <div class="quiz-option">D) Ocultar as variáveis de ambiente dos servidores de produção.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: A) Permitir que qualquer membro consiga provisionar, configurar e operar a aplicação de forma padronizada.</strong><br>
+          <em>Justificativa:</em> O Runbook elimina o conhecimento isolado (silos de informação) e garante a continuidade operacional do software em longo prazo.
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKSHOP INTEGRADO -->
+    <div class="workshop-box">
+      <div class="workshop-header">
+        <span>🛠️ Entregável da Aula 23 — Documentação de Manutenção e Operação Concluída</span>
+      </div>
+
+      <p style="color: #e5e7eb; margin-bottom: 1rem;">
+        Todas as equipes devem comitar no repositório o conjunto completo e atualizado de documentações técnicas da aplicação Full Stack:<br>
+        <code>git commit -m "docs: conclusao do plano de manutencao e runbook de implantacao do sistema (docs/)"</code>
+      </p>
+    </div>
+
+    <footer>
+      Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados / Back-End
+    </footer>
+
+  </div>
+
+</body>
+</html>

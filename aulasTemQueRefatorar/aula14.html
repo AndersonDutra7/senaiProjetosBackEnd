@@ -1,0 +1,1023 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aula 14 – Construção de Endpoints REST (CRUD)</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+      :root {
+        --bg-main: #0b0f19;
+        --bg-card: #111827;
+        --bg-card-hover: #1f2937;
+        --border-color: #1f2937;
+        --border-highlight: #374151;
+        --primary: #38bdf8;
+        --primary-glow: rgba(56, 189, 248, 0.15);
+        --secondary: #818cf8;
+        --accent: #f43f5e;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --text-main: #f3f4f6;
+        --text-muted: #9ca3af;
+        --text-dim: #6b7280;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        line-height: 1.6;
+        padding: 2rem 1rem;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      /* HEADER */
+      header {
+        background: linear-gradient(
+          135deg,
+          rgba(17, 24, 39, 0.9) 0%,
+          rgba(31, 41, 55, 0.5) 100%
+        );
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 6px;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          var(--primary),
+          var(--secondary)
+        );
+      }
+
+      .header-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--primary-glow);
+        color: var(--primary);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #ffffff;
+        margin-bottom: 0.75rem;
+      }
+
+      .header-info {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .info-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* SECTION CARDS */
+      .section-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        transition: border-color 0.3s ease;
+        position: relative;
+      }
+
+      .section-card:hover {
+        border-color: var(--border-highlight);
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .section-number {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: #000;
+        font-weight: 800;
+        font-size: 1.1rem;
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .section-title-group h2 {
+        font-size: 1.4rem;
+        color: #ffffff;
+        font-weight: 700;
+      }
+
+      .section-title-group .time-tag {
+        font-size: 0.8rem;
+        color: var(--primary);
+        font-weight: 500;
+      }
+
+      /* CONTENT STYLING */
+      p {
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+
+      p strong {
+        color: var(--text-main);
+      }
+
+      code {
+        font-family: 'Fira Code', monospace;
+        background: rgba(56, 189, 248, 0.1);
+        color: var(--primary);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+
+      pre {
+        background: #090d16;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+      }
+
+      pre code {
+        background: transparent;
+        padding: 0;
+        color: #e5e7eb;
+        font-size: 0.88rem;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.25rem;
+        margin: 1.5rem 0;
+      }
+
+      .sub-card {
+        background: rgba(31, 41, 55, 0.4);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.25rem;
+      }
+
+      .sub-card h3 {
+        font-size: 1.05rem;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .sub-card p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+
+      /* TABLES */
+      .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.25rem 0;
+        font-size: 0.92rem;
+        background: rgba(17, 24, 39, 0.6);
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+      }
+
+      .custom-table th {
+        background: rgba(31, 41, 55, 0.8);
+        color: var(--primary);
+        text-align: left;
+        padding: 0.75rem 1rem;
+        font-weight: 600;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .custom-table td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+        color: var(--text-muted);
+      }
+
+      .custom-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .custom-table td strong {
+        color: var(--text-main);
+      }
+
+      /* BADGES & TAGS */
+      .badge {
+        display: inline-block;
+        font-family: 'Fira Code', monospace;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+      }
+      .badge-post {
+        background: rgba(52, 211, 153, 0.2);
+        color: #34d399;
+        border: 1px solid #34d399;
+      }
+      .badge-get {
+        background: rgba(56, 189, 248, 0.2);
+        color: #38bdf8;
+        border: 1px solid #38bdf8;
+      }
+      .badge-put {
+        background: rgba(251, 191, 36, 0.2);
+        color: #fbbf24;
+        border: 1px solid #fbbf24;
+      }
+      .badge-delete {
+        background: rgba(244, 63, 94, 0.2);
+        color: #f43f5e;
+        border: 1px solid #f43f5e;
+      }
+
+      /* HIGHLIGHTS */
+      .highlight-box {
+        background: rgba(56, 189, 248, 0.05);
+        border-left: 4px solid var(--primary);
+        padding: 1rem 1.25rem;
+        border-radius: 0 10px 10px 0;
+        margin: 1.25rem 0;
+        font-size: 0.95rem;
+      }
+
+      .highlight-box.warning {
+        background: rgba(251, 191, 36, 0.05);
+        border-left-color: var(--warning);
+      }
+
+      .highlight-box.success {
+        background: rgba(52, 211, 153, 0.05);
+        border-left-color: var(--success);
+      }
+
+      .highlight-box.danger {
+        background: rgba(244, 63, 94, 0.05);
+        border-left-color: var(--accent);
+      }
+
+      .highlight-box strong {
+        color: #fff;
+      }
+
+      /* STEPS / WORKFLOW */
+      .step-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+
+      .step-item {
+        display: flex;
+        gap: 1rem;
+        background: rgba(17, 24, 39, 0.8);
+        border: 1px solid var(--border-color);
+        padding: 1rem;
+        border-radius: 10px;
+      }
+
+      .step-badge {
+        background: var(--border-highlight);
+        color: var(--primary);
+        font-weight: 700;
+        font-family: 'Fira Code', monospace;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .step-content h4 {
+        color: #fff;
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .step-content p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+
+      /* QUIZ STYLING */
+      .quiz-card {
+        background: rgba(17, 24, 39, 0.9);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .quiz-question {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 0.75rem;
+      }
+
+      .quiz-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .quiz-option {
+        background: rgba(31, 41, 55, 0.5);
+        border: 1px solid var(--border-color);
+        padding: 0.6rem 1rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      .quiz-answer {
+        background: rgba(52, 211, 153, 0.1);
+        border-left: 4px solid var(--success);
+        padding: 0.75rem 1rem;
+        border-radius: 0 8px 8px 0;
+        font-size: 0.88rem;
+        color: var(--text-main);
+      }
+
+      /* WORKSHOP BOX */
+      .workshop-box {
+        background: linear-gradient(
+          135deg,
+          rgba(129, 140, 248, 0.1) 0%,
+          rgba(56, 189, 248, 0.05) 100%
+        );
+        border: 1px solid rgba(129, 140, 248, 0.3);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-top: 3rem;
+      }
+
+      .workshop-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--secondary);
+        font-weight: 700;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem 0;
+        color: var(--text-dim);
+        font-size: 0.85rem;
+        border-top: 1px solid var(--border-color);
+        margin-top: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- HEADER DE APRESENTAÇÃO -->
+      <header>
+        <div class="header-badge">
+          <span>📖 Guia Didático da Aula</span>
+        </div>
+        <h1>Construção de Endpoints REST (CRUD)</h1>
+        <p
+          style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0"
+        >
+          Implementação das operações de Criação, Leitura, Atualização e
+          Exclusão (CRUD) em APIs RESTful com Express.js e PostgreSQL, tradução
+          de regras de negócio de clientes B2B em contratos de API e construção
+          do CRUD de Produtos.
+        </p>
+
+        <div class="header-info">
+          <div class="info-item">
+            <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+          </div>
+          <div class="info-item">
+            <span
+              >🎯 <strong>Foco:</strong> CRUD RESTful (POST, GET, PUT, DELETE),
+              Levantamento de Demandas B2B, Soft Delete & Contratos JSON</span
+            >
+          </div>
+          <div class="info-item">
+            <span>🚀 <strong>Módulo:</strong> Banco de Dados & Back-End</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- SEÇÃO 1 -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">01</div>
+          <div class="section-title-group">
+            <h2>
+              Implementação dos Endpoints de Criação, Leitura, Atualização e
+              Exclusão (CRUD)
+            </h2>
+            <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+          </div>
+        </div>
+
+        <p>
+          Uma <strong>API RESTful</strong> expõe recursos (como produtos ou
+          clientes) identificados por URIs e operados por meio de verbos
+          padronizados do protocolo HTTP. O acrônimo
+          <strong>CRUD</strong> representa as quatro operações fundamentais de
+          qualquer sistema de informação:
+          <strong>Create, Read, Update e Delete</strong>.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          1. Mapeamento Semântico HTTP vs. Operações CRUD
+        </h3>
+
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Verbo HTTP</th>
+              <th>Endpoint (URI)</th>
+              <th>Ação CRUD</th>
+              <th>Status HTTP Recomendado</th>
+              <th>Uso da Payload / Parâmetros</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-post">POST</span></td>
+              <td><code>/api/v1/produtos</code></td>
+              <td><strong>Create</strong> (Criar)</td>
+              <td><code>201 Created</code></td>
+              <td>Dados enviados no <code>req.body</code> em formato JSON.</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-get">GET</span></td>
+              <td><code>/api/v1/produtos</code></td>
+              <td><strong>Read</strong> (Listar)</td>
+              <td><code>200 OK</code></td>
+              <td>
+                Suporta filtros via Query Parameters (<code>req.query</code>).
+              </td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-get">GET</span></td>
+              <td><code>/api/v1/produtos/:id</code></td>
+              <td><strong>Read</strong> (Buscar por ID)</td>
+              <td><code>200 OK</code> / <code>404 Not Found</code></td>
+              <td>
+                ID capturado via URL Parameter (<code>req.params.id</code>).
+              </td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-put">PUT</span></td>
+              <td><code>/api/v1/produtos/:id</code></td>
+              <td><strong>Update</strong> (Atualizar)</td>
+              <td><code>200 OK</code> / <code>404 Not Found</code></td>
+              <td>
+                ID via <code>req.params</code> e novos dados via
+                <code>req.body</code>.
+              </td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-delete">DELETE</span></td>
+              <td><code>/api/v1/produtos/:id</code></td>
+              <td><strong>Delete</strong> (Remover)</td>
+              <td><code>200 OK</code> / <code>204 No Content</code></td>
+              <td>
+                ID capturado via URL Parameter (<code>req.params.id</code>).
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          2. Implementação Técnica Completa do Módulo de Produtos
+        </h3>
+
+        <p><strong>A. Camada Model (`src/models/produtoModel.js`):</strong></p>
+        <pre><code>import { query } from '../config/db.js';
+
+export const produtoModel = {
+  // CREATE
+  criar: async ({ codigo_sku, nome_produto, preco_base }) => {
+    const text = `
+      INSERT INTO produtos (codigo_sku, nome_produto, preco_base)
+      VALUES ($1, $2, $3)
+      RETURNING *
+    `;
+    const result = await query(text, [codigo_sku, nome_produto, preco_base]);
+    return result.rows[0];
+  },
+
+  // READ (Listar com filtro opcional)
+  buscarTodos: async (buscaTextual) => {
+    let text = 'SELECT * FROM produtos WHERE ativo = TRUE';
+    const params = [];
+
+    if (buscaTextual) {
+      text += ' AND (nome_produto ILIKE $1 OR codigo_sku ILIKE $1)';
+      params.push(`%${buscaTextual}%`);
+    }
+
+    text += ' ORDER BY id_produto DESC';
+    const result = await query(text, params);
+    return result.rows;
+  },
+
+  // READ (Buscar por ID)
+  buscarPorId: async (id) => {
+    const text = 'SELECT * FROM produtos WHERE id_produto = $1 AND ativo = TRUE';
+    const result = await query(text, [id]);
+    return result.rows[0];
+  },
+
+  // UPDATE
+  atualizar: async (id, { codigo_sku, nome_produto, preco_base }) => {
+    const text = `
+      UPDATE produtos
+      SET codigo_sku = $1, nome_produto = $2, preco_base = $3
+      WHERE id_produto = $4 AND ativo = TRUE
+      RETURNING *
+    `;
+    const result = await query(text, [codigo_sku, nome_produto, preco_base, id]);
+    return result.rows[0];
+  },
+
+  // DELETE (Soft Delete - Recomendado em B2B)
+  inativar: async (id) => {
+    const text = `
+      UPDATE produtos
+      SET ativo = FALSE
+      WHERE id_produto = $1 AND ativo = TRUE
+      RETURNING *
+    `;
+    const result = await query(text, [id]);
+    return result.rows[0];
+  }
+};</code></pre>
+
+        <p>
+          <strong
+            >B. Camada Controller
+            (`src/controllers/produtoController.js`):</strong
+          >
+        </p>
+        <pre><code>import { produtoModel } from '../models/produtoModel.js';
+
+export const produtoController = {
+  criarProduto: async (req, res) => {
+    try {
+      const { codigo_sku, nome_produto, preco_base } = req.body;
+
+      if (!codigo_sku || !nome_produto || preco_base === undefined) {
+        return res.status(400).json({ success: false, message: 'SKU, Nome e Preço Base são obrigatórios.' });
+      }
+
+      const novoProduto = await produtoModel.criar({ codigo_sku, nome_produto, preco_base });
+      return res.status(201).json({ success: true, message: 'Produto cadastrado!', data: novoProduto });
+    } catch (error) {
+      console.error('❌ Erro produtoController.criarProduto:', error);
+      return res.status(500).json({ success: false, message: 'Erro ao cadastrar produto.' });
+    }
+  },
+
+  listarProdutos: async (req, res) => {
+    try {
+      const { busca } = req.query;
+      const produtos = await produtoModel.buscarTodos(busca);
+      return res.status(200).json({ success: true, count: produtos.length, data: produtos });
+    } catch (error) {
+      console.error('❌ Erro produtoController.listarProdutos:', error);
+      return res.status(500).json({ success: false, message: 'Erro ao listar produtos.' });
+    }
+  },
+
+  obterProdutoPorId: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const produto = await produtoModel.buscarPorId(id);
+
+      if (!produto) {
+        return res.status(404).json({ success: false, message: 'Produto não encontrado.' });
+      }
+
+      return res.status(200).json({ success: true, data: produto });
+    } catch (error) {
+      console.error('❌ Erro produtoController.obterProdutoPorId:', error);
+      return res.status(500).json({ success: false, message: 'Erro ao obter produto.' });
+    }
+  },
+
+  atualizarProduto: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { codigo_sku, nome_produto, preco_base } = req.body;
+
+      const produtoAtualizado = await produtoModel.atualizar(id, { codigo_sku, nome_produto, preco_base });
+
+      if (!produtoAtualizado) {
+        return res.status(404).json({ success: false, message: 'Produto não encontrado para atualização.' });
+      }
+
+      return res.status(200).json({ success: true, message: 'Produto atualizado!', data: produtoAtualizado });
+    } catch (error) {
+      console.error('❌ Erro produtoController.atualizarProduto:', error);
+      return res.status(500).json({ success: false, message: 'Erro ao atualizar produto.' });
+    }
+  },
+
+  excluirProduto: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const produtoInativado = await produtoModel.inativar(id);
+
+      if (!produtoInativado) {
+        return res.status(404).json({ success: false, message: 'Produto não encontrado para exclusão.' });
+      }
+
+      return res.status(200).json({ success: true, message: 'Produto inativado com sucesso!' });
+    } catch (error) {
+      console.error('❌ Erro produtoController.excluirProduto:', error);
+      return res.status(500).json({ success: false, message: 'Erro ao excluir produto.' });
+    }
+  }
+};</code></pre>
+      </section>
+
+      <!-- SEÇÃO 2 -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">02</div>
+          <div class="section-title-group">
+            <h2>
+              Aplicação de Técnicas de Levantamento de Demandas do Cliente na
+              Definição dos Endpoints
+            </h2>
+            <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+          </div>
+        </div>
+
+        <p>
+          Um erro frequente no desenvolvimento de software é projetar APIs
+          baseando-se apenas na estrutura das tabelas do banco de dados, sem
+          ouvir as **necessidades reais de negócio dos usuários e clientes
+          B2B**.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          1. Mapeamento de Demandas de Negócio B2B em Contratos REST
+        </h3>
+
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-badge">1</div>
+            <div class="step-content">
+              <h4>
+                Demanda do Cliente: "A equipe comercial precisa buscar insumos
+                pelo código SKU ou palavra-chave sem case sensitivity."
+              </h4>
+              <p>
+                <strong>Solução REST:</strong> Utilização de Query Parameters na
+                rota de listagem (`GET /api/v1/produtos?busca=sensor`) traduzido
+                no SQL com `ILIKE`.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">2</div>
+            <div class="step-content">
+              <h4>
+                Demanda do Cliente: "Produtos com histórico de vendas antigas
+                NUNCA podem ser apagados fisicamente do sistema."
+              </h4>
+              <p>
+                <strong>Solução REST:</strong> Implementação de
+                <strong>Soft Delete (Exclusão Lógica)</strong>. O verb
+                <code>DELETE /api/v1/produtos/:id</code> altera a flag `ativo =
+                FALSE`, preservando a integridade histórica dos relatórios do
+                banco de dados.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">3</div>
+            <div class="step-content">
+              <h4>
+                Demanda do Cliente: "Desejamos receber mensagens de erro claras
+                quando um SKU duplicado for inserido."
+              </h4>
+              <p>
+                <strong>Solução REST:</strong> Captura de exceções de
+                integridade no Controller (Erro PostgreSQL `23505` de violação
+                de `UNIQUE`) retornando `409 Conflict` com mensagem descritiva
+                em JSON.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="highlight-box success">
+          <strong>💡 O Contrato JSON Padronizado:</strong> Todas as respostas da
+          API devem seguir um envelope JSON uniforme contendo
+          <code>success</code> (Booleano), <code>message</code> (String
+          explicativa) e <code>data</code> (Objeto ou Array de resultados).
+        </div>
+      </section>
+
+      <!-- SEÇÃO 3 (DESAFIO PRÁTICO) -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">03</div>
+          <div class="section-title-group">
+            <h2>
+              Desafio Prático — Implementação do CRUD Completo da Entidade
+              Principal do Projeto
+            </h2>
+            <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+          </div>
+        </div>
+
+        <p>
+          Nesta atividade, as equipes implementarão as rotas completas de CRUD
+          para a entidade <code>produtos</code> (ou <code>pedidos</code>) da
+          aplicação B2B e realizarão a bateria de testes de aceitação no
+          Postman/Insomnia.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          1. Roteador de Produtos (`src/routes/produtoRoutes.js`)
+        </h3>
+
+        <pre><code>import { Router } from 'express';
+import { produtoController } from '../controllers/produtoController.js';
+
+const router = Router();
+
+// Mapeamento das 5 rotas fundamentais do CRUD RESTful
+router.post('/', produtoController.criarProduto);
+router.get('/', produtoController.listarProdutos);
+router.get('/:id', produtoController.obterProdutoPorId);
+router.put('/:id', produtoController.atualizarProduto);
+router.delete('/:id', produtoController.excluirProduto);
+
+export default router;</code></pre>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          2. Roteiro de Validação via Postman/Insomnia
+        </h3>
+
+        <div class="content-grid">
+          <div class="sub-card">
+            <h3>1. Teste de POST</h3>
+            <p>
+              Enviar payload JSON para <code>/api/v1/produtos</code> e verificar
+              o status <code>201 Created</code> e o ID gerado.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>2. Teste de GET com Busca</h3>
+            <p>
+              Realizar requisição
+              <code>GET /api/v1/produtos?busca=Rolamento</code> e validar a
+              filtragem correta no array de retorno.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>3. Teste de DELETE (Soft)</h3>
+            <p>
+              Executar <code>DELETE /api/v1/produtos/1</code> e confirmar que
+              novo <code>GET</code> para a mesma ID retorna
+              <code>404 Not Found</code>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 4 (ENCERRAMENTO) -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">04</div>
+          <div class="section-title-group">
+            <h2>Encerramento: Glossário da Aula + Quiz Final de Fixação</h2>
+            <span class="time-tag">⏱️ Duração Estimada: 30 min</span>
+          </div>
+        </div>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem">
+          📚 Glossário Técnico da Aula
+        </h3>
+
+        <div class="content-grid" style="margin-bottom: 2rem">
+          <div class="sub-card">
+            <h3>REST (Representational State Transfer)</h3>
+            <p>
+              Estilo arquitetural para sistemas distribuídos baseado em recursos
+              sem estado (stateless) identificados por URIs.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>Soft Delete (Exclusão Lógica)</h3>
+            <p>
+              Prática de marcar um registro como inativo no banco (`ativo =
+              FALSE`) em vez de apagá-lo fisicamente via SQL.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>Query Parameters</h3>
+            <p>
+              Parâmetros opcionais chave-valor passados na URL após o símbolo
+              `?` para ordenação, filtragem e paginação (`?busca=alfa`).
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>Status Code HTTP</h3>
+            <p>
+              Código numérico de 3 dígitos retornado pelo servidor indicando o
+              resultado do processamento da requisição (Ex: 200, 201, 400, 404,
+              500).
+            </p>
+          </div>
+        </div>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem">
+          ❓ Quiz Final de Fixação
+        </h3>
+
+        <!-- QUESTÃO 1 -->
+        <div class="quiz-card">
+          <div class="quiz-question">
+            1. Qual é o código de status HTTP recomendado para ser devolvido por
+            uma API RESTful após a criação BEM-SUCEDIDA de um novo registro via
+            verbo POST?
+          </div>
+          <div class="quiz-options">
+            <div class="quiz-option">A) 200 OK</div>
+            <div class="quiz-option">B) 201 Created</div>
+            <div class="quiz-option">C) 204 No Content</div>
+            <div class="quiz-option">D) 302 Found</div>
+          </div>
+          <div class="quiz-answer">
+            <strong>✅ Resposta Correta: B) 201 Created</strong><br />
+            <em>Justificativa:</em> O código `201 Created` é a resposta padrão
+            em APIs REST para confirmar a criação física bem-sucedida de um novo
+            recurso no servidor.
+          </div>
+        </div>
+
+        <!-- QUESTÃO 2 -->
+        <div class="quiz-card">
+          <div class="quiz-question">
+            2. Por que a técnica de Soft Delete (exclusão lógica) é altamente
+            recomendada em aplicações comerciais e ERPs B2B?
+          </div>
+          <div class="quiz-options">
+            <div class="quiz-option">
+              A) Porque reduz o consumo de memória RAM do Node.js.
+            </div>
+            <div class="quiz-option">
+              B) Porque impede a perda irrecuperável de histórico de vendas e
+              relatórios auditáveis caso um produto associado a pedidos antigos
+              fosse apagado fisicamente.
+            </div>
+            <div class="quiz-option">
+              C) Porque é o único método aceito pelo driver `pg` do PostgreSQL.
+            </div>
+            <div class="quiz-option">
+              D) Porque elimina a necessidade de utilizar o comando `ALTER
+              TABLE`.
+            </div>
+          </div>
+          <div class="quiz-answer">
+            <strong
+              >✅ Resposta Correta: B) Porque impede a perda de histórico e
+              auditabilidade.</strong
+            ><br />
+            <em>Justificativa:</em> Apagar uma linha fisicamente (`DELETE FROM`)
+            pode quebrar relacionamentos e corromper relatórios financeiros
+            históricos. O Soft Delete inativa o registro mantendo sua
+            rastreabilidade.
+          </div>
+        </div>
+
+        <!-- QUESTÃO 3 -->
+        <div class="quiz-card">
+          <div class="quiz-question">
+            3. Para realizar a busca por palavra-chave em uma API (`GET
+            /api/v1/produtos?busca=sensor`), como o parâmetro `busca` é acessado
+            no Express.js?
+          </div>
+          <div class="quiz-options">
+            <div class="quiz-option">A) Através de `req.body.busca`</div>
+            <div class="quiz-option">B) Através de `req.params.busca`</div>
+            <div class="quiz-option">C) Através de `req.query.busca`</div>
+            <div class="quiz-option">D) Através de `req.headers.busca`</div>
+          </div>
+          <div class="quiz-answer">
+            <strong>✅ Resposta Correta: C) Através de `req.query.busca`</strong
+            ><br />
+            <em>Justificativa:</em> Parâmetros de consulta passados na URL após
+            a interrogação (`?chave=valor`) são automaticamente parseados pelo
+            Express no objeto `req.query`.
+          </div>
+        </div>
+      </section>
+
+      <!-- WORKSHOP INTEGRADO -->
+      <div class="workshop-box">
+        <div class="workshop-header">
+          <span
+            >🛠️ Entregável da Aula 14 — Commit do CRUD Completo de
+            Produtos</span
+          >
+        </div>
+
+        <p style="color: #e5e7eb; margin-bottom: 1rem">
+          Cada equipe deve finalizar e testar a suíte CRUD de Produtos no
+          Postman/Insomnia, garantindo que todas as rotas respondam com status
+          HTTP adequados, e realizar o commit no repositório:<br />
+          <code
+            >git commit -m "feat: crud completo de produtos e rotas rest
+            implementados"</code
+          >
+        </p>
+      </div>
+
+      <footer>
+        Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados /
+        Back-End
+      </footer>
+    </div>
+  </body>
+</html>

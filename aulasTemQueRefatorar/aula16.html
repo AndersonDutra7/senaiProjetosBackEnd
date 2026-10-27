@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 16 – Autenticação e Segurança da Informação</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+    :root {
+      --bg-main: #0b0f19;
+      --bg-card: #111827;
+      --bg-card-hover: #1f2937;
+      --border-color: #1f2937;
+      --border-highlight: #374151;
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.15);
+      --secondary: #818cf8;
+      --accent: #f43f5e;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(31, 41, 55, 0.5) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-glow);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .header-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* SECTION CARDS */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: border-color 0.3s ease;
+      position: relative;
+    }
+
+    .section-card:hover {
+      border-color: var(--border-highlight);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #000;
+      font-weight: 800;
+      font-size: 1.1rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-title-group h2 {
+      font-size: 1.4rem;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .section-title-group .time-tag {
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* CONTENT STYLING */
+    p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    p strong {
+      color: var(--text-main);
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e5e7eb;
+      font-size: 0.88rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .sub-card {
+      background: rgba(31, 41, 55, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .sub-card h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sub-card p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* TABLES */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.92rem;
+      background: rgba(17, 24, 39, 0.6);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .custom-table th {
+      background: rgba(31, 41, 55, 0.8);
+      color: var(--primary);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .custom-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+      color: var(--text-muted);
+    }
+
+    .custom-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .custom-table td strong {
+      color: var(--text-main);
+    }
+
+    /* BADGES & TAGS */
+    .badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    .badge-jwt { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+    .badge-bcrypt { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid #34d399; }
+    .badge-cors { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid #fbbf24; }
+    .badge-sec { background: rgba(244, 63, 94, 0.2); color: #f43f5e; border: 1px solid #f43f5e; }
+
+    /* HIGHLIGHTS */
+    .highlight-box {
+      background: rgba(56, 189, 248, 0.05);
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0 10px 10px 0;
+      margin: 1.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .highlight-box.warning {
+      background: rgba(251, 191, 36, 0.05);
+      border-left-color: var(--warning);
+    }
+
+    .highlight-box.success {
+      background: rgba(52, 211, 153, 0.05);
+      border-left-color: var(--success);
+    }
+
+    .highlight-box.danger {
+      background: rgba(244, 63, 94, 0.05);
+      border-left-color: var(--accent);
+    }
+
+    .highlight-box strong {
+      color: #fff;
+    }
+
+    /* STEPS / WORKFLOW */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1rem;
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .step-badge {
+      background: var(--border-highlight);
+      color: var(--primary);
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* QUIZ STYLING */
+    .quiz-card {
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .quiz-question {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-option {
+      background: rgba(31, 41, 55, 0.5);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .quiz-answer {
+      background: rgba(52, 211, 153, 0.1);
+      border-left: 4px solid var(--success);
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    /* WORKSHOP BOX */
+    .workshop-box {
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .workshop-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- HEADER DE APRESENTAÇÃO -->
+    <header>
+      <div class="header-badge">
+        <span>📖 Guia Didático da Aula</span>
+      </div>
+      <h1>Autenticação e Segurança da Informação</h1>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0;">
+        Autenticação Stateless com JSON Web Tokens (JWT), criptografia unidirecional de senhas com `bcrypt`, proteção de rotas privadas via Middlewares, políticas CORS e gerenciamento seguro de segredos no arquivo `.env`.
+      </p>
+      
+      <div class="header-info">
+        <div class="info-item">
+          <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+        </div>
+        <div class="info-item">
+          <span>🎯 <strong>Foco:</strong> JWT (Stateless Auth), Bcrypt (Salt & Hash), Middleware de Autenticação, CORS, Protection & `.env`</span>
+        </div>
+        <div class="info-item">
+          <span>🚀 <strong>Módulo:</strong> Banco de Dados & Back-End</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- SEÇÃO 1 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div class="section-title-group">
+          <h2>Autenticação com JWT e Criptografia de Senhas (`bcrypt`)</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        A proteção de credenciais de usuários e a verificação de identidade em APIs Web modernas exigem mecanismos de segurança rigorosos. Senhas **jamais podem ser salvas em texto puro** nem criptografadas com algoritmos reversíveis.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Criptografia Unidirecional (Hashing) com `bcrypt` e Salting</h3>
+
+      <p>
+        O <strong>bcrypt</strong> é um algoritmo de hashing adaptativo projetado especificamente para proteção de senhas. Ele aplica uma técnica chamada <strong>Salting</strong> (adição de uma string aleatória antes do hash) e um fator de custo (rounds) para prevenir ataques de dicionário e *Rainbow Tables*.
+      </p>
+
+      <div class="content-grid">
+        <div class="sub-card">
+          <h3><span class="badge badge-sec">Incorreto: Criptografia Reversível / Texto Puro</span></h3>
+          <p>Salvar senhas como <code>"senha123"</code> ou usar algoritmos reversíveis (Ex: Base64, AES) permite que qualquer vazamento de banco exponha todas as senhas dos clientes B2B.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-bcrypt">Correto: Hash Irreversível (`bcrypt`)</span></h3>
+          <p>O `bcrypt` gera uma hash de 60 caracteres (Ex: <code>$2b$10$e8N8y...</code>). O processo é irreversível: o sistema apenas compara a senha digitada com a hash guardada via <code>bcrypt.compare()</code>.</p>
+        </div>
+      </div>
+
+      <pre><code>// Instalação das dependências de segurança
+npm install bcryptjs jsonwebtoken cors</code></pre>
+
+      <pre><code>import bcrypt from 'bcryptjs';
+
+// 1. Criptografando a senha durante o cadastro do usuário
+const saltRounds = 10; // Fator de custo balanceado (computacionalmente seguro)
+const senhaTextoPuro = 'SenhaSegura123!';
+const hashSenha = await bcrypt.hash(senhaTextoPuro, saltRounds);
+
+// 2. Comparando a senha digitada no Login com a Hash salva no banco
+const senhaDigitada = 'SenhaSegura123!';
+const senhaValida = await bcrypt.compare(senhaDigitada, hashSenha); // Retorna true ou false</code></pre>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Arquitetura do JSON Web Token (JWT) — Autenticação Stateless</h3>
+
+      <p>
+        O <strong>JWT (JSON Web Token)</strong> é um padrão aberto (RFC 7519) para transmissão segura de declarações (*claims*) entre partes no formato JSON. Por ser **Stateless** (sem estado no servidor), a API não precisa guardar sessões em memória.
+      </p>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Parte do Token</th>
+            <th>Conteúdo / Estrutura</th>
+            <th>Função na Segurança</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Header</code> (Cabeçalho)</td>
+            <td>JSON codificado em Base64Url contendo o algoritmo (ex: HS256) e tipo.</td>
+            <td>Informa como o token foi assinado.</td>
+          </tr>
+          <tr>
+            <td><code>Payload</code> (Carga útil)</td>
+            <td>JSON em Base64Url com dados do usuário (<code>id_usuario</code>, <code>email</code>, <code>perfil</code>) e expiração.</td>
+            <td>Carrega as informações de identificação (claims publicas). **Não coloque senhas aqui!**</td>
+          </tr>
+          <tr>
+            <td><code>Signature</code> (Assinatura)</td>
+            <td>Hash criptográfico combinando Header + Payload + Chave Secreta (`JWT_SECRET`).</td>
+            <td>Garante a **integridade**: se qualquer caractere do token for alterado, a assinatura se torna inválida.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-box success">
+        <strong>💡 Estrutura de um Token JWT:</strong> <code>header.payload.signature</code> (três partes separadas por pontos).
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div class="section-title-group">
+          <h2>Boas Práticas de Segurança na Comunicação Web (CORS, Proteção e `.env`)</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        Proteger uma API vai além da autenticação de usuários. Envolve configurar adequadamente a política de origem cruzada (**CORS**) e proteger chaves mestras e variáveis de ambiente contra vazamentos.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Configuração do Middleware CORS (`cors`) no Express</h3>
+
+      <p>
+        Por padrão, navegadores web bloqueiam requisições AJAX/Fetch feitas a partir de domínios diferentes da API devido à **Same-Origin Policy (SOP)**. O middleware <code>cors</code> especifica quais origens confiáveis podem consumir a API.
+      </p>
+
+      <pre><code>import express from 'express';
+import cors from 'cors';
+
+const app = express();
+
+// Configuração estrita do CORS para produção B2B
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173', // Apenas o frontend autorizado
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+};
+
+app.use(cors(corsOptions));</code></pre>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Gerenciamento Seguro de Segredos no `.env` e `.gitignore`</h3>
+
+      <p>A chave secreta usada para assinar o JWT (<code>JWT_SECRET</code>) deve ser uma string longa, complexa e mantida em segredo absoluto.</p>
+
+      <pre><code># Arquivo .env (NUNCA SUBIR PARA O GITHUB!)
+PORT=3000
+DB_HOST=localhost
+DB_USER=app_b2b_user
+DB_PASSWORD=senha_super_segura
+DB_NAME=portal_b2b
+JWT_SECRET=c8f93021a8e1b402d8471c4820a32b91d74829104c8f2b1092a
+JWT_EXPIRES_IN=8h
+FRONTEND_URL=http://localhost:5173</code></pre>
+
+      <div class="highlight-box danger">
+        <strong>🚨 Regra de Ouro da Segurança Dev:</strong> O arquivo <code>.env</code> NUNCA deve ser comitado no repositório do Git. Certifique-se de que a linha <code>.env</code> está listada dentro do arquivo <code>.gitignore</code> do seu projeto!
+      </div>
+    </section>
+
+    <!-- SEÇÃO 3 (DESAFIO PRÁTICO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div class="section-title-group">
+          <h2>Desafio Prático — Implementação do Módulo de Login e Middleware de Autenticação</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        As equipes implementarão o fluxo completo de **Registro, Login e Proteção de Rotas Privadas** da aplicação utilizando a biblioteca `jsonwebtoken` e `bcryptjs`.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Model do Usuário/Autenticação (`src/models/usuarioModel.js`)</h3>
+
+      <pre><code>import { query } from '../config/db.js';
+import bcrypt from 'bcryptjs';
+
+export const usuarioModel = {
+  // Cadastra um novo usuário criptografando a senha com bcrypt
+  criar: async ({ nome, email, senha, perfil }) => {
+    const hashSenha = await bcrypt.hash(senha, 10);
+    const text = `
+      INSERT INTO usuarios (nome, email, senha, perfil)
+      VALUES ($1, $2, $3, $4)
+      RETURNING id_usuario, nome, email, perfil, criado_em
+    `;
+    const result = await query(text, [nome, email, hashSenha, perfil || 'CLIENTE']);
+    return result.rows[0];
+  },
+
+  // Busca usuário por e-mail (incluindo a hash da senha para verificação)
+  buscarPorEmail: async (email) => {
+    const text = 'SELECT * FROM usuarios WHERE email = $1 AND ativo = TRUE';
+    const result = await query(text, [email]);
+    return result.rows[0];
+  }
+};</code></pre>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Controller de Autenticação (`src/controllers/authController.js`)</h3>
+
+      <pre><code>import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+import { usuarioModel } from '../models/usuarioModel.js';
+
+export const authController = {
+  registrar: async (req, res) => {
+    try {
+      const { nome, email, senha, perfil } = req.body;
+      if (!nome || !email || !senha) {
+        return res.status(400).json({ success: false, message: 'Nome, E-mail e Senha são obrigatórios.' });
+      }
+
+      const usuarioExistente = await usuarioModel.buscarPorEmail(email);
+      if (usuarioExistente) {
+        return res.status(409).json({ success: false, message: 'Este e-mail já está em uso.' });
+      }
+
+      const novoUsuario = await usuarioModel.criar({ nome, email, senha, perfil });
+      return res.status(201).json({ success: true, message: 'Usuário cadastrado com sucesso!', data: novoUsuario });
+    } catch (error) {
+      console.error('❌ Erro no authController.registrar:', error);
+      return res.status(500).json({ success: false, message: 'Erro ao registrar usuário.' });
+    }
+  },
+
+  login: async (req, res) => {
+    try {
+      const { email, senha } = req.body;
+      if (!email || !senha) {
+        return res.status(400).json({ success: false, message: 'E-mail e senha são obrigatórios.' });
+      }
+
+      const usuario = await usuarioModel.buscarPorEmail(email);
+      if (!usuario) {
+        return res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
+      }
+
+      // Validação da senha com bcrypt
+      const senhaValida = await bcrypt.compare(senha, usuario.senha);
+      if (!senhaValida) {
+        return res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
+      }
+
+      // Geração do Token JWT com validade estipulada
+      const token = jwt.sign(
+        { id_usuario: usuario.id_usuario, email: usuario.email, perfil: usuario.perfil },
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_EXPIRES_IN || '8h' }
+      );
+
+      return res.status(200).json({
+        success: true,
+        message: 'Login realizado com sucesso!',
+        token,
+        usuario: { id_usuario: usuario.id_usuario, nome: usuario.nome, email: usuario.email, perfil: usuario.perfil }
+      });
+    } catch (error) {
+      console.error('❌ Erro no authController.login:', error);
+      return res.status(500).json({ success: false, message: 'Erro ao realizar login.' });
+    }
+  }
+};</code></pre>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">3. Middleware de Proteção de Rotas (`src/middlewares/authMiddleware.js`)</h3>
+
+      <pre><code>import jwt from 'jsonwebtoken';
+
+export const autenticarToken = (req, res, next) => {
+  // Captura do Header Authorization (Formato: "Bearer TOKEN_JWT_AQUI")
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ success: false, message: 'Acesso negado. Token de autenticação não fornecido.' });
+  }
+
+  try {
+    // Validação e verificação de assinatura/expiração do JWT
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.usuario = decoded; // Injeta os dados do usuário autenticado no objeto req
+    next(); // Permite a passagem para a próxima função/controller
+  } catch (error) {
+    return res.status(403).json({ success: false, message: 'Token de autenticação inválido ou expirado.' });
+  }
+};</code></pre>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">4. Aplicação do Middleware nas Rotas Privadas</h3>
+
+      <pre><code>import { Router } from 'express';
+import { pedidoController } from '../controllers/pedidoController.js';
+import { autenticarToken } from '../middlewares/authMiddleware.js';
+
+const router = Router();
+
+// Apenas usuários autenticados com JWT podem criar ou listar pedidos!
+router.post('/', autenticarToken, pedidoController.criarPedido);
+router.get('/', autenticarToken, pedidoController.listarPedidos);
+
+export default router;</code></pre>
+    </section>
+
+    <!-- SEÇÃO 4 (ENCERRAMENTO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div class="section-title-group">
+          <h2>Encerramento: Glossário da Aula + Quiz Final de Fixação</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 30 min</span>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">📚 Glossário Técnico da Aula</h3>
+
+      <div class="content-grid" style="margin-bottom: 2rem;">
+        <div class="sub-card">
+          <h3>bcrypt</h3>
+          <p>Algoritmo de hashing adaptativo irreversível com suporte nativo a Salting, ideal para armazenamento seguro de senhas.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>JWT (JSON Web Token)</h3>
+          <p>Padrão compacto e autocontido para transmissão segura de dados de autenticação em formato JSON assinado digitalmente.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>CORS (Cross-Origin Resource Sharing)</h3>
+          <p>Mecanismo do navegador que utiliza cabeçalhos HTTP para permitir ou restringir o acesso a recursos de um domínio diferente.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Bearer Token</h3>
+          <p>Esquema de autenticação HTTP onde o cliente envia o token de acesso no cabeçalho `Authorization: Bearer <token>`.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">❓ Quiz Final de Fixação</h3>
+
+      <!-- QUESTÃO 1 -->
+      <div class="quiz-card">
+        <div class="quiz-question">1. Por que algoritmos de criptografia reversível (que permitem descriptografar a senha) NÃO devem ser utilizados para guardar senhas no banco de dados?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Porque a criptografia reversível ocupa muito espaço no disco rígido.</div>
+          <div class="quiz-option">B) Porque se um atacante obtiver a chave de descriptografia ou o arquivo do banco, todas as senhas dos usuários poderão ser recuperadas em texto puro.</div>
+          <div class="quiz-option">C) Porque o Node.js não suporta criptografia reversível.</div>
+          <div class="quiz-option">D) Porque o PostgreSQL não aceita senhas descriptografadas.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Porque o vazamento da chave permite expor todas as senhas.</strong><br>
+          <em>Justificativa:</em> O correto é utilizar hashing irreversível (`bcrypt`). A senha nunca é descriptografada; apenas compara-se a hash gerada na tentativa de login.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 2 -->
+      <div class="quiz-card">
+        <div class="quiz-question">2. Qual é o papel da Assinatura (Signature) em um Token JWT e o que ocorre se um usuário malicioso tentar alterar o seu perfil de "CLIENTE" para "ADMIN" dentro do Payload?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) A assinatura é atualizada automaticamente no navegador do cliente.</div>
+          <div class="quiz-option">B) A assinatura torna-se incompatível com o hash recalculado pelo servidor via `JWT_SECRET`, e a API rejeita a requisição com status `403 Forbidden`.</div>
+          <div class="quiz-option">C) O banco de dados altera o perfil do usuário para ADMIN automaticamente.</div>
+          <div class="quiz-option">D) O token passa a valer por tempo indeterminado.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) A assinatura torna-se incompatível e a API rejeita a requisição.</strong><br>
+          <em>Justificativa:</em> A assinatura valida a integridade do token. Qualquer alteração nos dados do Payload invalida a verificação do servidor.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 3 -->
+      <div class="quiz-card">
+        <div class="quiz-question">3. Como o middleware de autenticação `autenticarToken` valida o usuário em uma rota privada como `POST /api/v1/pedidos`?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Consultando o arquivo `.env` para ver a lista de e-mails permitidos.</div>
+          <div class="quiz-option">B) Extraindo o JWT do cabeçalho `Authorization: Bearer <token>`, verificando sua validade com `jwt.verify` e injetando o usuário autenticado no objeto `req.usuario`.</div>
+          <div class="quiz-option">C) Solicitando novamente a senha do usuário a cada requisição de pedido.</div>
+          <div class="quiz-option">D) Desligando a conexão do PostgreSQL temporariamente.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Extraindo o JWT do cabeçalho Authorization e verificando com `jwt.verify`.</strong><br>
+          <em>Justificativa:</em> O middleware intercepta a requisição HTTP, extrai o Bearer token, valida sua chave e expiração e autoriza o prosseguimento se válido.
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKSHOP INTEGRADO -->
+    <div class="workshop-box">
+      <div class="workshop-header">
+        <span>🛠️ Entregável da Aula 16 — Módulo de Autenticação e Segurança B2B Completo</span>
+      </div>
+
+      <p style="color: #e5e7eb; margin-bottom: 1rem;">
+        Cada equipe deve finalizar os endpoints <code>/api/v1/auth/register</code> e <code>/api/v1/auth/login</code>, aplicar a proteção por JWT em todas as rotas privadas de pedidos e realizar o commit final:<br>
+        <code>git commit -m "feat: modulo de autenticacao jwt, bcrypt, cors e rotas protegidas implementados"</code>
+      </p>
+    </div>
+
+    <footer>
+      Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados / Back-End
+    </footer>
+
+  </div>
+
+</body>
+</html>

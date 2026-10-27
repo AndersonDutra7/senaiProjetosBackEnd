@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 18 – Integração com o Front-End (HTML/CSS/JS)</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+    :root {
+      --bg-main: #0b0f19;
+      --bg-card: #111827;
+      --bg-card-hover: #1f2937;
+      --border-color: #1f2937;
+      --border-highlight: #374151;
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.15);
+      --secondary: #818cf8;
+      --accent: #f43f5e;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(31, 41, 55, 0.5) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-glow);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .header-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* SECTION CARDS */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: border-color 0.3s ease;
+      position: relative;
+    }
+
+    .section-card:hover {
+      border-color: var(--border-highlight);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #000;
+      font-weight: 800;
+      font-size: 1.1rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-title-group h2 {
+      font-size: 1.4rem;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .section-title-group .time-tag {
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* CONTENT STYLING */
+    p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    p strong {
+      color: var(--text-main);
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e5e7eb;
+      font-size: 0.88rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .sub-card {
+      background: rgba(31, 41, 55, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .sub-card h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sub-card p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* TABLES */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.92rem;
+      background: rgba(17, 24, 39, 0.6);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .custom-table th {
+      background: rgba(31, 41, 55, 0.8);
+      color: var(--primary);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .custom-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+      color: var(--text-muted);
+    }
+
+    .custom-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .custom-table td strong {
+      color: var(--text-main);
+    }
+
+    /* BADGES & TAGS */
+    .badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    .badge-fetch { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+    .badge-dom { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid #34d399; }
+    .badge-proto { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid #fbbf24; }
+
+    /* HIGHLIGHTS */
+    .highlight-box {
+      background: rgba(56, 189, 248, 0.05);
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0 10px 10px 0;
+      margin: 1.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .highlight-box.warning {
+      background: rgba(251, 191, 36, 0.05);
+      border-left-color: var(--warning);
+    }
+
+    .highlight-box.success {
+      background: rgba(52, 211, 153, 0.05);
+      border-left-color: var(--success);
+    }
+
+    .highlight-box.danger {
+      background: rgba(244, 63, 94, 0.05);
+      border-left-color: var(--accent);
+    }
+
+    .highlight-box strong {
+      color: #fff;
+    }
+
+    /* STEPS / WORKFLOW */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1rem;
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .step-badge {
+      background: var(--border-highlight);
+      color: var(--primary);
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* QUIZ STYLING */
+    .quiz-card {
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .quiz-question {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-option {
+      background: rgba(31, 41, 55, 0.5);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .quiz-answer {
+      background: rgba(52, 211, 153, 0.1);
+      border-left: 4px solid var(--success);
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    /* WORKSHOP BOX */
+    .workshop-box {
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .workshop-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- HEADER DE APRESENTAÇÃO -->
+    <header>
+      <div class="header-badge">
+        <span>📖 Guia Didático da Aula</span>
+      </div>
+      <h1>Integração com o Front-End (HTML/CSS/JS)</h1>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0;">
+        Conexão da interface visual do cliente B2B (HTML5, CSS3, JavaScript ES6) com a API REST Node.js/Express: consumo assíncrono via Fetch API, gerenciamento do Token JWT no LocalStorage, headers de requisição e atualização dinâmica da DOM.
+      </p>
+      
+      <div class="header-info">
+        <div class="info-item">
+          <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+        </div>
+        <div class="info-item">
+          <span>🎯 <strong>Foco:</strong> Fetch API, `async/await`, LocalStorage, Authorization Header, Manipulação da DOM & Integração B2B</span>
+        </div>
+        <div class="info-item">
+          <span>🚀 <strong>Módulo:</strong> Banco de Dados & Back-End</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- SEÇÃO 1 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div class="section-title-group">
+          <h2>Consumo de API REST no Front-End com Fetch / AJAX</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        A comunicação assíncrona entre o navegador web (client-side) e a API REST (server-side) permite atualizar o conteúdo da página **sem a necessidade de recarregá-la inteiramente (Page Reload)**. Esse padrão, conhecido historicamente como **AJAX (Asynchronous JavaScript and XML)**, é implementado nativamente nos navegadores modernos via <strong>Fetch API</strong> com sintaxe <code>async/await</code>.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. O Ciclo da Requisição Assíncrona com `fetch()`</h3>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-badge">1</div>
+          <div class="step-content">
+            <h4>Disparo do Evento (Event Handler)</h4>
+            <p>O usuário clica em um botão de consulta ou submete um formulário (ex: <code>form.addEventListener('submit', ...)</code>).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">2</div>
+          <div class="step-content">
+            <h4>Chamada Assíncrona (`fetch(url, config)`)</h4>
+            <p>O navegador dispara uma requisição HTTP via soquete para a API Node.js rodando em <code>http://localhost:3000/api/v1/...</code> de forma não bloqueante.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">3</div>
+          <div class="step-content">
+            <h4>Parsing da Resposta JSON (`await response.json()`)</h4>
+            <p>A resposta do servidor é recebida. O corpo em formato string JSON é convertido em um objeto JavaScript manipulável.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">4</div>
+          <div class="step-content">
+            <h4>Renderização Dinâmica da DOM</h4>
+            <p>Os elementos da interface visual (tabelas, cards, alertas) são atualizados via manipulação de DOM (<code>element.innerHTML</code> ou <code>document.createElement</code>).</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Exemplo 1: Requisição `GET` com Injeção de Bearer Token</h3>
+
+      <p>Buscando a lista de produtos B2B cadastrados e injetando o Token JWT salvo no <code>localStorage</code>:</p>
+
+      <pre><code>async function carregarProdutosB2B() {
+  const token = localStorage.getItem('token_b2b');
+
+  // Redireciona para o login se o usuário não possuir token salvo
+  if (!token) {
+    window.location.href = '/login.html';
+    return;
+  }
+
+  try {
+    const response = await fetch('http://localhost:3000/api/v1/produtos', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Envio do Bearer Token
+      }
+    });
+
+    const resultado = await response.json();
+
+    if (!response.ok) {
+      throw new Error(resultado.message || 'Falha ao buscar produtos.');
+    }
+
+    // Renderiza a lista na tabela HTML da interface
+    renderizarTabelaProdutos(resultado.data);
+
+  } catch (error) {
+    console.error('❌ Erro no front-end ao listar produtos:', error);
+    alert(`Erro: ${error.message}`);
+  }
+}</code></pre>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">3. Exemplo 2: Requisição `POST` com Envio de Payload JSON</h3>
+
+      <p>Submetendo um novo cadastro de produto B2B a partir de um formulário da interface:</p>
+
+      <pre><code>const formCadastro = document.getElementById('form-novo-produto');
+
+formCadastro.addEventListener('submit', async (event) => {
+  event.preventDefault(); // Impede o comportamento padrão de reload da página!
+
+  const token = localStorage.getItem('token_b2b');
+  
+  // Extração dos valores digitados nos inputs
+  const payload = {
+    codigo_sku: document.getElementById('sku').value,
+    nome_produto: document.getElementById('nome').value,
+    preco_base: parseFloat(document.getElementById('preco').value)
+  };
+
+  try {
+    const response = await fetch('http://localhost:3000/api/v1/produtos', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // Informa o formato da payload
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(payload) // Converte objeto JS para String JSON
+    });
+
+    const resultado = await response.json();
+
+    if (!response.ok) {
+      // Exibe erros de validação retornados pela API (Zod / AppError)
+      if (resultado.errors) {
+        const msgs = resultado.errors.map(e => e.mensagem).join('\n');
+        alert(`Atenção:\n${msgs}`);
+      } else {
+        alert(`Erro: ${resultado.message}`);
+      }
+      return;
+    }
+
+    alert('✅ Produto cadastrado com sucesso!');
+    formCadastro.reset();
+    carregarProdutosB2B(); // Recarrega a tabela automaticamente!
+
+  } catch (error) {
+    console.error('❌ Erro na comunicação com a API:', error);
+    alert('Não foi possível conectar ao servidor. Verifique sua conexão.');
+  }
+});</code></pre>
+    </section>
+
+    <!-- SEÇÃO 2 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div class="section-title-group">
+          <h2>Protocolos e Padrões de Comunicação Client-Side / Server-Side</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        Para que a comunicação entre o front-end (executado pelo motor JavaScript do navegador) e o back-end (Node.js) ocorra sem falhas, diversos protocolos e padrões da Web entram em ação simultaneamente.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Pilares da Comunicação Client-Server</h3>
+
+      <div class="content-grid">
+        <div class="sub-card">
+          <h3><span class="badge badge-proto">HTTP / HTTPS</span></h3>
+          <p>Protocolo de aplicação sem estado (stateless) para transporte de requisições e respostas entre navegadores e servidores.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-fetch">HTTP Headers</span></h3>
+          <p>Metadados chave-valor que definem o comportamento da comunicação (Ex: <code>Content-Type</code>, <code>Authorization</code>, <code>Accept</code>).</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-dom">Formatos JSON</span></h3>
+          <p>Padrão universal de intercâmbio de dados de texto leve. Convertido com <code>JSON.stringify()</code> no envio e <code>JSON.parse()</code> ou <code>.json()</code> no recebimento.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-proto">Armazenamento Local</span></h3>
+          <p>Uso de <code>localStorage</code> (persistência longa) ou <code>sessionStorage</code> (durante a aba) para manter o Token JWT de sessão do usuário no navegador.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Entendendo a Requisição Preflight (`OPTIONS` CORS)</h3>
+
+      <p>
+        Quando o JavaScript executa uma chamada `fetch()` contendo um cabeçalho customizado (como `Authorization`) ou envia dados em `application/json` para um domínio/porta diferente, o navegador dispara automaticamente uma requisição preliminar invisível do tipo <strong>`OPTIONS` (Preflight Request)</strong> para verificar se a API aceita esses cabeçalhos.
+      </p>
+
+      <div class="highlight-box warning">
+        <strong>⚠️ Por que configurar o CORS no Back-End?</strong> Se o middleware <code>cors()</code> não estiver devidamente registrado no `app.js` do Express, o navegador bloqueará o `fetch()` no front-end com o erro clássico: <em>"Access-Control-Allow-Origin header is missing"</em>.
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">3. Resumo dos Cabeçalhos Essenciais na Comunicação B2B</h3>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Cabeçalho HTTP</th>
+            <th>Origem</th>
+            <th>Propósito no Sistema B2B</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Content-Type: application/json</code></td>
+            <td>Cliente & Servidor</td>
+            <td>Informa que o corpo da requisição/resposta é uma string formatada em JSON.</td>
+          </tr>
+          <tr>
+            <td><code>Authorization: Bearer &lt;token&gt;</code></td>
+            <td>Cliente</td>
+            <td>Envia o Token JWT para autenticar e autorizar a requisição nas rotas privadas.</td>
+          </tr>
+          <tr>
+            <td><code>Access-Control-Allow-Origin</code></td>
+            <td>Servidor</td>
+            <td>Informa ao navegador quais domínios (ex: `http://localhost:5173`) têm permissão para ler as respostas.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SEÇÃO 3 (DESAFIO PRÁTICO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div class="section-title-group">
+          <h2>Desafio Prático — Integração Completa das Telas Front-End com a API Node.js</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        Neste desafio, as equipes realizarão a integração real entre a tela de **Login (`login.html`)**, a tela de **Catálogo de Produtos (`produtos.html`)** e a API Express desenvolvida nas aulas anteriores.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Script de Login Front-End (`public/js/login.js`)</h3>
+
+      <pre><code>document.getElementById('form-login').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById('input-email').value;
+  const senha = document.getElementById('input-senha').value;
+
+  try {
+    const response = await fetch('http://localhost:3000/api/v1/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, senha })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(`Falha no login: ${data.message}`);
+      return;
+    }
+
+    // 1. Armazena o Token JWT no LocalStorage do navegador
+    localStorage.setItem('token_b2b', data.token);
+    localStorage.setItem('usuario_b2b', JSON.stringify(data.usuario));
+
+    alert(`Bem-vindo, ${data.usuario.nome}!`);
+
+    // 2. Redireciona para o painel principal de produtos
+    window.location.href = '/produtos.html';
+
+  } catch (error) {
+    console.error('❌ Erro na autenticação:', error);
+    alert('Erro de conexão com o servidor de autenticação.');
+  }
+});</code></pre>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Script de Listagem e Renderização da DOM (`public/js/produtos.js`)</h3>
+
+      <pre><code>// Função para renderizar os cards de produtos dinamicamente na DOM
+function renderizarTabelaProdutos(produtos) {
+  const container = document.getElementById('grid-produtos');
+  container.innerHTML = ''; // Limpa o conteúdo anterior
+
+  if (produtos.length === 0) {
+    container.innerHTML = '<p style="color: #9ca3af;">Nenhum produto cadastrado no momento.</p>';
+    return;
+  }
+
+  produtos.forEach((prod) => {
+    const card = document.createElement('div');
+    card.className = 'sub-card';
+    card.style.marginBottom = '1rem';
+    
+    card.innerHTML = `
+      <h3 style="color: #38bdf8;">${prod.nome_produto}</h3>
+      <p><strong>SKU:</strong> <code>${prod.codigo_sku}</code></p>
+      <p><strong>Preço Base:</strong> R$ ${Number(prod.preco_base).toFixed(2)}</p>
+      <button onclick="inativarProduto(${prod.id_produto})" style="background: #f43f5e; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; margin-top: 8px;">
+        Inativar Produto
+      </button>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+// Função para inativar um produto (Soft Delete via API)
+async function inativarProduto(id) {
+  if (!confirm('Deseja realmente inativar este produto?')) return;
+
+  const token = localStorage.getItem('token_b2b');
+
+  try {
+    const response = await fetch(`http://localhost:3000/api/v1/produtos/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(`Erro: ${data.message}`);
+      return;
+    }
+
+    alert('Produto inativado com sucesso!');
+    carregarProdutosB2B(); // Atualiza a lista exibida!
+  } catch (error) {
+    alert('Erro ao processar inativação do produto.');
+  }
+}</code></pre>
+    </section>
+
+    <!-- SEÇÃO 4 (ENCERRAMENTO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div class="section-title-group">
+          <h2>Encerramento: Glossário da Aula + Quiz Final de Fixação</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 30 min</span>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">📚 Glossário Técnico da Aula</h3>
+
+      <div class="content-grid" style="margin-bottom: 2rem;">
+        <div class="sub-card">
+          <h3>Fetch API</h3>
+          <p>Interface moderna do JavaScript para realizar requisições HTTP assíncronas baseada em Promises e `async/await`.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>LocalStorage</h3>
+          <p>Mecanismo de armazenamento chave-valor no navegador que persiste dados mesmo após o fechamento da janela.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Preflight Request (OPTIONS)</h3>
+          <p>Requisição preliminar enviada automaticamente pelo navegador para verificar permissões de CORS antes de enviar chamadas complexas.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Manipulação de DOM</h3>
+          <p>Alteração dinâmica da estrutura da página Web (HTML) em tempo de execução via JavaScript em resposta aos dados retornados pela API.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">❓ Quiz Final de Fixação</h3>
+
+      <!-- QUESTÃO 1 -->
+      <div class="quiz-card">
+        <div class="quiz-question">1. Ao enviar um payload em formato JSON para uma API REST através do comando `fetch()`, qual é o papel da instrução `JSON.stringify(payload)`?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Criptografar a senha do usuário com a biblioteca bcrypt.</div>
+          <div class="quiz-option">B) Converter o objeto JavaScript em uma string de texto formatada em JSON exigida no corpo (`body`) da requisição HTTP.</div>
+          <div class="quiz-option">C) Salvar os dados automaticamente no LocalStorage.</div>
+          <div class="quiz-option">D) Converter a requisição POST em um comando SQL INSERT.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Converter o objeto JS em string JSON.</strong><br>
+          <em>Justificativa:</em> O protocolo HTTP trafega apenas texto puro. `JSON.stringify()` serializa objetos JS para a representação textual JSON enviada no `body`.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 2 -->
+      <div class="quiz-card">
+        <div class="quiz-question">2. Onde o front-end deve armazenar o Token JWT retornado pela API após o login bem-sucedido para garantir que o usuário continue autenticado nas páginas seguintes?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Em um arquivo `.env` localizado na pasta do navegador.</div>
+          <div class="quiz-option">B) No `localStorage` ou `sessionStorage` do navegador, injetando-o no cabeçalho `Authorization: Bearer <token>` a cada requisição privada.</div>
+          <div class="quiz-option">C) Em um comentário no HTML da página `index.html`.</div>
+          <div class="quiz-option">D) Diretamente na tabela do PostgreSQL no cliente.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) No localStorage ou sessionStorage do navegador.</strong><br>
+          <em>Justificativa:</em> O armazenamento local permite recuperar o token e enviá-lo nos cabeçalhos HTTP para validar o acesso a rotas privadas da API.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 3 -->
+      <div class="quiz-card">
+        <div class="quiz-question">3. O que acontece se o front-end esquecer de incluir o evento `event.preventDefault()` no listener de submissão do formulário (`form.addEventListener('submit', ...)`?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) A API Node.js desliga automaticamente.</div>
+          <div class="quiz-option">B) O navegador executa a submissão nativa síncrona do formulário, recarregando a página e interrompendo a chamada assíncrona do `fetch()`.</div>
+          <div class="quiz-option">C) O banco de dados bloqueia a entrada do usuário.</div>
+          <div class="quiz-option">D) O token JWT expira imediatamente.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) O navegador executa a submissão nativa e recarrega a página.</strong><br>
+          <em>Justificativa:</em> O método `preventDefault()` cancela a ação padrão de reload da página do formulário HTML, permitindo que o JavaScript assuma o controle assíncrono via Fetch API.
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKSHOP INTEGRADO -->
+    <div class="workshop-box">
+      <div class="workshop-header">
+        <span>🛠️ Entregável da Aula 18 — Integração Front-End / Back-End Concluída</span>
+      </div>
+
+      <p style="color: #e5e7eb; margin-bottom: 1rem;">
+        Todas as equipes devem conectar as telas de Login e Gestão de Produtos com a API Node.js, armazenando o JWT no <code>localStorage</code> e realizando a renderização dinâmica da DOM, com o commit final:<br>
+        <code>git commit -m "feat: integracao das telas frontend com a api nodejs via fetch e jwt"</code>
+      </p>
+    </div>
+
+    <footer>
+      Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados / Back-End
+    </footer>
+
+  </div>
+
+</body>
+</html>

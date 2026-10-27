@@ -1,0 +1,17 @@
+{
+  "name": "streamflix",
+  "version": "1.0.0",
+  "description": "StreamFlix - simulado SAEP (solução de referência)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "express": "^4.22.3",
+    "express-session": "^1.19.0",
+    "multer": "^1.4.4",
+    "pg": "^8.23.1"
+  }
+}

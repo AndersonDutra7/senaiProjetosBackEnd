@@ -1,0 +1,1876 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Avaliação Prática – Portal B2B de E-commerce e Integração Logística
+      Industrial
+    </title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11pt;
+        color: #000;
+        background: #fff;
+      }
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 15mm;
+      }
+
+      /* ── CABEÇALHO ── */
+      .header-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 14px;
+      }
+      .header-table td {
+        border: 1px solid #000;
+        padding: 3px 6px;
+        vertical-align: middle;
+        font-size: 10pt;
+      }
+      .logo-cell {
+        width: 140px;
+        text-align: center;
+        vertical-align: middle !important;
+        padding: 8px;
+      }
+      .senai-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .senai-brand img {
+        max-width: 120px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+      .title-cell {
+        text-align: center;
+        font-weight: bold;
+        font-size: 13pt;
+        letter-spacing: 1px;
+        padding: 6px;
+      }
+      .desemp-cell {
+        width: 90px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 10pt;
+        vertical-align: top;
+      }
+      .label-bold {
+        font-weight: bold;
+      }
+      .fill {
+        color: #2e5496;
+        font-weight: bold;
+        font-style: italic;
+      }
+
+      /* ── CAIXAS ── */
+      .box {
+        margin-bottom: 20px;
+      }
+      .capacidades-header {
+        background: #2e5496;
+        color: #fff;
+        font-weight: bold;
+        font-size: 12pt;
+        padding: 10px;
+        margin-top: 18px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .capacidades-content {
+        border: 1px solid #2e5496;
+        border-top: none;
+        padding: 8px 10px 10px 10px;
+        margin-bottom: 4px;
+      }
+      .capacidades-content p {
+        margin-bottom: 3px;
+      }
+      .capacidades-content p:last-child {
+        margin-bottom: 0;
+      }
+      .cc {
+        padding: 12px 14px !important;
+      }
+      .cc p {
+        line-height: 1.5;
+      }
+      .section-divider {
+        margin: 28px 0;
+        border-top: 3px solid #2e5496;
+        border-bottom: 3px solid #2e5496;
+        padding: 12px 0 8px 0;
+      }
+      .section-title {
+        font-size: 13pt;
+        font-weight: bold;
+        color: #2e5496;
+        text-align: center;
+        margin-bottom: 4px;
+      }
+      .sub {
+        font-weight: bold;
+        color: #2e5496;
+        text-transform: uppercase;
+        margin: 14px 0 8px;
+      }
+      .aviso {
+        border-left: 4px solid #2e5496;
+        background: #f3f6fb;
+        padding: 8px 12px;
+        margin: 10px 0;
+        font-size: 10pt;
+        line-height: 1.5;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      ul.lista {
+        margin: 4px 0 0 18px;
+        line-height: 1.6;
+      }
+
+      /* ── TABELAS ── */
+      table.t {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 10pt;
+        background: #fff;
+      }
+      table.t th {
+        background: #2e5496;
+        color: #fff;
+        padding: 8px;
+        border: 1px solid #2e5496;
+        text-align: left;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      table.t td {
+        padding: 7px 8px;
+        border: 1px solid #d0d7de;
+        vertical-align: top;
+        line-height: 1.45;
+      }
+      table.t tr:nth-child(even) td {
+        background: #fcfdfe;
+      }
+      .c {
+        text-align: center !important;
+      }
+      .b {
+        font-weight: bold;
+        color: #2e5496;
+      }
+      .ct {
+        font-size: 9pt;
+        color: #444;
+        text-align: center;
+      }
+      tr {
+        break-inside: avoid;
+      }
+      figure {
+        margin: 6px 0 14px;
+        break-inside: avoid;
+      }
+      figcaption {
+        font-size: 9.5pt;
+        font-weight: bold;
+        color: #2e5496;
+        margin: 0 0 4px;
+      }
+
+      /* ── MÓDULOS ── */
+      .mod {
+        margin-bottom: 18px;
+      }
+      .mod-h {
+        background: #2e5496;
+        color: #fff;
+        padding: 6px 10px;
+        font-weight: bold;
+        font-size: 10.5pt;
+        border-radius: 2px 2px 0 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .mod table.t {
+        border: 1px solid #2e5496;
+        border-top: none;
+      }
+      .mod table.t th {
+        background: #f2f4f8;
+        color: #000;
+        border: 1px solid #d0d7de;
+        border-bottom: 2px solid #2e5496;
+      }
+
+      /* ── ENTREGA FINAL (verde) ── */
+      .fin .capacidades-header,
+      .fin .mod-h {
+        background: #1b7e36;
+      }
+      .fin.capacidades-content,
+      .fin .capacidades-content {
+        border-color: #1b7e36;
+      }
+      .fin .b {
+        color: #1b7e36;
+      }
+      .fin table.t th {
+        background: #1b7e36;
+        border-color: #1b7e36;
+      }
+      .fin.mod table.t {
+        border-color: #1b7e36;
+      }
+      .fin.mod table.t th {
+        background: #f2f8f4;
+        color: #000;
+        border: 1px solid #d0d7de;
+        border-bottom: 2px solid #1b7e36;
+      }
+      .fin .aviso {
+        border-left-color: #1b7e36;
+        background: #f2f8f4;
+      }
+      .fin-txt {
+        color: #1b7e36 !important;
+      }
+
+      /* ── LISTA DE VERIFICAÇÃO ── */
+      table.v td.g {
+        border-top: 2px solid #8a9bb8;
+      }
+      .fin table.v td.g {
+        border-top: 2px solid #7fb48f;
+      }
+      table.v td.cap {
+        font-size: 9.5pt;
+        background: #fcfdfe;
+      }
+      .chk {
+        text-align: center !important;
+        font-size: 14pt;
+        color: #555;
+        width: 7%;
+      }
+
+      /* ── DIAGRAMA ── */
+      .d-zone {
+        fill: #f8fafd;
+        stroke: #2e5496;
+        stroke-width: 1.3;
+        stroke-dasharray: 6 4;
+      }
+      .d-box {
+        fill: #fff;
+        stroke: #000;
+        stroke-width: 1.3;
+      }
+      .d-box2 {
+        fill: #efefef;
+        stroke: #666;
+        stroke-width: 1.2;
+      }
+      .d-fin {
+        fill: #e8f4ec;
+        stroke: #1b7e36;
+        stroke-width: 1.5;
+      }
+      .d-l {
+        stroke: #2e5496;
+        stroke-width: 1.4;
+        fill: none;
+      }
+      .d-n {
+        font:
+          bold 11px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #000;
+      }
+      .d-s {
+        font:
+          9.5px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #444;
+      }
+      .d-z {
+        font:
+          bold 10px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #2e5496;
+      }
+      .d-tag {
+        fill: #2e5496;
+      }
+      .d-tagt {
+        font:
+          bold 8.5px Arial,
+          Helvetica,
+          sans-serif;
+        fill: #fff;
+      }
+
+      @media print {
+        body {
+          background: #fff;
+        }
+        .page {
+          margin: 0;
+          padding: 12mm 14mm;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- ══════════════ CABEÇALHO ══════════════ -->
+      <table class="header-table">
+        <tr>
+          <td class="logo-cell" rowspan="7">
+            <div class="senai-brand">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_sfpOEDmPPoL6K0aQL4qg5SsWL_41ZqhyF7zW1509kA&s=10"
+                alt="Logo SENAI"
+              />
+              <span>Serviço Nacional de Aprendizagem</span>
+            </div>
+          </td>
+          <td class="title-cell">AVALIAÇÃO PRÁTICA - SA</td>
+          <td class="desemp-cell" rowspan="7">Desempenho</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-bold">Data:</span>
+            <span class="fill"></span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-bold">Docente:</span>
+            <span class="fill">Anderson Raulino Dutra</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-bold">Curso Técnico em:</span>
+            <span class="fill">Técnico em Desenvolvimento de Sistemas</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-bold">Unidade Curricular:</span>
+            <span class="fill">Projeto de Backend</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-bold">Turma:</span>
+            <span class="fill">T TIIN 2025/1 M2- 463013</span>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Profissional / Equipe:</strong></td>
+        </tr>
+      </table>
+
+      <!-- ══════════════ CAPACIDADES ══════════════ -->
+      <div class="box">
+        <div class="capacidades-header">CAPACIDADES TÉCNICAS</div>
+        <div class="capacidades-content">
+          <p>
+            <strong>CT1:</strong> Validar sistema para web em ambiente de
+            produção.
+          </p>
+          <p>
+            <strong>CT2:</strong> Seguir as especificações e recomendações para
+            integração dos sistemas web.
+          </p>
+          <p>
+            <strong>CT3:</strong> Planejar rotinas de verificações dos sistemas
+            web.
+          </p>
+          <p>
+            <strong>CT4:</strong> Planejar roadmap de atualização do sistema web
+            de acordo com escopo e necessidades do projeto
+          </p>
+          <p>
+            <strong>CT5:</strong> Executar testes de acordo com o plano
+            proposto.
+          </p>
+          <p>
+            <strong>CT6:</strong> Executar manutenções de acordo com o plano do
+            projeto
+          </p>
+          <p>
+            <strong>CT7:</strong> Documentar o processo de implantação de
+            sistema para web.
+          </p>
+          <p><strong>CT8:</strong> Aplicar técnicas de modelagem de dados.</p>
+          <p>
+            <strong>CT9:</strong> Aplicar rotinas de verificações dos sistemas
+            web.
+          </p>
+          <p>
+            <strong>CT10:</strong> Aplicar boas práticas de implantação de
+            sistemas para web, considerando o escopo do projeto.
+          </p>
+          <p>
+            <strong>CT11:</strong> Aplicar atualizações de sistema de acordo com
+            escopo e necessidades do projeto
+          </p>
+          <p>
+            <strong>CT12:</strong> Aplicar as boas práticas dos padrões de
+            protocolos de comunicação em sistemas web
+          </p>
+          <p>
+            <strong>CT13:</strong> Elaborar plano de implantação de sistemas
+            para web
+          </p>
+          <p>
+            <strong>CT14:</strong> Executar planos de implantação de sistemas
+            para web.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-divider">
+        <div class="section-title">
+          SITUAÇÃO PROFISSIONAL <br />
+          PORTAL B2B DE E-COMMERCE E INTEGRAÇÃO LOGÍSTICA INDUSTRIAL
+        </div>
+      </div>
+
+      <!-- ══════════════ CONTEXTUALIZAÇÃO ══════════════ -->
+      <div class="box">
+        <div class="capacidades-header">CONTEXTUALIZAÇÃO</div>
+        <div class="capacidades-content cc">
+          <p style="margin-bottom: 10px">
+            A indústria possui um
+            <strong>Portal Comercial B2B</strong> destinado ao gerenciamento de
+            <strong>pedidos de compras</strong> e <strong>inventários</strong>.
+            Para disponibilizar o sistema em produção, é necessário definir as
+            configurações da aplicação e da infraestrutura, estabelecer uma
+            estratégia de implantação, aplicar boas práticas de segurança e
+            garantir que o ambiente esteja preparado para sua operação.
+          </p>
+        </div>
+      </div>
+
+      <!-- ══════════════ DESAFIO ══════════════ -->
+      <div class="box">
+        <div class="capacidades-header">DESAFIO</div>
+        <div class="capacidades-content cc">
+          <p style="margin-bottom: 10px">
+            A equipe deverá <strong>analisar a arquitetura</strong> do Portal
+            Comercial B2B,
+            <strong
+              >definir e aplicar suas configurações e parametrizações</strong
+            >
+            e
+            <strong
+              >elaborar um plano para sua implantação em ambiente de
+              produção</strong
+            >. O plano deverá contemplar a preparação do ambiente, instalação e
+            configuração dos componentes, segurança da infraestrutura, migração
+            de dados quando necessária, execução da implantação, validação do
+            sistema e procedimentos para tratamento de falhas.
+          </p>
+          <p>
+            Ao final, a equipe deverá
+            <strong>comprovar o funcionamento do sistema em produção</strong> e
+            <strong>documentar todo o processo de implantação</strong>.
+          </p>
+        </div>
+      </div>
+
+      <!-- ══════════════ RESULTADOS ESPERADOS ══════════════ -->
+      <div class="box">
+        <div class="capacidades-header">RESULTADOS ESPERADOS</div>
+        <div class="capacidades-content cc">
+          <p>
+            Espera-se obter um Portal Comercial B2B
+            <strong>configurado, implantado e validado</strong> em ambiente de
+            produção simulado, seguindo boas práticas de arquitetura, segurança
+            e implantação. O projeto deverá demonstrar:
+          </p>
+          <ul class="lista">
+            <li>configuração e parametrização adequada do sistema;</li>
+            <li>ambiente de produção preparado e seguro;</li>
+            <li>plano de implantação definido e executado;</li>
+            <li>sistema validado após a implantação;</li>
+            <li>processo de implantação documentado e reproduzível.</li>
+          </ul>
+
+          <div class="sub">Entregas da SA</div>
+          <table class="t">
+            <thead>
+              <tr>
+                <th class="c" style="width: 6%">#</th>
+                <th>Entrega</th>
+                <th class="c" style="width: 24%">Módulo de entrega</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="c"><strong>1</strong></td>
+                <td class="b">Projeto de Arquitetura e Configuração</td>
+                <td class="c">I (base) e II (parametrização)</td>
+              </tr>
+              <tr>
+                <td class="c"><strong>2</strong></td>
+                <td class="b">Plano de Implantação e Cronograma</td>
+                <td class="c">IV</td>
+              </tr>
+              <tr>
+                <td class="c"><strong>3</strong></td>
+                <td class="b">Repositório Versionado do Projeto</td>
+                <td class="c">I, II e IV (evolução contínua)</td>
+              </tr>
+              <tr>
+                <td class="c"><strong>4</strong></td>
+                <td class="b">Configuração de Infraestrutura e Segurança</td>
+                <td class="c">III</td>
+              </tr>
+              <tr>
+                <td class="c"><strong>5</strong></td>
+                <td class="b">
+                  Sistema implantado em ambiente de produção simulado
+                </td>
+                <td class="c">IV</td>
+              </tr>
+              <tr>
+                <td class="c"><strong>6</strong></td>
+                <td class="b">Relatório de Validação da Implantação</td>
+                <td class="c">IV</td>
+              </tr>
+              <tr>
+                <td class="c"><strong>7</strong></td>
+                <td class="b">Deployment Runbook / Dossiê de Implantação</td>
+                <td class="c">IV</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════════ COMANDO / VISÃO GERAL ══════════════ -->
+      <div class="box">
+        <div class="capacidades-header">
+          COMANDO DA SITUAÇÃO DE APRENDIZAGEM
+        </div>
+        <div class="capacidades-content cc">
+          <p style="margin-bottom: 10px">
+            Como <strong>equipe de desenvolvimento e implantação</strong> do
+            Portal Comercial B2B, vocês deverão conduzir o projeto em
+            <strong>3 entregas parciais (Módulos I, II e III)</strong>, que se
+            acumulam e são consolidadas na
+            <strong>Entrega Final (Módulo IV)</strong>. Cada entrega deve ser
+            organizada de forma clara, profissional e rastreável, com evidências
+            numeradas e legíveis.
+          </p>
+
+          <div class="sub">Visão Geral das Entregas</div>
+          <table class="t">
+            <thead>
+              <tr>
+                <th class="c" style="width: 9%">Módulo</th>
+                <th style="width: 20%">Entrega</th>
+                <th>Composição</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="c"><strong>I</strong></td>
+                <td class="b">Entrega Parcial 1</td>
+                <td>
+                  Projeto de Arquitetura e Configuração + Modelagem de Dados +
+                  Backlog e Roadmap de Atualização + Repositório Versionado
+                  (estrutura e governança de código)
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>II</strong></td>
+                <td class="b">Entrega Parcial 2</td>
+                <td>
+                  Repositório com o core do Portal + Parametrização por ambiente
+                  + Comunicação HTTP/REST e integração logística simulada +
+                  Atualização aplicada + Empacotamento reproduzível
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>III</strong></td>
+                <td class="b">Entrega Parcial 3</td>
+                <td>
+                  Plano de Verificações e Testes + Execução de testes e rotinas
+                  de verificação + Configuração de Infraestrutura e Segurança +
+                  Registro de manutenções
+                </td>
+              </tr>
+              <tr>
+                <td class="c"><strong>IV</strong></td>
+                <td class="b fin-txt">Entrega Final</td>
+                <td>
+                  Plano de Implantação e Cronograma + Sistema implantado em
+                  ambiente de produção simulado + Relatório de Validação da
+                  Implantação + Deployment Runbook / Dossiê de Implantação
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════════ ARQUITETURA DE REFERÊNCIA ══════════════ -->
+      <div class="box">
+        <div class="capacidades-header">
+          ARQUITETURA DE REFERÊNCIA DO AMBIENTE
+        </div>
+        <div class="capacidades-content cc">
+          <p style="margin-bottom: 10px">
+            O diagrama abaixo é de <strong>baixa fidelidade</strong>: indica os
+            blocos e o fluxo esperados entre o repositório, o pipeline de
+            implantação e o ambiente de produção simulado. A equipe define e
+            justifica as tecnologias de cada bloco. As etiquetas em azul (ex.:
+            <span
+              style="
+                background: #2e5496;
+                color: #fff;
+                font-size: 8pt;
+                font-weight: bold;
+                padding: 1px 4px;
+                border-radius: 2px;
+              "
+              >M3</span
+            >) indicam o módulo em que o bloco é tratado.
+          </p>
+          <figure>
+            <figcaption>
+              Diagrama 1 — Ambiente de produção simulado e fluxo de implantação
+            </figcaption>
+            <svg
+              viewBox="0 0 840 370"
+              width="100%"
+              role="img"
+              aria-label="Diagrama do ambiente: cliente B2B, proxy reverso com HTTPS, aplicação, banco de dados e sistema logístico simulado, e o pipeline de implantação do repositório à produção"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <marker
+                  id="ar"
+                  markerWidth="8"
+                  markerHeight="8"
+                  refX="7"
+                  refY="4"
+                  orient="auto"
+                >
+                  <path d="M0,0 L8,4 L0,8 z" fill="#2e5496" />
+                </marker>
+              </defs>
+
+              <rect
+                class="d-zone"
+                x="230"
+                y="20"
+                width="590"
+                height="250"
+                rx="4"
+              />
+              <text class="d-z" x="244" y="38">
+                AMBIENTE DE PRODUÇÃO SIMULADO
+              </text>
+
+              <rect
+                class="d-box2"
+                x="20"
+                y="100"
+                width="150"
+                height="60"
+                rx="3"
+              />
+              <text class="d-n" x="95" y="127" text-anchor="middle">
+                Cliente B2B
+              </text>
+              <text class="d-s" x="95" y="143" text-anchor="middle">
+                navegador / sistema do cliente
+              </text>
+
+              <rect class="d-box" x="260" y="100" width="140" height="60" />
+              <text class="d-n" x="330" y="127" text-anchor="middle">
+                Proxy reverso
+              </text>
+              <text class="d-s" x="330" y="143" text-anchor="middle">
+                HTTPS · só portas necessárias
+              </text>
+
+              <rect class="d-box" x="450" y="100" width="140" height="60" />
+              <text class="d-n" x="520" y="127" text-anchor="middle">
+                Portal B2B (API)
+              </text>
+              <text class="d-s" x="520" y="143" text-anchor="middle">
+                pedidos · inventário · login
+              </text>
+
+              <rect class="d-box" x="650" y="56" width="140" height="60" />
+              <text class="d-n" x="720" y="83" text-anchor="middle">
+                Banco de dados
+              </text>
+              <text class="d-s" x="720" y="99" text-anchor="middle">
+                usuário de privilégios mínimos
+              </text>
+
+              <rect class="d-box2" x="650" y="170" width="140" height="60" />
+              <text class="d-n" x="720" y="197" text-anchor="middle">
+                Sistema logístico
+              </text>
+              <text class="d-s" x="720" y="213" text-anchor="middle">
+                integração simulada
+              </text>
+
+              <line
+                class="d-l"
+                x1="170"
+                y1="130"
+                x2="258"
+                y2="130"
+                marker-end="url(#ar)"
+              />
+              <text class="d-s" x="214" y="122" text-anchor="middle">
+                HTTPS
+              </text>
+              <line
+                class="d-l"
+                x1="400"
+                y1="130"
+                x2="448"
+                y2="130"
+                marker-end="url(#ar)"
+              />
+              <text class="d-s" x="424" y="122" text-anchor="middle">HTTP</text>
+              <line
+                class="d-l"
+                x1="590"
+                y1="112"
+                x2="648"
+                y2="92"
+                marker-end="url(#ar)"
+              />
+              <text class="d-s" x="618" y="86" text-anchor="middle">SQL</text>
+              <line
+                class="d-l"
+                x1="590"
+                y1="148"
+                x2="648"
+                y2="190"
+                marker-end="url(#ar)"
+              />
+              <text class="d-s" x="624" y="182" text-anchor="middle">
+                REST/JSON
+              </text>
+
+              <text class="d-n" x="20" y="288">PIPELINE DE IMPLANTAÇÃO</text>
+
+              <rect
+                class="d-box2"
+                x="20"
+                y="300"
+                width="150"
+                height="50"
+                rx="3"
+              />
+              <text class="d-n" x="95" y="322" text-anchor="middle">
+                Repositório Git
+              </text>
+              <text class="d-s" x="95" y="337" text-anchor="middle">
+                branches · tags
+              </text>
+
+              <rect
+                class="d-box2"
+                x="230"
+                y="300"
+                width="150"
+                height="50"
+                rx="3"
+              />
+              <text class="d-n" x="305" y="322" text-anchor="middle">
+                Build e empacotamento
+              </text>
+              <text class="d-s" x="305" y="337" text-anchor="middle">
+                scripts / containers
+              </text>
+
+              <rect
+                class="d-box2"
+                x="440"
+                y="300"
+                width="150"
+                height="50"
+                rx="3"
+              />
+              <text class="d-n" x="515" y="322" text-anchor="middle">
+                Testes e homologação
+              </text>
+              <text class="d-s" x="515" y="337" text-anchor="middle">
+                plano de testes
+              </text>
+
+              <rect
+                class="d-fin"
+                x="650"
+                y="300"
+                width="150"
+                height="50"
+                rx="3"
+              />
+              <text class="d-n" x="725" y="322" text-anchor="middle">
+                Implantação
+              </text>
+              <text class="d-s" x="725" y="337" text-anchor="middle">
+                produção simulado
+              </text>
+
+              <line
+                class="d-l"
+                x1="170"
+                y1="325"
+                x2="228"
+                y2="325"
+                marker-end="url(#ar)"
+              />
+              <line
+                class="d-l"
+                x1="380"
+                y1="325"
+                x2="438"
+                y2="325"
+                marker-end="url(#ar)"
+              />
+              <line
+                class="d-l"
+                x1="590"
+                y1="325"
+                x2="648"
+                y2="325"
+                marker-end="url(#ar)"
+              />
+              <line
+                class="d-l"
+                x1="725"
+                y1="300"
+                x2="725"
+                y2="272"
+                marker-end="url(#ar)"
+              />
+
+              <rect
+                class="d-tag"
+                x="226"
+                y="104"
+                width="22"
+                height="13"
+                rx="2"
+              />
+              <text class="d-tagt" x="237" y="113.5" text-anchor="middle">
+                M3
+              </text>
+              <rect
+                class="d-tag"
+                x="436"
+                y="82"
+                width="22"
+                height="13"
+                rx="2"
+              />
+              <text class="d-tagt" x="447" y="91.5" text-anchor="middle">
+                M2
+              </text>
+              <rect
+                class="d-tag"
+                x="636"
+                y="38"
+                width="22"
+                height="13"
+                rx="2"
+              />
+              <text class="d-tagt" x="647" y="47.5" text-anchor="middle">
+                M1
+              </text>
+              <rect class="d-tag" x="6" y="304" width="22" height="13" rx="2" />
+              <text class="d-tagt" x="17" y="313.5" text-anchor="middle">
+                M1
+              </text>
+              <rect
+                class="d-tag"
+                x="216"
+                y="304"
+                width="22"
+                height="13"
+                rx="2"
+              />
+              <text class="d-tagt" x="227" y="313.5" text-anchor="middle">
+                M2
+              </text>
+              <rect
+                class="d-tag"
+                x="426"
+                y="304"
+                width="22"
+                height="13"
+                rx="2"
+              />
+              <text class="d-tagt" x="437" y="313.5" text-anchor="middle">
+                M3
+              </text>
+              <rect
+                class="d-tag"
+                x="636"
+                y="304"
+                width="22"
+                height="13"
+                rx="2"
+              />
+              <text class="d-tagt" x="647" y="313.5" text-anchor="middle">
+                M4
+              </text>
+            </svg>
+          </figure>
+        </div>
+      </div>
+
+      <!-- ══════════════ DESAFIO: REQUISITOS POR MÓDULO ══════════════ -->
+      <div class="box">
+        <div class="capacidades-header">
+          DESAFIO — REQUISITOS DE ENTREGA POR MÓDULO
+        </div>
+        <div class="capacidades-content cc">
+          <p style="margin-bottom: 14px">
+            O <strong>Portal Comercial B2B</strong> será construído e implantado
+            de forma progressiva. A seguir, a distribuição dos artefatos
+            exigidos em cada módulo de entrega. A coluna
+            <strong>CT</strong> indica a capacidade avaliada no item.
+          </p>
+
+          <!-- MÓDULO I -->
+          <div class="mod">
+            <div class="mod-h">
+              MÓDULO I — Entrega Parcial 1: Planejamento Ágil, Arquitetura e
+              Governança de Código
+            </div>
+            <table class="t">
+              <thead>
+                <tr>
+                  <th class="c" style="width: 9%">Seção</th>
+                  <th style="width: 24%">Entregável</th>
+                  <th>Requisitos</th>
+                  <th class="c" style="width: 9%">CT</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="c"><strong>01</strong></td>
+                  <td class="b">Projeto de Arquitetura e Configuração</td>
+                  <td>
+                    • Descrever a arquitetura do Portal em camadas, com os
+                    componentes, o fluxo de pedidos e inventário e os pontos de
+                    integração com a logística industrial.<br />
+                    • Registrar as especificações de integração (sistemas
+                    envolvidos, formatos e contratos) e as decisões técnicas
+                    justificadas (tecnologias e ambientes).<br />
+                    • Listar as parametrizações previstas por ambiente.
+                  </td>
+                  <td class="ct">CT2</td>
+                </tr>
+                <tr>
+                  <td class="c"><strong>02</strong></td>
+                  <td class="b">Modelagem de Dados</td>
+                  <td>
+                    • Elaborar o modelo conceitual (MER/DER) de pedidos, itens,
+                    clientes B2B, produtos e inventário.<br />
+                    • Traduzir para o modelo lógico relacional (PK, FK, tipos),
+                    normalizado até a 3FN, com dicionário de dados.
+                  </td>
+                  <td class="ct">CT8</td>
+                </tr>
+                <tr>
+                  <td class="c"><strong>03</strong></td>
+                  <td class="b">Backlog e Roadmap de Atualização</td>
+                  <td>
+                    • Construir o backlog priorizado do Portal.<br />
+                    • Definir o roadmap de releases e atualizações, com marcos,
+                    versionamento, riscos e dependências.
+                  </td>
+                  <td class="ct">CT4</td>
+                </tr>
+                <tr>
+                  <td class="c"><strong>04</strong></td>
+                  <td class="b">Repositório Versionado (estrutura)</td>
+                  <td>
+                    • Criar o repositório com estrutura de pastas, README,
+                    <code>.gitignore</code>, estratégia de branches e convenção
+                    de commits.<br />
+                    • Registrar commits iniciais de todos os integrantes.
+                  </td>
+                  <td class="ct">CT2</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- MÓDULO II -->
+          <div class="mod">
+            <div class="mod-h">
+              MÓDULO II — Entrega Parcial 2: Parametrização, Frameworks e
+              Construção do Core
+            </div>
+            <table class="t">
+              <thead>
+                <tr>
+                  <th class="c" style="width: 9%">Seção</th>
+                  <th style="width: 24%">Entregável</th>
+                  <th>Requisitos</th>
+                  <th class="c" style="width: 9%">CT</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="c"><strong>05</strong></td>
+                  <td class="b">Parametrização por Ambiente</td>
+                  <td>
+                    • Separar as configurações de desenvolvimento, homologação e
+                    produção por variáveis de ambiente ou arquivos de
+                    configuração.<br />
+                    • Manter credenciais e chaves fora do repositório e fornecer
+                    um arquivo de exemplo (<code>.env.example</code>).
+                  </td>
+                  <td class="ct">CT10</td>
+                </tr>
+                <tr>
+                  <td class="c"><strong>06</strong></td>
+                  <td class="b">Core do Portal</td>
+                  <td>
+                    • Implementar, com o framework escolhido, o núcleo do
+                    Portal: autenticação, cadastro e consulta de produtos e
+                    inventário, criação e acompanhamento de pedidos de compra.
+                  </td>
+                  <td class="ct">CT12</td>
+                </tr>
+                <tr>
+                  <td class="c"><strong>07</strong></td>
+                  <td class="b">Protocolos e Integração Logística</td>
+                  <td>
+                    • Usar HTTP/HTTPS com os métodos e códigos de status
+                    adequados e respostas padronizadas em JSON.<br />
+                    • Restringir origens e métodos (CORS) e não expor dados
+                    sensíveis na URL.<br />
+                    • Implementar a integração logística simulada (ex.:
+                    expedição e rastreio) conforme o contrato definido no Módulo
+                    I.
+                  </td>
+                  <td class="ct">CT12</td>
+                </tr>
+                <tr>
+                  <td class="c"><strong>08</strong></td>
+                  <td class="b">Atualização Controlada</td>
+                  <td>
+                    • Aplicar ao menos uma atualização prevista no roadmap
+                    (funcional, de dependências ou de estrutura de dados), sem
+                    perda de dados.<br />
+                    • Registrar branch, <em>tag</em> de release e changelog.
+                  </td>
+                  <td class="ct">CT11</td>
+                </tr>
+                <tr>
+                  <td class="c"><strong>09</strong></td>
+                  <td class="b">Empacotamento Reproduzível</td>
+                  <td>
+                    • Entregar scripts ou containers de build e execução, com
+                    dependências e versões declaradas, que permitam subir o
+                    Portal em outra máquina.
+                  </td>
+                  <td class="ct">CT10</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- MÓDULO III -->
+          <div class="mod">
+            <div class="mod-h">
+              MÓDULO III — Entrega Parcial 3: Engenharia de Testes, Resolução de
+              Problemas e Segurança
+            </div>
+            <table class="t">
+              <thead>
+                <tr>
+                  <th class="c" style="width: 9%">Seção</th>
+                  <th style="width: 24%">Entregável</th>
+                  <th>Requisitos</th>
+                  <th class="c" style="width: 9%">CT</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="c"><strong>10</strong></td>
+                  <td class="b">Plano de Verificações e Testes</td>
+                  <td>
+                    • Definir as rotinas de verificação (disponibilidade, logs,
+                    banco, integração, backup), a periodicidade, os responsáveis
+                    e a forma de registro.<br />
+                    • Elaborar o plano de testes com cenários positivos e
+                    negativos, resultado esperado e critério de aceite.
+                  </td>
+                  <td class="ct">CT3</td>
+                </tr>
+                <tr>
+                  <td class="c"><strong>11</strong></td>
+                  <td class="b">Execução de Testes</td>
+                  <td>
+                    • Executar o plano: testes funcionais, de API e de
+                    integração, conferindo também a persistência no banco.<br />
+                    • Registrar resultado esperado x obtido, falhas e reteste.
+                  </td>
+                  <td class="ct">CT5</td>
+                </tr>
+                <tr>
+                  <td class="c"><strong>12</strong></td>
+                  <td class="b">Rotinas de Verificação Aplicadas</td>
+                  <td>
+                    • Executar as rotinas planejadas (verificação de
+                    disponibilidade, leitura de logs, integridade do banco) e
+                    registrar as evidências datadas.
+                  </td>
+                  <td class="ct">CT9</td>
+                </tr>
+                <tr>
+                  <td class="c"><strong>13</strong></td>
+                  <td class="b">
+                    Configuração de Infraestrutura, Segurança e Manutenção
+                  </td>
+                  <td>
+                    • Configurar a infraestrutura com boas práticas: apenas
+                    serviços e portas necessários, banco com usuário de
+                    privilégios mínimos, HTTPS e backup do banco.<br />
+                    • Aplicar a segurança da aplicação: validação de entradas,
+                    consultas parametrizadas, senhas protegidas, autenticação e
+                    autorização por perfil.<br />
+                    • Registrar os problemas encontrados, as correções e as
+                    manutenções executadas conforme o plano.
+                  </td>
+                  <td class="ct">CT6</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- MÓDULO IV -->
+          <div class="mod fin">
+            <div class="mod-h">
+              MÓDULO IV — Entrega Final: Plano de Implantação, DevOps,
+              Homologação e Documentação
+            </div>
+            <table class="t">
+              <thead>
+                <tr>
+                  <th class="c" style="width: 9%">Seção</th>
+                  <th style="width: 24%">Entregável</th>
+                  <th>Requisitos</th>
+                  <th class="c" style="width: 9%">CT</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="c"><strong>14</strong></td>
+                  <td class="b">Plano de Implantação e Cronograma</td>
+                  <td>
+                    • Contemplar: preparação do ambiente, instalação e
+                    configuração dos componentes, segurança da infraestrutura,
+                    migração de dados quando necessária, execução, validação e
+                    tratamento de falhas.<br />
+                    • Definir cronograma, responsáveis, janela de implantação,
+                    riscos e critérios de interrupção e de retorno
+                    (<em>rollback</em>).
+                  </td>
+                  <td class="ct">CT13</td>
+                </tr>
+                <tr>
+                  <td class="c"><strong>15</strong></td>
+                  <td class="b">Implantação em Produção Simulado</td>
+                  <td>
+                    • Executar o plano na ordem prevista, em ambiente distinto
+                    do de desenvolvimento.<br />
+                    • Realizar a migração dos dados e conferir a integridade.<br />
+                    • Deixar o Portal acessível e demonstrar seu funcionamento,
+                    registrando os desvios do plano e seu tratamento.
+                  </td>
+                  <td class="ct">CT14</td>
+                </tr>
+                <tr>
+                  <td class="c"><strong>16</strong></td>
+                  <td class="b">Relatório de Validação da Implantação</td>
+                  <td>
+                    • Executar o checklist pós-implantação (fluxos críticos,
+                    integração, banco) com evidências numeradas.<br />
+                    • Comparar o esperado com o obtido, testar o procedimento de
+                    falha (retorno à versão anterior ou restauração) e emitir o
+                    parecer de aceite.
+                  </td>
+                  <td class="ct">CT1</td>
+                </tr>
+                <tr>
+                  <td class="c"><strong>17</strong></td>
+                  <td class="b">Deployment Runbook / Dossiê de Implantação</td>
+                  <td>
+                    • Consolidar: pré-requisitos, passo a passo com comandos,
+                    configurações, versões, resolução de problemas e
+                    <em>rollback</em>.<br />
+                    • Garantir que a implantação seja reproduzível por outra
+                    equipe usando somente o documento.
+                  </td>
+                  <td class="ct">CT7</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="aviso">
+            <strong>Formato de entrega</strong><br />
+            • Cada módulo é entregue em <strong>PDF</strong> com as evidências
+            numeradas e legíveis, acompanhado do
+            <strong>link do repositório versionado</strong> no estado da
+            entrega.<br />
+            • As entregas são <strong>cumulativas</strong>: o repositório e os
+            documentos evoluem a cada módulo; a Entrega Final consolida tudo.<br />
+            • O <strong>ambiente de produção simulado</strong> (máquina virtual,
+            containers ou servidor disponibilizado) deve ser distinto do
+            ambiente de desenvolvimento.<br />
+            • Evidências ilegíveis, comandos que não reproduzem o resultado
+            apresentado ou credenciais expostas no repositório serão
+            consideradas falhas de entrega.
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ LISTAS DE VERIFICAÇÃO ══════════════ -->
+
+      <!-- MÓDULO I -->
+      <!-- <div class="box">
+        <div class="capacidades-header">
+          LISTA DE VERIFICAÇÃO — CRITÉRIOS DE AVALIAÇÃO (MÓDULO I)
+        </div>
+        <div class="capacidades-content" style="padding: 0">
+          <table class="t v">
+            <thead>
+              <tr>
+                <th style="width: 40%">Critério de Avaliação</th>
+                <th style="width: 27%">Capacidade Avaliada</th>
+                <th class="c">Atingiu</th>
+                <th class="c">Parcialmente</th>
+                <th class="c">Não Atingiu</th>
+                <th class="c">Obs.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="g">
+                  Elaborou o modelo conceitual (MER/DER) do Portal,
+                  identificando entidades, atributos, identificadores e
+                  cardinalidades de pedidos, itens, clientes B2B, produtos e
+                  inventário.
+                </td>
+                <td class="cap g" rowspan="3">
+                  <strong>Técnica (CT8):</strong> Aplicar técnicas de modelagem
+                  de dados.
+                </td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="g"></td>
+              </tr>
+              <tr>
+                <td>
+                  Traduziu o modelo conceitual para o modelo lógico relacional,
+                  com chaves primárias e estrangeiras e tipos de dados
+                  adequados.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Aplicou a normalização até a 3FN, eliminando redundâncias, e
+                  construiu um dicionário de dados coerente com o modelo.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="g">
+                  Estruturou um backlog priorizado, com itens vinculados ao
+                  escopo e às necessidades do Portal.
+                </td>
+                <td class="cap g" rowspan="3">
+                  <strong>Técnica (CT4):</strong> Planejar roadmap de
+                  atualização do sistema web de acordo com escopo e necessidades
+                  do projeto
+                </td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="g"></td>
+              </tr>
+              <tr>
+                <td>
+                  Definiu o roadmap de releases e atualizações com marcos,
+                  esquema de versionamento e critérios de liberação.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Identificou riscos e dependências das atualizações (impacto no
+                  banco, nas integrações e nas janelas de manutenção).
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="g">
+                  Levantou e documentou as especificações de integração do
+                  Portal com a logística industrial (sistemas envolvidos,
+                  formatos e contratos de API).
+                </td>
+                <td class="cap g" rowspan="3">
+                  <strong>Técnica (CT2):</strong> Seguir as especificações e
+                  recomendações para integração dos sistemas web.
+                </td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="g"></td>
+              </tr>
+              <tr>
+                <td>
+                  Desenhou a arquitetura em camadas, indicando o fluxo de dados
+                  e os pontos de integração conforme as recomendações da
+                  documentação das tecnologias adotadas.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Organizou o repositório versionado com estrutura de pastas,
+                  README, estratégia de branches e convenção de commits.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div> -->
+
+      <!-- MÓDULO II -->
+      <!-- <div class="box">
+        <div class="capacidades-header">
+          LISTA DE VERIFICAÇÃO — CRITÉRIOS DE AVALIAÇÃO (MÓDULO II)
+        </div>
+        <div class="capacidades-content" style="padding: 0">
+          <table class="t v">
+            <thead>
+              <tr>
+                <th style="width: 40%">Critério de Avaliação</th>
+                <th style="width: 27%">Capacidade Avaliada</th>
+                <th class="c">Atingiu</th>
+                <th class="c">Parcialmente</th>
+                <th class="c">Não Atingiu</th>
+                <th class="c">Obs.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="g">
+                  Implementou a comunicação cliente-servidor por HTTP/HTTPS com
+                  os métodos (GET, POST, PUT, DELETE) e os códigos de status
+                  adequados a cada operação.
+                </td>
+                <td class="cap g" rowspan="3">
+                  <strong>Técnica (CT12):</strong> Aplicar as boas práticas dos
+                  padrões de protocolos de comunicação em sistemas web
+                </td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="g"></td>
+              </tr>
+              <tr>
+                <td>
+                  Padronizou as requisições e respostas (JSON, cabeçalhos e
+                  mensagens de erro), sem expor dados sensíveis na URL.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Restringiu origens e métodos permitidos (CORS) e implementou a
+                  integração logística simulada conforme o contrato definido.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="g">
+                  Aplicou ao menos uma atualização prevista no roadmap sem
+                  comprometer as funcionalidades já existentes.
+                </td>
+                <td class="cap g" rowspan="3">
+                  <strong>Técnica (CT11):</strong> Aplicar atualizações de
+                  sistema de acordo com escopo e necessidades do projeto
+                </td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="g"></td>
+              </tr>
+              <tr>
+                <td>
+                  Versionou a atualização com branch, <em>tag</em> de release e
+                  changelog.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Executou a alteração de estrutura de dados de forma
+                  controlada, preservando a integridade dos dados existentes.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="g">
+                  Separou as configurações por ambiente (desenvolvimento,
+                  homologação e produção) usando variáveis de ambiente ou
+                  arquivos de configuração.
+                </td>
+                <td class="cap g" rowspan="3">
+                  <strong>Técnica (CT10):</strong> Aplicar boas práticas de
+                  implantação de sistemas para web, considerando o escopo do
+                  projeto.
+                </td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="g"></td>
+              </tr>
+              <tr>
+                <td>
+                  Manteve credenciais e chaves fora do repositório, fornecendo
+                  arquivo de exemplo de configuração.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Tornou o build e a execução reproduzíveis por scripts ou
+                  containers, com dependências e versões declaradas.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div> -->
+
+      <!-- MÓDULO III -->
+      <!-- <div class="box">
+        <div class="capacidades-header">
+          LISTA DE VERIFICAÇÃO — CRITÉRIOS DE AVALIAÇÃO (MÓDULO III)
+        </div>
+        <div class="capacidades-content" style="padding: 0">
+          <table class="t v">
+            <thead>
+              <tr>
+                <th style="width: 40%">Critério de Avaliação</th>
+                <th style="width: 27%">Capacidade Avaliada</th>
+                <th class="c">Atingiu</th>
+                <th class="c">Parcialmente</th>
+                <th class="c">Não Atingiu</th>
+                <th class="c">Obs.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="g">
+                  Definiu as rotinas de verificação do sistema (disponibilidade,
+                  logs, banco, integração e backup) e a periodicidade de cada
+                  uma.
+                </td>
+                <td class="cap g" rowspan="3">
+                  <strong>Técnica (CT3):</strong> Planejar rotinas de
+                  verificações dos sistemas web.
+                </td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="g"></td>
+              </tr>
+              <tr>
+                <td>
+                  Elaborou o plano de testes com cenários positivos e negativos,
+                  resultado esperado e critério de aceite.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Definiu responsáveis, ferramentas ou comandos e a forma de
+                  registro de cada verificação.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="g">
+                  Verificou a disponibilidade da aplicação e dos serviços dos
+                  quais ela depende.
+                </td>
+                <td class="cap g" rowspan="3">
+                  <strong>Técnica (CT9):</strong> Aplicar rotinas de
+                  verificações dos sistemas web.
+                </td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="g"></td>
+              </tr>
+              <tr>
+                <td>
+                  Analisou os logs e a integridade do banco de dados,
+                  identificando anomalias.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Registrou cada verificação com evidências datadas e as
+                  comparou com o que foi planejado.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="g">
+                  Executou os testes funcionais dos fluxos principais (login,
+                  pedido de compra, inventário), positivos e negativos, conforme
+                  o plano.
+                </td>
+                <td class="cap g" rowspan="3">
+                  <strong>Técnica (CT5):</strong> Executar testes de acordo com
+                  o plano proposto.
+                </td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="g"></td>
+              </tr>
+              <tr>
+                <td>
+                  Executou testes de API e de integração, conferindo códigos de
+                  status, formatos de resposta e persistência no banco.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Registrou o resultado esperado x obtido, as falhas encontradas
+                  e o reteste após cada correção.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="g">
+                  Registrou e priorizou os problemas encontrados, indicando
+                  causa e ação corretiva.
+                </td>
+                <td class="cap g" rowspan="3">
+                  <strong>Técnica (CT6):</strong> Executar manutenções de acordo
+                  com o plano do projeto
+                </td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="g"></td>
+              </tr>
+              <tr>
+                <td>
+                  Executou as manutenções corretivas e preventivas previstas no
+                  plano (correções, atualização de dependências, backup do
+                  banco) preservando uma versão estável.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Corrigiu vulnerabilidades e configurou a segurança da
+                  infraestrutura e da aplicação (portas e serviços necessários,
+                  banco com privilégios mínimos, HTTPS, validação de entradas,
+                  consultas parametrizadas, senhas protegidas).
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div> -->
+
+      <!-- MÓDULO IV -->
+      <!-- <div class="box fin">
+        <div class="capacidades-header">
+          LISTA DE VERIFICAÇÃO — CRITÉRIOS DE AVALIAÇÃO (MÓDULO IV - ENTREGA
+          FINAL)
+        </div>
+        <div class="capacidades-content" style="padding: 0">
+          <table class="t v">
+            <thead>
+              <tr>
+                <th style="width: 40%">Critério de Avaliação</th>
+                <th style="width: 27%">Capacidade Avaliada</th>
+                <th class="c">Atingiu</th>
+                <th class="c">Parcialmente</th>
+                <th class="c">Não Atingiu</th>
+                <th class="c">Obs.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="g">
+                  Elaborou o plano contemplando preparação do ambiente,
+                  instalação e configuração dos componentes, segurança da
+                  infraestrutura, migração de dados, execução e validação.
+                </td>
+                <td class="cap g" rowspan="3">
+                  <strong>Técnica (CT13):</strong> Elaborar plano de implantação
+                  de sistemas para web
+                </td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="g"></td>
+              </tr>
+              <tr>
+                <td>
+                  Definiu o cronograma com etapas, responsáveis, durações e
+                  janela de implantação.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Definiu os procedimentos de tratamento de falhas: riscos,
+                  critérios de interrupção, <em>rollback</em> e contingência.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="g">
+                  Executou o plano na ordem prevista, preparando o ambiente e
+                  instalando e configurando os componentes.
+                </td>
+                <td class="cap g" rowspan="3">
+                  <strong>Técnica (CT14):</strong> Executar planos de
+                  implantação de sistemas para web.
+                </td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="g"></td>
+              </tr>
+              <tr>
+                <td>
+                  Realizou a migração ou carga dos dados necessários e conferiu
+                  a integridade após a execução.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Deixou o Portal acessível em ambiente de produção simulado e
+                  registrou os desvios em relação ao plano e como foram
+                  tratados.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="g">
+                  Executou o checklist de validação pós-implantação (fluxos
+                  críticos, integração e banco de dados).
+                </td>
+                <td class="cap g" rowspan="3">
+                  <strong>Técnica (CT1):</strong> Validar sistema para web em
+                  ambiente de produção.
+                </td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="g"></td>
+              </tr>
+              <tr>
+                <td>
+                  Comprovou o funcionamento com evidências numeradas e comparou
+                  o esperado com o obtido no Relatório de Validação.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Testou o procedimento de falha (retorno à versão anterior ou
+                  restauração) e emitiu o parecer de aceite da implantação.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td class="g">
+                  Produziu o Deployment Runbook com pré-requisitos, passo a
+                  passo, comandos e configurações utilizadas.
+                </td>
+                <td class="cap g" rowspan="3">
+                  <strong>Técnica (CT7):</strong> Documentar o processo de
+                  implantação de sistema para web.
+                </td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="chk g">☐</td>
+                <td class="g"></td>
+              </tr>
+              <tr>
+                <td>
+                  Incluiu no dossiê a resolução de problemas, o
+                  <em>rollback</em> e as versões de todos os componentes do
+                  ambiente.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Garantiu que o documento é fiel ao sistema implantado e que a
+                  implantação pode ser reproduzida por outra equipe seguindo
+                  somente o dossiê.
+                </td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td class="chk">☐</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div> -->
+    </div>
+  </body>
+</html>

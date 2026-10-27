@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 20 – Elaboração do Plano de Testes</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+    :root {
+      --bg-main: #0b0f19;
+      --bg-card: #111827;
+      --bg-card-hover: #1f2937;
+      --border-color: #1f2937;
+      --border-highlight: #374151;
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.15);
+      --secondary: #818cf8;
+      --accent: #f43f5e;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(31, 41, 55, 0.5) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-glow);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .header-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* SECTION CARDS */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: border-color 0.3s ease;
+      position: relative;
+    }
+
+    .section-card:hover {
+      border-color: var(--border-highlight);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #000;
+      font-weight: 800;
+      font-size: 1.1rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-title-group h2 {
+      font-size: 1.4rem;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .section-title-group .time-tag {
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* CONTENT STYLING */
+    p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    p strong {
+      color: var(--text-main);
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e5e7eb;
+      font-size: 0.88rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .sub-card {
+      background: rgba(31, 41, 55, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .sub-card h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sub-card p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* TABLES */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.92rem;
+      background: rgba(17, 24, 39, 0.6);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .custom-table th {
+      background: rgba(31, 41, 55, 0.8);
+      color: var(--primary);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .custom-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+      color: var(--text-muted);
+    }
+
+    .custom-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .custom-table td strong {
+      color: var(--text-main);
+    }
+
+    /* BADGES & TAGS */
+    .badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    .badge-test { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+    .badge-unit { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid #34d399; }
+    .badge-integration { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid #fbbf24; }
+    .badge-e2e { background: rgba(129, 140, 248, 0.2); color: #818cf8; border: 1px solid #818cf8; }
+
+    /* HIGHLIGHTS */
+    .highlight-box {
+      background: rgba(56, 189, 248, 0.05);
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0 10px 10px 0;
+      margin: 1.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .highlight-box.warning {
+      background: rgba(251, 191, 36, 0.05);
+      border-left-color: var(--warning);
+    }
+
+    .highlight-box.success {
+      background: rgba(52, 211, 153, 0.05);
+      border-left-color: var(--success);
+    }
+
+    .highlight-box.danger {
+      background: rgba(244, 63, 94, 0.05);
+      border-left-color: var(--accent);
+    }
+
+    .highlight-box strong {
+      color: #fff;
+    }
+
+    /* STEPS / WORKFLOW */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1rem;
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .step-badge {
+      background: var(--border-highlight);
+      color: var(--primary);
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* QUIZ STYLING */
+    .quiz-card {
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .quiz-question {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-option {
+      background: rgba(31, 41, 55, 0.5);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .quiz-answer {
+      background: rgba(52, 211, 153, 0.1);
+      border-left: 4px solid var(--success);
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    /* WORKSHOP BOX */
+    .workshop-box {
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .workshop-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- HEADER DE APRESENTAÇÃO -->
+    <header>
+      <div class="header-badge">
+        <span>📖 Guia Didático da Aula</span>
+      </div>
+      <h1>Elaboração do Plano de Testes</h1>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0;">
+        Conceituação, composição e atribuições de um Plano de Testes de Software para APIs Node.js/Express, análise das camadas da Pirâmide de Testes (Unitários, Integração e Funcionais/E2E) e estruturação prática dos Casos de Teste para o projeto Full Stack.
+      </p>
+      
+      <div class="header-info">
+        <div class="info-item">
+          <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+        </div>
+        <div class="info-item">
+          <span>🎯 <strong>Foco:</strong> Plano de Testes, Matriz de Rastreabilidade, Testes Unitários, Testes de Integração, Testes Funcionais & Casos de Teste</span>
+        </div>
+        <div class="info-item">
+          <span>🚀 <strong>Módulo:</strong> Testes, Implantação, Manutenção e Entrega Final</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- SEÇÃO 1 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div class="section-title-group">
+          <h2>Planos de Teste — Composição, Atribuições e Relatórios</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 45 min</span>
+        </div>
+      </div>
+
+      <p>
+        Um <strong>Plano de Testes (Test Plan)</strong> é o documento formal que orienta e disciplina todo o processo de garantia da qualidade (QA) de um sistema de software. Ele especifica o escopo, os objetivos, a estratégia, os recursos necessários, o cronograma e os critérios de aceitação que serão aplicados para validar a aplicação antes de seu envio para homologação e produção.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Componentes Essenciais de um Plano de Testes de Back-End</h3>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Seção do Plano</th>
+            <th>Descrição e Conteúdo</th>
+            <th>Aplicação Prática no Projeto Node.js</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🎯 <strong>Escopo & Objetivos</strong></td>
+            <td>Define quais módulos, rotas e regras de negócio serão validados e o que está fora do escopo.</td>
+            <td>Inclusão dos endpoints de login/autenticação JWT e CRUD B2B; exclusão de serviços externos simulados por mocks.</td>
+          </tr>
+          <tr>
+            <td>💻 <strong>Ambiente de Testes</strong></td>
+            <td>Especifica as configurações de hardware, software, variáveis e banco de dados isolado.</td>
+            <td>Banco PostgreSQL de testes (<code>b2b_db_test</code>), Node.js v20 LTS, variáveis configuradas via <code>.env.test</code>.</td>
+          </tr>
+          <tr>
+            <td>👥 <strong>Atribuições da Equipe</strong></td>
+            <td>Mapeia os papéis e responsabilidades dos membros do time no ciclo de execução dos testes.</td>
+            <td>Desenvolvedores criam testes unitários de Models; QA/Líder executa testes de integração das rotas HTTP.</td>
+          </tr>
+          <tr>
+            <td>🛑 <strong>Critérios de Parada / Aceite</strong></td>
+            <td>Métricas necessárias para aprovar a entrega parcial ou final (ex.: taxa de cobertura de código).</td>
+            <td>100% de sucesso nos fluxos críticos do CRUD e cobertura de código mínima (Code Coverage) de 75%.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Matriz de Rastreabilidade e Estrutura de um Caso de Teste</h3>
+
+      <p>
+        Cada **Caso de Teste (Test Case)** deve estar associado diretamente a um requisito funcional ou não funcional mapeado na fase de planejamento do software, garantindo a rastreabilidade total do sistema.
+      </p>
+
+      <div class="content-grid">
+        <div class="sub-card">
+          <h3><span class="badge badge-test">ESTRUTURA DO CASO DE TESTE</span></h3>
+          <p><strong>• ID do Teste:</strong> CT-001<br>
+             <strong>• Requisito Associado:</strong> RF-01 (Autenticação JWT)<br>
+             <strong>• Pré-condição:</strong> Usuário ativo no banco com e-mail cadastrado.<br>
+             <strong>• Passos:</strong> Enviar requisição <code>POST /api/auth/login</code> com credenciais válidas.<br>
+             <strong>• Resultado Esperado:</strong> Retorno HTTP Status 200 com token JWT válido na resposta JSON.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-test">RELATÓRIO DE EXECUÇÃO</span></h3>
+          <p>Documento ou saída consolidada que registra a data de execução, a quantidade de cenários testados, a taxa de sucesso/falha, os bugs encontrados (issues) e o status final de aprovação da suíte de testes.</p>
+        </div>
+      </div>
+
+      <div class="highlight-box success">
+        <strong>💡 Por que criar um banco de testes separado?</strong> Executar testes diretamente no banco de desenvolvimento ou produção pode corromper ou apagar dados reais. O Plano de Testes deve definir o uso de scripts de automatização para criar, povoar e limpar a base de dados de teste (<code>beforeEach</code> e <code>afterAll</code>) a cada execução da suíte.
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div class="section-title-group">
+          <h2>Tipos e Camadas de Teste Aplicados a APIs Node.js</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        Na engenharia de software de back-end, os testes são categorizados em diferentes níveis e responsabilidades, normalmente representados pelo conceito da <strong>Pirâmide de Testes</strong>.
+      </p>
+
+      <div class="content-grid">
+        <div class="sub-card">
+          <h3><span class="badge badge-unit">1. TESTES UNITÁRIOS</span></h3>
+          <p>Validam a menor unidade lógica do sistema de forma totalmente isolada (ex.: funções de cálculo de desconto, utilitários, validação de schemas com Zod). Não acessam banco de dados real nem fazem requisições de rede.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-integration">2. TESTES DE INTEGRAÇÃO</span></h3>
+          <p>Verificam como múltiplos componentes funcionam juntas (ex.: rota do Express + Controller + repositório + banco PostgreSQL). Garantem que as requisições HTTP retornem os status e payloads corretos.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-e2e">3. TESTES FUNCIONAIS / E2E</span></h3>
+          <p>Simulam a jornada do usuário do início ao fim (End-to-End), integrando o Front-End HTML/CSS/JS com a API REST e o Banco de Dados, validando o comportamento real do produto sob o ponto de vista do cliente.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Exemplo de Caso de Teste de Integração (Express + Supertest)</h3>
+
+      <p>
+        Em uma aplicação Node.js com Express e Jest/Supertest, um caso de teste de integração avalia a rota REST e o banco de dados simultaneamente:
+      </p>
+
+      <pre><code>// __tests__/produtos.test.js
+const request = require('supertest');
+const app = require('../src/app');
+const { pool } = require('../src/config/database');
+
+describe('POST /api/produtos - Cadastro de Produtos B2B', () => {
+  
+  // Limpeza dos dados de teste antes dos testes
+  beforeAll(async () => {
+    await pool.query('DELETE FROM produtos WHERE codigo_sku = $1', ['SKU-TEST-01']);
+  });
+
+  it('Deve cadastrar um produto válido e retornar status 201', async () => {
+    const novoProduto = {
+      nome: 'Servidor Rack 1U',
+      codigo_sku: 'SKU-TEST-01',
+      preco: 4500.00,
+      estoque: 10
+    };
+
+    const response = await request(app)
+      .post('/api/produtos')
+      .set('Authorization', `Bearer ${global.tokenAutenticado}`)
+      .send(novoProduto);
+
+    expect(response.status).toBe(201);
+    expect(response.body).toHaveProperty('id');
+    expect(response.body.nome).toBe(novoProduto.nome);
+  });
+});</code></pre>
+
+      <div class="highlight-box warning">
+        <strong>⚠️ Atenção à Pirâmide de Testes:</strong> A base da pirâmide deve conter uma quantidade massiva de <strong>testes unitários</strong> (rápidos e baratos), seguidos por um número intermediário de <strong>testes de integração</strong> e um número menor e bem selecionado de <strong>testes funcionais/E2E</strong> (mais lentos e custosos).
+      </div>
+    </section>
+
+    <!-- SEÇÃO 3 (DESAFIO PRÁTICO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div class="section-title-group">
+          <h2>Desafio Prático — Elaboração do Plano de Testes da Aplicação</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 45 min</span>
+        </div>
+      </div>
+
+      <p>
+        As equipes deverão elaborar a primeira versão oficial do **Plano de Testes da Aplicação Full Stack (Portal B2B)**. O documento deverá mapear e detalhar ao menos 5 Casos de Teste cobrindo os fluxos críticos da API Node.js e do banco PostgreSQL.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Passos para Estruturação do Documento da Equipe</h3>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-badge">1</div>
+          <div class="step-content">
+            <h4>Mapeamento do Escopo de Testes</h4>
+            <p>Selecione as funcionalidades essenciais do projeto (Ex: Login de usuário, cadastro de produto, consulta filtrada, alteração de estoque e criação de pedido transacional).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">2</div>
+          <div class="step-content">
+            <h4>Definição dos Tipos de Teste por Recurso</h4>
+            <p>Classifique cada funcionalidade definindo se ela será coberta por teste unitário (ex.: validação com Zod) ou de integração (ex.: rota Express acessando banco `pg`).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">3</div>
+          <div class="step-content">
+            <h4>Escrita Detalhada dos Casos de Teste (CTs)</h4>
+            <p>Preencha a especificação com ID, requisito, pré-condições, dados de entrada, passos de execução e resultados esperados para casos com sucesso e casos de exceção/erro (caminho triste).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">4</div>
+          <div class="step-content">
+            <h4>Versionamento do Plano no Repositório Git</h4>
+            <p>Crie o arquivo <code>docs/PLANO_DE_TESTES.md</code> na branch principal do projeto e realize o commit e push com a equipe.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Modelo de Tabela de Especificação de Casos de Teste</h3>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Funcionalidade / Rota</th>
+            <th>Tipo</th>
+            <th>Dados de Entrada</th>
+            <th>Resultado Esperado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>CT-01</strong></td>
+            <td>Autenticação / <code>POST /api/login</code></td>
+            <td><span class="badge badge-integration">Integração</span></td>
+            <td>E-mail e senha válidos</td>
+            <td>Status HTTP 200 + Token JWT retornado no body</td>
+          </tr>
+          <tr>
+            <td><strong>CT-02</strong></td>
+            <td>Autenticação / <code>POST /api/login</code></td>
+            <td><span class="badge badge-integration">Integração</span></td>
+            <td>Senha incorreta</td>
+            <td>Status HTTP 401 + mensagem "Credenciais inválidas"</td>
+          </tr>
+          <tr>
+            <td><strong>CT-03</strong></td>
+            <td>Cadastro Produto / <code>POST /api/produtos</code></td>
+            <td><span class="badge badge-unit">Unitário</span></td>
+            <td>Preço negativo (ex.: -50.00)</td>
+            <td>Erro de validação do Zod antes de executar SQL</td>
+          </tr>
+          <tr>
+            <td><strong>CT-04</strong></td>
+            <td>Criação Pedido / <code>POST /api/pedidos</code></td>
+            <td><span class="badge badge-integration">Integração</span></td>
+            <td>Carrinho com item sem estoque</td>
+            <td>Status HTTP 400 + Rollback da transação no PostgreSQL</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SEÇÃO 4 (ENCERRAMENTO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div class="section-title-group">
+          <h2>Encerramento: Glossário da Aula + Quiz Final de Fixação</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 30 min</span>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">📚 Glossário Técnico da Aula</h3>
+
+      <div class="content-grid" style="margin-bottom: 2rem;">
+        <div class="sub-card">
+          <h3>Plano de Testes (Test Plan)</h3>
+          <p>Documento formal que descreve o escopo, a abordagem, os recursos e o cronograma das atividades de teste planejadas para um software.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Teste Unitário (Unit Test)</h3>
+          <p>Teste automatizado focado em verificar o funcionamento de pequenas unidades isoladas de código, como funções e métodos, sem dependências externas.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Teste de Integração</h3>
+          <p>Teste que avalia a interação entre diferentes módulos ou camadas do sistema, como as rotas HTTP do Express comunicando-se com o banco de dados.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Cobertura de Código (Code Coverage)</h3>
+          <p>Métrica percentual que indica a quantidade de linhas, rotas ou ramificações de código executadas durante a suíte de testes.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">❓ Quiz Final de Fixação</h3>
+
+      <!-- QUESTÃO 1 -->
+      <div class="quiz-card">
+        <div class="quiz-question">1. Qual é o principal objetivo da elaboração de um Plano de Testes de Software antes da execução dos testes em uma API REST Node.js?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Impedir que os desenvolvedores escrevam código em arquivos JavaScript.</div>
+          <div class="quiz-option">B) Estabelecer o escopo, ambiente, estratégias, critérios de aceitação e responsabilidades para garantir systematicamente a qualidade do software.</div>
+          <div class="quiz-option">C) Substituir a necessidade de utilizar um banco de dados relacional PostgreSQL.</div>
+          <div class="quiz-option">D) Converter a API REST em um site estático sem interatividade.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Estabelecer escopo, ambiente, estratégias e critérios para garantir a qualidade do software.</strong><br>
+          <em>Justificativa:</em> O Plano de Testes serve como o mapa estratégico que organiza todas as atividades de validação, definindo o que, como e quando testar.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 2 -->
+      <div class="quiz-card">
+        <div class="quiz-question">2. Qual a principal característica de um Teste de Integração em uma aplicação Back-End Node.js/Express?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Testar apenas funções matemáticas em isolamento total, sem utilizar bibliotecas externas.</div>
+          <div class="quiz-option">B) Validar a comunicação e a resposta combinada de múltiplos componentes, como o envio de uma requisição HTTP via Express e a persistência/consulta no banco PostgreSQL.</div>
+          <div class="quiz-option">C) Testar a velocidade de digitação do desenvolvedor no terminal do VS Code.</div>
+          <div class="quiz-option">D) Verificar exclusivamente o design e a paleta de cores das páginas HTML.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Validar a comunicação e a resposta combinada de múltiplos componentes (ex.: Express + PostgreSQL).</strong><br>
+          <em>Justificativa:</em> Diferente dos testes unitários, os testes de integração garantem que os componentes e camadas do back-end funcionam perfeitamente integrados.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 3 -->
+      <div class="quiz-card">
+        <div class="quiz-question">3. Por que é fundamental utilizar um banco de dados isolado e dedicado exclusivamente para o ambiente de testes (ex.: `b2b_db_test`)?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Para evitar o risco de alterar, apagar ou corromper dados reais do ambiente de desenvolvimento ou produção durante a execução das suítes de teste.</div>
+          <div class="quiz-option">B) Porque o PostgreSQL não aceita mais de uma tabela no mesmo banco de dados.</div>
+          <div class="quiz-option">C) Para garantir que o Node.js não precise de tokens JWT durante os testes.</div>
+          <div class="quiz-option">D) Porque as consultas SQL só funcionam em bancos chamados `test`.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: A) Para evitar alterar ou corromper dados reais do ambiente de desenvolvimento/produção.</strong><br>
+          <em>Justificativa:</em> A execução de testes insere, altera e remove dados frequentemente. Um banco exclusivo garante isolamento, previsibilidade e segurança da informação.
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKSHOP INTEGRADO -->
+    <div class="workshop-box">
+      <div class="workshop-header">
+        <span>🛠️ Entregável da Aula 20 — Documento do Plano de Testes</span>
+      </div>
+
+      <p style="color: #e5e7eb; margin-bottom: 1rem;">
+        Todas as equipes devem criar e comitar o arquivo de documentação contendo a especificação completa dos testes do projeto:<br>
+        <code>git commit -m "docs: elaboracao e versionamento do plano de testes do projeto (docs/PLANO_DE_TESTES.md)"</code>
+      </p>
+    </div>
+
+    <footer>
+      Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados / Back-End
+    </footer>
+
+  </div>
+
+</body>
+</html>

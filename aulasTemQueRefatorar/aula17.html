@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 17 – Validação de Dados e Tratamento de Erros</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+    :root {
+      --bg-main: #0b0f19;
+      --bg-card: #111827;
+      --bg-card-hover: #1f2937;
+      --border-color: #1f2937;
+      --border-highlight: #374151;
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.15);
+      --secondary: #818cf8;
+      --accent: #f43f5e;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(31, 41, 55, 0.5) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-glow);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .header-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* SECTION CARDS */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: border-color 0.3s ease;
+      position: relative;
+    }
+
+    .section-card:hover {
+      border-color: var(--border-highlight);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #000;
+      font-weight: 800;
+      font-size: 1.1rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-title-group h2 {
+      font-size: 1.4rem;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .section-title-group .time-tag {
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* CONTENT STYLING */
+    p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    p strong {
+      color: var(--text-main);
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e5e7eb;
+      font-size: 0.88rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .sub-card {
+      background: rgba(31, 41, 55, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .sub-card h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sub-card p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* TABLES */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.92rem;
+      background: rgba(17, 24, 39, 0.6);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .custom-table th {
+      background: rgba(31, 41, 55, 0.8);
+      color: var(--primary);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .custom-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+      color: var(--text-muted);
+    }
+
+    .custom-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .custom-table td strong {
+      color: var(--text-main);
+    }
+
+    /* BADGES & TAGS */
+    .badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    .badge-val { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+    .badge-err { background: rgba(244, 63, 94, 0.2); color: #f43f5e; border: 1px solid #f43f5e; }
+    .badge-res { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid #34d399; }
+
+    /* HIGHLIGHTS */
+    .highlight-box {
+      background: rgba(56, 189, 248, 0.05);
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0 10px 10px 0;
+      margin: 1.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .highlight-box.warning {
+      background: rgba(251, 191, 36, 0.05);
+      border-left-color: var(--warning);
+    }
+
+    .highlight-box.success {
+      background: rgba(52, 211, 153, 0.05);
+      border-left-color: var(--success);
+    }
+
+    .highlight-box.danger {
+      background: rgba(244, 63, 94, 0.05);
+      border-left-color: var(--accent);
+    }
+
+    .highlight-box strong {
+      color: #fff;
+    }
+
+    /* STEPS / WORKFLOW */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1rem;
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .step-badge {
+      background: var(--border-highlight);
+      color: var(--primary);
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* QUIZ STYLING */
+    .quiz-card {
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .quiz-question {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-option {
+      background: rgba(31, 41, 55, 0.5);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .quiz-answer {
+      background: rgba(52, 211, 153, 0.1);
+      border-left: 4px solid var(--success);
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    /* WORKSHOP BOX */
+    .workshop-box {
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .workshop-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- HEADER DE APRESENTAÇÃO -->
+    <header>
+      <div class="header-badge">
+        <span>📖 Guia Didático da Aula</span>
+      </div>
+      <h1>Validação de Dados e Tratamento de Erros</h1>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0;">
+        Construção de resiliência em APIs RESTful: validação preventiva de entradas (Middlewares de validação com Zod/Express-Validator), sanitização de payloads B2B, criação de exceções customizadas (AppError) e padronização global de respostas JSON.
+      </p>
+      
+      <div class="header-info">
+        <div class="info-item">
+          <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+        </div>
+        <div class="info-item">
+          <span>🎯 <strong>Foco:</strong> Validação de Schemas (Zod), Middlewares de Input, AppError Custom, Padronização de Envelope JSON & Status Codes</span>
+        </div>
+        <div class="info-item">
+          <span>🚀 <strong>Módulo:</strong> Banco de Dados & Back-End</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- SEÇÃO 1 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div class="section-title-group">
+          <h2>Validação de Dados de Entrada (Middlewares de Validação)</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        Uma das principais diretrizes de segurança e qualidade de software é: <strong>"Nunca confie nos dados enviados pelo cliente"</strong>. Dados de entrada malformados, tipos incorretos ou ausentes podem causar *crashes* na aplicação, vulnerabilidades de segurança ou corrupção de dados no banco PostgreSQL.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Princípio da Validação na Borda (Edge Validation)</h3>
+
+      <p>
+        A validação deve ocorrer na **borda da requisição (camada de rotas/middlewares)**, antes mesmo que os dados cheguem aos Controllers e Models. Isso economiza processamento e recursos de banco de dados.
+      </p>
+
+      <div class="content-grid">
+        <div class="sub-card">
+          <h3><span class="badge badge-err">Sem Middleware de Validação</span></h3>
+          <p>O dado entra na API, passa pelo Controller, tenta rodar no Model, falha no banco de dados com erro de tipo (SQLSTATE) e consome conexões do Pool antes de rejeitar.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-val">Com Middleware de Validação (Zod)</span></h3>
+          <p>O schema valida <code>req.body</code> no início da requisição. Se houver erro, a API responde imediatamente com <code>400 Bad Request</code> contendo a lista detalhada de campos incorretos.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Validação Estrita de Schemas com a Biblioteca `zod`</h3>
+
+      <p>A biblioteca <strong>Zod</strong> permite declarar schemas de validação com inferência automática de tipos e mensagens customizadas em português.</p>
+
+      <pre><code>npm install zod</code></pre>
+
+      <p><strong>A. Definição do Schema de Validação de Cliente B2B (`src/schemas/clienteSchema.js`):</strong></p>
+      <pre><code>import { z } from 'zod';
+
+export const criarClienteSchema = z.object({
+  cnpj: z
+    .string({ required_error: 'O CNPJ é obrigatório.' })
+    .length(14, 'O CNPJ deve conter exatamente 14 dígitos numéricos.')
+    .regex(/^\d+$/, 'O CNPJ deve conter apenas números.'),
+
+  razao_social: z
+    .string({ required_error: 'A Razão Social é obrigatória.' })
+    .min(3, 'A Razão Social deve ter no mínimo 3 caracteres.')
+    .max(150, 'A Razão Social não pode exceder 150 caracteres.'),
+
+  email: z
+    .string({ required_error: 'O e-mail é obrigatório.' })
+    .email('Formato de e-mail inválido.'),
+
+  telefone: z
+    .string()
+    .optional()
+});</code></pre>
+
+      <p><strong>B. Middleware Genérico de Validação (`src/middlewares/validateSchema.js`):</strong></p>
+      <pre><code>export const validateSchema = (schema) => (req, res, next) => {
+  try {
+    // Valida e sanitiza req.body contra o schema definido
+    req.body = schema.parse(req.body);
+    next(); // Dados válidos! Prossegue para o Controller.
+  } catch (error) {
+    // Formata os erros do Zod em um array amigável
+    const errosFormatados = error.errors.map((err) => ({
+      campo: err.path.join('.'),
+      mensagem: err.message
+    }));
+
+    return res.status(400).json({
+      success: false,
+      error_code: 'VALIDATION_ERROR',
+      message: 'Dados de entrada inválidos.',
+      errors: errosFormatados
+    });
+  }
+};</code></pre>
+    </section>
+
+    <!-- SEÇÃO 2 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div class="section-title-group">
+          <h2>Tratamento Centralizado de Erros e Padronização de Respostas</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        Para manter uma arquitetura limpa e previsível, a aplicação deve adotar uma **Classe de Erro Operacional Customizada (`AppError`)** e um **Envelope Padrão de Resposta JSON** para toda a API.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. A Classe `AppError` para Exceções de Negócio (`src/errors/AppError.js`)</h3>
+
+      <p>
+        Erros conhecidos da aplicação (ex: cliente não encontrado, estoque insuficiente, credenciais inválidas) são **Erros Operacionais**. Criamos uma classe que herda de <code>Error</code> estipulando o status HTTP correspondente.
+      </p>
+
+      <pre><code>export class AppError extends Error {
+  constructor(message, statusCode = 400, errorCode = 'BAD_REQUEST') {
+    super(message);
+    this.statusCode = statusCode;
+    this.errorCode = errorCode;
+    this.isOperational = true; // Diferencia erros conhecidos de falhas inesperadas de código
+    Error.captureStackTrace(this, this.constructor);
+  }
+}</code></pre>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Padronização Global do Envelope de Resposta JSON</h3>
+
+      <p>Todas as rotas da API B2B devem seguir uma estrutura de resposta consistente, tanto para sucesso quanto para falhas:</p>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Tipo de Resposta</th>
+            <th>Estrutura JSON do Envelope</th>
+            <th>Exemplo de Uso</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-res">SUCESSO (2xx)</span></td>
+            <td><code>{ success: true, message: "...", data: { ... } }</code></td>
+            <td><code>200 OK</code> em buscas / <code>201 Created</code> no cadastro.</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-err">ERRO OPERACIONAL (4xx)</span></td>
+            <td><code>{ success: false, error_code: "...", message: "..." }</code></td>
+            <td><code>404 Not Found</code>, <code>401 Unauthorized</code>, <code>409 Conflict</code>.</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-err">ERRO INTERNO (500)</span></td>
+            <td><code>{ success: false, error_code: "INTERNAL_SERVER_ERROR", message: "..." }</code></td>
+            <td>Falhas de conexão com banco, exceções não tratadas de código.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">3. Reformulação do Middleware Global de Erros (`src/middlewares/errorHandler.js`)</h3>
+
+      <pre><code>import { AppError } from '../errors/AppError.js';
+
+export const errorHandler = (err, req, res, next) => {
+  // 1. Tratamento de Exceções Operacionais do AppError
+  if (err instanceof AppError) {
+    return res.status(err.statusCode).json({
+      success: false,
+      error_code: err.errorCode,
+      message: err.message
+    });
+  }
+
+  // 2. Tratamento de Erros Nativos de Violação do PostgreSQL
+  if (err.code === '23505') {
+    return res.status(409).json({
+      success: false,
+      error_code: 'DUPLICATE_ENTRY',
+      message: 'Conflito: registro já existente no banco de dados.'
+    });
+  }
+
+  console.error('💥 [ERRO NÃO TRATADO DE SERVIDOR]:', err);
+
+  // 3. Fallback para Erros Inesperados (500)
+  return res.status(500).json({
+    success: false,
+    error_code: 'INTERNAL_SERVER_ERROR',
+    message: 'Ocorreu um erro interno inesperado no servidor.'
+  });
+};</code></pre>
+    </section>
+
+    <!-- SEÇÃO 3 (DESAFIO PRÁTICO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div class="section-title-group">
+          <h2>Desafio Prático — Implementação de Validações e Erros no Projeto B2B</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        Nesta atividade prática, as equipes integrarão o middleware de validação com `zod` em todas as rotas e refatorarão os Controllers para utilizar a classe `AppError`.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Refatoração do Controller usando `AppError` (`src/controllers/clienteController.js`)</h3>
+
+      <pre><code>import { clienteModel } from '../models/clienteModel.js';
+import { AppError } from '../errors/AppError.js';
+
+export const clienteController = {
+  obterPorId: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const cliente = await clienteModel.buscarPorId(id);
+
+      if (!cliente) {
+        // Lança o AppError operacional e repassa para o next()
+        throw new AppError('Cliente não encontrado com o ID informado.', 404, 'CLIENT_NOT_FOUND');
+      }
+
+      return res.status(200).json({ success: true, data: cliente });
+    } catch (error) {
+      next(error); // Encaminha para o middleware global de erros!
+    }
+  },
+
+  criar: async (req, res, next) => {
+    try {
+      // Nota: O req.body já foi pré-validado e sanitizado pelo validateSchema!
+      const novoCliente = await clienteModel.criar(req.body);
+      return res.status(201).json({ success: true, message: 'Cliente cadastrado!', data: novoCliente });
+    } catch (error) {
+      next(error);
+    }
+  }
+};</code></pre>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Mapeamento das Rotas com Middleware de Validação (`src/routes/clienteRoutes.js`)</h3>
+
+      <pre><code>import { Router } from 'express';
+import { clienteController } from '../controllers/clienteController.js';
+import { validateSchema } from '../middlewares/validateSchema.js';
+import { criarClienteSchema } from '../schemas/clienteSchema.js';
+
+const router = Router();
+
+// A rota valida os dados de entrada ANTES de acionar o Controller!
+router.post('/', validateSchema(criarClienteSchema), clienteController.criar);
+router.get('/:id', clienteController.obterPorId);
+
+export default router;</code></pre>
+
+      <div class="highlight-box success">
+        <strong>🧪 Exemplo de Resposta de Erro de Validação Formatada (Status 400):</strong>
+        <pre><code>{
+  "success": false,
+  "error_code": "VALIDATION_ERROR",
+  "message": "Dados de entrada inválidos.",
+  "errors": [
+    { "campo": "cnpj", "mensagem": "O CNPJ deve conter exatamente 14 dígitos numéricos." },
+    { "campo": "email", "mensagem": "Formato de e-mail inválido." }
+  ]
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 4 (ENCERRAMENTO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div class="section-title-group">
+          <h2>Encerramento: Glossário da Aula + Quiz Final de Fixação</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 30 min</span>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">📚 Glossário Técnico da Aula</h3>
+
+      <div class="content-grid" style="margin-bottom: 2rem;">
+        <div class="sub-card">
+          <h3>Zod / Schema Validation</h3>
+          <p>Biblioteca de declaração e validação de schemas em TypeScript/JavaScript com inferência automática e tratamento de borda.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>AppError (Erro Operacional)</h3>
+          <p>Classe customizada de erro para representar falhas previsíveis de regra de negócio associadas a status HTTP adequados.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Sanitização de Dados</h3>
+          <p>Processo de limpar, remover caracteres indesejados e ajustar o formato das entradas do usuário antes do processamento.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Envelope JSON Padronizado</h3>
+          <p>Padrão estrutural de resposta da API (`success`, `message`, `data`/`errors`) mantido uniformemente em todas as rotas.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">❓ Quiz Final de Fixação</h3>
+
+      <!-- QUESTÃO 1 -->
+      <div class="quiz-card">
+        <div class="quiz-question">1. Qual é a principal vantagem de executar a validação de dados de entrada via middlewares (como Zod) antes de alcançar os Controllers e Models?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Aumentar o tamanho do banco de dados PostgreSQL.</div>
+          <div class="quiz-option">B) Barrar requisições malformadas na borda da aplicação, evitando o desperdício de processamento e conexões do banco.</div>
+          <div class="quiz-option">C) Eliminar a necessidade de usar o protocolo HTTP.</div>
+          <div class="quiz-option">D) Substituir a camada de rotas do Express.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Barrar requisições malformadas na borda da aplicação.</strong><br>
+          <em>Justificativa:</em> Validar schemas na borda previne falhas graves e economiza recursos do servidor e do Pool de conexões do PostgreSQL.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 2 -->
+      <div class="quiz-card">
+        <div class="quiz-question">2. O que caracteriza um "Erro Operacional" representado pela classe `AppError` em oposição a uma falha inesperada de código?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Um erro operacional é uma falha previsível de regra de negócio (ex: recurso não encontrado, saldo insuficiente) tratada com status HTTP 4xx.</div>
+          <div class="quiz-option">B) Um erro operacional é um defeito de hardware no servidor de banco de dados.</div>
+          <div class="quiz-option">C) Um erro operacional ocorre apenas quando a internet cai.</div>
+          <div class="quiz-option">D) Um erro operacional exige o reinício do servidor Node.js.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: A) Falha previsível de regra de negócio com status HTTP 4xx.</strong><br>
+          <em>Justificativa:</em> Erros operacionais são cenários conhecidos do sistema e devem retornar mensagens amigáveis ao cliente com status adequado.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 3 -->
+      <div class="quiz-card">
+        <div class="quiz-question">3. No Express.js, quando um Controller captura um erro no bloco `catch (error)`, qual é a boa prática para encaminhá-lo ao Middleware Global de Erros?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Executar `console.log(error)` e ignorar a requisição.</div>
+          <div class="quiz-option">B) Chamar a função `next(error)` repassando a exceção capturada.</div>
+          <div class="quiz-option">C) Reiniciar a aplicação chamando `process.exit(1)`.</div>
+          <div class="quiz-option">D) Chamar `res.send(error)` enviando a stack trace em texto puro.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Chamar a função `next(error)`.</strong><br>
+          <em>Justificativa:</em> Passar o erro como argumento para `next(error)` instrui o Express a desviar a execução diretamente para o Middleware Global de Tratamento de Erros.
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKSHOP INTEGRADO -->
+    <div class="workshop-box">
+      <div class="workshop-header">
+        <span>🛠️ Entregável da Aula 17 — Validação e Resiliência da API Concluída</span>
+      </div>
+
+      <p style="color: #e5e7eb; margin-bottom: 1rem;">
+        Todas as equipes devem aplicar os schemas de validação com Zod em todas as rotas POST/PUT e refatorar os Controllers utilizando <code>AppError</code> e <code>next(error)</code>, realizando o commit:<br>
+        <code>git commit -m "feat: validacao de schemas zod, classe apperror e respostas padronizadas implementadas"</code>
+      </p>
+    </div>
+
+    <footer>
+      Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados / Back-End
+    </footer>
+
+  </div>
+
+</body>
+</html>

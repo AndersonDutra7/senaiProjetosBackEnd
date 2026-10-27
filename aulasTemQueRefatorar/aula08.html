@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 08 – Instalação e Configuração do PostgreSQL</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+    :root {
+      --bg-main: #0b0f19;
+      --bg-card: #111827;
+      --bg-card-hover: #1f2937;
+      --border-color: #1f2937;
+      --border-highlight: #374151;
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.15);
+      --secondary: #818cf8;
+      --accent: #f43f5e;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(31, 41, 55, 0.5) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-glow);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .header-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* SECTION CARDS */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: border-color 0.3s ease;
+      position: relative;
+    }
+
+    .section-card:hover {
+      border-color: var(--border-highlight);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #000;
+      font-weight: 800;
+      font-size: 1.1rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-title-group h2 {
+      font-size: 1.4rem;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .section-title-group .time-tag {
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* CONTENT STYLING */
+    p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    p strong {
+      color: var(--text-main);
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e5e7eb;
+      font-size: 0.88rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .sub-card {
+      background: rgba(31, 41, 55, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .sub-card h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sub-card p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* TABLES */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.92rem;
+      background: rgba(17, 24, 39, 0.6);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .custom-table th {
+      background: rgba(31, 41, 55, 0.8);
+      color: var(--primary);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .custom-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+      color: var(--text-muted);
+    }
+
+    .custom-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .custom-table td strong {
+      color: var(--text-main);
+    }
+
+    /* BADGES & TAGS */
+    .badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    .badge-sql { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid #34d399; }
+    .badge-tool { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+    .badge-acid { background: rgba(129, 140, 248, 0.2); color: #818cf8; border: 1px solid #818cf8; }
+
+    /* HIGHLIGHTS */
+    .highlight-box {
+      background: rgba(56, 189, 248, 0.05);
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0 10px 10px 0;
+      margin: 1.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .highlight-box.warning {
+      background: rgba(251, 191, 36, 0.05);
+      border-left-color: var(--warning);
+    }
+
+    .highlight-box.success {
+      background: rgba(52, 211, 153, 0.05);
+      border-left-color: var(--success);
+    }
+
+    .highlight-box strong {
+      color: #fff;
+    }
+
+    /* STEPS / WORKFLOW */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1rem;
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .step-badge {
+      background: var(--border-highlight);
+      color: var(--primary);
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* WORKSHOP BOX */
+    .workshop-box {
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .workshop-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- HEADER DE APRESENTAÇÃO -->
+    <header>
+      <div class="header-badge">
+        <span>📖 Guia Didático da Aula</span>
+      </div>
+      <h1>Instalação e Configuração do PostgreSQL</h1>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0;">
+        Instalação do SGBD PostgreSQL, parametrização do serviço, utilização de ferramentas de administração (pgAdmin / psql) e tomada de decisão sobre o tipo de banco para o Portal B2B.
+      </p>
+      
+      <div class="header-info">
+        <div class="info-item">
+          <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+        </div>
+        <div class="info-item">
+          <span>🎯 <strong>Foco:</strong> Setup PostgreSQL, pgAdmin, CLI psql, SQL Types & Trade-off SQL vs. NoSQL</span>
+        </div>
+        <div class="info-item">
+          <span>🚀 <strong>Módulo:</strong> Banco de Dados & Back-End</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- SEÇÃO 1 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div class="section-title-group">
+          <h2>Instalação e Configuração do Banco de Dados PostgreSQL</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        O <strong>PostgreSQL</strong> é um dos SGBDs (Sistemas Gerenciadores de Banco de Dados) objeto-relacionais de código aberto mais avançados e confiáveis do mundo. Ele é conhecido por seu suporte completo às propriedades <strong>ACID</strong>, extenção de tipos (JSONB, GIS) e altíssima estabilidade para aplicações corporativas e industriais.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Passo a Passo de Instalação e Inicialização do Serviço</h3>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-badge">1</div>
+          <div class="step-content">
+            <h4>Instalação Local (Instalador Oficial ou Docker)</h4>
+            <p><strong>Option A (Nativo):</strong> Download do instalador oficial para Windows/Linux/macOS configurando a porta padrão <code>5432</code> e definindo a senha do superusuário <code>postgres</code>.<br>
+            <strong>Option B (Docker Containers):</strong> Execução via linha de comando:<br>
+            <code>docker run --name pg-portal-b2b -e POSTGRES_PASSWORD=segredo123 -p 5432:5432 -d postgres:16-alpine</code></p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">2</div>
+          <div class="step-content">
+            <h4>Arquivos Críticos de Configuração do Server</h4>
+            <p>• <code>postgresql.conf</code>: Define a porta de escuta, conexões máximas (<code>max_connections = 100</code>), alocação de memória (<code>shared_buffers</code>) e nivel de log.<br>
+            • <code>pg_hba.conf</code> (Host-Based Authentication): Controla as permissões de acesso por endereço IP, banco de dados e métodos de autenticação (ex: <code>md5</code>, <code>scram-sha-256</code>).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">3</div>
+          <div class="step-content">
+            <h4>Criação do Banco de Dados e Usuário de Aplicação</h4>
+            <p>Nunca utilize o superusuário <code>postgres</code> diretamente na sua aplicação Node.js. Crie um banco dedicado e um usuário de aplicação com permissões restritas.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-box warning">
+        <strong>⚠️ Boa Prática de Segurança (Princípio do Menor Privilégio):</strong> Crie roles/usuários separados para desenvolvimento e produção com privilégios apenas de <code>SELECT, INSERT, UPDATE, DELETE</code> nas tabelas do schema público, evitando conceder perfil de <code>SUPERUSER</code> para a API.
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div class="section-title-group">
+          <h2>Tipos de Dados, Tabelas e Ferramentas de Administração (pgAdmin / psql)</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        Para administrar e interagir com o PostgreSQL, os desenvolvedores utilizam tanto interfaces gráficas (GUI) quanto ferramentas de linha de comando (CLI).
+      </p>
+
+      <div class="content-grid">
+        <div class="sub-card">
+          <h3>🖥️ pgAdmin IV (Interface Gráfica)</h3>
+          <p>Ferramenta web-based rica para navegação visual em esquemas, criação visual de tabelas, execução de scripts com o Query Tool, importação/exportação de dados em CSV e monitoramento de sessões ativas do banco.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>💻 CLI `psql` (Linha de Comando)</h3>
+          <p>Utilitário nativo de terminal, extremamente leve e rápido. Essencial para automações, servidores sem interface gráfica (Headless Linux) e execuções em esteiras CI/CD de produção.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Comandos Essenciais da CLI `psql`</h3>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Comando psql</th>
+            <th>Descrição e Utilidade</th>
+            <th>Exemplo Prático</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>psql -U &lt;user&gt; -d &lt;dbname&gt;</code></td>
+            <td>Conecta ao banco de dados pelo terminal</td>
+            <td><code>psql -U admin_b2b -d portal_b2b_db -h localhost</code></td>
+          </tr>
+          <tr>
+            <td><code>\l</code></td>
+            <td>Lista todos os bancos de dados do servidor</td>
+            <td><code>\l</code></td>
+          </tr>
+          <tr>
+            <td><code>\c &lt;dbname&gt;</code></td>
+            <td>Conecta a outro banco de dados (Change DB)</td>
+            <td><code>\c portal_b2b_db</code></td>
+          </tr>
+          <tr>
+            <td><code>\dt</code></td>
+            <td>Lista todas as tabelas do banco atual</td>
+            <td><code>\dt</code></td>
+          </tr>
+          <tr>
+            <td><code>\d &lt;nome_tabela&gt;</code></td>
+            <td>Descreve a estrutura e colunas da tabela (Describe)</td>
+            <td><code>\d clientes_b2b</code></td>
+          </tr>
+          <tr>
+            <td><code>\i &lt;caminho_arquivo.sql&gt;</code></td>
+            <td>Executa um arquivo de script SQL externo</td>
+            <td><code>\i src/database/schema.sql</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Script DDL Inicial de Teste: Criação de Tabela e Inserção no PostgreSQL</h3>
+
+      <pre><code>-- 1. Criação da Tabela de Categorias de Produtos
+CREATE TABLE IF NOT EXISTS categorias (
+    id_categoria SERIAL PRIMARY KEY,
+    nome_categoria VARCHAR(80) NOT NULL UNIQUE,
+    descricao TEXT,
+    ativo BOOLEAN DEFAULT TRUE,
+    criado_em TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. Inserção de Dados MOCADOS para teste
+INSERT INTO categorias (nome_categoria, descricao) 
+VALUES 
+    ('Componentes Eletrônicos', 'Sensores, placas e microcontroladores industriais'),
+    ('Insumos Químicos', 'Reagentes e matéria-prima para linhas de produção')
+RETURNING *;</code></pre>
+    </section>
+
+    <!-- SEÇÃO 3 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div class="section-title-group">
+          <h2>Determinação do Tipo de Banco de Dados de Acordo com o Projeto</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        A escolha entre um **Banco de Dados Relacional (SQL)** e um **Banco Não-Relacional (NoSQL)** deve ser orientada pela natureza dos dados, nível de consistência exigido e padrão de consulta da aplicação.
+      </p>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Critério de Comparação</th>
+            <th>Bancos Relacionais (SQL / PostgreSQL)</th>
+            <th>Bancos Não-Relacionais (NoSQL / MongoDB / Redis)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Estrutura dos Dados</strong></td>
+            <td>Rígida, tabelas relacionais predefinidas por Schema.</td>
+            <td>Flexível, orientada a Documentos (JSON), Chave-Valor ou Grafos.</td>
+          </tr>
+          <tr>
+            <td><strong>Garantia de Transação</strong></td>
+            <td><strong>Garantia ACID total</strong> (Atomicidade, Consistência, Isolamento, Durabilidade).</td>
+            <td>Modelo BASE (Eventual Consistency), foco em disponibilidade.</td>
+          </tr>
+          <tr>
+            <td><strong>Relacionamentos Complexos</strong></td>
+            <td>Excelência em consultas com <code>JOINs</code> entre múltiplas tabelas.</td>
+            <td>Desencorajado <code>JOIN</code>; prefere dados desnormalizados/aninhados.</td>
+          </tr>
+          <tr>
+            <td><strong>Caso de Uso Ideal</strong></td>
+            <td>Sistemas Financeiros, Portais ERP, CRM, <strong>Portais B2B Comercial & Estoque</strong>.</td>
+            <td>Feeds de Redes Sociais, Caches rápidos (Redis), Catálogos com dados altamente mutáveis.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="sub-card" style="margin-top: 1.5rem;">
+        <h3 style="color: var(--success);">🎯 Justificativa da Escolha do PostgreSQL para o Portal B2B:</h3>
+        <p style="font-size: 0.95rem;">
+          O <strong>Portal Comercial B2B</strong> exige regras fiscais e financeiras rígidas onde um pedido de compra não pode ser faturado sem a garantia de saldo de estoque e integridade do cliente. A capacidade de transação <strong>ACID</strong> do PostgreSQL garante que se a reserva do inventário falhar, a criação do pedido seja desfeita (Rollback) automaticamente. Além disso, a presença do tipo nativo <code>JSONB</code> no PostgreSQL permite o melhor dos dois mundos: relacional estrito para tabelas core e suporte flexível a NoSQL para metadados e logs.
+        </p>
+      </div>
+    </section>
+
+    <!-- WORKSHOP INTEGRADO -->
+    <div class="workshop-box">
+      <div class="workshop-header">
+        <span>🛠️ Atividade Prática Integrada — Provisionamento e Configuração do PostgreSQL do Projeto (Em Duplas)</span>
+      </div>
+
+      <p style="color: #e5e7eb; margin-bottom: 1rem;">
+        <strong>Cenário:</strong> Cada equipe irá criar o banco de dados do projeto B2B no PostgreSQL, configurar as credenciais de acesso locais e testar a comunicação via terminal e pgAdmin.
+      </p>
+
+      <div style="background: rgba(17, 24, 39, 0.7); padding: 1.25rem; border-radius: 10px; border: 1px solid var(--border-color);">
+        <h4 style="color: var(--primary); margin-bottom: 0.75rem;">Roteiro Prático da Atividade:</h4>
+        <ol>
+          <li><strong>Provisionamento do Banco:</strong> Abra o pgAdmin ou terminal `psql` e execute o comando <code>CREATE DATABASE portal_b2b_db;</code>.</li>
+          <li style="margin-top: 0.5rem;"><strong>Criação de Usuário e Privilégios:</strong> Crie um novo usuário chamado `app_b2b` com senha e conceda privilégios de conexão ao banco `portal_b2b_db`.</li>
+          <li style="margin-top: 0.5rem;"><strong>Execução de DDL via Script `.sql`:</strong> Crie o arquivo <code>src/config/schema.sql</code> no seu projeto contendo as tabelas <code>clientes_b2b</code> e <code>pedidos</code> com restrições PK/FK e execute o script usando o comando `\i` do `psql` ou o Query Tool do pgAdmin.</li>
+          <li style="margin-top: 0.5rem;"><strong>Configuração do arquivo `.env`:</strong> Atualize as variáveis de conexão no arquivo <code>.env</code> do projeto Node.js com o `DB_HOST`, `DB_USER`, `DB_PASS` e `DB_NAME` criados.</li>
+        </ol>
+      </div>
+    </div>
+
+    <footer>
+      Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados / Back-End
+    </footer>
+
+  </div>
+
+</body>
+</html>

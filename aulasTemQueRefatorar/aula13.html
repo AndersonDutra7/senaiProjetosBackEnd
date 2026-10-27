@@ -1,0 +1,801 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 13 – Estrutura MVC Aplicada ao Projeto</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+    :root {
+      --bg-main: #0b0f19;
+      --bg-card: #111827;
+      --bg-card-hover: #1f2937;
+      --border-color: #1f2937;
+      --border-highlight: #374151;
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.15);
+      --secondary: #818cf8;
+      --accent: #f43f5e;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(31, 41, 55, 0.5) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-glow);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .header-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* SECTION CARDS */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: border-color 0.3s ease;
+      position: relative;
+    }
+
+    .section-card:hover {
+      border-color: var(--border-highlight);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #000;
+      font-weight: 800;
+      font-size: 1.1rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-title-group h2 {
+      font-size: 1.4rem;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .section-title-group .time-tag {
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* CONTENT STYLING */
+    p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    p strong {
+      color: var(--text-main);
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e5e7eb;
+      font-size: 0.88rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .sub-card {
+      background: rgba(31, 41, 55, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .sub-card h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sub-card p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* TABLES */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.92rem;
+      background: rgba(17, 24, 39, 0.6);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .custom-table th {
+      background: rgba(31, 41, 55, 0.8);
+      color: var(--primary);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .custom-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+      color: var(--text-muted);
+    }
+
+    .custom-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .custom-table td strong {
+      color: var(--text-main);
+    }
+
+    /* BADGES & TAGS */
+    .badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    .badge-route { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+    .badge-controller { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid #fbbf24; }
+    .badge-model { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid #34d399; }
+
+    /* HIGHLIGHTS */
+    .highlight-box {
+      background: rgba(56, 189, 248, 0.05);
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0 10px 10px 0;
+      margin: 1.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .highlight-box.warning {
+      background: rgba(251, 191, 36, 0.05);
+      border-left-color: var(--warning);
+    }
+
+    .highlight-box.success {
+      background: rgba(52, 211, 153, 0.05);
+      border-left-color: var(--success);
+    }
+
+    .highlight-box.danger {
+      background: rgba(244, 63, 94, 0.05);
+      border-left-color: var(--accent);
+    }
+
+    .highlight-box strong {
+      color: #fff;
+    }
+
+    /* STEPS / WORKFLOW */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1rem;
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .step-badge {
+      background: var(--border-highlight);
+      color: var(--primary);
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* QUIZ STYLING */
+    .quiz-card {
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .quiz-question {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-option {
+      background: rgba(31, 41, 55, 0.5);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .quiz-answer {
+      background: rgba(52, 211, 153, 0.1);
+      border-left: 4px solid var(--success);
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    /* WORKSHOP BOX */
+    .workshop-box {
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .workshop-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- HEADER DE APRESENTAÇÃO -->
+    <header>
+      <div class="header-badge">
+        <span>📖 Guia Didático da Aula</span>
+      </div>
+      <h1>Estrutura MVC Aplicada ao Projeto</h1>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0;">
+        Padrão de arquitetura de software Model-View-Controller (MVC) aplicado ao Express.js e PostgreSQL: organização modular de rotas, controllers e models, desacoplamento de responsabilidades e estruturação profissional da aplicação B2B.
+      </p>
+      
+      <div class="header-info">
+        <div class="info-item">
+          <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+        </div>
+        <div class="info-item">
+          <span>🎯 <strong>Foco:</strong> Arquitetura MVC, Express Router, Controllers, Models, Separação de Camadas & Mapeamento de Rotas</span>
+        </div>
+        <div class="info-item">
+          <span>🚀 <strong>Módulo:</strong> Banco de Dados & Back-End</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- SEÇÃO 1 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div class="section-title-group">
+          <h2>Organização de Rotas, Controllers e Models no Express</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        O padrão de arquitetura <strong>MVC (Model-View-Controller)</strong> divide uma aplicação em três componentes principais de software. Em APIs RESTful modernas desenvolvidas com Node.js e Express, a camada <strong>View</strong> é substituída pelas respostas estruturadas em formato <strong>JSON</strong> enviadas ao cliente HTTP.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. As Três Camadas no Contexto de APIs RESTful</h3>
+
+      <div class="content-grid">
+        <div class="sub-card">
+          <h3><span class="badge badge-route">ROUTES (ROTAS)</span></h3>
+          <p>Mapeia os verbos HTTP (<code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>) e URLs para funções específicas. É a porta de entrada da aplicação, sem conter lógica de negócio.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-controller">CONTROLLERS</span></h3>
+          <p>Orquestra o fluxo da requisição. Recebe os dados de entrada (<code>req.params</code>, <code>req.body</code>, <code>req.query</code>), chama a camada Model, trata erros e envia a resposta HTTP (<code>res.status().json()</code>).</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-model">MODELS</span></h3>
+          <p>Gerencia as regras de negócio e o acesso direto ao banco de dados. Executa instruções SQL (queries parametrizadas com `pg.Pool`) e retorna dados puros.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Por que Não Colocar Tudo em um Único Arquivo?</h3>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Abordagem monolítica em arquivo único (`server.js`)</th>
+            <th>Arquitetura MVC Modularizada</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>❌ Alto acoplamento: SQL, rotas e validações misturados em centenas de linhas.</td>
+            <td>✅ Baixo acoplamento: cada arquivo possui uma responsabilidade única e clara (SRP).</td>
+          </tr>
+          <tr>
+            <td>❌ Impossível reusar rotinas de banco de dados em diferentes partes do sistema.</td>
+            <td>✅ Reutilização: funções da camada Model podem ser chamadas por múltiplos Controllers.</td>
+          </tr>
+          <tr>
+            <td>❌ Testes unitários e de integração extremamente complexos.</td>
+            <td>✅ Testabilidade simples: é possível testar Models isoladamente sem simular rotas Express.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-box warning">
+        <strong>⚠️ O Anti-Pattern "Fat Controller":</strong> Um erro comum em projetos iniciantes é colocar comandos SQL dentro dos Controllers. O Controller deve ser <strong>enxuto (Thin Controller)</strong> — sua função é apenas orquestrar, delegando todas as operações de banco para o <strong>Model</strong>.
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div class="section-title-group">
+          <h2>Separação de Camadas — Da Rota à Consulta no Banco de Dados</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        Compreender o ciclo de vida e a rastreabilidade de uma requisição HTTP através das camadas da aplicação é essencial para o desenvolvimento seguro e depuração rápida.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. O Ciclo de Vida Completo de uma Requisição (Fluxo Passo a Passo)</h3>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-badge">1</div>
+          <div class="step-content">
+            <h4>Cliente HTTP (Postman / Frontend)</h4>
+            <p>O cliente envia a requisição <code>POST /api/v1/clientes</code> contendo o payload JSON com os dados do cliente B2B.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">2</div>
+          <div class="step-content">
+            <h4>Camada de Rotas (`routes/clienteRoutes.js`)</h4>
+            <p>O <code>express.Router</code> intercepta a requisição e a direciona para a função <code>clienteController.criarCliente</code>.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">3</div>
+          <div class="step-content">
+            <h4>Camada Controller (`controllers/clienteController.js`)</h4>
+            <p>Extrai os dados de <code>req.body</code>, valida o preenchimento de campos obrigatórios e invoca <code>clienteModel.salvar(dados)</code>.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">4</div>
+          <div class="step-content">
+            <h4>Camada Model (`models/clienteModel.js`)</h4>
+            <p>Monta o comando SQL parametrizado (`INSERT INTO clientes_b2b ... RETURNING *`) e o executa através da conexão do Pool (`db.query`).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">5</div>
+          <div class="step-content">
+            <h4>SGBD PostgreSQL & Retorno</h4>
+            <p>O PostgreSQL persiste o registro e devolve a nova linha criada para o Model, que a repassa ao Controller. O Controller então devolve a resposta HTTP com status <code>201 Created</code> e o JSON resultante ao cliente.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Implementação do Fluxo em Código Node.js (Exemplo Completo)</h3>
+
+      <p><strong>A. Camada Model (`src/models/clienteModel.js`):</strong></p>
+      <pre><code>import { query } from '../config/db.js';
+
+export const clienteModel = {
+  // Busca todos os clientes cadastrados
+  buscarTodos: async () => {
+    const text = 'SELECT id_cliente, cnpj, razao_social, email, telefone, ativo FROM clientes_b2b ORDER BY razao_social ASC';
+    const result = await query(text);
+    return result.rows;
+  },
+
+  // Busca um cliente pelo ID
+  buscarPorId: async (id) => {
+    const text = 'SELECT * FROM clientes_b2b WHERE id_cliente = $1';
+    const result = await query(text, [id]);
+    return result.rows[0];
+  },
+
+  // Cadastra um novo cliente com Prepared Statement
+  criar: async (dados) => {
+    const { cnpj, razao_social, email, telefone } = dados;
+    const text = `
+      INSERT INTO clientes_b2b (cnpj, razao_social, email, telefone)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *
+    `;
+    const values = [cnpj, razao_social, email, telefone];
+    const result = await query(text, values);
+    return result.rows[0];
+  }
+};</code></pre>
+
+      <p><strong>B. Camada Controller (`src/controllers/clienteController.js`):</strong></p>
+      <pre><code>import { clienteModel } from '../models/clienteModel.js';
+
+export const clienteController = {
+  listarClientes: async (req, res) => {
+    try {
+      const clientes = await clienteModel.buscarTodos();
+      return res.status(200).json({ success: true, count: clientes.length, data: clientes });
+    } catch (error) {
+      console.error('❌ Erro no clienteController.listarClientes:', error);
+      return res.status(500).json({ success: false, message: 'Erro interno ao buscar clientes.' });
+    }
+  },
+
+  cadastrarCliente: async (req, res) => {
+    try {
+      const { cnpj, razao_social, email, telefone } = req.body;
+
+      // Validação básica de entrada de dados no Controller
+      if (!cnpj || !razao_social || !email) {
+        return res.status(400).json({ success: false, message: 'Os campos CNPJ, Razão Social e E-mail são obrigatórios.' });
+      }
+
+      const novoCliente = await clienteModel.criar({ cnpj, razao_social, email, telefone });
+      return res.status(201).json({ success: true, message: 'Cliente cadastrado com sucesso!', data: novoCliente });
+    } catch (error) {
+      console.error('❌ Erro no clienteController.cadastrarCliente:', error);
+      return res.status(500).json({ success: false, message: 'Erro interno ao cadastrar cliente.' });
+    }
+  }
+};</code></pre>
+
+      <p><strong>C. Camada de Rotas (`src/routes/clienteRoutes.js`):</strong></p>
+      <pre><code>import { Router } from 'express';
+import { clienteController } from '../controllers/clienteController.js';
+
+const router = Router();
+
+// Mapeamento dos Endpoints HTTP
+router.get('/', clienteController.listarClientes);
+router.post('/', clienteController.cadastrarCliente);
+
+export default router;</code></pre>
+    </section>
+
+    <!-- SEÇÃO 3 (DESAFIO PRÁTICO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div class="section-title-group">
+          <h2>Desafio Prático — Estruturação das Pastas MVC e Mapeamento de Rotas</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        As equipes devem refatorar o projeto Node.js criando a estrutura oficial de diretórios MVC e registrar os módulos de rotas principais no arquivo central da aplicação.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Árvore Oficial de Arquivos do Projeto (`src/`)</h3>
+
+      <pre><code>portal-b2b-backend/
+├── .env
+├── .gitignore
+├── package.json
+└── src/
+    ├── config/
+    │   ├── db.js          <-- Módulo de conexão (pg.Pool)
+    │   ├── schema.sql     <-- DDL de criação
+    │   └── seeds.sql      <-- DML de povoamento
+    ├── models/
+    │   ├── clienteModel.js
+    │   └── produtoModel.js
+    ├── controllers/
+    │   ├── clienteController.js
+    │   └── produtoController.js
+    ├── routes/
+    │   ├── clienteRoutes.js
+    │   └── produtoRoutes.js
+    ├── app.js             <-- Configuração dos middlewares Express e Rotas
+    └── server.js          <-- Inicialização do servidor na porta 3000</code></pre>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Registro de Rotas no Arquivo Principal (`src/app.js`)</h3>
+
+      <pre><code>import express from 'express';
+import clienteRoutes from './routes/clienteRoutes.js';
+import produtoRoutes from './routes/produtoRoutes.js';
+
+const app = express();
+
+// Middlewares Globais
+app.use(express.json()); // Parser de JSON no body da requisição
+
+// Prefixagem e Mapeamento de Módulos de Rota
+app.use('/api/v1/clientes', clienteRoutes);
+app.use('/api/v1/produtos', produtoRoutes);
+
+// Rota de Healthcheck do Servidor
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK', timestamp: new Date() });
+});
+
+export default app;</code></pre>
+    </section>
+
+    <!-- SEÇÃO 4 (ENCERRAMENTO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div class="section-title-group">
+          <h2>Encerramento: Glossário da Aula + Quiz Final de Fixação</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 30 min</span>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">📚 Glossário Técnico da Aula</h3>
+
+      <div class="content-grid" style="margin-bottom: 2rem;">
+        <div class="sub-card">
+          <h3>Pattern MVC</h3>
+          <p>Padrão arquitetural que divide a aplicação nas camadas de Modelo (Model), Visão (View) e Controle (Controller).</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Express Router</h3>
+          <p>Mapeador de rotas modular do Express.js que permite agrupar endpoints por recurso e exportá-los para o `app.js`.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Thin Controller</h3>
+          <p>Boas práticas de arquitetura onde o Controller é enxuto, concentrando-se apenas na validação da requisição e delegação para o Model.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Data Access Object (DAO)</h3>
+          <p>Padrão de projeto implementado dentro da camada Model para encapsular o acesso e execução de queries no banco de dados.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">❓ Quiz Final de Fixação</h3>
+
+      <!-- QUESTÃO 1 -->
+      <div class="quiz-card">
+        <div class="quiz-question">1. Qual é a responsabilidade primária da camada Controller na arquitetura MVC para APIs RESTful?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Executar comandos DDL de criação de tabelas no PostgreSQL.</div>
+          <div class="quiz-option">B) Receber a requisição HTTP, validar parâmetros básicos de entrada, acionar o Model e enviar a resposta ao cliente.</div>
+          <div class="quiz-option">C) Renderizar telas em HTML e CSS diretamente no servidor.</div>
+          <div class="quiz-option">D) Gerenciar a criptografia das senhas no arquivo `.env`.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Receber a requisição HTTP, validar entradas, acionar o Model e responder ao cliente.</strong><br>
+          <em>Justificativa:</em> O Controller age como um orquestrador entre a requisição externa do cliente e a lógica de persistência do Model.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 2 -->
+      <div class="quiz-card">
+        <div class="quiz-question">2. Por que a instrução SQL `db.query('SELECT * FROM clientes')` NUNCA deve ser escrita diretamente dentro de um arquivo de rotas (`clienteRoutes.js`)?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Porque os arquivos de rotas são bloqueados pelo navegador.</div>
+          <div class="quiz-option">B) Porque viola a separação de responsabilidades (SRP), misturando mapeamento de rotas com acesso ao banco de dados e dificultando a manutenção.</div>
+          <div class="quiz-option">C) Porque o Express.js proíbe o uso de funções assíncronas em rotas.</div>
+          <div class="quiz-option">D) Porque obriga a reinicialização do PostgreSQL a cada requisição.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Porque viola a separação de responsabilidades (SRP).</strong><br>
+          <em>Justificativa:</em> As rotas servem exclusivamente para direcionar endpoints aos Controllers. A lógica de banco deve residir estritamente nos Models.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 3 -->
+      <div class="quiz-card">
+        <div class="quiz-question">3. No fluxo de criação de um registro (`POST`), qual componente é responsável por montar a instrução SQL parametrizada (`INSERT ... $1`)?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) A camada Model (`clienteModel.js`).</div>
+          <div class="quiz-option">B) A camada Router (`clienteRoutes.js`).</div>
+          <div class="quiz-option">C) O middleware global `express.json()`.</div>
+          <div class="quiz-option">D) O arquivo de inicialização do servidor (`server.js`).</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: A) A camada Model (`clienteModel.js`).</strong><br>
+          <em>Justificativa:</em> A camada Model é a única camada autorizada a conter SQL e interagir diretamente com a abstração do banco de dados.
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKSHOP INTEGRADO -->
+    <div class="workshop-box">
+      <div class="workshop-header">
+        <span>🛠️ Entregável da Aula 13 — Estruturação do Projeto na Arquitetura MVC</span>
+      </div>
+
+      <p style="color: #e5e7eb; margin-bottom: 1rem;">
+        Cada equipe deve refatorar o repositório organizando os arquivos nas pastas <code>routes/</code>, <code>controllers/</code> e <code>models/</code>, realizar o teste dos endpoints <code>GET</code> e <code>POST</code> via Postman/Insomnia com sucesso e realizar o commit:<br>
+        <code>git commit -m "feat: estrutura arquitetural mvc e rotas de clientes b2b implementadas"</code>
+      </p>
+    </div>
+
+    <footer>
+      Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados / Back-End
+    </footer>
+
+  </div>
+
+</body>
+</html>

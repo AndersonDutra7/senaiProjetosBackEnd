@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 21 – Execução de Testes e Relatórios</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+    :root {
+      --bg-main: #0b0f19;
+      --bg-card: #111827;
+      --bg-card-hover: #1f2937;
+      --border-color: #1f2937;
+      --border-highlight: #374151;
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.15);
+      --secondary: #818cf8;
+      --accent: #f43f5e;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(31, 41, 55, 0.5) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-glow);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .header-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* SECTION CARDS */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: border-color 0.3s ease;
+      position: relative;
+    }
+
+    .section-card:hover {
+      border-color: var(--border-highlight);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #000;
+      font-weight: 800;
+      font-size: 1.1rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-title-group h2 {
+      font-size: 1.4rem;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .section-title-group .time-tag {
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* CONTENT STYLING */
+    p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    p strong {
+      color: var(--text-main);
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e5e7eb;
+      font-size: 0.88rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .sub-card {
+      background: rgba(31, 41, 55, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .sub-card h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sub-card p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* TABLES */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.92rem;
+      background: rgba(17, 24, 39, 0.6);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .custom-table th {
+      background: rgba(31, 41, 55, 0.8);
+      color: var(--primary);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .custom-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+      color: var(--text-muted);
+    }
+
+    .custom-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .custom-table td strong {
+      color: var(--text-main);
+    }
+
+    /* BADGES & TAGS */
+    .badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    .badge-jest { background: rgba(244, 63, 94, 0.2); color: #f43f5e; border: 1px solid #f43f5e; }
+    .badge-supertest { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+    .badge-coverage { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid #34d399; }
+    .badge-report { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid #fbbf24; }
+
+    /* HIGHLIGHTS */
+    .highlight-box {
+      background: rgba(56, 189, 248, 0.05);
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0 10px 10px 0;
+      margin: 1.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .highlight-box.warning {
+      background: rgba(251, 191, 36, 0.05);
+      border-left-color: var(--warning);
+    }
+
+    .highlight-box.success {
+      background: rgba(52, 211, 153, 0.05);
+      border-left-color: var(--success);
+    }
+
+    .highlight-box.danger {
+      background: rgba(244, 63, 94, 0.05);
+      border-left-color: var(--accent);
+    }
+
+    .highlight-box strong {
+      color: #fff;
+    }
+
+    /* STEPS / WORKFLOW */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1rem;
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .step-badge {
+      background: var(--border-highlight);
+      color: var(--primary);
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* QUIZ STYLING */
+    .quiz-card {
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .quiz-question {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-option {
+      background: rgba(31, 41, 55, 0.5);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .quiz-answer {
+      background: rgba(52, 211, 153, 0.1);
+      border-left: 4px solid var(--success);
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    /* WORKSHOP BOX */
+    .workshop-box {
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .workshop-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- HEADER DE APRESENTAÇÃO -->
+    <header>
+      <div class="header-badge">
+        <span>📖 Guia Didático da Aula</span>
+      </div>
+      <h1>Execução de Testes e Relatórios</h1>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0;">
+        Prática de automação de testes em Node.js com Jest e Supertest, execução das suítes unitárias e de integração, análise de cobertura de código (Code Coverage) e elaboração do Relatório de Execução de Testes do projeto.
+      </p>
+      
+      <div class="header-info">
+        <div class="info-item">
+          <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+        </div>
+        <div class="info-item">
+          <span>🎯 <strong>Foco:</strong> Jest, Supertest, Execução Automatizada, Cobertura de Código, Log de Defeitos & Relatório de Execução</span>
+        </div>
+        <div class="info-item">
+          <span>🚀 <strong>Módulo:</strong> Testes, Implantação, Manutenção e Entrega Final</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- SEÇÃO 1 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div class="section-title-group">
+          <h2>Ferramentas de Teste para Node.js — Testes de Rotas e Funções</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        Para garantir que uma aplicação server-side se comporte conforme esperado, utilizamos ecossistemas automatizados de testes. No universo Node.js, a combinação entre <strong>Jest</strong> (test runner e assertions) e <strong>Supertest</strong> (requisições HTTP virtuais) é o padrão de mercado mais utilizado.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Comparativo das Ferramentas de Teste no Ecossistema Node.js</h3>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Ferramenta</th>
+            <th>Papel Principal</th>
+            <th>Vantagens e Recursos Integrados</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-jest">Jest</span></td>
+            <td>Test Runner, Asserções e Mocks</td>
+            <td>Zero configuração inicial, relatórios de cobertura embutidos (<code>--coverage</code>), execução paralela e sintaxe limpa (<code>describe</code>, <code>it</code>, <code>expect</code>).</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-supertest">Supertest</span></td>
+            <td>Testes de Integração HTTP</td>
+            <td>Permite disparar requisições <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code> diretamente para a instância da aplicação Express sem precisar alocar uma porta de rede real.</td>
+          </tr>
+          <tr>
+            <td><strong>Mocha + Chai</strong></td>
+            <td>Framework de Testes + Asserção</td>
+            <td>Arquitetura modular clássica que exige montagem individual do test runner (Mocha), biblioteca de asserção (Chai) e biblioteca de mocks (Sinon).</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Estrutura de Código: Teste Unitário vs Teste de Rota HTTP</h3>
+
+      <div class="content-grid">
+        <div class="sub-card">
+          <h3><span class="badge badge-jest">1. TESTE UNITÁRIO (Função / Regra)</span></h3>
+          <pre><code>// services/calculadoraDesconto.test.js
+const { calcularDesconto } = require('./descontoService');
+
+describe('Serviço de Desconto', () => {
+  it('Deve aplicar 10% de desconto para compras acima de R$ 500', () => {
+    const resultado = calcularDesconto(600.00);
+    expect(resultado).toBe(540.00);
+  });
+});</code></pre>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-supertest">2. TESTE DE ROTA (Supertest + Express)</span></h3>
+          <pre><code>// routes/autenticacao.test.js
+const request = require('supertest');
+const app = require('../src/app');
+
+describe('POST /api/auth/login', () => {
+  it('Deve retornar 401 para credenciais inválidas', async () => {
+    const res = await request(app)
+      .post('/api/auth/login')
+      .send({ email: 'errado@test.com', senha: '123' });
+
+    expect(res.status).toBe(401);
+    expect(res.body.error).toBe('Credenciais inválidas');
+  });
+});</code></pre>
+        </div>
+      </div>
+
+      <div class="highlight-box success">
+        <strong>💡 Configuração Recomendada no <code>package.json</code>:</strong> adicione a flag <code>--runInBand</code> ao script de testes caso seus testes de integração façam edições concorrentes no banco de dados PostgreSQL de testes, garantindo execução sequencial e evitando conflitos de chave primária.
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div class="section-title-group">
+          <h2>Execução de Testes e Relatório de Cobertura (Code Coverage)</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 45 min</span>
+        </div>
+      </div>
+
+      <p>
+        A execução automatizada dos testes não apenas verifica a aprovação das regras de negócio, mas também gera métricas de qualidade chamadas de <strong>Code Coverage (Cobertura de Código)</strong>. Essa análise identifica exatamente quais linhas, funções e ramificações condicionais (<code>if/else</code>) foram atingidas pela suíte de testes.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Análise das Métricas de Cobertura do Jest</h3>
+
+      <div class="content-grid">
+        <div class="sub-card">
+          <h3><span class="badge badge-coverage">% Statements</span></h3>
+          <p>Mede a porcentagem de instruções/declarações executadas no código-fonte durante a execução dos testes.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-coverage">% Branches</span></h3>
+          <p>Mede se todas as ramificações lógicas (ex: blocos <code>if/else</code>, <code>switch</code>, operadores ternários) foram testadas em ambos os caminhos.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-coverage">% Functions</span></h3>
+          <p>Verifica quantas das funções e métodos declarados no projeto foram efetivamente chamados ao menos uma vez.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-coverage">% Lines</span></h3>
+          <p>Indica a porcentagem de linhas de código executadas pelo Jest, apontando exatamente quais trechos ficaram descobertos.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Estrutura de um Relatório de Execução de Testes Formal</h3>
+
+      <p>
+        Após a execução da bateria de testes proposta no Plano de Testes (Aula 20), a equipe compila os resultados no **Relatório de Execução de Testes (Test Execution Report)**. Este documento deve contemplar:
+      </p>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-badge">A</div>
+          <div class="step-content">
+            <h4>Resumo Numérico de Execução</h4>
+            <p>Total de Casos de Teste planejados vs executados, taxa de aprovação (<code>Pass</code>), falhas (<code>Fail</code>) e ignorados (<code>Skipped</code>).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">B</div>
+          <div class="step-content">
+            <h4>Métricas de Cobertura Alcançadas</h4>
+            <p>Apresentação da porcentagem total de cobertura gerada pelo comando <code>npm test -- --coverage</code> no terminal.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">C</div>
+          <div class="step-content">
+            <h4>Log de Defeitos e Erros Encontrados (Bug Tracking)</h4>
+            <p>Registro das falhas identificadas durante a execução, severidade do bug, responsável pela correção e status (Resolvido / Pendente).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">D</div>
+          <div class="step-content">
+            <h4>Parecer Final de Qualidade</h4>
+            <p>Declaratório informando se a versão testada está homologada e estável para ser submetida ao processo de implantação/deploy.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 3 (DESAFIO PRÁTICO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div class="section-title-group">
+          <h2>Desafio Prático — Execução dos Testes da API do Projeto e Geração do Relatório</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 45 min</span>
+        </div>
+      </div>
+
+      <p>
+        As equipes irão executar a suíte completa de testes unitários e de integração desenvolvidos para a API Node.js/PostgreSQL, analisar o relatório de cobertura HTML gerado pelo Jest e formalizar o documento de **Relatório de Execução de Testes**.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Roteiro de Execução do Desafio</h3>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-badge">1</div>
+          <div class="step-content">
+            <h4>Preparação do Ambiente de Banco de Testes</h4>
+            <p>Garantir que a variável de ambiente aponta para o banco de testes (<code>NODE_ENV=test</code>) e rodar os scripts de criação de tabelas (<code>schema.sql</code>).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">2</div>
+          <div class="step-content">
+            <h4>Disparo da Suíte e Geração de Coverage</h4>
+            <p>Executar no terminal o comando <code>npm test -- --coverage</code>. Inspecionar os relatórios gerados na pasta <code>coverage/lcov-report/index.html</code>.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">3</div>
+          <div class="step-content">
+            <h4>Correção de Falhas e Refatoração</h4>
+            <p>Caso algum teste falhe (status `FAIL`), depurar o Controller/Model correspondente, corrigir o código e reexecutar a suíte até obter 100% de sucesso.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">4</div>
+          <div class="step-content">
+            <h4>Elaboração do Documento `docs/RELATORIO_DE_TESTES.md`</h4>
+            <p>Preencher o documento consolidando os resultados reais obtidos no terminal para cada Caso de Teste definido na Aula 20.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Modelo da Tabela de Execução para o Relatório</h3>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>ID Caso</th>
+            <th>Módulo / Rota Testada</th>
+            <th>Resultado Esperado</th>
+            <th>Resultado Obtido</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>CT-01</strong></td>
+            <td><code>POST /api/login</code></td>
+            <td>Status 200 + Token JWT no corpo da resposta</td>
+            <td>Status 200 e token formatado recebido com sucesso</td>
+            <td><span class="badge badge-coverage">APROVADO</span></td>
+          </tr>
+          <tr>
+            <td><strong>CT-02</strong></td>
+            <td><code>POST /api/login</code></td>
+            <td>Status 401 para senha incorreta</td>
+            <td>Status 401 retornado conforme esperado</td>
+            <td><span class="badge badge-coverage">APROVADO</span></td>
+          </tr>
+          <tr>
+            <td><strong>CT-03</strong></td>
+            <td><code>POST /api/produtos</code></td>
+            <td>Status 400 para preço negativo (Zod)</td>
+            <td>Status 400 retornado com array de erros do Zod</td>
+            <td><span class="badge badge-coverage">APROVADO</span></td>
+          </tr>
+          <tr>
+            <td><strong>CT-04</strong></td>
+            <td><code>POST /api/pedidos</code></td>
+            <td>Rollback e Status 400 para estoque insuficiente</td>
+            <td>Transação desfeita e mensagem de erro informada</td>
+            <td><span class="badge badge-coverage">APROVADO</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SEÇÃO 4 (ENCERRAMENTO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div class="section-title-group">
+          <h2>Encerramento: Glossário da Aula + Quiz Final de Fixação</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 30 min</span>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">📚 Glossário Técnico da Aula</h3>
+
+      <div class="content-grid" style="margin-bottom: 2rem;">
+        <div class="sub-card">
+          <h3>Jest</h3>
+          <p>Framework de testes em JavaScript desenvolvido pelo Meta, com suporte nativo a asserções, mocks e relatórios de cobertura de código.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Supertest</h3>
+          <p>Biblioteca de abstração de testes HTTP que permite simular requisições contra aplicações web Node.js sem a necessidade de escutar portas reais.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Code Coverage</h3>
+          <p>Métrica que indica o percentual de código-fonte de uma aplicação que é efetivamente testado pelas suítes de testes automatizados.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Relatório de Execução</h3>
+          <p>Documento técnico que consolida as evidências, estatísticas de aprovação/falha e o registro de bugs encontrados durante a execução dos testes.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">❓ Quiz Final de Fixação</h3>
+
+      <!-- QUESTÃO 1 -->
+      <div class="quiz-card">
+        <div class="quiz-question">1. Qual é a grande vantagem prática de utilizar a biblioteca `Supertest` em conjunto com o `Jest` para testar uma API REST criada em Express?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) O Supertest converte as rotas do Express diretamente para linguagens de banco de dados SQL.</div>
+          <div class="quiz-option">B) O Supertest permite realizar requisições HTTP simuladas diretamente sobre a instância da aplicação Express sem precisar abrir uma porta de rede real no sistema operacional.</div>
+          <div class="quiz-option">C) O Supertest elimina a necessidade de tratar erros assíncronos na aplicação.</div>
+          <div class="quiz-option">D) O Supertest substitui o uso do PostgreSQL por arquivos de texto.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Permite realizar requisições simuladas sem precisar abrir uma porta de rede real.</strong><br>
+          <em>Justificativa:</em> O Supertest consome a instância do servidor Express diretamente, tornando os testes de integração HTTP extremamente ágeis e isolados de conflitos de rede.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 2 -->
+      <div class="quiz-card">
+        <div class="quiz-question">2. O que a métrica de "Branch Coverage" (Cobertura de Ramificações) indica no relatório do Jest?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Quantas branches do repositório Git foram mescladas com a branch `main`.</div>
+          <div class="quiz-option">B) A porcentagem de funções matemáticas do código que foram exportadas.</div>
+          <div class="quiz-option">C) Se todas as alternativas de estruturas condicionais (como `if/else` ou `switch/case`) foram testadas em ambos os caminhos possíveis.</div>
+          <div class="quiz-option">D) Quantas rotas foram excluídas da documentação da API.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: C) Se todas as alternativas de estruturas condicionais foram testadas nos caminhos verdadeiro e falso.</strong><br>
+          <em>Justificativa:</em> A cobertura de ramificações garante que não existam caminhos decisórios no código que tenham ficado sem validação pelos testes.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 3 -->
+      <div class="quiz-card">
+        <div class="quiz-question">3. Qual é a principal finalidade de elaborar um Relatório de Execução de Testes ao final do ciclo de validações do software?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Consolidar as evidências de testes, registrar o percentual de aprovação, listar os bugs encontrados e formalizar a aprovação da aplicação para o deploy.</div>
+          <div class="quiz-option">B) Desabilitar a validação de tokens JWT no ambiente de produção.</div>
+          <div class="quiz-option">C) Apagar o histórico de commits do repositório Git do projeto.</div>
+          <div class="quiz-option">D) Substituir o arquivo `.env` do servidor por um script em HTML.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: A) Consolidar evidências, estatísticas, bugs encontrados e formalizar a aprovação para deploy.</strong><br>
+          <em>Justificativa:</em> O relatório de execução é o documento auditável que comprova que o software atingiu os parâmetros de qualidade exigidos para ir à produção.
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKSHOP INTEGRADO -->
+    <div class="workshop-box">
+      <div class="workshop-header">
+        <span>🛠️ Entregável da Aula 21 — Relatório de Execução de Testes</span>
+      </div>
+
+      <p style="color: #e5e7eb; margin-bottom: 1rem;">
+        Todas as equipes devem comitar no repositório o relatório consolidado de execução dos testes da aplicação e o registro de cobertura de código:<br>
+        <code>git commit -m "test: execucao da suite de testes e geracao do relatorio de testes (docs/RELATORIO_DE_TESTES.md)"</code>
+      </p>
+    </div>
+
+    <footer>
+      Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados / Back-End
+    </footer>
+
+  </div>
+
+</body>
+</html>

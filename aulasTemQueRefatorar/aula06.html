@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aula 06 – Consolidação do Planejamento do Projeto</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+      :root {
+        --bg-main: #0b0f19;
+        --bg-card: #111827;
+        --bg-card-hover: #1f2937;
+        --border-color: #1f2937;
+        --border-highlight: #374151;
+        --primary: #38bdf8;
+        --primary-glow: rgba(56, 189, 248, 0.15);
+        --secondary: #818cf8;
+        --accent: #f43f5e;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --text-main: #f3f4f6;
+        --text-muted: #9ca3af;
+        --text-dim: #6b7280;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        line-height: 1.6;
+        padding: 2rem 1rem;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      /* HEADER */
+      header {
+        background: linear-gradient(
+          135deg,
+          rgba(17, 24, 39, 0.9) 0%,
+          rgba(31, 41, 55, 0.5) 100%
+        );
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 6px;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          var(--primary),
+          var(--secondary)
+        );
+      }
+
+      .header-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--primary-glow);
+        color: var(--primary);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #ffffff;
+        margin-bottom: 0.75rem;
+      }
+
+      .header-info {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .info-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* SECTION CARDS */
+      .section-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        transition: border-color 0.3s ease;
+        position: relative;
+      }
+
+      .section-card:hover {
+        border-color: var(--border-highlight);
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .section-number {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: #000;
+        font-weight: 800;
+        font-size: 1.1rem;
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .section-title-group h2 {
+        font-size: 1.4rem;
+        color: #ffffff;
+        font-weight: 700;
+      }
+
+      .section-title-group .time-tag {
+        font-size: 0.8rem;
+        color: var(--primary);
+        font-weight: 500;
+      }
+
+      /* CONTENT STYLING */
+      p {
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+
+      p strong {
+        color: var(--text-main);
+      }
+
+      code {
+        font-family: 'Fira Code', monospace;
+        background: rgba(56, 189, 248, 0.1);
+        color: var(--primary);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+
+      pre {
+        background: #090d16;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+      }
+
+      pre code {
+        background: transparent;
+        padding: 0;
+        color: #e5e7eb;
+        font-size: 0.88rem;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.25rem;
+        margin: 1.5rem 0;
+      }
+
+      .sub-card {
+        background: rgba(31, 41, 55, 0.4);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.25rem;
+      }
+
+      .sub-card h3 {
+        font-size: 1.05rem;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .sub-card p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+
+      /* TABLES */
+      .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.25rem 0;
+        font-size: 0.92rem;
+        background: rgba(17, 24, 39, 0.6);
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+      }
+
+      .custom-table th {
+        background: rgba(31, 41, 55, 0.8);
+        color: var(--primary);
+        text-align: left;
+        padding: 0.75rem 1rem;
+        font-weight: 600;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .custom-table td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+        color: var(--text-muted);
+      }
+
+      .custom-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .custom-table td strong {
+        color: var(--text-main);
+      }
+
+      /* BADGES & TAGS */
+      .badge {
+        display: inline-block;
+        font-family: 'Fira Code', monospace;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+      }
+      .badge-ct {
+        background: rgba(129, 140, 248, 0.2);
+        color: #818cf8;
+        border: 1px solid #818cf8;
+      }
+      .badge-sec {
+        background: rgba(52, 211, 153, 0.2);
+        color: #34d399;
+        border: 1px solid #34d399;
+      }
+
+      /* HIGHLIGHTS */
+      .highlight-box {
+        background: rgba(56, 189, 248, 0.05);
+        border-left: 4px solid var(--primary);
+        padding: 1rem 1.25rem;
+        border-radius: 0 10px 10px 0;
+        margin: 1.25rem 0;
+        font-size: 0.95rem;
+      }
+
+      .highlight-box.warning {
+        background: rgba(251, 191, 36, 0.05);
+        border-left-color: var(--warning);
+      }
+
+      .highlight-box.success {
+        background: rgba(52, 211, 153, 0.05);
+        border-left-color: var(--success);
+      }
+
+      .highlight-box strong {
+        color: #fff;
+      }
+
+      /* STEPS / WORKFLOW */
+      .step-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+
+      .step-item {
+        display: flex;
+        gap: 1rem;
+        background: rgba(17, 24, 39, 0.8);
+        border: 1px solid var(--border-color);
+        padding: 1rem;
+        border-radius: 10px;
+      }
+
+      .step-badge {
+        background: var(--border-highlight);
+        color: var(--primary);
+        font-weight: 700;
+        font-family: 'Fira Code', monospace;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .step-content h4 {
+        color: #fff;
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .step-content p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+
+      /* WORKSHOP BOX */
+      .workshop-box {
+        background: linear-gradient(
+          135deg,
+          rgba(129, 140, 248, 0.1) 0%,
+          rgba(56, 189, 248, 0.05) 100%
+        );
+        border: 1px solid rgba(129, 140, 248, 0.3);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-top: 3rem;
+      }
+
+      .workshop-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--secondary);
+        font-weight: 700;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem 0;
+        color: var(--text-dim);
+        font-size: 0.85rem;
+        border-top: 1px solid var(--border-color);
+        margin-top: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- HEADER DE APRESENTAÇÃO -->
+      <header>
+        <div class="header-badge">
+          <span>📖 Guia Didático da Aula</span>
+        </div>
+        <h1>Consolidação do Planejamento do Projeto</h1>
+        <p
+          style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0"
+        >
+          Estruturação do Dossiê Técnico do Portal Comercial B2B, matriz de
+          decisão de tecnologias e apresentação da Entrega Parcial 1 (Módulo I
+          da SA).
+        </p>
+
+        <div class="header-info">
+          <div class="info-item">
+            <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+          </div>
+          <div class="info-item">
+            <span
+              >🎯 <strong>Foco:</strong> Escopo Técnico, Arquitetura B2B, RNFs &
+              Entrega Parcial 1</span
+            >
+          </div>
+          <div class="info-item">
+            <span
+              >🚀 <strong>Módulo:</strong> Situação de Aprendizagem (Módulo
+              I)</span
+            >
+          </div>
+        </div>
+      </header>
+
+      <!-- SEÇÃO 1 -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">01</div>
+          <div class="section-title-group">
+            <h2>
+              Estrutura de um Documento de Escopo Técnico do Projeto (Dossiê de
+              Arquitetura)
+            </h2>
+            <span class="time-tag">⏱️ Duração Estimada: 45 min</span>
+          </div>
+        </div>
+
+        <p>
+          O <strong>Documento de Escopo e Arquitetura Técnica</strong> é a
+          "planta baixa" de qualquer sistema corporativo. Em projetos
+          industriais como o <strong>Portal Comercial B2B</strong> (focado no
+          gerenciamento de pedidos de compras, clientes corporativos, inventário
+          e logística), esse documento alinha a equipe de desenvolvimento com a
+          área de infraestrutura e operações.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          Componentes Indispensáveis do Dossiê Técnico:
+        </h3>
+
+        <div class="content-grid">
+          <div class="sub-card">
+            <h3>🏛️ 1. Arquitetura em Camadas</h3>
+            <p>
+              Mapeamento das 3 camadas principais:
+              <strong>Apresentação (Front-End)</strong>,
+              <strong>Lógica de Negócio (API Node.js/Express)</strong> e
+              <strong>Persistência de Dados (PostgreSQL)</strong>, com os pontos
+              de integração com a logística industrial.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>🔌 2. Contratos de Integração</h3>
+            <p>
+              Especificação formal das rotas REST, formatos de mensagens (JSON),
+              payloads e códigos HTTP trocados entre o Portal B2B e o sistema
+              logístico.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>📦 3. Fluxo de Pedidos & Inventário</h3>
+            <p>
+              Diagrama sequencial que ilustra o ciclo de vida do pedido:
+              <em
+                >Criação do Pedido ➔ Reserva de Estoque no Inventário ➔
+                Atualização Logística ➔ Faturamento</em
+              >.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>⚙️ 4. Parametrização por Ambiente</h3>
+            <p>
+              Mapeamento claro das variáveis de configuração que mudam entre
+              <code>Desenvolvimento</code>, <code>Homologação</code> e
+              <code>Produção</code> (armazenadas via arquivos
+              <code>.env</code>).
+            </p>
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <strong>💡 Visão Industrial B2B:</strong> Em um portal comercial
+          corporativo, a integridade do inventário é crítica. O documento de
+          arquitetura deve prever transações atômicas no banco de dados para
+          evitar "venda duplicada" (quando dois clientes B2B compram o mesmo
+          lote de produto simultaneamente).
+        </div>
+      </section>
+
+      <!-- SEÇÃO 2 -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">02</div>
+          <div class="section-title-group">
+            <h2>
+              Definição das Tecnologias Alinhadas aos Requisitos Não-Funcionais
+              (RNFs)
+            </h2>
+            <span class="time-tag">⏱️ Duração Estimada: 45 min</span>
+          </div>
+        </div>
+
+        <p>
+          A escolha da pilha de tecnologia (Stack) nunca deve ser baseada apenas
+          em "preferência pessoal", mas sim na
+          <strong
+            >justificativa técnica frente aos Requisitos Não-Funcionais
+            (RNFs)</strong
+          >
+          do portal.
+        </p>
+
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Tecnologia Selecionada</th>
+              <th>Requisito Não-Funcional Atendido (RNF)</th>
+              <th>Justificativa Técnica de Arquitetura</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Node.js + Express</strong></td>
+              <td><code>RNF01: Desempenho & Alta Concorrência</code></td>
+              <td>
+                I/O Não-Bloqueante (Event Loop) ideal para APIs REST que lidam
+                com milhares de requisições assíncronas paralelas de consulta de
+                inventário e pedidos.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>PostgreSQL</strong></td>
+              <td><code>RNF02: Integridade & Propriedades ACID</code></td>
+              <td>
+                SGBD Relacional robusto que garante atomicidade e consistência
+                transacional no fechamento de pedidos, histórico financeiro e
+                estoque até a 3FN.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>HTML5 / CSS3 / JS Vanilla</strong></td>
+              <td><code>RNF03: Leveza & Compatibilidade Web</code></td>
+              <td>
+                Interface web leve, responsiva e de baixo consumo de banda para
+                acesso rápido via navegadores por compradores industriais e
+                representantes comerciais.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Git & GitHub</strong></td>
+              <td><code>RNF04: Rastreabilidade & Governança</code></td>
+              <td>
+                Versionamento distribuído com proteção de branches (`main`,
+                `develop`), testes e histórico de auditoria do código-fonte.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          Exemplo de Mapeamento de Parametrizações por Ambiente:
+        </h3>
+
+        <div class="sub-card">
+          <pre><code># Parametrizações no arquivo .env (Injetadas em runtime via dotenv)
+PORT=3000                           # Porta de execução do servidor Express
+NODE_ENV=development                # Ambiente (development | production)
+DB_HOST=localhost                   # Endereço do PostgreSQL
+DB_PORT=5432                        # Porta do Banco
+DB_NAME=portal_b2b_db               # Nome da base de dados relacional
+DB_USER=admin_b2b                   # Usuário da conexão
+DB_PASS=segredo_desenvolvimento     # Senha sensível
+LOGISTIC_API_URL=https://mock-log.com # Endpoint simulado da logística industrial</code></pre>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 3 (DESAFIO PRÁTICO - ENTREGA PARCIAL 1) -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">03</div>
+          <div class="section-title-group">
+            <h2>
+              Desafio Prático — Entrega Parcial 1 (Módulo I: Planejamento,
+              Arquitetura e Governança)
+            </h2>
+            <span class="time-tag">⏱️ Duração Estimada: 90 min</span>
+          </div>
+        </div>
+
+        <p>
+          Nesta seção, as equipes realizarão a consolidação, apresentação e
+          validação da <strong>Entrega Parcial 1 (Módulo I)</strong> do projeto
+          <strong>Portal Comercial B2B</strong>. O entregável deve ser
+          estruturado em relatório técnico e acompanhado do repositório de
+          código versionado.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          Composição Obrigatória das 4 Seções do Módulo I:
+        </h3>
+
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-badge">01</div>
+            <div class="step-content">
+              <h4>
+                Projeto de Arquitetura e Configuração
+                <span class="badge badge-ct">CT2</span>
+              </h4>
+              <p>
+                • Descrição da arquitetura do Portal B2B em camadas com diagrama
+                de componentes, fluxo de pedidos/inventário e pontos de
+                integração com a logística industrial.<br />
+                • Especificações de integração (sistemas envolvidos, contratos
+                REST/JSON) e decisões técnicas justificadas.<br />
+                • Lista das parametrizações previstas por ambiente (dev vs.
+                prod).
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">02</div>
+            <div class="step-content">
+              <h4>
+                Modelagem de Dados B2B <span class="badge badge-ct">CT8</span>
+              </h4>
+              <p>
+                • Modelo Conceitual (MER) englobando: Pedidos, Itens de Pedido,
+                Clientes B2B, Produtos e Inventário.<br />
+                • Modelo Lógico Relacional (DER) traduzido com Chaves Primárias
+                (PK), Chaves Estrangeiras (FK), tipos de dados nativos,
+                normalizado rigorosamente até a <strong>3FN</strong> e
+                acompanhado do Dicionário de Dados.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">03</div>
+            <div class="step-content">
+              <h4>
+                Backlog Priorizado e Roadmap de Atualizações
+                <span class="badge badge-ct">CT4</span>
+              </h4>
+              <p>
+                • Backlog do Portal priorizado via matriz MoSCoW com User
+                Stories e Critérios de Aceite.<br />
+                • Roadmap visual de releases e atualizações contendo marcos do
+                projeto, versionamento semântico, análise de riscos e
+                dependências técnicas.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">04</div>
+            <div class="step-content">
+              <h4>
+                Repositório Versionado (Estrutura e Governança)
+                <span class="badge badge-ct">CT2</span>
+              </h4>
+              <p>
+                • Repositório Git configurado com a estrutura física de pastas
+                MVC Node.js (`src/controllers`, `src/models`, `src/routes`,
+                `src/config`).<br />
+                • Arquivos obrigatórios de governança:
+                <code>README.md</code> corporativo, <code>.gitignore</code>,
+                <code>.env.example</code>.<br />
+                • Estratégia de branches (<code>main</code>,
+                <code>develop</code>, <code>feature/*</code>) e convenção de
+                <em>Conventional Commits</em> com evidência de commits iniciais
+                de <strong>todos os integrantes da equipe</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WORKSHOP INTEGRADO / ROTEIRO DE APRESENTACAO -->
+      <div class="workshop-box">
+        <div class="workshop-header">
+          <span
+            >🛠️ Roteiro de Apresentação e Validação do Módulo I (Banca do
+            Professor)</span
+          >
+        </div>
+
+        <p style="color: #e5e7eb; margin-bottom: 1rem">
+          Cada equipe terá
+          <strong>10 minutos para apresentar a consolidação do Módulo I</strong>
+          para a turma e o professor, demonstrando os artefatos técnicos
+          produzidos:
+        </p>
+
+        <div
+          style="
+            background: rgba(17, 24, 39, 0.7);
+            padding: 1.25rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+          "
+        >
+          <h4 style="color: var(--primary); margin-bottom: 0.75rem">
+            Checklist de Validação da Entrega Parcial 1:
+          </h4>
+          <ol>
+            <li>
+              <strong>Dossiê de Arquitetura:</strong> Apresentar a visão geral
+              do Portal Comercial B2B, o diagrama de camadas e as
+              parametrizações por ambiente (`.env`).
+            </li>
+            <li style="margin-top: 0.5rem">
+              <strong>Modelagem Relacional (DER):</strong> Mostrar o diagrama
+              DER até a 3FN e defender como a relação de
+              <code
+                >Clientes B2B ➔ Pedidos ➔ Itens ➔ Produtos ➔ Inventário</code
+              >
+              está estruturada.
+            </li>
+            <li style="margin-top: 0.5rem">
+              <strong>Quadro Kanban e Backlog:</strong> Apresentar o quadro de
+              tarefas, as User Stories priorizadas em <em>Must Have</em> e o
+              Roadmap da Sprint 1.
+            </li>
+            <li style="margin-top: 0.5rem">
+              <strong>Inspeção do Repositório Git:</strong> Abrir o terminal ou
+              GitHub para comprovar a estrutura física MVC, o arquivo
+              <code>.gitignore</code> configurado e o histórico de commits no
+              padrão <em>Conventional Commits</em> feito por todos os membros do
+              grupo.
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <footer>
+        Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados /
+        Back-End
+      </footer>
+    </div>
+  </body>
+</html>

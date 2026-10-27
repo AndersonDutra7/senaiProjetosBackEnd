@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 22 – Implantação de Sistemas para Internet</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+    :root {
+      --bg-main: #0b0f19;
+      --bg-card: #111827;
+      --bg-card-hover: #1f2937;
+      --border-color: #1f2937;
+      --border-highlight: #374151;
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.15);
+      --secondary: #818cf8;
+      --accent: #f43f5e;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(31, 41, 55, 0.5) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-glow);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .header-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* SECTION CARDS */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: border-color 0.3s ease;
+      position: relative;
+    }
+
+    .section-card:hover {
+      border-color: var(--border-highlight);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #000;
+      font-weight: 800;
+      font-size: 1.1rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-title-group h2 {
+      font-size: 1.4rem;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .section-title-group .time-tag {
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* CONTENT STYLING */
+    p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    p strong {
+      color: var(--text-main);
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e5e7eb;
+      font-size: 0.88rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .sub-card {
+      background: rgba(31, 41, 55, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .sub-card h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sub-card p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* TABLES */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.92rem;
+      background: rgba(17, 24, 39, 0.6);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .custom-table th {
+      background: rgba(31, 41, 55, 0.8);
+      color: var(--primary);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .custom-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+      color: var(--text-muted);
+    }
+
+    .custom-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .custom-table td strong {
+      color: var(--text-main);
+    }
+
+    /* BADGES & TAGS */
+    .badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    .badge-prod { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+    .badge-sec { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid #34d399; }
+    .badge-infra { background: rgba(129, 140, 248, 0.2); color: #818cf8; border: 1px solid #818cf8; }
+    .badge-deploy { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid #fbbf24; }
+
+    /* HIGHLIGHTS */
+    .highlight-box {
+      background: rgba(56, 189, 248, 0.05);
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0 10px 10px 0;
+      margin: 1.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .highlight-box.warning {
+      background: rgba(251, 191, 36, 0.05);
+      border-left-color: var(--warning);
+    }
+
+    .highlight-box.success {
+      background: rgba(52, 211, 153, 0.05);
+      border-left-color: var(--success);
+    }
+
+    .highlight-box.danger {
+      background: rgba(244, 63, 94, 0.05);
+      border-left-color: var(--accent);
+    }
+
+    .highlight-box strong {
+      color: #fff;
+    }
+
+    /* STEPS / WORKFLOW */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1rem;
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .step-badge {
+      background: var(--border-highlight);
+      color: var(--primary);
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* QUIZ STYLING */
+    .quiz-card {
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .quiz-question {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-option {
+      background: rgba(31, 41, 55, 0.5);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .quiz-answer {
+      background: rgba(52, 211, 153, 0.1);
+      border-left: 4px solid var(--success);
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    /* WORKSHOP BOX */
+    .workshop-box {
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .workshop-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- HEADER DE APRESENTAÇÃO -->
+    <header>
+      <div class="header-badge">
+        <span>📖 Guia Didático da Aula</span>
+      </div>
+      <h1>Implantação de Sistemas para Internet</h1>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0;">
+        Configuração e parametrização do ambiente de produção, elaboração do plano de implantação com estratégia de rollback, hardening de infraestrutura de rede e execução do deploy completo da aplicação Full Stack (Node.js + PostgreSQL + HTML/CSS/JS).
+      </p>
+      
+      <div class="header-info">
+        <div class="info-item">
+          <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+        </div>
+        <div class="info-item">
+          <span>🎯 <strong>Foco:</strong> Produção vs Dev, Variáveis de Ambiente, Plano de Deploy, SSL/TLS, Helmet, Rate Limit & Nuvem (PaaS)</span>
+        </div>
+        <div class="info-item">
+          <span>🚀 <strong>Módulo:</strong> Testes, Implantação, Manutenção e Entrega Final</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- SEÇÃO 1 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div class="section-title-group">
+          <h2>Configuração e Parametrização do Sistema para Produção</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 45 min</span>
+        </div>
+      </div>
+
+      <p>
+        A transição de uma aplicação do ambiente de desenvolvimento local para o ambiente de **produção (Production)** exige o desacoplamento total entre o código-fonte e as configurações específicas de infraestrutura. Todas as credenciais, URLs de conexões de banco de dados e chaves secretas devem ser injetadas exclusivamente via <strong>Variáveis de Ambiente (Environment Variables)</strong>.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Matriz Comparativa: Desenvolvimento vs Produção</h3>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Parâmetro</th>
+            <th>Ambiente de Desenvolvimento (Dev)</th>
+            <th>Ambiente de Produção (Prod)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>NODE_ENV</code></td>
+            <td><code>development</code> (exibe stack traces de erros)</td>
+            <td><code>production</code> (otimiza desempenho e oculta erros internos)</td>
+          </tr>
+          <tr>
+            <td>🌐 <strong>Porta do Servidor</strong></td>
+            <td>Porta fixa estática (ex.: <code>3000</code>)</td>
+            <td>Porta dinâmica fornecida pela nuvem (<code>process.env.PORT</code>)</td>
+          </tr>
+          <tr>
+            <td>🗄️ <strong>Banco de Dados</strong></td>
+            <td>Instância local no <code>localhost</code> (sem SSL)</td>
+            <td>Banco gerenciado em nuvem com conexão obrigatória via <strong>SSL/TLS</strong></td>
+          </tr>
+          <tr>
+            <td>🔑 <strong>Segredos / JWT</strong></td>
+            <td>Chave simples de rascunho (ex.: <code>"minhasenha123"</code>)</td>
+            <td>Hash criptográfico de alta entropia (256 bits) injetado no PaaS</td>
+          </tr>
+          <tr>
+            <td>🛡️ <strong>Origem CORS</strong></td>
+            <td>Geralmente liberado (<code>origin: "*"</code>)</td>
+            <td>Restrito estritamente ao domínio do Front-End publicado</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Configuração Dinâmica da Conexão PostgreSQL para Produção</h3>
+
+      <p>
+        No ambiente cloud, a biblioteca `pg` precisa reconhecer a string de conexão informada pelo provedor e habilitar a criptografia SSL obrigatória:
+      </p>
+
+      <pre><code>// src/config/database.js
+const { Pool } = require('pg');
+
+const isProduction = process.env.NODE_ENV === 'production';
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: isProduction ? { rejectUnauthorized: false } : false
+});
+
+module.exports = { pool };</code></pre>
+
+      <div class="highlight-box warning">
+        <strong>⚠️ Regra de Ouro da Infraestrutura:</strong> O arquivo <code>.env</code> com valores reais de produção JAMAIS deve ser commitado no repositório Git. Utilize o arquivo <code>.env.example</code> como modelo documentado no repositório e cadastre os valores reais no painel de configurações (Environment Variables) do seu provedor de nuvem.
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div class="section-title-group">
+          <h2>Elaboração do Plano de Implantação e Cronograma</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 45 min</span>
+        </div>
+      </div>
+
+      <p>
+        O <strong>Plano de Implantação (Deployment Plan)</strong> é o documento normativo que organiza as atividades, a ordem cronológica dos procedimentos, as janelas de manutenção e a estratégia de recuperação em caso de falha (<strong>Rollback Strategy</strong>) durante o processo de liberação da aplicação.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Fases do Cronograma de Implantação</h3>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-badge">1</div>
+          <div class="step-content">
+            <h4>Fase Pre-Deploy (Preparação do Terreno)</h4>
+            <p>Provisionamento do banco de dados relacional remoto no provedor Cloud, execução das DDLs (<code>schema.sql</code>), inserção dos dados semente e homologação das variáveis de ambiente no servidor.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">2</div>
+          <div class="step-content">
+            <h4>Fase Deploy (Publicação do Código)</h4>
+            <p>Conexão do repositório Git (branch `main`) ao serviço PaaS, execução do script de build (<code>npm run build</code>) e inicialização dos contêineres/processos do Node.js.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">3</div>
+          <div class="step-content">
+            <h4>Fase Post-Deploy (Testes de Fumaça / Smoke Tests)</h4>
+            <p>Validação dos endpoints críticos em produção (ex: chamada no endpoint `/healthcheck`, teste de login visual e verificação do tráfego HTTPS).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">4</div>
+          <div class="step-content">
+            <h4>Plano de Contingência e Rollback</h4>
+            <p>Em caso de falha crítica pós-implantação, aciona-se a reversão automática para a última tag Git estável ou a restauração do snapshot mais recente do banco de dados.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-box success">
+        <strong>💡 O que é um Endpoint de Healthcheck?</strong> É uma rota leve criada na API (ex: <code>GET /healthcheck</code>) que apenas verifica a conectividade com o banco de dados e retorna status HTTP 200 com <code>{ status: "ok" }</code>. Os servidores de hospedagem usam essa rota para saber se a aplicação está viva.
+      </div>
+    </section>
+
+    <!-- SEÇÃO 3 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div class="section-title-group">
+          <h2>Boas Práticas de Segurança na Infraestrutura de Deploy</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 45 min</span>
+        </div>
+      </div>
+
+      <p>
+        Publicar uma aplicação na internet expõe o servidor a escaneamentos automatizados e potenciais ataques maliciosos. Aplicar o princípio de <strong>Defense in Depth (Defesa em Profundidade)</strong> é fundamental para proteger os dados e os serviços.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Pilares Fundamentais do Hardening do Back-End</h3>
+
+      <div class="content-grid">
+        <div class="sub-card">
+          <h3><span class="badge badge-sec">1. Criptografia HTTPS (TLS)</span></h3>
+          <p>Todo o tráfego HTTP entre o navegador e o servidor Node.js deve ser criptografado via TLS (Porta 443 com certificado SSL), impedindo a interceptação de senhas e tokens por ataques Man-in-the-Middle.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-sec">2. Proteção de Cabeçalhos (Helmet.js)</span></h3>
+          <p>O middleware <code>helmet()</code> oculta o cabeçalho <code>X-Powered-By: Express</code> e injeta diretivas de segurança contra ataques XSS, Clickjacking e Content Sniffing.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-sec">3. Limitação de Taxa (Rate Limiting)</span></h3>
+          <p>O uso do <code>express-rate-limit</code> bloqueia ataques de força bruta no endpoint de login limitando a quantidade de requisições por IP em uma janela de tempo (ex.: máx 100 requisições / 15 min).</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-sec">4. Menor Privilégio no Banco</span></h3>
+          <p>A conta de banco usada pela aplicação Node.js em produção não deve ser o superusuário (`postgres`), mas sim um usuário com privilégios restritos às tabelas do schema da aplicação.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Exemplo de Aplicação das Camadas no Express</h3>
+
+      <pre><code>// src/app.js
+const express = require('express');
+const helmet = require('helmet');
+const cors = require('cors');
+const rateLimit = require('express-rate-limit');
+
+const app = express();
+
+// 1. Proteção de Cabeçalhos HTTP
+app.use(helmet());
+
+// 2. Restrição Estrita de CORS
+app.use(cors({
+  origin: process.env.CLIENT_URL || 'https://meusite.com',
+  optionsSuccessStatus: 200
+}));
+
+// 3. Limite de Requisições contra Força Bruta
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 100, // Limite de 100 requisições por IP
+  message: { error: 'Muitas requisições originadas deste IP, tente novamente mais tarde.' }
+});
+
+app.use('/api/', limiter);</code></pre>
+    </section>
+
+    <!-- SEÇÃO 4 (DESAFIO PRÁTICO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div class="section-title-group">
+          <h2>Desafio Prático — Deploy da Aplicação Full Stack em Nuvem</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 45 min</span>
+        </div>
+      </div>
+
+      <p>
+        As equipes deverão publicar a aplicação completa em ambiente de nuvem de produção/homologação (utilizando plataformas PaaS gratuitas como Render, Railway, Vercel ou Neon PostgreSQL), interligando todas as camadas em HTTPS.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Roteiro de Execução do Deploy em 4 Passos</h3>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-badge">A</div>
+          <div class="step-content">
+            <h4>1. Provisionamento do Banco PostgreSQL Remoto</h4>
+            <p>Criar a instância de PostgreSQL em nuvem (ex.: Render ou Neon). Conectar via DBeaver/pgAdmin ou terminal e executar o script DDL <code>schema.sql</code> para criar a estrutura das tabelas em produção.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">B</div>
+          <div class="step-content">
+            <h4>2. Deploy do Back-End Node.js (Web Service)</h4>
+            <p>Conectar o repositório GitHub da equipe no PaaS. Configurar as variáveis de ambiente em nuvem: <code>NODE_ENV=production</code>, <code>DATABASE_URL</code>, <code>JWT_SECRET</code> e <code>CLIENT_URL</code>.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">C</div>
+          <div class="step-content">
+            <h4>3. Deploy do Front-End e Vinculação</h4>
+            <p>Publicar as telas HTML/CSS/JS (ex.: Vercel, Netlify ou Render Static) e atualizar a URL base das chamadas `fetch()` no arquivo JS para apontar para o domínio HTTPS público do Back-End recém-criado.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">D</div>
+          <div class="step-content">
+            <h4>4. Execução de Smoke Tests e Validação</h4>
+            <p>Acessar a URL pública da aplicação, efetuar login, realizar cadastros no banco remoto e confirmar o funcionamento ponta a ponta sem erros no console do navegador.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Checklist de Validação da Implantação</h3>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Camada</th>
+            <th>Provedor / Recurso</th>
+            <th>Status Esperado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🗄️ <strong>Banco de Dados</strong></td>
+            <td>PostgreSQL em Nuvem (Neon/Render)</td>
+            <td>Tabelas criadas, conexão SSL ativa e dados gravados.</td>
+          </tr>
+          <tr>
+            <td>⚙️ <strong>Back-End API</strong></td>
+            <td>Node.js Web Service (Render/Railway)</td>
+            <td>Servidor online com HTTPS e rota <code>/healthcheck</code> respondendo 200 OK.</td>
+          </tr>
+          <tr>
+            <td>💻 <strong>Front-End</strong></td>
+            <td>Hospedagem Estática (Vercel/Render)</td>
+            <td>Interface visual acessível via HTTPS consumindo a API sem bloqueio de CORS.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SEÇÃO 5 (ENCERRAMENTO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">05</div>
+        <div class="section-title-group">
+          <h2>Encerramento: Glossário da Aula + Quiz Final de Fixação</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 30 min</span>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">📚 Glossário Técnico da Aula</h3>
+
+      <div class="content-grid" style="margin-bottom: 2rem;">
+        <div class="sub-card">
+          <h3>Deploy (Implantação)</h3>
+          <p>Processo automatizado ou manual de transferência, compilação e execução de uma aplicação em um ambiente de hospedagem acessível.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>PaaS (Platform as a Service)</h3>
+          <p>Modelo de computação em nuvem em que o provedor gerencia a infraestrutura (servidores, rede, SO) e o desenvolvedor apenas publica o código da aplicação.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Helmet.js</h3>
+          <p>Middleware essencial para Express que configura diversos cabeçalhos HTTP para defender a aplicação contra vulnerabilidades conhecidas da Web.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Rollback</h3>
+          <p>Procedimento de contingência que reverte a aplicação implantada para uma versão anterior estável caso ocorram falhas imprevistas.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">❓ Quiz Final de Fixação</h3>
+
+      <!-- QUESTÃO 1 -->
+      <div class="quiz-card">
+        <div class="quiz-question">1. Qual das alternativas representa uma ação CORRETA e obrigatória ao configurar as variáveis de ambiente para a publicação de uma API Node.js em ambiente de produção?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Commit do arquivo `.env` contendo as senhas reais do banco de dados no repositório público do GitHub.</div>
+          <div class="quiz-option">B) Definir a variável `NODE_ENV=production` e cadastrar as senhas e chaves secretas diretamente nas configurações de Environment Variables do painel da plataforma cloud.</div>
+          <div class="quiz-option">C) Apagar todas as variáveis de ambiente do código e escrever a string de conexão diretamente no arquivo `server.js`.</div>
+          <div class="quiz-option">D) Desativar o uso de portas dinâmicas e forçar o uso da porta 3000 em todos os servidores da nuvem.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Definir NODE_ENV=production e cadastrar as senhas no painel da nuvem.</strong><br>
+          <em>Justificativa:</em> As variáveis sensíveis devem ser injetadas pela plataforma de hospedagem em tempo de execução, mantendo o repositório seguro e limpo de segredos.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 2 -->
+      <div class="quiz-card">
+        <div class="quiz-question">2. Qual é o papel principal da biblioteca `helmet` quando incorporada como middleware em uma aplicação web Express em produção?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Executar os testes de integração do banco de dados automaticamente a cada 5 minutos.</div>
+          <div class="quiz-option">B) Configurar automaticamente diversos cabeçalhos HTTP de segurança para ocultar tecnologias internas e proteger contra ataques web como XSS e Clickjacking.</div>
+          <div class="quiz-option">C) Criptografar as senhas das contas de usuários utilizando o algoritmo bcrypt.</div>
+          <div class="quiz-option">D) Substituir a necessidade de utilizar o protocolo HTTPS/TLS no servidor.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Configurar cabeçalhos HTTP de segurança e ocultar tecnologias internas do servidor.</strong><br>
+          <em>Justificativa:</em> O `helmet()` realiza o hardening dos cabeçalhos HTTP de forma simples e eficiente, elevando o nível de segurança padrão do Express.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 3 -->
+      <div class="quiz-card">
+        <div class="quiz-question">3. O que define um procedimento de "Rollback" dentro de um Plano de Implantação de Software?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) O processo de reescrever todo o código-fonte em outra linguagem de programação.</div>
+          <div class="quiz-option">B) A ação emergencial de reverter o ambiente de produção para a versão anterior estável do código/banco de dados caso o novo deploy apresente erros graves.</div>
+          <div class="quiz-option">C) A sincronização do arquivo `.gitignore` com o banco de dados PostgreSQL.</div>
+          <div class="quiz-option">D) O bloqueio definitivo de todas as chamadas `fetch()` vindas do front-end.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Ação emergencial de reverter o ambiente para a versão anterior estável caso o deploy falhe.</strong><br>
+          <em>Justificativa:</em> O Rollback é a estratégia de contingência que garante a disponibilidade do sistema minimizando o tempo de inatividade (downtime) em imprevistos.
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKSHOP INTEGRADO -->
+    <div class="workshop-box">
+      <div class="workshop-header">
+        <span>🛠️ Entregável da Aula 22 — Aplicação Publicada em Produção</span>
+      </div>
+
+      <p style="color: #e5e7eb; margin-bottom: 1rem;">
+        Todas as equipes devem cadastrar no repositório a documentação do plano de implantação com os links das URLs públicas ativas do Back-End, Front-End e Banco de Dados remoto:<br>
+        <code>git commit -m "docs: elaboracao do plano de implantacao e links das aplicacoes em producao (docs/PLANO_DE_IMPLANTACAO.md)"</code>
+      </p>
+    </div>
+
+    <footer>
+      Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados / Back-End
+    </footer>
+
+  </div>
+
+</body>
+</html>

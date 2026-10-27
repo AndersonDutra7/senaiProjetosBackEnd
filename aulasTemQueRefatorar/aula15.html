@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 15 – Integração da API com o Banco de Dados</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+    :root {
+      --bg-main: #0b0f19;
+      --bg-card: #111827;
+      --bg-card-hover: #1f2937;
+      --border-color: #1f2937;
+      --border-highlight: #374151;
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.15);
+      --secondary: #818cf8;
+      --accent: #f43f5e;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(31, 41, 55, 0.5) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-glow);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .header-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* SECTION CARDS */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: border-color 0.3s ease;
+      position: relative;
+    }
+
+    .section-card:hover {
+      border-color: var(--border-highlight);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #000;
+      font-weight: 800;
+      font-size: 1.1rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-title-group h2 {
+      font-size: 1.4rem;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .section-title-group .time-tag {
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* CONTENT STYLING */
+    p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    p strong {
+      color: var(--text-main);
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e5e7eb;
+      font-size: 0.88rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .sub-card {
+      background: rgba(31, 41, 55, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .sub-card h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sub-card p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* TABLES */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.92rem;
+      background: rgba(17, 24, 39, 0.6);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .custom-table th {
+      background: rgba(31, 41, 55, 0.8);
+      color: var(--primary);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .custom-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+      color: var(--text-muted);
+    }
+
+    .custom-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .custom-table td strong {
+      color: var(--text-main);
+    }
+
+    /* BADGES & TAGS */
+    .badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    .badge-dao { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+    .badge-err { background: rgba(244, 63, 94, 0.2); color: #f43f5e; border: 1px solid #f43f5e; }
+    .badge-tx { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid #fbbf24; }
+
+    /* HIGHLIGHTS */
+    .highlight-box {
+      background: rgba(56, 189, 248, 0.05);
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0 10px 10px 0;
+      margin: 1.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .highlight-box.warning {
+      background: rgba(251, 191, 36, 0.05);
+      border-left-color: var(--warning);
+    }
+
+    .highlight-box.success {
+      background: rgba(52, 211, 153, 0.05);
+      border-left-color: var(--success);
+    }
+
+    .highlight-box.danger {
+      background: rgba(244, 63, 94, 0.05);
+      border-left-color: var(--accent);
+    }
+
+    .highlight-box strong {
+      color: #fff;
+    }
+
+    /* STEPS / WORKFLOW */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1rem;
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .step-badge {
+      background: var(--border-highlight);
+      color: var(--primary);
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* QUIZ STYLING */
+    .quiz-card {
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .quiz-question {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-option {
+      background: rgba(31, 41, 55, 0.5);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .quiz-answer {
+      background: rgba(52, 211, 153, 0.1);
+      border-left: 4px solid var(--success);
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    /* WORKSHOP BOX */
+    .workshop-box {
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .workshop-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- HEADER DE APRESENTAÇÃO -->
+    <header>
+      <div class="header-badge">
+        <span>📖 Guia Didático da Aula</span>
+      </div>
+      <h1>Integração da API com o Banco de Dados</h1>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0;">
+        Camada de Acesso a Dados com Padrão Repository/DAO, tratamento centralizado de erros do PostgreSQL, middleware global do Express e transações atômicas relacionais (BEGIN / COMMIT / ROLLBACK) no Portal Comercial B2B.
+      </p>
+      
+      <div class="header-info">
+        <div class="info-item">
+          <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+        </div>
+        <div class="info-item">
+          <span>🎯 <strong>Foco:</strong> DAO/Repository Pattern, Erros do PostgreSQL (23505, 23503), Middleware Global, Transações SQL & Integração Completa</span>
+        </div>
+        <div class="info-item">
+          <span>🚀 <strong>Módulo:</strong> Banco de Dados & Back-End</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- SEÇÃO 1 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div class="section-title-group">
+          <h2>Camada de Acesso a Dados (DAO / Repository Pattern)</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        À medida que a aplicação cresce, escrever queries SQL diretamente nos Models pode gerar duplicação de código e dificultar a troca ou evolução do mecanismo de persistência. A criação de uma <strong>Camada de Acesso a Dados (DAO / Repository Pattern)</strong> encapsula completamente os detalhes técnicos do SGBD.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Padrão Repository vs. Acesso Direto</h3>
+
+      <div class="content-grid">
+        <div class="sub-card">
+          <h3><span class="badge badge-dao">REPOSITORY PATTERN</span></h3>
+          <p>Atua como uma coleção em memória de objetos de domínio. Isola as regras de negócio de como os dados são lidos ou persistidos no banco de dados.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-dao">DAO (Data Access Object)</span></h3>
+          <p>Mapeia operações brutas de tabela (CRUD) para métodos JavaScript assíncronos (`async/await`), ocultando comandos `SELECT`, `INSERT`, `UPDATE` e `DELETE`.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Implementação do Repository com Abstração de Conexão (`src/repositories/pedidoRepository.js`)</h3>
+
+      <pre><code>import { query } from '../config/db.js';
+
+export const pedidoRepository = {
+  // Busca pedido completo com dados do cliente e itens agregados em JSON
+  buscarPorIdCompleto: async (idPedido) => {
+    const text = `
+      SELECT 
+        p.id_pedido,
+        p.data_pedido,
+        p.status_pedido,
+        p.valor_total,
+        json_build_object(
+          'id_cliente', c.id_cliente,
+          'cnpj', c.cnpj,
+          'razao_social', c.razao_social,
+          'email', c.email
+        ) AS cliente,
+        COALESCE(
+          json_agg(
+            json_build_object(
+              'id_produto', pr.id_produto,
+              'codigo_sku', pr.codigo_sku,
+              'nome_produto', pr.nome_produto,
+              'quantidade', ip.quantidade,
+              'preco_unitario', ip.preco_unitario_momento,
+              'subtotal', (ip.quantidade * ip.preco_unitario_momento)
+            )
+          ) FILTER (WHERE pr.id_produto IS NOT NULL), '[]'
+        ) AS itens
+      FROM pedidos p
+      INNER JOIN clientes_b2b c ON p.id_cliente = c.id_cliente
+      LEFT JOIN itens_pedido ip ON p.id_pedido = ip.id_pedido
+      LEFT JOIN produtos pr ON ip.id_produto = pr.id_produto
+      WHERE p.id_pedido = $1
+      GROUP BY p.id_pedido, c.id_cliente;
+    `;
+    const result = await query(text, [idPedido]);
+    return result.rows[0];
+  }
+};</code></pre>
+
+      <div class="highlight-box success">
+        <strong>💡 Vantagem do `json_build_object` e `json_agg`:</strong> O PostgreSQL realiza a agregação e montagem dos objetos filhos diretamente no motor de banco de dados, enviando para o Node.js uma estrutura JSON pronta e de altíssima performance.
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div class="section-title-group">
+          <h2>Tratamento de Requisições, Códigos do PostgreSQL e Middleware Global de Erros</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        Uma API profissional não deve expor *stack traces* de erros de banco de dados nem quebrar durante exceções não tratadas. As exceções lançadas pelo PostgreSQL possuem códigos numéricos padronizados (SQLSTATE) que devem ser traduzidos em **respostas HTTP claras e informativas**.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Mapeamento das Exceções mais Comuns do PostgreSQL</h3>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Código PostgreSQL (SQLSTATE)</th>
+            <th>Nome do Erro</th>
+            <th>Causa no Sistema B2B</th>
+            <th>Status HTTP Correspondente</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>23505</code></td>
+            <td><code>unique_violation</code></td>
+            <td>Tentativa de cadastrar um CNPJ, E-mail ou SKU que já existe no banco.</td>
+            <td><code>409 Conflict</code></td>
+          </tr>
+          <tr>
+            <td><code>23503</code></td>
+            <td><code>foreign_key_violation</code></td>
+            <td>Tentar vincular um pedido a um `id_cliente` inexistente ou deletar cliente com pedidos associados.</td>
+            <td><code>400 Bad Request</code> / <code>422 Unprocessable</code></td>
+          </tr>
+          <tr>
+            <td><code>23514</code></td>
+            <td><code>check_violation</code></td>
+            <td>Tentar cadastrar preço negativo ou quantidade de item igual a zero (`CHECK`).</td>
+            <td><code>400 Bad Request</code></td>
+          </tr>
+          <tr>
+            <td><code>22P02</code></td>
+            <td><code>invalid_text_representation</code></td>
+            <td>Enviar texto ou caractere inválido para um campo de ID do tipo numérico/BIGINT.</td>
+            <td><code>400 Bad Request</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Middleware Global de Tratamento de Erros (`src/middlewares/errorHandler.js`)</h3>
+
+      <pre><code>// Middleware Global de Erros do Express (quatro parâmetros obrigatórios: err, req, res, next)
+export const errorHandler = (err, req, res, next) => {
+  console.error('❌ [LOG DE ERRO GLOBAL]:', err);
+
+  // Erros de violação do PostgreSQL
+  if (err.code === '23505') {
+    return res.status(409).json({
+      success: false,
+      error_code: 'DUPLICATE_ENTRY',
+      message: 'Já existe um registro cadastrado com o mesmo identificador único (CNPJ, E-mail ou SKU).'
+    });
+  }
+
+  if (err.code === '23503') {
+    return res.status(400).json({
+      success: false,
+      error_code: 'FOREIGN_KEY_VIOLATION',
+      message: 'A entidade pai referenciada não existe ou possui dependências ativas.'
+    });
+  }
+
+  if (err.code === '22P02') {
+    return res.status(400).json({
+      success: false,
+      error_code: 'INVALID_INPUT_FORMAT',
+      message: 'Formato de dado inválido fornecido nos parâmetros da requisição.'
+    });
+  }
+
+  // Erro genérico padrão de servidor
+  return res.status(err.status || 500).json({
+    success: false,
+    error_code: 'INTERNAL_SERVER_ERROR',
+    message: err.message || 'Ocorreu um erro interno inesperado no servidor.'
+  });
+};</code></pre>
+
+      <div class="highlight-box danger">
+        <strong>⚠️ Regra do Express:</strong> O middleware global de erro DEVE possuir exatamente quatro argumentos: <code>(err, req, res, next)</code> e ser registrado em <code>app.use(errorHandler)</code> **APÓS todas as declarações de rotas** no arquivo <code>app.js</code>!
+      </div>
+    </section>
+
+    <!-- SEÇÃO 3 (DESAFIO PRÁTICO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div class="section-title-group">
+          <h2>Desafio Prático — Integração Completa e Transação Atômica de Pedidos B2B</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        A criação de um Pedido de Venda B2B exige a inserção do cabeçalho (`pedidos`), inserção dos itens (`itens_pedido`) e atualização do saldo em estoque (`inventario`). Se qualquer um desses passos falhar, **TUDO deve ser cancelado**. Isso exige o uso de **Transações SQL com Client Dedicado do Pool**.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Padrão de Transação Atômica com `pool.connect()` (`src/models/pedidoModel.js`)</h3>
+
+      <pre><code>import pool from '../config/db.js';
+
+export const pedidoModel = {
+  // Transação Atômica Completa: Pedido + Itens + Abate de Estoque
+  criarPedidoCompleto: async (idCliente, itens) => {
+    // 1. Solicita um Client exclusivo do Pool de Conexões
+    const client = await pool.connect();
+
+    try {
+      // 2. Inicia o Bloco Transacional
+      await client.query('BEGIN');
+
+      // A. Inserção do Cabeçalho do Pedido
+      const resPedido = await client.query(
+        'INSERT INTO pedidos (id_cliente, status_pedido, valor_total) VALUES ($1, $2, $3) RETURNING *',
+        [idCliente, 'CONFIRMADO', 0.00]
+      );
+      const novoPedido = resPedido.rows[0];
+      let valorTotalPedido = 0;
+
+      // B. Loop de Inserção dos Itens e Atualização do Saldo do Inventário
+      for (const item of itens) {
+        // Busca preço atual e verifica saldo em estoque
+        const resProduto = await client.query(
+          'SELECT p.preco_base, i.quantidade_saldo FROM produtos p JOIN inventario i ON p.id_produto = i.id_produto WHERE p.id_produto = $1 FOR UPDATE',
+          [item.id_produto]
+        );
+
+        if (resProduto.rows.length === 0) {
+          throw new Error(`Produto ID ${item.id_produto} não localizado.`);
+        }
+
+        const { preco_base, quantidade_saldo } = resProduto.rows[0];
+
+        if (quantidade_saldo < item.quantidade) {
+          throw new Error(`Estoque insuficiente para o produto ID ${item.id_produto}. Saldo atual: ${quantidade_saldo}`);
+        }
+
+        const subtotal = preco_base * item.quantidade;
+        valorTotalPedido += subtotal;
+
+        // Inserção do Item do Pedido
+        await client.query(
+          'INSERT INTO itens_pedido (id_pedido, id_produto, quantidade, preco_unitario_momento) VALUES ($1, $2, $3, $4)',
+          [novoPedido.id_pedido, item.id_produto, item.quantidade, preco_base]
+        );
+
+        // Abate de Estoque no Inventário
+        await client.query(
+          'UPDATE inventario SET quantidade_saldo = quantidade_saldo - $1 WHERE id_produto = $2',
+          [item.quantidade, item.id_produto]
+        );
+      }
+
+      // C. Atualização do Valor Total Final do Pedido
+      await client.query(
+        'UPDATE pedidos SET valor_total = $1 WHERE id_pedido = $2',
+        [valorTotalPedido, novoPedido.id_pedido]
+      );
+
+      // 3. Efetiva todas as operações no banco de dados
+      await client.query('COMMIT');
+      novoPedido.valor_total = valorTotalPedido;
+      return novoPedido;
+
+    } catch (error) {
+      // 4. Em caso de falha, desfaz todas as alterações ocorridas na transação!
+      await client.query('ROLLBACK');
+      throw error;
+    } finally {
+      // 5. OBRIGATÓRIO: Devolve o Client de volta para o Pool
+      client.release();
+    }
+  }
+};</code></pre>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Rota de Criação de Pedidos Transacionais (`POST /api/v1/pedidos`)</h3>
+
+      <pre><code>// Exemplo de Payload de Teste enviado via Postman
+{
+  "id_cliente": 1,
+  "itens": [
+    { "id_produto": 1, "quantidade": 2 },
+    { "id_produto": 2, "quantidade": 5 }
+  ]
+}</code></pre>
+    </section>
+
+    <!-- SEÇÃO 4 (ENCERRAMENTO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div class="section-title-group">
+          <h2>Encerramento: Glossário da Aula + Quiz Final de Fixação</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 30 min</span>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">📚 Glossário Técnico da Aula</h3>
+
+      <div class="content-grid" style="margin-bottom: 2rem;">
+        <div class="sub-card">
+          <h3>Repository Pattern</h3>
+          <p>Camada de abstração entre as regras de negócio e a persistência, simulando uma coleção em memória de entidades.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Transação SQL (ACID)</h3>
+          <p>Unidade lógica de trabalho delimitada por `BEGIN`, `COMMIT` e `ROLLBACK` que garante a propriedade de atomicidade (tudo ou nada).</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>SQLSTATE 23505</h3>
+          <p>Código de erro nativo do PostgreSQL indicando violação de restrição `UNIQUE` (tentativa de duplicar dados únicos).</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>client.release()</h3>
+          <p>Método crucial invocado no bloco `finally` para devolver uma conexão individual do `pg.Pool` de volta ao gerenciador.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">❓ Quiz Final de Fixação</h3>
+
+      <!-- QUESTÃO 1 -->
+      <div class="quiz-card">
+        <div class="quiz-question">1. Em uma operação de fechamento de pedido que envolve gravar o pedido, gravar os itens e dar baixa no estoque, o que ocorre se o comando ROLLBACK for executado no bloco catch?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) O pedido é gravado, mas os itens são apagados do banco.</div>
+          <div class="quiz-option">B) Todas as alterações realizadas desde o comando BEGIN são completamente desfeitas, restaurando o banco ao estado original.</div>
+          <div class="quiz-option">C) O banco de dados é desligado imediatamente por segurança.</div>
+          <div class="quiz-option">D) O estoque é zerado automaticamente.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Todas as alterações desde o BEGIN são completamente desfeitas.</strong><br>
+          <em>Justificativa:</em> O comando `ROLLBACK` garante a atomicidade da transação. Se houver falha em qualquer etapa, nada é salvo.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 2 -->
+      <div class="quiz-card">
+        <div class="quiz-question">2. Qual é a utilidade prática de criar um Middleware Global de Erros no Express.js com a assinatura `(err, req, res, next)`?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Executar consultas SQL mais rapidamente.</div>
+          <div class="quiz-option">B) Interceptar exceções não tratadas da aplicação em um único ponto, traduzindo códigos de erro como SQLSTATE 23505 em respostas HTTP sem expor stack traces.</div>
+          <div class="quiz-option">C) Substituir a necessidade do arquivo `.env`.</div>
+          <div class="quiz-option">D) Validar automaticamente o formato do CNPJ.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Interceptar exceções não tratadas em um único ponto e traduzir em respostas HTTP adequadas.</strong><br>
+          <em>Justificativa:</em> O middleware global centraliza a gestão de exceções da API, padronizando os retornos JSON de erro para o cliente.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 3 -->
+      <div class="quiz-card">
+        <div class="quiz-question">3. O que acontece se o desenvolvedor utilizar `const client = await pool.connect()` para realizar uma transação e ESQUECER de chamar `client.release()` no bloco `finally`?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) O código funciona normalmente sem nenhum efeito colateral.</div>
+          <div class="quiz-option">B) A conexão fica "vazada" (connection leak), esgotando as conexões do Pool e travando a API após algumas requisições.</div>
+          <div class="quiz-option">C) O PostgreSQL apaga a tabela afetada.</div>
+          <div class="quiz-option">D) O servidor Node.js reinicia automaticamente.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) A conexão fica vazada (connection leak), esgotando o Pool.</strong><br>
+          <em>Justificativa:</em> Chamar `client.release()` no bloco `finally` é essencial para liberar a conexão de volta ao Pool. Sem isso, novas requisições ficarão bloqueadas aguardando conexões.
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKSHOP INTEGRADO -->
+    <div class="workshop-box">
+      <div class="workshop-header">
+        <span>🛠️ Entregável da Aula 15 — API B2B Integrada e Testada com Transações</span>
+      </div>
+
+      <p style="color: #e5e7eb; margin-bottom: 1rem;">
+        Cada equipe deve finalizar a integração dos endpoints de Clientes, Produtos e Pedidos B2B com o PostgreSQL, incluir a criação de pedidos com transação atômica e middleware global de erros, realizando o commit:<br>
+        <code>git commit -m "feat: integracao completa da api com postgresql, transacoes e middleware de erros"</code>
+      </p>
+    </div>
+
+    <footer>
+      Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados / Back-End
+    </footer>
+
+  </div>
+
+</body>
+</html>

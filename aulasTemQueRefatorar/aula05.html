@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aula 05 – Introdução ao Node.js e Express</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+      :root {
+        --bg-main: #0b0f19;
+        --bg-card: #111827;
+        --bg-card-hover: #1f2937;
+        --border-color: #1f2937;
+        --border-highlight: #374151;
+        --primary: #38bdf8;
+        --primary-glow: rgba(56, 189, 248, 0.15);
+        --secondary: #818cf8;
+        --accent: #f43f5e;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --text-main: #f3f4f6;
+        --text-muted: #9ca3af;
+        --text-dim: #6b7280;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        line-height: 1.6;
+        padding: 2rem 1rem;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      /* HEADER */
+      header {
+        background: linear-gradient(
+          135deg,
+          rgba(17, 24, 39, 0.9) 0%,
+          rgba(31, 41, 55, 0.5) 100%
+        );
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 6px;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          var(--primary),
+          var(--secondary)
+        );
+      }
+
+      .header-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--primary-glow);
+        color: var(--primary);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #ffffff;
+        margin-bottom: 0.75rem;
+      }
+
+      .header-info {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .info-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* SECTION CARDS */
+      .section-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        transition: border-color 0.3s ease;
+        position: relative;
+      }
+
+      .section-card:hover {
+        border-color: var(--border-highlight);
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .section-number {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: #000;
+        font-weight: 800;
+        font-size: 1.1rem;
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .section-title-group h2 {
+        font-size: 1.4rem;
+        color: #ffffff;
+        font-weight: 700;
+      }
+
+      .section-title-group .time-tag {
+        font-size: 0.8rem;
+        color: var(--primary);
+        font-weight: 500;
+      }
+
+      /* CONTENT STYLING */
+      p {
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+
+      p strong {
+        color: var(--text-main);
+      }
+
+      code {
+        font-family: 'Fira Code', monospace;
+        background: rgba(56, 189, 248, 0.1);
+        color: var(--primary);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+
+      pre {
+        background: #090d16;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+      }
+
+      pre code {
+        background: transparent;
+        padding: 0;
+        color: #e5e7eb;
+        font-size: 0.88rem;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.25rem;
+        margin: 1.5rem 0;
+      }
+
+      .sub-card {
+        background: rgba(31, 41, 55, 0.4);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.25rem;
+      }
+
+      .sub-card h3 {
+        font-size: 1.05rem;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .sub-card p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+
+      /* TABLES */
+      .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.25rem 0;
+        font-size: 0.92rem;
+        background: rgba(17, 24, 39, 0.6);
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+      }
+
+      .custom-table th {
+        background: rgba(31, 41, 55, 0.8);
+        color: var(--primary);
+        text-align: left;
+        padding: 0.75rem 1rem;
+        font-weight: 600;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .custom-table td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+        color: var(--text-muted);
+      }
+
+      .custom-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .custom-table td strong {
+        color: var(--text-main);
+      }
+
+      /* BADGES & TAGS */
+      .badge {
+        display: inline-block;
+        font-family: 'Fira Code', monospace;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+      }
+      .badge-get {
+        background: rgba(52, 211, 153, 0.2);
+        color: #34d399;
+        border: 1px solid #34d399;
+      }
+      .badge-post {
+        background: rgba(56, 189, 248, 0.2);
+        color: #38bdf8;
+        border: 1px solid #38bdf8;
+      }
+      .badge-use {
+        background: rgba(129, 140, 248, 0.2);
+        color: #818cf8;
+        border: 1px solid #818cf8;
+      }
+      .badge-err {
+        background: rgba(244, 63, 94, 0.2);
+        color: #f43f5e;
+        border: 1px solid #f43f5e;
+      }
+
+      /* HIGHLIGHTS */
+      .highlight-box {
+        background: rgba(56, 189, 248, 0.05);
+        border-left: 4px solid var(--primary);
+        padding: 1rem 1.25rem;
+        border-radius: 0 10px 10px 0;
+        margin: 1.25rem 0;
+        font-size: 0.95rem;
+      }
+
+      .highlight-box.warning {
+        background: rgba(251, 191, 36, 0.05);
+        border-left-color: var(--warning);
+      }
+
+      .highlight-box.success {
+        background: rgba(52, 211, 153, 0.05);
+        border-left-color: var(--success);
+      }
+
+      .highlight-box strong {
+        color: #fff;
+      }
+
+      /* STEPS / WORKFLOW */
+      .step-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+
+      .step-item {
+        display: flex;
+        gap: 1rem;
+        background: rgba(17, 24, 39, 0.8);
+        border: 1px solid var(--border-color);
+        padding: 1rem;
+        border-radius: 10px;
+      }
+
+      .step-badge {
+        background: var(--border-highlight);
+        color: var(--primary);
+        font-weight: 700;
+        font-family: 'Fira Code', monospace;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .step-content h4 {
+        color: #fff;
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .step-content p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+
+      /* WORKSHOP BOX */
+      .workshop-box {
+        background: linear-gradient(
+          135deg,
+          rgba(129, 140, 248, 0.1) 0%,
+          rgba(56, 189, 248, 0.05) 100%
+        );
+        border: 1px solid rgba(129, 140, 248, 0.3);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-top: 3rem;
+      }
+
+      .workshop-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--secondary);
+        font-weight: 700;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem 0;
+        color: var(--text-dim);
+        font-size: 0.85rem;
+        border-top: 1px solid var(--border-color);
+        margin-top: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- HEADER DE APRESENTAÇÃO -->
+      <header>
+        <div class="header-badge">
+          <span>📖 Guia Didático da Aula</span>
+        </div>
+        <h1>Introdução ao Node.js e Express</h1>
+        <p
+          style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0"
+        >
+          Arquitetura de execução do Node.js, Event Loop, desenvolvimento de
+          servidores HTTP e cadeia de Middlewares com o framework Express.
+        </p>
+
+        <div class="header-info">
+          <div class="info-item">
+            <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+          </div>
+          <div class="info-item">
+            <span
+              >🎯 <strong>Foco:</strong> Event Loop, Módulos, Express Server,
+              Middlewares & Async Handling</span
+            >
+          </div>
+          <div class="info-item">
+            <span>🚀 <strong>Módulo:</strong> Desenvolvimento Back-End</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- SEÇÃO 1 -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">01</div>
+          <div class="section-title-group">
+            <h2>
+              Node.js: Runtime, Módulos e Event Loop Aplicados ao Back-End
+            </h2>
+            <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+          </div>
+        </div>
+
+        <p>
+          O <strong>Node.js</strong> permite executar JavaScript no lado do
+          servidor. Diferente de servidores web tradicionais (como Apache ou
+          IIS), que criam uma nova <em>thread</em> de memória para cada
+          requisição recebida, o Node.js utiliza uma arquitetura baseada em
+          <strong
+            >thread única (Single-Thread) não-bloqueante orientada a
+            eventos</strong
+          >.
+        </p>
+
+        <div class="content-grid">
+          <div class="sub-card">
+            <h3>⚡ V8 Engine & Libuv</h3>
+            <p>
+              O Node.js combina o motor de execução
+              <strong>V8 (Google Chrome)</strong> para compilar JS em código de
+              máquina super-rápido com a biblioteca <strong>Libuv</strong> para
+              gerenciar operações assíncronas de I/O de sistema.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>🔄 Event Loop (Laço de Eventos)</h3>
+            <p>
+              Mecanismo central que monitora a fila de tarefas assíncronas.
+              Quando uma operação pesada (leitura de arquivo, query SQL) é
+              acionada, ela é delegada em segundo plano e seu retorno entra no
+              Event Loop sem travar o servidor.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>📦 Sistema de Módulos</h3>
+            <p>
+              Organização de código modularizada.<br />
+              <strong>CommonJS (Padrão histórico):</strong>
+              <code>require()</code> e <code>module.exports</code>.<br />
+              <strong>ES Modules (Moderno):</strong> <code>import</code> e
+              <code>export</code>.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>🛠️ Módulos Nativos</h3>
+            <p>
+              Recursos embutidos essenciais do Node.js:<br />
+              <code>fs</code> (File System), <code>path</code> (manipulação de
+              caminhos), <code>http</code> (criação básica de servidores web) e
+              <code>crypto</code> (criptografia).
+            </p>
+          </div>
+        </div>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          Exemplo Comparativo: Código Bloqueante (Síncrono) vs. Não-Bloqueante
+          (Assíncrono)
+        </h3>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+          "
+        >
+          <div>
+            <p
+              style="color: var(--accent); font-weight: 600; font-size: 0.9rem"
+            >
+              ❌ Bloqueante (Evitar no Back-End):
+            </p>
+            <pre><code>const fs = require('fs');
+
+// Trava a execução do Node.js até terminar de ler o arquivo de 2GB
+const data = fs.readFileSync('arquivo_gigante.txt');
+console.log('Conteúdo lido!');
+console.log('Próxima tarefa executada.');</code></pre>
+          </div>
+
+          <div>
+            <p
+              style="color: var(--success); font-weight: 600; font-size: 0.9rem"
+            >
+              ✅ Não-Bloqueante (Assíncrono com Async/Await):
+            </p>
+            <pre><code>const fs = require('fs/promises');
+
+async function lerArquivo() {
+  // Delega I/O para a Libuv e libera a thread do Node.js
+  const data = await fs.readFile('arquivo_gigante.txt');
+  console.log('Conteúdo lido!');
+}
+
+lerArquivo();
+console.log('Próxima tarefa executada imediatamente!');</code></pre>
+          </div>
+        </div>
+
+        <div class="highlight-box warning">
+          <strong>⚠️ A Regra do Event Loop:</strong>
+          <em>"Nunca bloqueie a Thread Principal!"</em>. Operações CPU-bound
+          intensivas (como processamento de vídeo ou loops pesados de 10 bilhões
+          de iterações) congelam o servidor para todos os outros usuários
+          conectados.
+        </div>
+      </section>
+
+      <!-- SEÇÃO 2 -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">02</div>
+          <div class="section-title-group">
+            <h2>Framework Express: Rotas, Middlewares e Servidor HTTP</h2>
+            <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+          </div>
+        </div>
+
+        <p>
+          O <strong>Express</strong> é o framework web minimalista, flexível e
+          mais utilizado do ecossistema Node.js. Ele abstrai o módulo nativo
+          <code>http</code>, fornecendo uma camada robusta para gerenciamento de
+          <strong
+            >Roteamento, Requisição (Request), Resposta (Response) e
+            Middlewares</strong
+          >.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          1. O que é um Middleware no Express?
+        </h3>
+        <p>
+          Middlewares são funções que têm acesso aos objetos de requisição
+          (<code>req</code>), resposta (<code>res</code>) e à próxima função de
+          middleware no ciclo de requisição-resposta (<code>next</code>). Eles
+          funcionam como uma "linha de montagem".
+        </p>
+
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-badge">1</div>
+            <div class="step-content">
+              <h4>Requisição HTTP de Entrada</h4>
+              <p>
+                O cliente envia uma requisição (ex:
+                <code>POST /api/v1/pedidos</code> contendo dados em JSON e token
+                no Header).
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">2</div>
+            <div class="step-content">
+              <h4>Middleware Global de Body Parser</h4>
+              <p>
+                <code>app.use(express.json())</code> converte a string do corpo
+                da requisição em um objeto JavaScript acessível via
+                <code>req.body</code> e chama <code>next()</code>.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">3</div>
+            <div class="step-content">
+              <h4>Middleware de Autenticação / Segurança</h4>
+              <p>
+                Verifica se o token JWT é válido. Se incorreto, interrompe a
+                execução retornando <code>401 Unauthorized</code>. Se correto,
+                anexa o usuário em <code>req.usuario</code> e chama
+                <code>next()</code>.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">4</div>
+            <div class="step-content">
+              <h4>Controlador da Rota (Controller)</h4>
+              <p>
+                Recebe a requisição limpa e autenticada, chama a regra no Model,
+                persiste no banco e retorna a resposta final
+                <code>res.status(201).json(...)</code>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          2. Tipos de Middlewares no Express
+        </h3>
+
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Categoria</th>
+              <th>Sintaxe / Exemplo de Aplicação</th>
+              <th>Propósito no Back-End</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-use">Global</span></td>
+              <td>
+                <code>app.use(cors())</code> /
+                <code>app.use(express.json())</code>
+              </td>
+              <td>
+                Executado em <strong>todas as requisições</strong> que chegam ao
+                servidor. Configura CORS, parsers e logs.
+              </td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-get">Específico por Rota</span></td>
+              <td>
+                <code>app.get('/admin', verificarAdmin, adminController)</code>
+              </td>
+              <td>
+                Executado apenas na rota indicada antes de chegar ao controller
+                final (ex: validação de permissões).
+              </td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-err">Tratador de Erros</span></td>
+              <td><code>app.use((err, req, res, next) => { ... })</code></td>
+              <td>
+                Middleware especial contendo <strong>4 parâmetros</strong>.
+                Intercepta exceções lançadas na aplicação e padroniza respostas
+                de erro 500.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          3. Extração de Parâmetros de Entrada no Express
+        </h3>
+
+        <div class="sub-card">
+          <ul
+            style="
+              margin-left: 1.2rem;
+              font-size: 0.9rem;
+              color: var(--text-muted);
+            "
+          >
+            <li style="margin-bottom: 0.5rem">
+              <strong>Route Params (`req.params`):</strong> Parâmetros
+              obrigatórios na URL. Exemplo: <code>GET /usuarios/:id</code> ➔
+              <code>const { id } = req.params;</code>
+            </li>
+            <li style="margin-bottom: 0.5rem">
+              <strong>Query Params (`req.query`):</strong> Filtros e paginação
+              opcionais na URL. Exemplo:
+              <code>GET /produtos?categoria=tech&limit=10</code> ➔
+              <code>const { categoria, limit } = req.query;</code>
+            </li>
+            <li>
+              <strong>Request Body (`req.body`):</strong> Dados complexos
+              enviados em formulários ou payloads JSON (POST/PUT/PATCH).
+              Exemplo: <code>const { nome, email } = req.body;</code>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 3 -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">03</div>
+          <div class="section-title-group">
+            <h2>Recomendações Técnicas na Aplicação do Node.js e Express</h2>
+            <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+          </div>
+        </div>
+
+        <p>
+          Para construir uma aplicação Back-End pronta para ambiente de
+          produção, certas práticas técnicas e de arquitetura de código são
+          indispensáveis:
+        </p>
+
+        <div class="content-grid">
+          <div class="sub-card">
+            <h3>🛡️ 1. Segurança com Helmet & Rate Limit</h3>
+            <p>
+              Utilize o pacote <code>helmet</code> para configurar
+              automaticamente headers HTTP de segurança (proteção contra
+              Clickjacking, XSS) e o <code>express-rate-limit</code> para barrar
+              ataques de força bruta.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>⚡ 2. Tratamento de Exceções Assíncronas</h3>
+            <p>
+              Em rotas <code>async/await</code>, exceções não capturadas podem
+              travar o servidor. Envolva os blocos em <code>try/catch</code> ou
+              utilize bibliotecas como <code>express-async-errors</code> para
+              repassar erros ao middleware central.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>📂 3. Modularização de Rotas (`express.Router`)</h3>
+            <p>
+              Nunca concentre todas as rotas no <code>app.js</code>. Crie
+              arquivos isolados na pasta <code>src/routes/</code> e importe-os
+              modularmente (ex:
+              <code>app.use('/api/v1/usuarios', usuarioRoutes)</code>).
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>🌱 4. Isolamento de Variáveis de Ambiente</h3>
+            <p>
+              Portas de servidor, URLs de banco de dados e segredos JWT devem
+              ser injetados via <code>process.env.VAR_NAME</code> carregados
+              pelo pacote <code>dotenv</code> no início da aplicação.
+            </p>
+          </div>
+        </div>
+
+        <div class="highlight-box success">
+          <strong
+            >✨ Exemplo de Middleware Central de Erros Profissional:</strong
+          >
+          <pre><code>// Deve ser registrado DEPOIS de todas as rotas no app.js
+app.use((err, req, res, next) => {
+  console.error(`[ERRO INTERNO]: ${err.stack}`);
+  
+  const statusCode = err.statusCode || 500;
+  const message = err.message || 'Erro interno no servidor.';
+
+  res.status(statusCode).json({
+    sucesso: false,
+    erro: message,
+    timestamp: new Date().toISOString()
+  });
+});</code></pre>
+        </div>
+      </section>
+
+      <!-- WORKSHOP INTEGRADO -->
+      <div class="workshop-box">
+        <div class="workshop-header">
+          <span
+            >🛠️ Atividade Prática Integrada — Servidor Express de Eventos com
+            Middlewares (Em Duplas)</span
+          >
+        </div>
+
+        <p style="color: #e5e7eb; margin-bottom: 1rem">
+          <strong>Cenário:</strong> Sua equipe deve construir um servidor Web em
+          Express para um
+          <strong>Sistema de Inscrições em Eventos de Tecnologia</strong>
+          (`/api/v1/eventos`).
+        </p>
+
+        <div
+          style="
+            background: rgba(17, 24, 39, 0.7);
+            padding: 1.25rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+          "
+        >
+          <h4 style="color: var(--primary); margin-bottom: 0.75rem">
+            Requisitos Práticos da Atividade:
+          </h4>
+          <ol>
+            <li>
+              <strong>Servidor e Middlewares Globais:</strong> Configure o
+              servidor na porta <code>3000</code> com suporte a JSON
+              (<code>express.json()</code>).
+            </li>
+            <li style="margin-top: 0.5rem">
+              <strong>Middleware Customizado de Log:</strong> Escreva um
+              middleware global que imprima no console o método HTTP, a URL da
+              requisição e o timestamp exato de cada chamada recebida.
+            </li>
+            <li style="margin-top: 0.5rem">
+              <strong>Middleware de Validação por Rota:</strong> Crie um
+              middleware de validação para a rota <code>POST /eventos</code> que
+              verifique se os campos <code>titulo</code>, <code>data</code> e
+              <code>vagas</code> estão presentes no <code>req.body</code>. Caso
+              falhe, retorne <code>400 Bad Request</code> sem chamar o
+              controller.
+            </li>
+            <li style="margin-top: 0.5rem">
+              <strong>Rotas e Respostas:</strong> Crie as rotas
+              <code>GET /eventos</code> (retornando status
+              <code>200 OK</code> com array de eventos) e
+              <code>POST /eventos</code> (retornando status
+              <code>201 Created</code> com o evento cadastrado).
+            </li>
+            <li style="margin-top: 0.5rem">
+              <strong>Tratamento de Erros:</strong> Configure o middleware
+              centralizado de exceções para capturar erros e responder em padrão
+              JSON.
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <footer>
+        Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados /
+        Back-End
+      </footer>
+    </div>
+  </body>
+</html>

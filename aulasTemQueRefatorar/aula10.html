@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 10 – Linguagem de Definição de Dados (DDL)</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+    :root {
+      --bg-main: #0b0f19;
+      --bg-card: #111827;
+      --bg-card-hover: #1f2937;
+      --border-color: #1f2937;
+      --border-highlight: #374151;
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.15);
+      --secondary: #818cf8;
+      --accent: #f43f5e;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(31, 41, 55, 0.5) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-glow);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .header-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* SECTION CARDS */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: border-color 0.3s ease;
+      position: relative;
+    }
+
+    .section-card:hover {
+      border-color: var(--border-highlight);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #000;
+      font-weight: 800;
+      font-size: 1.1rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-title-group h2 {
+      font-size: 1.4rem;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .section-title-group .time-tag {
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* CONTENT STYLING */
+    p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    p strong {
+      color: var(--text-main);
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e5e7eb;
+      font-size: 0.88rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .sub-card {
+      background: rgba(31, 41, 55, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .sub-card h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sub-card p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* TABLES */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.92rem;
+      background: rgba(17, 24, 39, 0.6);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .custom-table th {
+      background: rgba(31, 41, 55, 0.8);
+      color: var(--primary);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .custom-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+      color: var(--text-muted);
+    }
+
+    .custom-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .custom-table td strong {
+      color: var(--text-main);
+    }
+
+    /* BADGES & TAGS */
+    .badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    .badge-create { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid #34d399; }
+    .badge-alter { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid #fbbf24; }
+    .badge-drop { background: rgba(244, 63, 94, 0.2); color: #f43f5e; border: 1px solid #f43f5e; }
+
+    /* HIGHLIGHTS */
+    .highlight-box {
+      background: rgba(56, 189, 248, 0.05);
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0 10px 10px 0;
+      margin: 1.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .highlight-box.warning {
+      background: rgba(251, 191, 36, 0.05);
+      border-left-color: var(--warning);
+    }
+
+    .highlight-box.success {
+      background: rgba(52, 211, 153, 0.05);
+      border-left-color: var(--success);
+    }
+
+    .highlight-box strong {
+      color: #fff;
+    }
+
+    /* STEPS / WORKFLOW */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1rem;
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .step-badge {
+      background: var(--border-highlight);
+      color: var(--primary);
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* QUIZ STYLING */
+    .quiz-card {
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .quiz-question {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-option {
+      background: rgba(31, 41, 55, 0.5);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .quiz-answer {
+      background: rgba(52, 211, 153, 0.1);
+      border-left: 4px solid var(--success);
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    /* WORKSHOP BOX */
+    .workshop-box {
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .workshop-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- HEADER DE APRESENTAÇÃO -->
+    <header>
+      <div class="header-badge">
+        <span>📖 Guia Didático da Aula</span>
+      </div>
+      <h1>Linguagem de Definição de Dados (DDL)</h1>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0;">
+        Sintaxe DDL avançada em SQL: criação, alteração e remoção de estruturas de banco de dados, aplicação de restrições de integridade e elaboração do script DDL oficial do Portal B2B.
+      </p>
+      
+      <div class="header-info">
+        <div class="info-item">
+          <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+        </div>
+        <div class="info-item">
+          <span>🎯 <strong>Foco:</strong> CREATE, ALTER, DROP, Constraints (NOT NULL, UNIQUE, CHECK), PK/FK & Script DDL</span>
+        </div>
+        <div class="info-item">
+          <span>🚀 <strong>Módulo:</strong> Banco de Dados & Back-End</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- SEÇÃO 1 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div class="section-title-group">
+          <h2>Comandos DDL: CREATE, ALTER, DROP e Constraints (NOT NULL, UNIQUE, CHECK)</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        A <strong>Linguagem de Definição de Dados (DDL - Data Definition Language)</strong> é o subconjunto do SQL responsável por criar, alterar e excluir a estrutura física dos objetos no banco de dados (tabelas, esquemas, índices, visões e sequências).
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Os Três Comandos Principais da DDL</h3>
+
+      <div class="content-grid">
+        <div class="sub-card">
+          <h3><span class="badge badge-create">CREATE</span></h3>
+          <p>Instancia novos objetos no banco de dados (Ex: <code>CREATE TABLE</code>, <code>CREATE DATABASE</code>, <code>CREATE INDEX</code>).</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-alter">ALTER</span></h3>
+          <p>Modifica a estrutura existente de um objeto sem apagar seus dados (Ex: adicionar/remover colunas, alterar tipos de dados, adicionar restrições).</p>
+        </div>
+
+        <div class="sub-card">
+          <h3><span class="badge badge-drop">DROP</span></h3>
+          <p>Remove permanentemente estruturas do banco de dados (Ex: <code>DROP TABLE</code>, <code>DROP DATABASE</code>). Operação irreversível!</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Restrições de Integridade (Constraints) no Nível de Colunas e Tabelas</h3>
+      <p>
+        Constraints são regras aplicadas às colunas para garantir a consistência e qualidade dos dados inseridos no sistema.
+      </p>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Constraint</th>
+            <th>Prefixo Padrão</th>
+            <th>Finalidade e Comportamento</th>
+            <th>Exemplo Prático DDL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>NOT NULL</code></td>
+            <td>-</td>
+            <td>Impede que uma coluna aceite valores nulos/vazios.</td>
+            <td><code>razao_social VARCHAR(150) NOT NULL</code></td>
+          </tr>
+          <tr>
+            <td><code>UNIQUE</code></td>
+            <td><code>uq_</code></td>
+            <td>Garante que todos os valores de uma coluna (ou combinação de colunas) sejam distintos no banco.</td>
+            <td><code>CONSTRAINT uq_clientes_cnpj UNIQUE (cnpj)</code></td>
+          </tr>
+          <tr>
+            <td><code>CHECK</code></td>
+            <td><code>ck_</code></td>
+            <td>Valida uma expressão lógica antes de aceitar a inserção ou edição do registro.</td>
+            <td><code>CONSTRAINT ck_produtos_preco CHECK (preco_base > 0)</code></td>
+          </tr>
+          <tr>
+            <td><code>DEFAULT</code></td>
+            <td>-</td>
+            <td>Atribui um valor padrão automático caso a coluna não seja informada no INSERT.</td>
+            <td><code>status VARCHAR(20) DEFAULT 'RASCUNHO'</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">3. Exemplo Prático de Modificação com `ALTER TABLE`</h3>
+
+      <pre><code>-- Adicionando uma nova coluna com valor padrão
+ALTER TABLE clientes_b2b 
+ADD COLUMN limite_credito NUMERIC(12,2) DEFAULT 5000.00;
+
+-- Adicionando uma constraint CHECK após a criação da tabela
+ALTER TABLE clientes_b2b 
+ADD CONSTRAINT ck_clientes_limite CHECK (limite_credito >= 0);
+
+-- Modificando o tipo de dado de uma coluna existente
+ALTER TABLE clientes_b2b 
+ALTER COLUMN razao_social TYPE VARCHAR(200);
+
+-- Removendo uma coluna não utilizada
+ALTER TABLE clientes_b2b 
+DROP COLUMN IF EXISTS observacoes_antigas;</code></pre>
+
+      <div class="highlight-box warning">
+        <strong>⚠️ Cuidado ao Executar DROP TABLE:</strong> Utilizar <code>DROP TABLE clientes_b2b CASCADE;</code> remove a tabela e **apaga automaticamente todas as chaves estrangeiras, visões e dependências** vinculadas a ela. Em ambientes de produção, restrições DDL são gerenciadas estritamente via **Migrations**.
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div class="section-title-group">
+          <h2>Chaves Primárias, Estrangeiras e Relacionamentos em SQL</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        A ligação física entre tabelas é declarada na DDL através de **Primary Keys (PK)** e **Foreign Keys (FK)**, especificando os comportamentos de integridade referencial para manutenção dos dados.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Declaração Formal de Chave Primária e Estrangeira com Nomenclatura Padronizada</h3>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-badge">1</div>
+          <div class="step-content">
+            <h4>Primary Key Simples e Composta</h4>
+            <p>• <strong>PK Simples:</strong> <code>CONSTRAINT pk_produtos PRIMARY KEY (id_produto)</code><br>
+            • <strong>PK Composta (Tabela de Junção):</strong> <code>CONSTRAINT pk_itens_pedido PRIMARY KEY (id_pedido, id_produto)</code></p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">2</div>
+          <div class="step-content">
+            <h4>Foreign Key com Cláusulas de Ação (`ON DELETE / ON UPDATE`)</h4>
+            <p>Especifica o que o banco de dados deve fazer com as linhas filhas quando a linha pai for alterada ou removida:</p>
+            <ul style="margin-left: 1.2rem; color: var(--text-muted); font-size: 0.9rem; margin-top: 0.4rem;">
+              <li><code>ON DELETE RESTRICT</code>: Impede a exclusão da linha pai se houver filhos (Ideal para vendas e clientes).</li>
+              <li><code>ON DELETE CASCADE</code>: Deleta automaticamente todos os filhos vinculados.</li>
+              <li><code>ON DELETE SET NULL</code>: Mantém os filhos e define o campo da FK como NULO.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. DDL com Transação Atômica Relacional (Exemplo de Tabela Associativa)</h3>
+
+      <pre><code>-- Tabela de Itens de Pedido (Relacionamento N:M entre Pedidos e Produtos)
+CREATE TABLE itens_pedido (
+    id_pedido BIGINT NOT NULL,
+    id_produto BIGINT NOT NULL,
+    quantidade INT NOT NULL,
+    preco_unitario_momento NUMERIC(12,2) NOT NULL,
+    
+    -- Chave Primária Composta
+    CONSTRAINT pk_itens_pedido PRIMARY KEY (id_pedido, id_produto),
+    
+    -- Chaves Estrangeiras com Constraints explicitamente nomeadas
+    CONSTRAINT fk_itens_pedido_pedido FOREIGN KEY (id_pedido)
+        REFERENCES pedidos (id_pedido)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+        
+    CONSTRAINT fk_itens_pedido_produto FOREIGN KEY (id_produto)
+        REFERENCES produtos (id_produto)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE,
+        
+    -- Restrição CHECK de quantidade positiva
+    CONSTRAINT ck_itens_pedido_quantidade CHECK (quantidade > 0)
+);</code></pre>
+    </section>
+
+    <!-- SEÇÃO 3 (DESAFIO PRÁTICO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div class="section-title-group">
+          <h2>Desafio Prático — Script SQL de Criação das Tabelas do Projeto (`schema.sql`)</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        Cada equipe deve consolidar o script DDL oficial que cria todo o esquema do banco de dados relacional PostgreSQL do <strong>Portal Comercial B2B</strong>.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Estrutura do Arquivo `src/config/schema.sql` Obrigatória:</h3>
+
+      <pre><code>-- =============================================================
+-- PORTAL COMERCIAL B2B - SCRIPT DDL DE CRIAÇÃO DO BANCO DE DADOS
+-- =============================================================
+
+-- 1. LIMPEZA INICIAL DO ESQUEMA (DROPS EM ORDEM REVERSA DE DEPENDÊNCIA)
+DROP TABLE IF EXISTS itens_pedido CASCADE;
+DROP TABLE IF EXISTS inventario CASCADE;
+DROP TABLE IF EXISTS pedidos CASCADE;
+DROP TABLE IF EXISTS produtos CASCADE;
+DROP TABLE IF EXISTS clientes_b2b CASCADE;
+
+-- 2. TABELA: CLIENTES_B2B
+CREATE TABLE clientes_b2b (
+    id_cliente BIGSERIAL,
+    cnpj VARCHAR(14) NOT NULL,
+    razao_social VARCHAR(150) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    telefone VARCHAR(20),
+    ativo BOOLEAN DEFAULT TRUE,
+    criado_em TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    
+    CONSTRAINT pk_clientes_b2b PRIMARY KEY (id_cliente),
+    CONSTRAINT uq_clientes_b2b_cnpj UNIQUE (cnpj),
+    CONSTRAINT uq_clientes_b2b_email UNIQUE (email)
+);
+
+-- 3. TABELA: PRODUTOS
+CREATE TABLE produtos (
+    id_produto BIGSERIAL,
+    codigo_sku VARCHAR(50) NOT NULL,
+    nome_produto VARCHAR(120) NOT NULL,
+    preco_base NUMERIC(12,2) NOT NULL,
+    ativo BOOLEAN DEFAULT TRUE,
+    
+    CONSTRAINT pk_produtos PRIMARY KEY (id_produto),
+    CONSTRAINT uq_produtos_sku UNIQUE (codigo_sku),
+    CONSTRAINT ck_produtos_preco CHECK (preco_base >= 0)
+);
+
+-- 4. TABELA: INVENTARIO
+CREATE TABLE inventario (
+    id_inventario BIGSERIAL,
+    id_produto BIGINT NOT NULL,
+    quantidade_saldo INT NOT NULL DEFAULT 0,
+    localizacao_deposito VARCHAR(50) DEFAULT 'GALPAO_PRINCIPAL',
+    atualizado_em TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    
+    CONSTRAINT pk_inventario PRIMARY KEY (id_inventario),
+    CONSTRAINT uq_inventario_produto UNIQUE (id_produto),
+    CONSTRAINT fk_inventario_produto FOREIGN KEY (id_produto)
+        REFERENCES produtos (id_produto) ON DELETE CASCADE,
+    CONSTRAINT ck_inventario_saldo CHECK (quantidade_saldo >= 0)
+);
+
+-- 5. TABELA: PEDIDOS
+CREATE TABLE pedidos (
+    id_pedido BIGSERIAL,
+    id_cliente BIGINT NOT NULL,
+    data_pedido TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    status_pedido VARCHAR(30) DEFAULT 'RASCUNHO',
+    valor_total NUMERIC(12,2) DEFAULT 0.00,
+    
+    CONSTRAINT pk_pedidos PRIMARY KEY (id_pedido),
+    CONSTRAINT fk_pedidos_cliente FOREIGN KEY (id_cliente)
+        REFERENCES clientes_b2b (id_cliente) ON DELETE RESTRICT,
+    CONSTRAINT ck_pedidos_status CHECK (status_pedido IN ('RASCUNHO', 'CONFIRMADO', 'FATURADO', 'CANCELADO'))
+);
+
+-- 6. TABELA: ITENS_PEDIDO (TABELA ASSOCIATIVA)
+CREATE TABLE itens_pedido (
+    id_pedido BIGINT NOT NULL,
+    id_produto BIGINT NOT NULL,
+    quantidade INT NOT NULL,
+    preco_unitario_momento NUMERIC(12,2) NOT NULL,
+    
+    CONSTRAINT pk_itens_pedido PRIMARY KEY (id_pedido, id_produto),
+    CONSTRAINT fk_itens_pedido_pedido FOREIGN KEY (id_pedido)
+        REFERENCES pedidos (id_pedido) ON DELETE CASCADE,
+    CONSTRAINT fk_itens_pedido_produto FOREIGN KEY (id_produto)
+        REFERENCES produtos (id_produto) ON DELETE RESTRICT,
+    CONSTRAINT ck_itens_quantidade CHECK (quantidade > 0)
+);</code></pre>
+    </section>
+
+    <!-- SEÇÃO 4 (ENCERRAMENTO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div class="section-title-group">
+          <h2>Encerramento: Glossário da Aula + Quiz Final de Fixação</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 30 min</span>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">📚 Glossário Técnico da Aula</h3>
+
+      <div class="content-grid" style="margin-bottom: 2rem;">
+        <div class="sub-card">
+          <h3>DDL (Data Definition Language)</h3>
+          <p>Subconjunto de comandos SQL (CREATE, ALTER, DROP) focado em definir esquemas e objetos de banco de dados.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Constraint (Restrição)</h3>
+          <p>Regra de validação imposta pelo banco de dados para garantir integridade e consistência dos dados.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>CHECK Constraint</h3>
+          <p>Restrição de validação lógica que aceita apenas linhas cuja condição Booleana seja verdadeira.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Cascade Action</h3>
+          <p>Propriedade de integridade referencial que propaga automaticamente alterações ou exclusões para tabelas filhas.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">❓ Quiz Final de Fixação</h3>
+
+      <!-- QUESTÃO 1 -->
+      <div class="quiz-card">
+        <div class="quiz-question">1. Qual comando DDL deve ser utilizado para alterar o tipo de dado de uma coluna existente sem apagar a tabela?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) UPDATE TABLE</div>
+          <div class="quiz-option">B) MODIFY TABLE</div>
+          <div class="quiz-option">C) ALTER TABLE ... ALTER COLUMN ... TYPE</div>
+          <div class="quiz-option">D) CHANGE TABLE</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: C) ALTER TABLE ... ALTER COLUMN ... TYPE</strong><br>
+          <em>Justificativa:</em> O comando `ALTER TABLE` é o único comando DDL padronizado em SQL para modificar estruturas de colunas existentes.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 2 -->
+      <div class="quiz-card">
+        <div class="quiz-question">2. O que acontece ao tentar inserir um produto com preço `-15.00` em uma tabela que possui a constraint `CONSTRAINT ck_preco CHECK (preco >= 0)`?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) O valor é convertido automaticamente para `0.00`.</div>
+          <div class="quiz-option">B) O banco de dados lança um erro de violação de constraint e rejeita o INSERT.</div>
+          <div class="quiz-option">C) O valor é inserido com aviso (warning).</div>
+          <div class="quiz-option">D) A tabela é bloqueada para leitura.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) O banco lança um erro de violação de constraint e rejeita o INSERT.</strong><br>
+          <em>Justificativa:</em> Restrições `CHECK` impõem validação estrita. Se a expressão retornar FALSA, a operação é abortada.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 3 -->
+      <div class="quiz-card">
+        <div class="quiz-question">3. Qual cláusula de Foreign Key deve ser usada na tabela de Pedidos para IMPEDIR a exclusão acidental de um cliente que já possui compras registradas?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) ON DELETE CASCADE</div>
+          <div class="quiz-option">B) ON DELETE SET NULL</div>
+          <div class="quiz-option">C) ON DELETE RESTRICT</div>
+          <div class="quiz-option">D) ON DELETE TRUNCATE</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: C) ON DELETE RESTRICT</strong><br>
+          <em>Justificativa:</em> A ação `ON DELETE RESTRICT` (ou `NO ACTION`) bloqueia ativamente a exclusão de qualquer registro pai que possua filhos dependentes no banco.
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKSHOP INTEGRADO -->
+    <div class="workshop-box">
+      <div class="workshop-header">
+        <span>🛠️ Entregável da Aula 10 — Commit do Script DDL no Repositório</span>
+      </div>
+
+      <p style="color: #e5e7eb; margin-bottom: 1rem;">
+        Cada equipe deve salvar o arquivo <code>src/config/schema.sql</code> no repositório Git, executá-lo no PostgreSQL local com sucesso e realizar o commit padronizado:<br>
+        <code>git commit -m "feat: adiciona script DDL oficial de criacao de tabelas e constraints"</code>
+      </p>
+    </div>
+
+    <footer>
+      Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados / Back-End
+    </footer>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 09 – Normalização e Padronização de Dados</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+    :root {
+      --bg-main: #0b0f19;
+      --bg-card: #111827;
+      --bg-card-hover: #1f2937;
+      --border-color: #1f2937;
+      --border-highlight: #374151;
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.15);
+      --secondary: #818cf8;
+      --accent: #f43f5e;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(31, 41, 55, 0.5) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-glow);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .header-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* SECTION CARDS */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: border-color 0.3s ease;
+      position: relative;
+    }
+
+    .section-card:hover {
+      border-color: var(--border-highlight);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #000;
+      font-weight: 800;
+      font-size: 1.1rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-title-group h2 {
+      font-size: 1.4rem;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .section-title-group .time-tag {
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* CONTENT STYLING */
+    p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    p strong {
+      color: var(--text-main);
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e5e7eb;
+      font-size: 0.88rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .sub-card {
+      background: rgba(31, 41, 55, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .sub-card h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sub-card p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* TABLES */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.92rem;
+      background: rgba(17, 24, 39, 0.6);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .custom-table th {
+      background: rgba(31, 41, 55, 0.8);
+      color: var(--primary);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .custom-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+      color: var(--text-muted);
+    }
+
+    .custom-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .custom-table td strong {
+      color: var(--text-main);
+    }
+
+    /* BADGES & TAGS */
+    .badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    .badge-1fn { background: rgba(244, 63, 94, 0.2); color: #f43f5e; border: 1px solid #f43f5e; }
+    .badge-2fn { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid #fbbf24; }
+    .badge-3fn { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid #34d399; }
+
+    /* HIGHLIGHTS */
+    .highlight-box {
+      background: rgba(56, 189, 248, 0.05);
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0 10px 10px 0;
+      margin: 1.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .highlight-box.warning {
+      background: rgba(251, 191, 36, 0.05);
+      border-left-color: var(--warning);
+    }
+
+    .highlight-box.success {
+      background: rgba(52, 211, 153, 0.05);
+      border-left-color: var(--success);
+    }
+
+    .highlight-box strong {
+      color: #fff;
+    }
+
+    /* STEPS / WORKFLOW */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1rem;
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .step-badge {
+      background: var(--border-highlight);
+      color: var(--primary);
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* QUIZ STYLING */
+    .quiz-card {
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .quiz-question {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-option {
+      background: rgba(31, 41, 55, 0.5);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .quiz-answer {
+      background: rgba(52, 211, 153, 0.1);
+      border-left: 4px solid var(--success);
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    /* WORKSHOP BOX */
+    .workshop-box {
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .workshop-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- HEADER DE APRESENTAÇÃO -->
+    <header>
+      <div class="header-badge">
+        <span>📖 Guia Didático da Aula</span>
+      </div>
+      <h1>Normalização e Padronização de Dados</h1>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0;">
+        Procedimentos formais de normalização (1FN, 2FN e 3FN), eliminação de anomalias de banco de dados, refinamento do Diagrama ER e consolidação do DER do Portal Comercial B2B.
+      </p>
+      
+      <div class="header-info">
+        <div class="info-item">
+          <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+        </div>
+        <div class="info-item">
+          <span>🎯 <strong>Foco:</strong> 1FN, 2FN, 3FN, Refinamento DER, Anomalias SQL, Glossário & Quiz</span>
+        </div>
+        <div class="info-item">
+          <span>🚀 <strong>Módulo:</strong> Banco de Dados & Back-End</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- SEÇÃO 1 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div class="section-title-group">
+          <h2>Procedimentos de Normalização (1FN, 2FN, 3FN) e Padronização de Dados</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        A <strong>Normalização de Dados</strong> é uma técnica formal de análise de esquemas relacionais que visa organizar as colunas e tabelas de um banco de dados para <strong>minimizar a redundância</strong> e <strong>eliminar anomalias de atualização, inserção e exclusão</strong>.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. As Anomalias de um Banco Não-Normalizado</h3>
+
+      <div class="content-grid">
+        <div class="sub-card">
+          <h3>🚨 Anomalia de Inserção</h3>
+          <p>Impossibilidade de cadastrar um novo dado no sistema sem que outro dado não relacionado esteja presente. Ex: Não conseguir cadastrar um novo cliente B2B se ele ainda não realizou nenhum pedido.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>🚨 Anomalia de Atualização</h3>
+          <p>Existência de cópias do mesmo dado em múltiplos registros. Caso a Razão Social de um cliente mude, é necessário atualizar dezenas de linhas; se uma falhar, o banco fica inconsistente.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>🚨 Anomalia de Exclusão</h3>
+          <p>A exclusão inadvertida de um registro provoca a perda não intencional de outros dados importantes. Ex: Deletar um pedido cancelado e apagar junto o único cadastro do produto existente no sistema.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. As Três Formas Normais Fundamentais</h3>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-badge">1FN</div>
+          <div class="step-content">
+            <h4>Primeira Forma Normal (1FN) — Valores Atômicos</h4>
+            <p><strong>Regra:</strong> Uma tabela está na 1FN quando não possui atributos multivalorados ou grupos repetitivos. Todos os campos devem conter apenas <strong>valores atômicos (indivisíveis)</strong> e cada linha deve possuir um identificador único (PK).<br>
+            <em>Exemplo de Violação:</em> Armazenar vários produtos em uma única célula separada por vírgulas (`"Prod A, Prod B, Prod C"`).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">2FN</div>
+          <div class="step-content">
+            <h4>Segunda Forma Normal (2FN) — Dependência Funcional Total</h4>
+            <p><strong>Regra:</strong> A tabela deve estar na 1FN e <strong>todos os atributos não-chave devem depender da TOTALIDADE da Chave Primária</strong> (e não apenas de parte de uma chave composta).<br>
+            <em>Exemplo de Violação:</em> Numa tabela de `Item_Pedido` com PK composta (`id_pedido`, `id_produto`), colocar o atributo `descricao_produto`. A descrição depende apenas do `id_produto`, e não do `id_pedido`!</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">3FN</div>
+          <div class="step-content">
+            <h4>Terceira Forma Normal (3FN) — Sem Dependências Transitivas</h4>
+            <p><strong>Regra:</strong> A tabela deve estar na 2FN e <strong>nenhum atributo não-chave pode depender de outro atributo não-chave</strong> (não deve haver dependência transitiva).<br>
+            <em>Exemplo de Violação:</em> Na tabela `Clientes_B2B`, salvar os campos `cep`, `logradouro`, `bairro`, `cidade` e `uf`. A `cidade` depende do `cep`, que é um atributo não-chave!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-box success">
+        <strong>💡 O Mantra da Normalização (Bill Kent):</strong> <em>"Cada atributo não-chave deve fornecer um fato sobre A Chave (1FN), A Chave Toda (2FN) e Nada Além da Chave (3FN), assim me ajude Codd!"</em>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div class="section-title-group">
+          <h2>Refinamento do Diagrama Entidade-Relacionamento (DER)</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 45 min</span>
+        </div>
+      </div>
+
+      <p>
+        O refinamento do Diagrama ER consiste em transformar o modelo conceitual em um **Modelo Lógico Relacional (DER)** rigorosamente ajustado até a 3FN.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Evolução Prática do Portal B2B: Tabela Não-Normalizada ➔ Estrutura em 3FN</h3>
+
+      <div style="margin: 1rem 0;">
+        <p style="color: var(--accent); font-weight: 600;">❌ Tabela Não-Normalizada (Visão "Planilha" - Cheia de redundâncias):</p>
+        <pre><code>Tabela_Pedidos_Geral (
+    num_pedido, data_pedido, cnpj_cliente, razao_social, 
+    produtos_lista ("P1, P2"), valor_total, uf_entrega, nome_vendedor
+)</code></pre>
+      </div>
+
+      <div style="margin: 1.5rem 0;">
+        <p style="color: var(--success); font-weight: 600;">✅ Decomposição e Refinamento em 3FN (Cinco Tabelas Atômicas e Relacionadas):</p>
+
+        <pre><code>1. clientes_b2b (id_cliente PK, cnpj UNIQUE, razao_social, email, telefone)
+2. produtos (id_produto PK, codigo_sku UNIQUE, nome_produto, preco_base)
+3. inventario (id_inventario PK, id_produto FK, quantidade_saldo, localizacao_deposito)
+4. pedidos (id_pedido PK, id_cliente FK, data_pedido, status_pedido, valor_total)
+5. itens_pedido (id_pedido FK, id_produto FK, quantidade, preco_unitario_momento) -- PK Composta (id_pedido, id_produto)</code></pre>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Padronização de Nomenclaturas em Bancos Relacionais</h3>
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Elemento</th>
+            <th>Padrão Recomendado</th>
+            <th>Exemplo Correto</th>
+            <th>Exemplo a Evitar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Nomes de Tabelas</strong></td>
+            <td>Substantivos no plural em <code>snake_case</code></td>
+            <td><code>clientes_b2b</code>, <code>pedidos</code></td>
+            <td><code>ClienteB2B</code>, <code>tb_pedido</code></td>
+          </tr>
+          <tr>
+            <td><strong>Chaves Primárias (PK)</strong></td>
+            <td><code>id_tabela</code> ou <code>id</code> unificado</td>
+            <td><code>id_cliente</code></td>
+            <td><code>cod_cli</code>, <code>PK_CLIENTE</code></td>
+          </tr>
+          <tr>
+            <td><strong>Chaves Estrangeiras (FK)</strong></td>
+            <td>Mesmo nome da PK de origem</td>
+            <td><code>id_cliente</code> na tabela <code>pedidos</code></td>
+            <td><code>cliente_cod</code>, <code>fk_cli</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SEÇÃO 3 (DESAFIO PRÁTICO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div class="section-title-group">
+          <h2>Desafio Prático — Diagrama ER Normalizado da Aplicação da Equipe</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 45 min</span>
+        </div>
+      </div>
+
+      <p>
+        Nesta atividade, cada equipe irá revisar o Diagrama ER elaborado para o <strong>Portal Comercial B2B</strong> e submetê-lo a um teste de estresse de formas normais para garantir conformidade técnica absoluta.
+      </p>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-badge">1</div>
+          <div class="step-content">
+            <h4>Checklist 1FN</h4>
+            <p>Verifique se não existem colunas com valores separados por vírgula ou campos repetidos (`telefone_1`, `telefone_2`). Caso existam, crie uma tabela separada.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">2</div>
+          <div class="step-content">
+            <h4>Checklist 2FN</h4>
+            <p>Analise todas as tabelas com Chave Primária composta (ex: `itens_pedido`). Garanta que não existam colunas que dependam de apenas um dos componentes da chave.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">3</div>
+          <div class="step-content">
+            <h4>Checklist 3FN</h4>
+            <p>Verifique se não há atributos dependendo de outros atributos não-chave. Exemplo: Se salvar o status de envio em um pedido, certifique-se de que a data de entrega estimada não esteja duplicando regras da tabela de frete.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 4 (ENCERRAMENTO) -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">04</div>
+        <div class="section-title-group">
+          <h2>Encerramento: Glossário da Aula + Quiz Final de Fixação</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 30 min</span>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">📚 Glossário Técnico da Aula</h3>
+
+      <div class="content-grid" style="margin-bottom: 2rem;">
+        <div class="sub-card">
+          <h3>Atomicidade</h3>
+          <p>Propriedade de um dado ser indivisível no contexto da aplicação (ex: um CNPJ ou um preço unitário).</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Dependência Funcional</h3>
+          <p>Relacionamento entre atributos em que o valor de X determina de forma única o valor de Y (indicado por X ➔ Y).</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Dependência Transitiva</h3>
+          <p>Ocorre quando A determina B e B determina C (A ➔ B ➔ C). Logo, A determina C indiretamente.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>Redundância de Dados</h3>
+          <p>Duplicação desnecessária de informações no banco que gera consumo indevido de memória e risco de inconsistências.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">❓ Quiz Final de Fixação</h3>
+
+      <!-- QUESTÃO 1 -->
+      <div class="quiz-card">
+        <div class="quiz-question">1. Uma tabela que possui um campo "telefones" contendo os valores "4899991111, 4833332222" viola qual forma normal?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Segunda Forma Normal (2FN)</div>
+          <div class="quiz-option">B) Terceira Forma Normal (3FN)</div>
+          <div class="quiz-option">C) Primeira Forma Normal (1FN)</div>
+          <div class="quiz-option">D) Nenhuma, pois é um formato válido em bancos SQL.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: C) Primeira Forma Normal (1FN)</strong><br>
+          <em>Justificativa:</em> A 1FN exige que todos os atributos contenham apenas valores atômicos (únicos). Listas separadas por vírgula em um único campo violam explicitamente a 1FN.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 2 -->
+      <div class="quiz-card">
+        <div class="quiz-question">2. Na tabela `itens_pedido`, a chave primária é composta por (`id_pedido`, `id_produto`). Se adicionarmos o campo `nome_produto` nesta tabela, qual regra é violada?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Primeira Forma Normal (1FN)</div>
+          <div class="quiz-option">B) Segunda Forma Normal (2FN)</div>
+          <div class="quiz-option">C) Terceira Forma Normal (3FN)</div>
+          <div class="quiz-option">D) Nenhuma regra é violada.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: B) Segunda Forma Normal (2FN)</strong><br>
+          <em>Justificativa:</em> O `nome_produto` depende apenas de parte da chave primária (`id_produto`), caracterizando uma dependência funcional parcial, o que é proibido na 2FN.
+        </div>
+      </div>
+
+      <!-- QUESTÃO 3 -->
+      <div class="quiz-card">
+        <div class="quiz-question">3. Qual é a principal motivação para aplicar a Terceira Forma Normal (3FN)?</div>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Permitir a criação de campos multivalorados em JSON.</div>
+          <div class="quiz-option">B) Aumentar a velocidade de execução de seleções simples sem JOIN.</div>
+          <div class="quiz-option">C) Eliminar dependências transitivas entre atributos não-chave.</div>
+          <div class="quiz-option">D) Garantir que todas as tabelas possuam auto-incremento de chave primária.</div>
+        </div>
+        <div class="quiz-answer">
+          <strong>✅ Resposta Correta: C) Eliminar dependências transitivas entre atributos não-chave.</strong><br>
+          <em>Justificativa:</em> A 3FN exige que todos os atributos não-chave dependam exclusivamente da chave primária, eliminando dependências indiretas/transitivas.
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKSHOP INTEGRADO -->
+    <div class="workshop-box">
+      <div class="workshop-header">
+        <span>🛠️ Entregável da Aula 09 — Apresentação do DER Normalizado em 3FN</span>
+      </div>
+
+      <p style="color: #e5e7eb; margin-bottom: 1rem;">
+        Cada equipe deve atualizar o repositório do projeto no GitHub enviando o arquivo do **Diagrama ER Lógico Relacional (DER) refinado e normalizado até a 3FN**, contendo o dicionário de dados atualizado de todas as tabelas.
+      </p>
+    </div>
+
+    <footer>
+      Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados / Back-End
+    </footer>
+
+  </div>
+
+</body>
+</html>

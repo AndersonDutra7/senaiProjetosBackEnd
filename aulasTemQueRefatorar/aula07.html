@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 07 – Fundamentos de Modelagem de Dados</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+    :root {
+      --bg-main: #0b0f19;
+      --bg-card: #111827;
+      --bg-card-hover: #1f2937;
+      --border-color: #1f2937;
+      --border-highlight: #374151;
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.15);
+      --secondary: #818cf8;
+      --accent: #f43f5e;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(31, 41, 55, 0.5) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-glow);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .header-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* SECTION CARDS */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: border-color 0.3s ease;
+      position: relative;
+    }
+
+    .section-card:hover {
+      border-color: var(--border-highlight);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-number {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #000;
+      font-weight: 800;
+      font-size: 1.1rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-title-group h2 {
+      font-size: 1.4rem;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .section-title-group .time-tag {
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* CONTENT STYLING */
+    p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    p strong {
+      color: var(--text-main);
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e5e7eb;
+      font-size: 0.88rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .sub-card {
+      background: rgba(31, 41, 55, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .sub-card h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sub-card p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* TABLES */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.92rem;
+      background: rgba(17, 24, 39, 0.6);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .custom-table th {
+      background: rgba(31, 41, 55, 0.8);
+      color: var(--primary);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .custom-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+      color: var(--text-muted);
+    }
+
+    .custom-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .custom-table td strong {
+      color: var(--text-main);
+    }
+
+    /* BADGES & TAGS */
+    .badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    .badge-pk { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid #34d399; }
+    .badge-fk { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid #fbbf24; }
+    .badge-card { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+
+    /* HIGHLIGHTS */
+    .highlight-box {
+      background: rgba(56, 189, 248, 0.05);
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0 10px 10px 0;
+      margin: 1.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .highlight-box.warning {
+      background: rgba(251, 191, 36, 0.05);
+      border-left-color: var(--warning);
+    }
+
+    .highlight-box.success {
+      background: rgba(52, 211, 153, 0.05);
+      border-left-color: var(--success);
+    }
+
+    .highlight-box strong {
+      color: #fff;
+    }
+
+    /* STEPS / WORKFLOW */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1rem;
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .step-badge {
+      background: var(--border-highlight);
+      color: var(--primary);
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* WORKSHOP BOX */
+    .workshop-box {
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .workshop-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- HEADER DE APRESENTAÇÃO -->
+    <header>
+      <div class="header-badge">
+        <span>📖 Guia Didático da Aula</span>
+      </div>
+      <h1>Fundamentos de Modelagem de Dados</h1>
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0;">
+        Abstração do mundo real com MER/DER, definição de Entidades, Atributos, Relacionamentos, Integridade Referencial (PK/FK) e levantamento de armazenamento para o Portal B2B.
+      </p>
+      
+      <div class="header-info">
+        <div class="info-item">
+          <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+        </div>
+        <div class="info-item">
+          <span>🎯 <strong>Foco:</strong> MER, Entidades, Atributos, PK/FK, Integridade & Requisitos de Armazenamento</span>
+        </div>
+        <div class="info-item">
+          <span>🚀 <strong>Módulo:</strong> Banco de Dados & Back-End</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- SEÇÃO 1 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">01</div>
+        <div class="section-title-group">
+          <h2>Modelagem de Dados: Entidades, Atributos e Relacionamentos (MER)</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        A <strong>Modelagem Conceitual</strong> é a primeira fase do projeto de banco de dados relacional. O objetivo é criar o **Modelo Entidade-Relacionamento (MER)**, representando abstratamente os elementos do negócio do mundo real independentemente do SGBD que será utilizado.
+      </p>
+
+      <div class="content-grid">
+        <div class="sub-card">
+          <h3>🏢 1. Entidades (Forte vs. Fraca)</h3>
+          <p><strong>Entidade:</strong> Conjunto de objetos do mundo real sobre os quais precisamos guardar dados.<br>
+          • <strong>Entidade Forte:</strong> Existe de forma autônoma. Ex: <code>Cliente_B2B</code>, <code>Produto</code>.<br>
+          • <strong>Entidade Fraca:</strong> Depende da existência de outra entidade pai. Ex: <code>Item_Pedido</code> (só existe vinculada a um <code>Pedido</code>).</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>🏷️ 2. Atributos e Suas Categoriais</h3>
+          <p>Propriedades que descrevem uma entidade.<br>
+          • <strong>Atributo Simples (Atômico):</strong> Inseparável (ex: <code>CNPJ</code>, <code>Preco</code>).<br>
+          • <strong>Atributo Composto:</strong> Subdividido (ex: <code>Endereco</code> ➔ Logradouro, Número, CEP).<br>
+          • <strong>Atributo Derivado:</strong> Calculado a partir de outros (ex: <code>Valor_Total</code> = Qtd * Preco_Unitario).</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>🔗 3. Relacionamentos</h3>
+          <p>Associações lógicas entre duas ou mais entidades que expressam as regras do negócio.<br>
+          Exemplo: <em>"Cliente B2B <span style="color: var(--primary)">REALIZA</span> Pedido"</em> / <em>"Pedido <span style="color: var(--primary)">CONTÉM</span> Itens de Pedido"</em>.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>📊 4. Mapeamento de Cardinalidades</h3>
+          <p>Define o número mínimo e máximo de ocorrências de uma entidade associada a outra:<br>
+          • <strong>1:1 (Um para Um):</strong> Ex: Usuário e Perfil de Acesso.<br>
+          • <strong>1:N (Um para Muitos):</strong> Ex: Um Cliente B2B realiza N Pedidos.<br>
+          • <strong>N:M (Muitos para Muitos):</strong> Ex: Pedidos e Produtos (gera tabela associativa).</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Exemplo Prático de Cardinalidades no Domínio B2B:</h3>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Entidade Origem</th>
+            <th>Relacionamento</th>
+            <th>Entidade Destino</th>
+            <th>Cardinalidade (Mín:Máx)</th>
+            <th>Regra de Negócio Traduzida</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Cliente_B2B</code></td>
+            <td>Realiza</td>
+            <td><code>Pedido</code></td>
+            <td><span class="badge badge-card">1:N (0,n)</span></td>
+            <td>Um cliente B2B pode cadastrar-se sem compras (0) ou realizar múltiplos pedidos (N). Todo pedido pertence a exatamente 1 cliente.</td>
+          </tr>
+          <tr>
+            <td><code>Pedido</code></td>
+            <td>Contém</td>
+            <td><code>Item_Pedido</code></td>
+            <td><span class="badge badge-card">1:N (1,n)</span></td>
+            <td>Um pedido precisa conter no mínimo 1 item (1) e pode ter vários (N). Cada item pertence obrigatoriamente a 1 pedido.</td>
+          </tr>
+          <tr>
+            <td><code>Produto</code></td>
+            <td>Possui</td>
+            <td><code>Inventario</code></td>
+            <td><span class="badge badge-card">1:1 (1,1)</span></td>
+            <td>Cada produto cadastrado possui exatamente 1 registro de saldo no estoque de inventário industrial.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-box">
+        <strong>💡 Dica de Modelagem:</strong> Relacionamentos do tipo <strong>N:M (Muitos para Muitos)</strong> não podem ser implementados diretamente no banco relacional. Eles devem ser transformados em uma <strong>Tabela Associativa/Intermediária</strong> contendo as Chaves Estrangeiras das duas entidades originais (ex: `Pedido_Produto` ou `Item_Pedido`).
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">02</div>
+        <div class="section-title-group">
+          <h2>Chaves Primárias e Estrangeiras: Garantindo Integridade Referencial</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        Em um banco de dados relacional, as chaves garantem a <strong>unicidade dos registros</strong> e a <strong>rastreabilidade das conexões</strong> entre tabelas. A <strong>Integridade Referencial</strong> impede que existam "dados órfãos" no sistema (por exemplo, um pedido associado a um cliente que não existe).
+      </p>
+
+      <div class="content-grid">
+        <div class="sub-card">
+          <h3>🔑 Chave Primária (Primary Key - PK)</h3>
+          <p>Identificador único de cada linha em uma tabela.
+          <br>• Deve ser obrigatoriamente <strong>ÚNICA</strong> e <strong>NOT NULL</strong>.
+          <br>• <strong>Surrogate Key (Chave Substituta):</strong> Identificador sintético numérico ou UUID gerado pelo banco (Ex: <code>BIGSERIAL</code>, <code>UUID</code>). Prática recomendada!
+          <br>• <strong>Natural Key:</strong> Dado do mundo real (Ex: CNPJ). Evitado como PK por poder sofrer alterações cadastrais.</p>
+        </div>
+
+        <div class="sub-card">
+          <h3>🗝️ Chave Estrangeira (Foreign Key - FK)</h3>
+          <p>Coluna em uma tabela que faz referência direta à Chave Primária (PK) de outra tabela.
+          <br>• Estabelece o vínculo relacional entre os dados.
+          <br>• O banco de dados rejeita qualquer inserção na tabela filha cuja FK não corresponda a um valor existente na tabela pai.</p>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Ações de Constraint em Foreign Keys (Comportamento em Exclusão/Atualização)</h3>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-badge">1</div>
+          <div class="step-content">
+            <h4>ON DELETE RESTRICT / NO ACTION (Padrão e Recomendado para Finanças/Pedidos)</h4>
+            <p>Impede a exclusão de um registro pai enquanto houver registros filhos vinculados. Ex: Bloqueia a exclusão de um `Cliente_B2B` caso existam `Pedidos` históricos cadastrados para ele.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">2</div>
+          <div class="step-content">
+            <h4>ON DELETE CASCADE</h4>
+            <p>Exclui automaticamente todos os registros filhos caso o pai seja deletado. Ex: Se um `Pedido` for excluído, todos os seus `Itens_Pedido` associados são apagados automaticamente.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-badge">3</div>
+          <div class="step-content">
+            <h4>ON DELETE SET NULL</h4>
+            <p>Preserva os registros filhos, atribuindo valor `NULL` na coluna da FK quando o registro pai for excluído.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">Exemplo de DDL com Constraints Nomeadas em PostgreSQL:</h3>
+
+      <pre><code>-- Tabela Pai (Clientes B2B)
+CREATE TABLE clientes_b2b (
+    id_cliente BIGSERIAL,
+    razao_social VARCHAR(150) NOT NULL,
+    cnpj VARCHAR(14) NOT NULL,
+    
+    CONSTRAINT pk_clientes_b2b PRIMARY KEY (id_cliente),
+    CONSTRAINT uq_clientes_b2b_cnpj UNIQUE (cnpj)
+);
+
+-- Tabela Filha (Pedidos B2B)
+CREATE TABLE pedidos (
+    id_pedido BIGSERIAL,
+    id_cliente BIGINT NOT NULL,
+    data_pedido TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    status_pedido VARCHAR(30) DEFAULT 'RASCUNHO',
+    
+    CONSTRAINT pk_pedidos PRIMARY KEY (id_pedido),
+    CONSTRAINT fk_pedidos_cliente FOREIGN KEY (id_cliente)
+        REFERENCES clientes_b2b (id_cliente)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+);</code></pre>
+
+      <div class="highlight-box success">
+        <strong>✨ Padronização de Nomes de Constraints:</strong> Nomeie explicitamente todas as restrições no script DDL. Utilize prefixos claros: <code>pk_tabela</code> para Primary Keys, <code>fk_origem_destino</code> para Foreign Keys e <code>uq_tabela_campo</code> para restrições Unique.
+      </div>
+    </section>
+
+    <!-- SEÇÃO 3 -->
+    <section class="section-card">
+      <div class="section-header">
+        <div class="section-number">03</div>
+        <div class="section-title-group">
+          <h2>Levantamento de Requisitos de Armazenamento de Dados do Projeto</h2>
+          <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+        </div>
+      </div>
+
+      <p>
+        O <strong>levantamento de requisitos de armazenamento</strong> determina quais informações a aplicação Back-End precisa guardar, o tipo de dado nativo mais eficiente para cada campo e as estratégias de retenção para garantir o funcionamento do banco sob alta carga.
+      </p>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">1. Tipos de Dados Nativos no PostgreSQL e Casos de Uso</h3>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Categoria de Dado</th>
+            <th>Tipo Nativo PostgreSQL</th>
+            <th>Caso de Uso Recomendado no Portal B2B</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Identificadores (PK/FK)</strong></td>
+            <td><code>BIGSERIAL</code> / <code>UUID</code></td>
+            <td>Chaves primárias de autoincremento para grandes volumes ou UUID para APIs expostas.</td>
+          </tr>
+          <tr>
+            <td><strong>Textos Curtos / Códigos</strong></td>
+            <td><code>VARCHAR(N)</code> / <code>CHAR(N)</code></td>
+            <td><code>VARCHAR(14)</code> para CNPJ sem formatação; <code>VARCHAR(100)</code> para nomes/e-mails.</td>
+          </tr>
+          <tr>
+            <td><strong>Valores Monetários</strong></td>
+            <td><code>NUMERIC(12,2)</code> ou <code>DECIMAL</code></td>
+            <td>Preços de produtos e totais de pedidos. <strong>NUNCA use FLOAT/DOUBLE</strong> para dinheiro!</td>
+          </tr>
+          <tr>
+            <td><strong>Datas e Horários</strong></td>
+            <td><code>TIMESTAMP WITH TIME ZONE</code></td>
+            <td>Data/hora exata de criação de pedidos e atualizações com suporte a fusos horários.</td>
+          </tr>
+          <tr>
+            <td><strong>Dados Flexíveis / Mocks</strong></td>
+            <td><code>JSONB</code></td>
+            <td>Logs de integração com a logística industrial ou metadados de auditoria.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0;">2. Historização e Imutabilidade de Preços</h3>
+
+      <div class="sub-card">
+        <p style="color: #fff; font-weight: 600; margin-bottom: 0.5rem;">⚠️ O Problema da Alteração de Preço de Produtos:</p>
+        <p style="font-size: 0.9rem; margin-bottom: 0.75rem;">
+          Se a tabela <code>Item_Pedido</code> mantivesse apenas a referência (`id_produto`) sem salvar o valor no momento da venda, alterar o preço do produto na tabela <code>Produtos</code> modificaria retroativamente o valor de todos os pedidos históricos da empresa!
+        </p>
+        <p style="color: var(--primary); font-weight: 600; font-size: 0.9rem; margin-bottom: 0.25rem;">✅ A Solução de Arquitetura:</p>
+        <p style="font-size: 0.9rem; margin-bottom: 0;">
+          A tabela de junção <code>Item_Pedido</code> <strong>DEVE possuir uma coluna própria `preco_unitario_momento DECIMAL(12,2)`</strong> que armazena uma cópia congelada do preço no exato instante em que a compra foi confirmada.
+        </p>
+      </div>
+    </section>
+
+    <!-- WORKSHOP INTEGRADO -->
+    <div class="workshop-box">
+      <div class="workshop-header">
+        <span>🛠️ Atividade Prática Integrada — Modelagem Conceitual e Mapeamento de Armazenamento do Portal B2B (Em Duplas)</span>
+      </div>
+
+      <p style="color: #e5e7eb; margin-bottom: 1rem;">
+        <strong>Cenário:</strong> Cada dupla/equipe fará o levantamento dos requisitos de dados e a elaboração da Modelagem Conceitual (MER) para o módulo comercial do projeto B2B.
+      </p>
+
+      <div style="background: rgba(17, 24, 39, 0.7); padding: 1.25rem; border-radius: 10px; border: 1px solid var(--border-color);">
+        <h4 style="color: var(--primary); margin-bottom: 0.75rem;">Roteiro do Exercício:</h4>
+        <ol>
+          <li><strong>Mapeamento de Entidades e Atributos:</strong> Identifique no mínimo 5 entidades fundamentais do sistema (`Clientes_B2B`, `Pedidos`, `Itens_Pedido`, `Produtos`, `Inventario`) e liste 4 atributos com tipos nativos do PostgreSQL para cada uma.</li>
+          <li style="margin-top: 0.5rem;"><strong>Definição de Chaves Primárias e Estrangeiras:</strong> Identifique qual será a PK de cada tabela e mapeie onde estarão inseridas as FKs para garantir os relacionamentos.</li>
+          <li style="margin-top: 0.5rem;"><strong>Desenho do Modelo Entidade-Relacionamento (MER):</strong> Esboce o diagrama MER indicando as cardinalidades mínimas e máximas de todos os relacionamentos.</li>
+          <li style="margin-top: 0.5rem;"><strong>Regra de Integridade Referencial:</strong> Escreva uma breve justificativa explicando por que a exclusão de um cliente (`Clientes_B2B`) deve utilizar `ON DELETE RESTRICT` em relação aos pedidos cadastrados.</li>
+        </ol>
+      </div>
+    </div>
+
+    <footer>
+      Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados / Back-End
+    </footer>
+
+  </div>
+
+</body>
+</html>

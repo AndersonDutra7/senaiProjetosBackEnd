@@ -1,0 +1,948 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aula 03 – Requisitos do Projeto e Metodologias Ágeis</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+      :root {
+        --bg-main: #0b0f19;
+        --bg-card: #111827;
+        --bg-card-hover: #1f2937;
+        --border-color: #1f2937;
+        --border-highlight: #374151;
+        --primary: #38bdf8;
+        --primary-glow: rgba(56, 189, 248, 0.15);
+        --secondary: #818cf8;
+        --accent: #f43f5e;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --text-main: #f3f4f6;
+        --text-muted: #9ca3af;
+        --text-dim: #6b7280;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        line-height: 1.6;
+        padding: 2rem 1rem;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      /* HEADER */
+      header {
+        background: linear-gradient(
+          135deg,
+          rgba(17, 24, 39, 0.9) 0%,
+          rgba(31, 41, 55, 0.5) 100%
+        );
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 6px;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          var(--primary),
+          var(--secondary)
+        );
+      }
+
+      .header-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--primary-glow);
+        color: var(--primary);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #ffffff;
+        margin-bottom: 0.75rem;
+      }
+
+      .header-info {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .info-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* SECTION CARDS */
+      .section-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        transition: border-color 0.3s ease;
+        position: relative;
+      }
+
+      .section-card:hover {
+        border-color: var(--border-highlight);
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .section-number {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: #000;
+        font-weight: 800;
+        font-size: 1.1rem;
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .section-title-group h2 {
+        font-size: 1.4rem;
+        color: #ffffff;
+        font-weight: 700;
+      }
+
+      .section-title-group .time-tag {
+        font-size: 0.8rem;
+        color: var(--primary);
+        font-weight: 500;
+      }
+
+      /* CONTENT STYLING */
+      p {
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+
+      p strong {
+        color: var(--text-main);
+      }
+
+      code {
+        font-family: 'Fira Code', monospace;
+        background: rgba(56, 189, 248, 0.1);
+        color: var(--primary);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.25rem;
+        margin: 1.5rem 0;
+      }
+
+      .sub-card {
+        background: rgba(31, 41, 55, 0.4);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.25rem;
+      }
+
+      .sub-card h3 {
+        font-size: 1.05rem;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .sub-card p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+
+      /* TABLES */
+      .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.25rem 0;
+        font-size: 0.92rem;
+        background: rgba(17, 24, 39, 0.6);
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+      }
+
+      .custom-table th {
+        background: rgba(31, 41, 55, 0.8);
+        color: var(--primary);
+        text-align: left;
+        padding: 0.75rem 1rem;
+        font-weight: 600;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .custom-table td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+        color: var(--text-muted);
+      }
+
+      .custom-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .custom-table td strong {
+        color: var(--text-main);
+      }
+
+      /* BADGES & TAGS */
+      .badge {
+        display: inline-block;
+        font-family: 'Fira Code', monospace;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+      }
+      .badge-must {
+        background: rgba(244, 63, 94, 0.2);
+        color: #f43f5e;
+        border: 1px solid #f43f5e;
+      }
+      .badge-should {
+        background: rgba(251, 191, 36, 0.2);
+        color: #fbbf24;
+        border: 1px solid #fbbf24;
+      }
+      .badge-could {
+        background: rgba(56, 189, 248, 0.2);
+        color: #38bdf8;
+        border: 1px solid #38bdf8;
+      }
+      .badge-wont {
+        background: rgba(156, 163, 175, 0.2);
+        color: #9ca3af;
+        border: 1px solid #9ca3af;
+      }
+
+      /* HIGHLIGHTS */
+      .highlight-box {
+        background: rgba(56, 189, 248, 0.05);
+        border-left: 4px solid var(--primary);
+        padding: 1rem 1.25rem;
+        border-radius: 0 10px 10px 0;
+        margin: 1.25rem 0;
+        font-size: 0.95rem;
+      }
+
+      .highlight-box.warning {
+        background: rgba(251, 191, 36, 0.05);
+        border-left-color: var(--warning);
+      }
+
+      .highlight-box.success {
+        background: rgba(52, 211, 153, 0.05);
+        border-left-color: var(--success);
+      }
+
+      .highlight-box strong {
+        color: #fff;
+      }
+
+      /* KANBAN BOARD PREVIEW */
+      .kanban-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+
+      @media (max-width: 900px) {
+        .kanban-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 500px) {
+        .kanban-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .kanban-column {
+        background: rgba(17, 24, 39, 0.8);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1rem;
+      }
+
+      .kanban-header {
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.75rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .kanban-column.todo .kanban-header {
+        color: var(--text-muted);
+      }
+      .kanban-column.doing .kanban-header {
+        color: var(--primary);
+      }
+      .kanban-column.review .kanban-header {
+        color: var(--warning);
+      }
+      .kanban-column.done .kanban-header {
+        color: var(--success);
+      }
+
+      .wip-tag {
+        font-size: 0.7rem;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+
+      .kanban-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-highlight);
+        border-radius: 8px;
+        padding: 0.75rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.85rem;
+      }
+
+      .kanban-card-title {
+        color: #fff;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+
+      /* STEPS / WORKFLOW */
+      .step-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+
+      .step-item {
+        display: flex;
+        gap: 1rem;
+        background: rgba(17, 24, 39, 0.8);
+        border: 1px solid var(--border-color);
+        padding: 1rem;
+        border-radius: 10px;
+      }
+
+      .step-badge {
+        background: var(--border-highlight);
+        color: var(--primary);
+        font-weight: 700;
+        font-family: 'Fira Code', monospace;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .step-content h4 {
+        color: #fff;
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .step-content p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+
+      /* WORKSHOP BOX */
+      .workshop-box {
+        background: linear-gradient(
+          135deg,
+          rgba(129, 140, 248, 0.1) 0%,
+          rgba(56, 189, 248, 0.05) 100%
+        );
+        border: 1px solid rgba(129, 140, 248, 0.3);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-top: 3rem;
+      }
+
+      .workshop-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--secondary);
+        font-weight: 700;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem 0;
+        color: var(--text-dim);
+        font-size: 0.85rem;
+        border-top: 1px solid var(--border-color);
+        margin-top: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- HEADER DE APRESENTAÇÃO -->
+      <header>
+        <div class="header-badge">
+          <span>📖 Guia Didático da Aula</span>
+        </div>
+        <h1>Requisitos do Projeto e Metodologias Ágeis</h1>
+        <p
+          style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0"
+        >
+          Elicitação de requisitos técnicos, metodologias ágeis de gestão,
+          priorização com MoSCoW e planejamento de Sprints para projetos
+          Back-End.
+        </p>
+
+        <div class="header-info">
+          <div class="info-item">
+            <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+          </div>
+          <div class="info-item">
+            <span
+              >🎯 <strong>Foco:</strong> Requisitos, User Stories, MoSCoW,
+              Kanban & Scrum</span
+            >
+          </div>
+          <div class="info-item">
+            <span
+              >🚀 <strong>Módulo:</strong> Gestão de Projetos & Back-End</span
+            >
+          </div>
+        </div>
+      </header>
+
+      <!-- SEÇÃO 1 -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">01</div>
+          <div class="section-title-group">
+            <h2>
+              Técnicas de Levantamento de Requisitos e Demandas do Cliente
+            </h2>
+            <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+          </div>
+        </div>
+
+        <p>
+          Um dos maiores motivos de falha em projetos de software não é o código
+          ruim, mas a
+          <strong>falta de clareza sobre o que deveria ser construído</strong>.
+          O levantamento (elicitação) de requisitos conecta a necessidade de
+          negócio do cliente com o desenvolvimento técnico do Back-End.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          1. Requisitos Funcionais vs. Não-Funcionais
+        </h3>
+
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Tipo de Requisito</th>
+              <th>Definição Didática</th>
+              <th>Exemplo Prático (Visão Back-End)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Requisitos Funcionais (RF)</strong></td>
+              <td>
+                O que o sistema <em>deve fazer</em>. Descreve as ações, rotas,
+                regras de negócio e saídas esperadas.
+              </td>
+              <td>
+                <code
+                  >RF01: O sistema deve permitir o cadastro de clientes com
+                  validação de CPF único.</code
+                >
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Requisitos Não-Funcionais (RNF)</strong></td>
+              <td>
+                Como o sistema <em>deve se comportar</em>. Define restrições de
+                desempenho, segurança, escala e disponibilidade.
+              </td>
+              <td>
+                <code
+                  >RNF01: A API de autenticação deve responder em menos de 200ms
+                  sob carga de 1000 requisições simultâneas.</code
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          2. Escrevendo User Stories (Histórias de Usuário)
+        </h3>
+        <p>
+          No desenvolvimento ágil, requisitos funcionais são expressos no
+          formato de <strong>User Stories</strong> para manter o foco no valor
+          entregue ao usuário:
+        </p>
+
+        <div class="highlight-box">
+          <strong>Template de User Story:</strong><br />
+          <code
+            >Como [Papel do Usuário], eu quero [Funcionalidade/Ação], para que
+            [Objetivo/Benefício de Negócio].</code
+          >
+        </div>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          3. Critérios de Aceite (Definition of Done)
+        </h3>
+        <p>
+          Cada User Story deve conter
+          <strong>Critérios de Aceite</strong> testáveis para que o dev saiba
+          exatamente quando a tarefa está concluída:
+        </p>
+
+        <div class="sub-card" style="margin-bottom: 1rem">
+          <h3 style="color: var(--secondary)">
+            📝 Exemplo Completo de User Story Back-End:
+          </h3>
+          <p style="margin-bottom: 0.5rem; color: #fff">
+            <strong>História:</strong>
+            <em
+              >"Como cliente da loja, quero redefinir minha senha via e-mail
+              para que eu possa recuperar o acesso à minha conta caso a
+              esqueça."</em
+            >
+          </p>
+          <p style="margin-bottom: 0.25rem">
+            <strong>Critérios de Aceite Técnicos:</strong>
+          </p>
+          <ul
+            style="
+              margin-left: 1.2rem;
+              font-size: 0.88rem;
+              color: var(--text-muted);
+            "
+          >
+            <li>
+              Deve ser gerado um token criptográfico temporário válido por 15
+              minutos.
+            </li>
+            <li>
+              A API deve retornar HTTP status <code>200 OK</code> com mensagem
+              padrão, sem revelar se o e-mail existe no banco (prevenção contra
+              enunciação de usuários).
+            </li>
+            <li>
+              A nova senha deve possuir no mínimo 8 caracteres, contendo letras
+              e números (hash em bcrypt).
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 2 -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">02</div>
+          <div class="section-title-group">
+            <h2>Metodologias Ágeis: Princípios, Priorização MoSCoW e Kanban</h2>
+            <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+          </div>
+        </div>
+
+        <p>
+          As <strong>Metodologias Ágeis</strong> valorizam entregas incrementais
+          contínuas, feedback rápido e adaptação a mudanças em vez de
+          planejamentos rígidos e extensos.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          1. Priorização com o Método MoSCoW
+        </h3>
+        <p>
+          Nem todas as demandas possuem a mesma relevância. A matriz
+          <strong>MoSCoW</strong> ajuda a definir o escopo do
+          <strong>MVP (Produto Mínimo Viável)</strong>:
+        </p>
+
+        <div class="content-grid">
+          <div class="sub-card">
+            <h3>
+              <span class="badge badge-must">MUST HAVE</span> Indispensável
+            </h3>
+            <p>
+              Sem esta funcionalidade o sistema não funciona ou perde o sentido
+              comercial. Ex: Autenticação e persistência de dados essenciais.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>
+              <span class="badge badge-should">SHOULD HAVE</span> Importante
+            </h3>
+            <p>
+              Funcionalidade de alto valor que deve ser incluída se houver
+              tempo, mas que não impede o lançamento do MVP. Ex: Envio de e-mail
+              de confirmação.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3><span class="badge badge-could">COULD HAVE</span> Desejável</h3>
+            <p>
+              Pequenas melhorias de experiência ou extras que só serão feitos se
+              o cronograma estiver adiantado. Ex: Tema escuro configurável na
+              API.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>
+              <span class="badge badge-wont">WON'T HAVE</span> Fora do Escopo
+            </h3>
+            <p>
+              Funcionalidades combinadas que
+              <strong>não serão desenvolvidas nesta versão/sprint</strong>.
+              Evita o aumento descontrolado do escopo (Scope Creep).
+            </p>
+          </div>
+        </div>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          2. Gestão Visual com Quadro Kanban
+        </h3>
+        <p>
+          O Kanban utiliza colunas visuais e o princípio de
+          <strong>limite de WIP (Work In Progress)</strong> para garantir um
+          fluxo contínuo de entregas sem sobrecarregar os desenvolvedores.
+        </p>
+
+        <div class="kanban-grid">
+          <div class="kanban-column todo">
+            <div class="kanban-header">
+              <span>A Fazer (To Do)</span>
+            </div>
+            <div class="kanban-card">
+              <div class="kanban-card-title">RF03: Rota de Relatórios</div>
+              <span style="color: var(--text-dim); font-size: 0.75rem"
+                >Backend • API</span
+              >
+            </div>
+            <div class="kanban-card">
+              <div class="kanban-card-title">RNF02: Configurar Redis</div>
+              <span style="color: var(--text-dim); font-size: 0.75rem"
+                >Infra • Cache</span
+              >
+            </div>
+          </div>
+
+          <div class="kanban-column doing">
+            <div class="kanban-header">
+              <span>Em Progresso</span>
+              <span class="wip-tag">WIP: 2</span>
+            </div>
+            <div
+              class="kanban-card"
+              style="border-left: 3px solid var(--primary)"
+            >
+              <div class="kanban-card-title">RF01: Model de Usuários</div>
+              <span style="color: var(--primary); font-size: 0.75rem"
+                >@Dev_Ana</span
+              >
+            </div>
+          </div>
+
+          <div class="kanban-column review">
+            <div class="kanban-header">
+              <span>Code Review / PR</span>
+              <span class="wip-tag">WIP: 2</span>
+            </div>
+            <div
+              class="kanban-card"
+              style="border-left: 3px solid var(--warning)"
+            >
+              <div class="kanban-card-title">PR #12: Auth JWT</div>
+              <span style="color: var(--warning); font-size: 0.75rem"
+                >Aguardando revisão</span
+              >
+            </div>
+          </div>
+
+          <div class="kanban-column done">
+            <div class="kanban-header">
+              <span>Concluído (Done)</span>
+            </div>
+            <div
+              class="kanban-card"
+              style="border-left: 3px solid var(--success)"
+            >
+              <div class="kanban-card-title">Setup do Projeto Node</div>
+              <span style="color: var(--success); font-size: 0.75rem"
+                >✔ Aprovado</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="highlight-box warning">
+          <strong>⚠️ Regra de Ouro do Kanban:</strong>
+          <em>"Pare de começar e comece a terminar!"</em>. Desenvolvedores não
+          devem puxar uma nova tarefa do "To Do" enquanto houver Pull Requests
+          acumulados para revisão ou testes na coluna "Code Review".
+        </div>
+      </section>
+
+      <!-- SEÇÃO 3 -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">03</div>
+          <div class="section-title-group">
+            <h2>
+              Desenvolvimento de Projetos: Organização de Sprints e Etapas
+            </h2>
+            <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+          </div>
+        </div>
+
+        <p>
+          Para organizar o projeto prático do curso, dividiremos o
+          desenvolvimento em
+          <strong>Sprints (ciclos de entrega contínua)</strong>. Cada Sprint
+          possui um objetivo claro e termina com um software funcional testado.
+        </p>
+
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-badge">1</div>
+            <div class="step-content">
+              <h4>Sprint Planning (Planejamento)</h4>
+              <p>
+                A equipe seleciona as User Stories do Product Backlog com maior
+                prioridade (MoSCoW) e as decompõe em
+                <strong>tarefas técnicas executáveis de Back-End</strong> (ex:
+                criar tabela no banco, escrever rota do controller, validar
+                campos).
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">2</div>
+            <div class="step-content">
+              <h4>Execução & Dailies (Reuniões Diárias)</h4>
+              <p>
+                Desenvolvimento focado nas tarefas da Sprint. Alinhamentos
+                rápidos de 15 minutos respondendo a três perguntas:
+                <em
+                  >O que fiz ontem? O que farei hoje? Há algum impedimento
+                  técnico no meu caminho?</em
+                >
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">3</div>
+            <div class="step-content">
+              <h4>Sprint Review & Retrospectiva</h4>
+              <p>
+                Demonstração das rotas e funcionalidades construídas para
+                validação do cliente/professor e reunião interna da equipe para
+                responder:
+                <em
+                  >O que funcionou bem? O que podemos melhorar na próxima
+                  Sprint?</em
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          Exemplo de Decomposição: De User Story a Tarefas Técnicas Back-End
+        </h3>
+
+        <div class="sub-card">
+          <p style="color: #fff; font-weight: 600; margin-bottom: 0.5rem">
+            User Story: "Cadastro de Produtos no Sistema"
+          </p>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+              gap: 0.75rem;
+              font-size: 0.85rem;
+            "
+          >
+            <div
+              style="
+                background: rgba(17, 24, 39, 0.8);
+                padding: 0.6rem;
+                border-radius: 6px;
+                border: 1px solid var(--border-color);
+              "
+            >
+              <strong style="color: var(--primary)">Task 1 (Banco):</strong>
+              Criar migration SQL da tabela <code>produtos</code> com FK de
+              categoria.
+            </div>
+            <div
+              style="
+                background: rgba(17, 24, 39, 0.8);
+                padding: 0.6rem;
+                border-radius: 6px;
+                border: 1px solid var(--border-color);
+              "
+            >
+              <strong style="color: var(--primary)">Task 2 (Model):</strong>
+              Escrever <code>ProdutoModel</code> com método de inserção e busca.
+            </div>
+            <div
+              style="
+                background: rgba(17, 24, 39, 0.8);
+                padding: 0.6rem;
+                border-radius: 6px;
+                border: 1px solid var(--border-color);
+              "
+            >
+              <strong style="color: var(--primary)"
+                >Task 3 (Controller):</strong
+              >
+              Criar <code>POST /produtos</code> com validação de campos
+              obrigatórios.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WORKSHOP INTEGRADO -->
+      <div class="workshop-box">
+        <div class="workshop-header">
+          <span
+            >🛠️ Atividade Prática Integrada — Planejamento da Sprint 1 do
+            Projeto (Em Equipe)</span
+          >
+        </div>
+
+        <p style="color: #e5e7eb; margin-bottom: 1rem">
+          <strong>Cenário:</strong> Cada equipe/dupla iniciará o planejamento do
+          projeto prático do curso (módulo Back-End). Vocês devem definir os
+          requisitos iniciais, priorizá-los e preparar o Backlog da primeira
+          Sprint.
+        </p>
+
+        <div
+          style="
+            background: rgba(17, 24, 39, 0.7);
+            padding: 1.25rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+          "
+        >
+          <h4 style="color: var(--primary); margin-bottom: 0.75rem">
+            Roteiro do Exercício Prático:
+          </h4>
+          <ol>
+            <li>
+              <strong>Elicitação de Requisitos:</strong> Liste no mínimo
+              <strong>3 Requisitos Funcionais (RF)</strong> e
+              <strong>2 Requisitos Não-Funcionais (RNF)</strong> do sistema
+              escolhido.
+            </li>
+            <li style="margin-top: 0.5rem">
+              <strong>Escrita de User Stories:</strong> Escolha 2 Requisitos
+              Funcionais e transforme-os no formato padronizado de User Story
+              contendo 3 Critérios de Aceite técnicos cada.
+            </li>
+            <li style="margin-top: 0.5rem">
+              <strong>Classificação MoSCoW:</strong> Classifique todos os
+              requisitos em Must Have, Should Have, Could Have ou Won't Have.
+            </li>
+            <li style="margin-top: 0.5rem">
+              <strong>Montagem do Backlog da Sprint 1:</strong> Selecione os
+              itens <em>Must Have</em> e decomponha-os em
+              <strong>tarefas técnicas de Back-End</strong> (Banco de Dados,
+              Models, Controllers e Rotas) organizando-as nas colunas do seu
+              quadro Kanban.
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <footer>
+        Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados /
+        Back-End
+      </footer>
+    </div>
+  </body>
+</html>

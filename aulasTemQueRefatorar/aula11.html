@@ -1,0 +1,983 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aula 11 – Linguagem de Manipulação de Dados (DML)</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+      :root {
+        --bg-main: #0b0f19;
+        --bg-card: #111827;
+        --bg-card-hover: #1f2937;
+        --border-color: #1f2937;
+        --border-highlight: #374151;
+        --primary: #38bdf8;
+        --primary-glow: rgba(56, 189, 248, 0.15);
+        --secondary: #818cf8;
+        --accent: #f43f5e;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --text-main: #f3f4f6;
+        --text-muted: #9ca3af;
+        --text-dim: #6b7280;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        line-height: 1.6;
+        padding: 2rem 1rem;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      /* HEADER */
+      header {
+        background: linear-gradient(
+          135deg,
+          rgba(17, 24, 39, 0.9) 0%,
+          rgba(31, 41, 55, 0.5) 100%
+        );
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 6px;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          var(--primary),
+          var(--secondary)
+        );
+      }
+
+      .header-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--primary-glow);
+        color: var(--primary);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #ffffff;
+        margin-bottom: 0.75rem;
+      }
+
+      .header-info {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .info-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* SECTION CARDS */
+      .section-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        transition: border-color 0.3s ease;
+        position: relative;
+      }
+
+      .section-card:hover {
+        border-color: var(--border-highlight);
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .section-number {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: #000;
+        font-weight: 800;
+        font-size: 1.1rem;
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .section-title-group h2 {
+        font-size: 1.4rem;
+        color: #ffffff;
+        font-weight: 700;
+      }
+
+      .section-title-group .time-tag {
+        font-size: 0.8rem;
+        color: var(--primary);
+        font-weight: 500;
+      }
+
+      /* CONTENT STYLING */
+      p {
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+
+      p strong {
+        color: var(--text-main);
+      }
+
+      code {
+        font-family: 'Fira Code', monospace;
+        background: rgba(56, 189, 248, 0.1);
+        color: var(--primary);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+
+      pre {
+        background: #090d16;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+      }
+
+      pre code {
+        background: transparent;
+        padding: 0;
+        color: #e5e7eb;
+        font-size: 0.88rem;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.25rem;
+        margin: 1.5rem 0;
+      }
+
+      .sub-card {
+        background: rgba(31, 41, 55, 0.4);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.25rem;
+      }
+
+      .sub-card h3 {
+        font-size: 1.05rem;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .sub-card p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+
+      /* TABLES */
+      .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.25rem 0;
+        font-size: 0.92rem;
+        background: rgba(17, 24, 39, 0.6);
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+      }
+
+      .custom-table th {
+        background: rgba(31, 41, 55, 0.8);
+        color: var(--primary);
+        text-align: left;
+        padding: 0.75rem 1rem;
+        font-weight: 600;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .custom-table td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+        color: var(--text-muted);
+      }
+
+      .custom-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .custom-table td strong {
+        color: var(--text-main);
+      }
+
+      /* BADGES & TAGS */
+      .badge {
+        display: inline-block;
+        font-family: 'Fira Code', monospace;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+      }
+      .badge-insert {
+        background: rgba(52, 211, 153, 0.2);
+        color: #34d399;
+        border: 1px solid #34d399;
+      }
+      .badge-select {
+        background: rgba(56, 189, 248, 0.2);
+        color: #38bdf8;
+        border: 1px solid #38bdf8;
+      }
+      .badge-update {
+        background: rgba(251, 191, 36, 0.2);
+        color: #fbbf24;
+        border: 1px solid #fbbf24;
+      }
+      .badge-delete {
+        background: rgba(244, 63, 94, 0.2);
+        color: #f43f5e;
+        border: 1px solid #f43f5e;
+      }
+
+      /* HIGHLIGHTS */
+      .highlight-box {
+        background: rgba(56, 189, 248, 0.05);
+        border-left: 4px solid var(--primary);
+        padding: 1rem 1.25rem;
+        border-radius: 0 10px 10px 0;
+        margin: 1.25rem 0;
+        font-size: 0.95rem;
+      }
+
+      .highlight-box.warning {
+        background: rgba(251, 191, 36, 0.05);
+        border-left-color: var(--warning);
+      }
+
+      .highlight-box.success {
+        background: rgba(52, 211, 153, 0.05);
+        border-left-color: var(--success);
+      }
+
+      .highlight-box strong {
+        color: #fff;
+      }
+
+      /* STEPS / WORKFLOW */
+      .step-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+
+      .step-item {
+        display: flex;
+        gap: 1rem;
+        background: rgba(17, 24, 39, 0.8);
+        border: 1px solid var(--border-color);
+        padding: 1rem;
+        border-radius: 10px;
+      }
+
+      .step-badge {
+        background: var(--border-highlight);
+        color: var(--primary);
+        font-weight: 700;
+        font-family: 'Fira Code', monospace;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .step-content h4 {
+        color: #fff;
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .step-content p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+
+      /* QUIZ STYLING */
+      .quiz-card {
+        background: rgba(17, 24, 39, 0.9);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .quiz-question {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 0.75rem;
+      }
+
+      .quiz-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .quiz-option {
+        background: rgba(31, 41, 55, 0.5);
+        border: 1px solid var(--border-color);
+        padding: 0.6rem 1rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      .quiz-answer {
+        background: rgba(52, 211, 153, 0.1);
+        border-left: 4px solid var(--success);
+        padding: 0.75rem 1rem;
+        border-radius: 0 8px 8px 0;
+        font-size: 0.88rem;
+        color: var(--text-main);
+      }
+
+      /* WORKSHOP BOX */
+      .workshop-box {
+        background: linear-gradient(
+          135deg,
+          rgba(129, 140, 248, 0.1) 0%,
+          rgba(56, 189, 248, 0.05) 100%
+        );
+        border: 1px solid rgba(129, 140, 248, 0.3);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-top: 3rem;
+      }
+
+      .workshop-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--secondary);
+        font-weight: 700;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem 0;
+        color: var(--text-dim);
+        font-size: 0.85rem;
+        border-top: 1px solid var(--border-color);
+        margin-top: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- HEADER DE APRESENTAÇÃO -->
+      <header>
+        <div class="header-badge">
+          <span>📖 Guia Didático da Aula</span>
+        </div>
+        <h1>Linguagem de Manipulação de Dados (DML)</h1>
+        <p
+          style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0"
+        >
+          Operações fundamentais de inserção, consulta, atualização e exclusão
+          em SQL, consultas relacionais avançadas com JOINs e agregações, e
+          povoamento do Portal B2B.
+        </p>
+
+        <div class="header-info">
+          <div class="info-item">
+            <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+          </div>
+          <div class="info-item">
+            <span
+              >🎯 <strong>Foco:</strong> INSERT, SELECT, UPDATE, DELETE,
+              INNER/LEFT JOIN, GROUP BY, HAVING, Seeds & Queries</span
+            >
+          </div>
+          <div class="info-item">
+            <span>🚀 <strong>Módulo:</strong> Banco de Dados & Back-End</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- SEÇÃO 1 -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">01</div>
+          <div class="section-title-group">
+            <h2>Comandos DML Fundamentais: INSERT, SELECT, UPDATE e DELETE</h2>
+            <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+          </div>
+        </div>
+
+        <p>
+          A
+          <strong
+            >Linguagem de Manipulação de Dados (DML - Data Manipulation
+            Language)</strong
+          >
+          é o subconjunto da linguagem SQL voltado para a manipulação dos
+          registros armazenados nas tabelas. Diferente da DDL (que altera a
+          estrutura), a DML atua diretamente nos dados da aplicação.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          1. Os Quatro Pilares do CRUD Relacional
+        </h3>
+
+        <div class="content-grid">
+          <div class="sub-card">
+            <h3><span class="badge badge-insert">INSERT</span></h3>
+            <p>
+              Insere novas linhas/registros em uma tabela.<br />
+              • Inserções individuais ou em lote (bulk insert).<br />
+              • Cláusula nativa PostgreSQL <code>RETURNING *</code> para
+              capturar o ID gerado automaticamente.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3><span class="badge badge-select">SELECT</span></h3>
+            <p>
+              Consulta e recupera registros existentes.<br />
+              • Projeção de colunas específicas.<br />
+              • Filtragem com <code>WHERE</code>, ordenação com
+              <code>ORDER BY</code> e controle de paginação com
+              <code>LIMIT / OFFSET</code>.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3><span class="badge badge-update">UPDATE</span></h3>
+            <p>
+              Modifica valores de colunas em registros já existentes.<br />
+              • Requer o uso rigoroso de filtro <code>WHERE</code> para evitar
+              alteração acidental de todas as linhas da tabela.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3><span class="badge badge-delete">DELETE</span></h3>
+            <p>
+              Remove registros específicos da tabela.<br />
+              • Diferente do <code>TRUNCATE</code> (DDL), o
+              <code>DELETE</code> é transacional, pode ser desfeito (Rollback) e
+              aceita filtros refinados com <code>WHERE</code>.
+            </p>
+          </div>
+        </div>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          2. Exemplos Práticos de DML em PostgreSQL
+        </h3>
+
+        <pre><code>-- A. INSERT em Lote com Captura de ID (RETURNING)
+INSERT INTO clientes_b2b (cnpj, razao_social, email, telefone)
+VALUES 
+    ('11222333000199', 'Indústria Metalúrgica Alfa S.A.', 'compras@alfa.com.br', '1133334444'),
+    ('44555666000188', 'Tecnologia Industrial Beta Ltda', 'suprimentos@beta.com', '4832221111')
+RETURNING id_cliente, razao_social, criado_em;
+
+-- B. SELECT com Projeção, Filtro, Ordenação e Paginação
+SELECT id_produto, nome_produto, preco_base 
+FROM produtos 
+WHERE ativo = TRUE AND preco_base >= 100.00
+ORDER BY preco_base DESC
+LIMIT 10 OFFSET 0;
+
+-- C. UPDATE Seguro de Status e Valor de Pedido
+UPDATE pedidos 
+SET status_pedido = 'CONFIRMADO', 
+    valor_total = 15400.50
+WHERE id_pedido = 105 AND status_pedido = 'RASCUNHO';
+
+-- D. DELETE Condicional de Registro
+DELETE FROM itens_pedido 
+WHERE id_pedido = 105 AND id_produto = 3;</code></pre>
+
+        <div class="highlight-box warning">
+          <strong>⚠️ A Regra de Ouro do Back-End:</strong>
+          <em>"NUNCA execute UPDATE ou DELETE sem a cláusula WHERE!"</em>. Em
+          bancos relacionais de produção sem transação aberta (`BEGIN`), um
+          `UPDATE clientes_b2b SET ativo = FALSE;` desativará imediatamente toda
+          a base de clientes do portal.
+        </div>
+      </section>
+
+      <!-- SEÇÃO 2 -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">02</div>
+          <div class="section-title-group">
+            <h2>Consultas Avançadas: JOINs, Filtros, Ordenação e Agregações</h2>
+            <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+          </div>
+        </div>
+
+        <p>
+          O verdadeiro poder das bases de dados relacionais está na capacidade
+          de cruzar informações entre múltiplas tabelas normalizadas através de
+          junções (**JOINs**) e realizar análises agregadas.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          1. Tipos Principais de Junção (JOINs)
+        </h3>
+
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Tipo de JOIN</th>
+              <th>Comportamento Relacional</th>
+              <th>Caso de Uso Recomendado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>INNER JOIN</code></td>
+              <td>
+                Retorna apenas as linhas onde há **correspondência exata em
+                ambas as tabelas**.
+              </td>
+              <td>
+                Listar pedidos associados apenas a clientes cadastrados válidos.
+              </td>
+            </tr>
+            <tr>
+              <td><code>LEFT (OUTER) JOIN</code></td>
+              <td>
+                Retorna **todas as linhas da tabela da esquerda**, preenchendo
+                com `NULL` a direita se não houver par.
+              </td>
+              <td>
+                Listar **todos** os clientes cadastrados, incluindo os que ainda
+                não fizeram compras.
+              </td>
+            </tr>
+            <tr>
+              <td><code>RIGHT JOIN / FULL JOIN</code></td>
+              <td>
+                Preserva todos os registros da direita ou de ambas as tabelas
+                (pouco utilizado no dia a dia).
+              </td>
+              <td>
+                Auditorias completas de reconciliação de dados entre bases
+                externas.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          2. Operadores de Filtro Avançados
+        </h3>
+
+        <div class="content-grid">
+          <div class="sub-card">
+            <h3>🔍 Buscas Textuais com `ILIKE`</h3>
+            <p>
+              Busca case-insensitive no PostgreSQL com caracteres curinga.<br />
+              Ex:
+              <code>WHERE razao_social ILIKE '%metalurgica%'</code> (localiza
+              palavras em qualquer posição).
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>🎯 Conjuntos com `IN (...)`</h3>
+            <p>
+              Filtra valores contidos em uma lista expressa.<br />
+              Ex:
+              <code>WHERE status_pedido IN ('CONFIRMADO', 'FATURADO')</code>.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>📅 Intervalos com `BETWEEN`</h3>
+            <p>
+              Filtra dados dentro de um intervalo inclusivo de datas ou
+              números.<br />
+              Ex:
+              <code
+                >WHERE data_pedido BETWEEN '2026-01-01' AND '2026-10-31'</code
+              >.
+            </p>
+          </div>
+        </div>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          3. Agrupamentos e Funções de Agregação (`GROUP BY` & `HAVING`)
+        </h3>
+
+        <p>
+          As funções de agregação (<code>SUM</code>, <code>COUNT</code>,
+          <code>AVG</code>, <code>MAX</code>, <code>MIN</code>) consolidam
+          múltiplas linhas em um resultado resumido.
+        </p>
+
+        <pre><code>-- Relatório Agregado: Total gasto por Cliente B2B em pedidos confirmados
+SELECT 
+    c.id_cliente,
+    c.razao_social,
+    COUNT(p.id_pedido) AS total_pedidos,
+    SUM(p.valor_total) AS faturamento_total,
+    AVG(p.valor_total) AS ticket_medio
+FROM clientes_b2b c
+INNER JOIN pedidos p ON c.id_cliente = p.id_cliente
+WHERE p.status_pedido IN ('CONFIRMADO', 'FATURADO')
+GROUP BY c.id_cliente, c.razao_social
+HAVING SUM(p.valor_total) >= 50000.00 -- Filtro aplicado APÓS o agrupamento
+ORDER BY faturamento_total DESC;</code></pre>
+
+        <div class="highlight-box success">
+          <strong>💡 Diferença Crucial entre WHERE e HAVING:</strong> O
+          <code>WHERE</code> filtra linhas **antes** do agrupamento ser
+          calculado. O <code>HAVING</code> filtra os resultados agregados
+          **depois** do `GROUP BY` ter processado os totais!
+        </div>
+      </section>
+
+      <!-- SEÇÃO 3 (DESAFIO PRÁTICO) -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">03</div>
+          <div class="section-title-group">
+            <h2>
+              Desafio Prático — Povoamento (`seeds.sql`) e Consultas Reais para
+              o Portal B2B
+            </h2>
+            <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+          </div>
+        </div>
+
+        <p>
+          As equipes devem construir o script de povoamento inicial
+          (<strong>`seeds.sql`</strong>) com massa de dados coerente para testes
+          do Portal Comercial B2B e desenvolver as três consultas SQL de
+          relatórios de negócio exigidas.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          1. Script de Povoamento Inicial (`src/config/seeds.sql`)
+        </h3>
+
+        <pre><code>-- LIMPEZA DE DADOS
+TRUNCATE TABLE itens_pedido, inventario, pedidos, produtos, clientes_b2b RESTART IDENTITY CASCADE;
+
+-- MASSA DE DADOS DE CLIENTES B2B
+INSERT INTO clientes_b2b (cnpj, razao_social, email, telefone) VALUES
+('11222333000199', 'Indústria Metalúrgica Alfa S.A.', 'compras@alfa.com', '1133334444'),
+('44555666000188', 'Tecnologia Industrial Beta Ltda', 'compras@beta.com', '4832221111'),
+('77888999000177', 'Usinagem e Peças Gama Eireli', 'compras@gama.com', '5130009999');
+
+-- MASSA DE DADOS DE PRODUTOS E INVENTÁRIO
+INSERT INTO produtos (codigo_sku, nome_produto, preco_base) VALUES
+('SKU-ELEC-001', 'Sensor Indutivo de Proximidade 24V', 250.00),
+('SKU-MEC-002', 'Rolamento de Esferas Blindado R60', 120.50),
+('SKU-AUT-003', 'CLP Programável 16 Entradas Digital', 1850.00);
+
+INSERT INTO inventario (id_produto, quantidade_saldo, localizacao_deposito) VALUES
+(1, 150, 'GALPAO_A_PRATELEIRA_3'),
+(2, 8, 'GALPAO_A_PRATELEIRA_1'), -- Estoque Baixo!
+(3, 45, 'GALPAO_B_NOBREAK');
+
+-- MASSA DE DADOS DE PEDIDOS E ITENS
+INSERT INTO pedidos (id_cliente, status_pedido, valor_total) VALUES
+(1, 'FATURADO', 2370.00),
+(2, 'CONFIRMADO', 1850.00);
+
+INSERT INTO itens_pedido (id_pedido, id_produto, quantidade, preco_unitario_momento) VALUES
+(1, 1, 4, 250.00),
+(1, 2, 10, 120.50),
+(2, 3, 1, 1850.00);</code></pre>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          2. As Três Consultas de Relatórios de Negócio
+          (`src/config/queries.sql`)
+        </h3>
+
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-badge">Q1</div>
+            <div class="step-content">
+              <h4>Consulta 1: Relatório de Faturamento por Cliente B2B</h4>
+              <p>
+                Retorna o CNPJ, Razão Social, total de pedidos e soma comprada
+                ordenados pelos maiores compradores.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">Q2</div>
+            <div class="step-content">
+              <h4>
+                Consulta 2: Alerta de Estoque Crítico do Inventário Industrial
+              </h4>
+              <p>
+                Retorna os produtos cujo saldo em estoque está abaixo de 10
+                unidades via <code>INNER JOIN</code> entre
+                <code>produtos</code> e <code>inventario</code>.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">Q3</div>
+            <div class="step-content">
+              <h4>
+                Consulta 3: Detalhamento do Espelho do Pedido para Faturamento
+              </h4>
+              <p>
+                Realiza a junção tripla (<code
+                  >pedidos ➔ clientes_b2b ➔ itens_pedido ➔ produtos</code
+                >) calculando o subtotal por item (`quantidade *
+                preco_unitario_momento`).
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 4 (ENCERRAMENTO) -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">04</div>
+          <div class="section-title-group">
+            <h2>Encerramento: Glossário da Aula + Quiz Final de Fixação</h2>
+            <span class="time-tag">⏱️ Duração Estimada: 30 min</span>
+          </div>
+        </div>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem">
+          📚 Glossário Técnico da Aula
+        </h3>
+
+        <div class="content-grid" style="margin-bottom: 2rem">
+          <div class="sub-card">
+            <h3>DML (Data Manipulation Language)</h3>
+            <p>
+              Comandos SQL (INSERT, SELECT, UPDATE, DELETE) dedicados a
+              manipular os dados mantidos dentro das tabelas.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>INNER JOIN</h3>
+            <p>
+              Cláusula de junção que combina registros de duas tabelas apenas
+              quando a chave condicional se iguala em ambas.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>LEFT OUTER JOIN</h3>
+            <p>
+              Junção que mantém todos os registros da tabela à esquerda da
+              cláusula, associando `NULL` quando não houver par à direita.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>Cláusula HAVING</h3>
+            <p>
+              Filtro condicional executado especificamente sobre colunas que
+              contêm funções de agregação (SUM, COUNT) após um GROUP BY.
+            </p>
+          </div>
+        </div>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem">
+          ❓ Quiz Final de Fixação
+        </h3>
+
+        <!-- QUESTÃO 1 -->
+        <div class="quiz-card">
+          <div class="quiz-question">
+            1. Qual a diferença fundamental entre aplicar o filtro na cláusula
+            WHERE e na cláusula HAVING em uma consulta SQL?
+          </div>
+          <div class="quiz-options">
+            <div class="quiz-option">
+              A) O WHERE é usado para números e o HAVING é usado para textos.
+            </div>
+            <div class="quiz-option">
+              B) O WHERE filtra linhas individuais antes do agrupamento; o
+              HAVING filtra os totais agregados produzidos pelo GROUP BY.
+            </div>
+            <div class="quiz-option">
+              C) Não há diferença; ambas as cláusulas produzem resultados
+              idênticos em qualquer situação.
+            </div>
+            <div class="quiz-option">
+              D) O HAVING só pode ser utilizado quando existir um LEFT JOIN na
+              consulta.
+            </div>
+          </div>
+          <div class="quiz-answer">
+            <strong
+              >✅ Resposta Correta: B) O WHERE filtra linhas individuais antes
+              do agrupamento; o HAVING filtra os totais agregados produzidos
+              pelo GROUP BY.</strong
+            ><br />
+            <em>Justificativa:</em> O `WHERE` descarta registros antes do
+            calculo das funções agregadas. O `HAVING` atua sobre o resultado de
+            funções como `SUM()`, `COUNT()` ou `AVG()`.
+          </div>
+        </div>
+
+        <!-- QUESTÃO 2 -->
+        <div class="quiz-card">
+          <div class="quiz-question">
+            2. Em um sistema comercial, deseja-se listar TODOS os clientes
+            cadastrados e a quantidade de compras de cada um, inclusive daqueles
+            que NUNCA compraram nada. Qual JOIN utilizar?
+          </div>
+          <div class="quiz-options">
+            <div class="quiz-option">A) INNER JOIN</div>
+            <div class="quiz-option">B) CROSS JOIN</div>
+            <div class="quiz-option">
+              C) LEFT JOIN (posicionando Clientes à esquerda)
+            </div>
+            <div class="quiz-option">
+              D) RIGHT JOIN (posicionando Pedidos à direita sem Clientes)
+            </div>
+          </div>
+          <div class="quiz-answer">
+            <strong
+              >✅ Resposta Correta: C) LEFT JOIN (posicionando Clientes à
+              esquerda)</strong
+            ><br />
+            <em>Justificativa:</em> O `LEFT JOIN` preserva todos os registros da
+            tabela primária (esquerda/Clientes), mesmo quando não houver
+            correspondência na tabela secundária (Pedidos), retornando `NULL` na
+            contagem/dados.
+          </div>
+        </div>
+
+        <!-- QUESTÃO 3 -->
+        <div class="quiz-card">
+          <div class="quiz-question">
+            3. Para que serve a cláusula `RETURNING *` anexada ao final de uma
+            instrução `INSERT INTO` no PostgreSQL?
+          </div>
+          <div class="quiz-options">
+            <div class="quiz-option">
+              A) Para desfaire a inserção caso ocorra algum erro de rede.
+            </div>
+            <div class="quiz-option">
+              B) Para retornar imediatamente o registro recém-criado (incluindo
+              IDs autoincrementados) para a aplicação chamadora sem necessidade
+              de um SELECT extra.
+            </div>
+            <div class="quiz-option">
+              C) Para duplicar a inserção em uma tabela de backup em tempo real.
+            </div>
+            <div class="quiz-option">
+              D) Para aplicar a normalização 3FN aos dados inseridos.
+            </div>
+          </div>
+          <div class="quiz-answer">
+            <strong
+              >✅ Resposta Correta: B) Para retornar imediatamente o registro
+              recém-criado para a aplicação chamadora.</strong
+            ><br />
+            <em>Justificativa:</em> O `RETURNING` devolve as colunas da linha
+            recém-inserida (especialmente útil para obter `id_cliente` ou
+            `id_pedido` autoincrementados na API Node.js).
+          </div>
+        </div>
+      </section>
+
+      <!-- WORKSHOP INTEGRADO -->
+      <div class="workshop-box">
+        <div class="workshop-header">
+          <span
+            >🛠️ Entregável da Aula 11 — Commit dos Scripts `seeds.sql` e
+            `queries.sql`</span
+          >
+        </div>
+
+        <p style="color: #e5e7eb; margin-bottom: 1rem">
+          Cada equipe deve salvar os arquivos na pasta
+          <code>src/config/</code> do projeto, executá-los no PostgreSQL local e
+          realizar o commit no repositório:<br />
+          <code
+            >git commit -m "feat: adiciona script DML de povoamento e consultas
+            relatorias B2B"</code
+          >
+        </p>
+      </div>
+
+      <footer>
+        Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados /
+        Back-End
+      </footer>
+    </div>
+  </body>
+</html>

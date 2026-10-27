@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aula 04 – Ambiente de Desenvolvimento e Versionamento</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+      :root {
+        --bg-main: #0b0f19;
+        --bg-card: #111827;
+        --bg-card-hover: #1f2937;
+        --border-color: #1f2937;
+        --border-highlight: #374151;
+        --primary: #38bdf8;
+        --primary-glow: rgba(56, 189, 248, 0.15);
+        --secondary: #818cf8;
+        --accent: #f43f5e;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --text-main: #f3f4f6;
+        --text-muted: #9ca3af;
+        --text-dim: #6b7280;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        line-height: 1.6;
+        padding: 2rem 1rem;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      /* HEADER */
+      header {
+        background: linear-gradient(
+          135deg,
+          rgba(17, 24, 39, 0.9) 0%,
+          rgba(31, 41, 55, 0.5) 100%
+        );
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 6px;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          var(--primary),
+          var(--secondary)
+        );
+      }
+
+      .header-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--primary-glow);
+        color: var(--primary);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #ffffff;
+        margin-bottom: 0.75rem;
+      }
+
+      .header-info {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .info-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* SECTION CARDS */
+      .section-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        transition: border-color 0.3s ease;
+        position: relative;
+      }
+
+      .section-card:hover {
+        border-color: var(--border-highlight);
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .section-number {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: #000;
+        font-weight: 800;
+        font-size: 1.1rem;
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .section-title-group h2 {
+        font-size: 1.4rem;
+        color: #ffffff;
+        font-weight: 700;
+      }
+
+      .section-title-group .time-tag {
+        font-size: 0.8rem;
+        color: var(--primary);
+        font-weight: 500;
+      }
+
+      /* CONTENT STYLING */
+      p {
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+
+      p strong {
+        color: var(--text-main);
+      }
+
+      code {
+        font-family: 'Fira Code', monospace;
+        background: rgba(56, 189, 248, 0.1);
+        color: var(--primary);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+
+      pre {
+        background: #090d16;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+      }
+
+      pre code {
+        background: transparent;
+        padding: 0;
+        color: #e5e7eb;
+        font-size: 0.88rem;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.25rem;
+        margin: 1.5rem 0;
+      }
+
+      .sub-card {
+        background: rgba(31, 41, 55, 0.4);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.25rem;
+      }
+
+      .sub-card h3 {
+        font-size: 1.05rem;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .sub-card p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+
+      /* TABLES */
+      .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.25rem 0;
+        font-size: 0.92rem;
+        background: rgba(17, 24, 39, 0.6);
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+      }
+
+      .custom-table th {
+        background: rgba(31, 41, 55, 0.8);
+        color: var(--primary);
+        text-align: left;
+        padding: 0.75rem 1rem;
+        font-weight: 600;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .custom-table td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+        color: var(--text-muted);
+      }
+
+      .custom-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .custom-table td strong {
+        color: var(--text-main);
+      }
+
+      /* BADGES & TAGS */
+      .badge {
+        display: inline-block;
+        font-family: 'Fira Code', monospace;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+      }
+      .badge-feat {
+        background: rgba(52, 211, 153, 0.2);
+        color: #34d399;
+        border: 1px solid #34d399;
+      }
+      .badge-fix {
+        background: rgba(244, 63, 94, 0.2);
+        color: #f43f5e;
+        border: 1px solid #f43f5e;
+      }
+      .badge-docs {
+        background: rgba(56, 189, 248, 0.2);
+        color: #38bdf8;
+        border: 1px solid #38bdf8;
+      }
+      .badge-refactor {
+        background: rgba(251, 191, 36, 0.2);
+        color: #fbbf24;
+        border: 1px solid #fbbf24;
+      }
+
+      /* HIGHLIGHTS */
+      .highlight-box {
+        background: rgba(56, 189, 248, 0.05);
+        border-left: 4px solid var(--primary);
+        padding: 1rem 1.25rem;
+        border-radius: 0 10px 10px 0;
+        margin: 1.25rem 0;
+        font-size: 0.95rem;
+      }
+
+      .highlight-box.warning {
+        background: rgba(251, 191, 36, 0.05);
+        border-left-color: var(--warning);
+      }
+
+      .highlight-box.success {
+        background: rgba(52, 211, 153, 0.05);
+        border-left-color: var(--success);
+      }
+
+      .highlight-box strong {
+        color: #fff;
+      }
+
+      /* STEPS / WORKFLOW */
+      .step-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+
+      .step-item {
+        display: flex;
+        gap: 1rem;
+        background: rgba(17, 24, 39, 0.8);
+        border: 1px solid var(--border-color);
+        padding: 1rem;
+        border-radius: 10px;
+      }
+
+      .step-badge {
+        background: var(--border-highlight);
+        color: var(--primary);
+        font-weight: 700;
+        font-family: 'Fira Code', monospace;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .step-content h4 {
+        color: #fff;
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .step-content p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+
+      /* WORKSHOP BOX */
+      .workshop-box {
+        background: linear-gradient(
+          135deg,
+          rgba(129, 140, 248, 0.1) 0%,
+          rgba(56, 189, 248, 0.05) 100%
+        );
+        border: 1px solid rgba(129, 140, 248, 0.3);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-top: 3rem;
+      }
+
+      .workshop-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--secondary);
+        font-weight: 700;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem 0;
+        color: var(--text-dim);
+        font-size: 0.85rem;
+        border-top: 1px solid var(--border-color);
+        margin-top: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- HEADER DE APRESENTAÇÃO -->
+      <header>
+        <div class="header-badge">
+          <span>📖 Guia Didático da Aula</span>
+        </div>
+        <h1>Ambiente de Desenvolvimento e Versionamento</h1>
+        <p
+          style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 0"
+        >
+          Configuração do ecossistema Node.js, gerenciamento de dependências com
+          npm, estrutura MVC e versionamento colaborativo com Git.
+        </p>
+
+        <div class="header-info">
+          <div class="info-item">
+            <span>⏱️ <strong>Duração:</strong> 3 horas (Presencial)</span>
+          </div>
+          <div class="info-item">
+            <span
+              >🎯 <strong>Foco:</strong> Node.js, npm, MVC Structure, Git
+              Workflow & Code Hygiene</span
+            >
+          </div>
+          <div class="info-item">
+            <span>🚀 <strong>Módulo:</strong> Desenvolvimento Back-End</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- SEÇÃO 1 -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">01</div>
+          <div class="section-title-group">
+            <h2>
+              Configuração do Ambiente Node.js, npm e Estrutura de Projeto MVC
+            </h2>
+            <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+          </div>
+        </div>
+
+        <p>
+          O <strong>Node.js</strong> é um ambiente de execução JavaScript no
+          servidor construído sobre o motor V8 do Chrome. Ele utiliza um modelo
+          de E/S (Entrada/Saída) não-bloqueante e orientado a eventos, sendo
+          ideal para construir APIs REST escaláveis e de alta performance.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          1. Gerenciamento de Pacotes com npm
+        </h3>
+        <p>
+          O <strong>npm (Node Package Manager)</strong> é o ecossistema de
+          bibliotecas e o gerenciador de dependências nativo do Node.js.
+        </p>
+
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-badge">1</div>
+            <div class="step-content">
+              <h4>Inicialização do Projeto</h4>
+              <p>
+                Comando: <code>npm init -y</code><br />Gera o arquivo
+                <code>package.json</code>, que atua como o "RG" do projeto,
+                armazenando metadados, scripts e a lista de pacotes instalados.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">2</div>
+            <div class="step-content">
+              <h4>Instalação de Dependências de Produção</h4>
+              <p>
+                Comando: <code>npm install express dotenv pg</code
+                ><br />Bibliotecas necessárias para o funcionamento do sistema
+                em ambiente final (ex: frameworks web, conectores de banco).
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">3</div>
+            <div class="step-content">
+              <h4>Instalação de Dependências de Desenvolvimento</h4>
+              <p>
+                Comando: <code>npm install -D nodemon</code><br />Ferramentas
+                utilizadas apenas durante a codificação (ex: leitores de
+                auto-reload, formatadores), salvas na seção
+                <code>devDependencies</code>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          2. Estrutura Profissional de Pastas MVC
+        </h3>
+        <p>
+          Para manter o código limpo e escalável, organizamos a aplicação em uma
+          estrutura física modularizada baseada no padrão MVC:
+        </p>
+
+        <pre><code>meu-projeto-backend/
+├── node_modules/         # Pacotes instalados (NUNCA versionar)
+├── src/                  # Código fonte da aplicação
+│   ├── config/           # Conexões de banco de dados e variáveis de ambiente
+│   │   └── database.js
+│   ├── controllers/      # Regras de fluxo da requisição e resposta
+│   │   └── usuarioController.js
+│   ├── models/           # Abstração de dados e consultas SQL
+│   │   └── usuarioModel.js
+│   ├── routes/           # Definição dos endpoints REST
+│   │   └── usuarioRoutes.js
+│   └── app.js            # Instância do servidor Express e Middlewares
+├── .env                  # Segredos e variáveis de ambiente locais (NUNCA versionar)
+├── .env.example          # Modelo público das variáveis sem valores sensíveis
+├── .gitignore            # Arquivos ignorados pelo Git
+├── package.json          # Configuração de dependências e scripts
+└── server.js             # Ponto de entrada (Bootstrapping) da aplicação</code></pre>
+
+        <div class="highlight-box success">
+          <strong>💡 Boas Práticas de Bootstrap:</strong> Separe o
+          <code>app.js</code> (onde os middlewares e rotas são registrados) do
+          <code>server.js</code> (onde o servidor efetivamente escuta na porta
+          Ex: <code>app.listen(3000)</code>). Isso facilita a escrita de testes
+          automatizados sem ter que subir a porta do servidor.
+        </div>
+      </section>
+
+      <!-- SEÇÃO 2 -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">02</div>
+          <div class="section-title-group">
+            <h2>
+              Técnicas de Versionamento de Software — Git Colaborativo em Equipe
+            </h2>
+            <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+          </div>
+        </div>
+
+        <p>
+          Em ambientes corporativos, múltiplos desenvolvedores trabalham
+          simultaneamente na mesma base de código. O uso de **estratégia de
+          ramificação (*branching model*)** garante que o código principal em
+          produção permaneça sempre estável.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          1. Modelo de Branches para Equipes (Git Workflow)
+        </h3>
+
+        <div class="content-grid">
+          <div class="sub-card">
+            <h3>🚀 branch `main`</h3>
+            <p>
+              Código oficial em produção. Recebe apenas atualizações
+              consolidadas e testadas. Deve ser protegida contra commits
+              diretos.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>🛠️ branch `develop`</h3>
+            <p>
+              Ambiente de homologação e integração contínua. É para onde todas
+              as novas funcionalidades convergem antes de ir para produção.
+            </p>
+          </div>
+
+          <div class="sub-card">
+            <h3>✨ branches `feature/*`</h3>
+            <p>
+              Branches temporárias criadas a partir de <code>develop</code> para
+              isolar o desenvolvimento de uma única funcionalidade (ex:
+              <code>feature/login-jwt</code>).
+            </p>
+          </div>
+        </div>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          2. Fluxo Colaborativo: Do Desenvolvimento ao Pull Request
+        </h3>
+
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-badge">1</div>
+            <div class="step-content">
+              <h4>Atualizar o repositório local</h4>
+              <p>
+                Sempre baixe as alterações mais recentes antes de iniciar:
+                <code>git checkout develop && git pull origin develop</code>
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">2</div>
+            <div class="step-content">
+              <h4>Criar a branch de trabalho</h4>
+              <p>
+                Crie uma ramificação nomeada e específica:
+                <code>git checkout -b feature/cadastro-produtos</code>
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">3</div>
+            <div class="step-content">
+              <h4>Commits atômicos & Push</h4>
+              <p>
+                Desenvolva em pequenas etapas, commite e envie para o
+                repositório remoto:
+                <code>git push origin feature/cadastro-produtos</code>
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-badge">4</div>
+            <div class="step-content">
+              <h4>Abertura de Pull Request (PR) & Code Review</h4>
+              <p>
+                Abra um PR direcionando sua branch para a <code>develop</code>.
+                Outro colega de equipe revisa o código, sugere melhorias e
+                aprova o merge.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 3 -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-number">03</div>
+          <div class="section-title-group">
+            <h2>
+              Boas Práticas de Organização do Repositório e Rastreabilidade
+            </h2>
+            <span class="time-tag">⏱️ Duração Estimada: 60 min</span>
+          </div>
+        </div>
+
+        <p>
+          Um repositório profissional deve ser
+          <strong>autoconsistente, seguro e de fácil navegação</strong> para
+          qualquer novo desenvolvedor que entre na equipe.
+        </p>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          1. Higiene do Repositório e `.gitignore`
+        </h3>
+        <p>
+          Arquivos gerados automaticamente, senhas e módulos nunca devem ser
+          enviados ao servidor Git:
+        </p>
+
+        <div class="sub-card" style="margin-bottom: 1rem">
+          <h3 style="color: var(--accent)">
+            🚫 Exemplo do arquivo `.gitignore` obrigatório:
+          </h3>
+          <pre><code># Dependências
+node_modules/
+
+# Variáveis de ambiente e segredos
+.env
+*.pem
+
+# Logs de execução
+npm-debug.log*
+logs/
+
+# Arquivos de sistema/IDE
+.DS_Store
+.vscode/</code></pre>
+        </div>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          2. Padronização de Commits (Conventional Commits)
+        </h3>
+
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Prefixo</th>
+              <th>Finalidade</th>
+              <th>Exemplo Prático</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-feat">feat:</span></td>
+              <td>Nova funcionalidade adicionada</td>
+              <td>
+                <code>feat: adiciona rota POST /produtos para cadastro</code>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-fix">fix:</span></td>
+              <td>Correção de bug/erro existente</td>
+              <td>
+                <code
+                  >fix: corrige erro 500 no login com email inexistente</code
+                >
+              </td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-docs">docs:</span></td>
+              <td>Alteração na documentação</td>
+              <td>
+                <code
+                  >docs: atualiza instructions do README com comandos de
+                  setup</code
+                >
+              </td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-refactor">refactor:</span></td>
+              <td>Mudança de código sem alterar regra/comportamento</td>
+              <td>
+                <code
+                  >refactor: isola conexao do PostgreSQL no modulo
+                  database.js</code
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="color: #fff; font-size: 1.1rem; margin: 1.5rem 0 0.75rem 0">
+          3. Rastreabilidade com `.env.example` e `README.md`
+        </h3>
+        <p>
+          O arquivo <code>README.md</code> é o cartão de visitas do projeto. Ele
+          deve conter a instrução de instalação, pré-requisitos, variáveis
+          necessárias (listadas sem senhas reais no <code>.env.example</code>) e
+          passos para rodar o projeto.
+        </p>
+      </section>
+
+      <!-- WORKSHOP INTEGRADO -->
+      <div class="workshop-box">
+        <div class="workshop-header">
+          <span
+            >🛠️ Atividade Prática Integrada — Setup do Repositório do Projeto
+            (Em Duplas)</span
+          >
+        </div>
+
+        <p style="color: #e5e7eb; margin-bottom: 1rem">
+          <strong>Cenário:</strong> Cada dupla/equipe fará o setup oficial do
+          ambiente Node.js e a inicialização do repositório Git colaborativo
+          para o projeto do curso.
+        </p>
+
+        <div
+          style="
+            background: rgba(17, 24, 39, 0.7);
+            padding: 1.25rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+          "
+        >
+          <h4 style="color: var(--primary); margin-bottom: 0.75rem">
+            Passo a Passo do Exercício:
+          </h4>
+          <ol>
+            <li>
+              <strong>Setup do Node.js:</strong> Crie a pasta do projeto,
+              execute <code>npm init -y</code>, instale o <code>express</code> e
+              o <code>nodemon</code> (como dev).
+            </li>
+            <li style="margin-top: 0.5rem">
+              <strong>Estruturação MVC:</strong> Crie a estrutura de pastas
+              física (<code>src/controllers</code>, <code>src/models</code>,
+              <code>src/routes</code>, <code>src/config</code>).
+            </li>
+            <li style="margin-top: 0.5rem">
+              <strong>Higiene & Proteção:</strong> Crie o arquivo
+              <code>.gitignore</code> ignorando <code>node_modules/</code> e
+              <code>.env</code>. Crie um arquivo <code>.env.example</code>.
+            </li>
+            <li style="margin-top: 0.5rem">
+              <strong>Git Colaborativo:</strong> Inicialize o Git (`git init`),
+              crie a branch `develop`, e a partir dela crie uma branch
+              `feature/setup-inicial`. Faça o primeiro commit no padrão
+              <em>Conventional Commits</em> (`feat: setup inicial da estrutura
+              mvc e dependencias`).
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <footer>
+        Desenvolvimento de Sistemas • Unidade Curricular de Banco de Dados /
+        Back-End
+      </footer>
+    </div>
+  </body>
+</html>

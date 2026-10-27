@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StreamFlix</title>
+    <link rel="icon" type="image/png" href="imagens/perfil/logoSimulado.png" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- 1. Cabeçalho -->
+    <header class="cabecalho">
+      <!-- 1.1 Seção usuário -->
+      <div class="sec-usuario">
+        <img id="foto-usuario" class="foto-perfil" src="imagens/perfil/logoSimulado.png" alt="Foto de perfil" />
+        <span id="nome-usuario" class="nome-usuario">@StreamFlix</span>
+        <button id="btn-perfil" class="btn btn-preto" type="button" aria-disabled="true">Ver Perfil</button>
+      </div>
+      <!-- 1.2 Seção empresa -->
+      <h1 id="marca" class="marca" title="Ir para o catálogo">StreamFlix</h1>
+      <!-- 1.3 Botão de login / logout -->
+      <div class="sec-login">
+        <button id="btn-login" class="btn btn-preto" type="button">Login</button>
+      </div>
+    </header>
+
+    <main class="conteudo">
+      <!-- Visão: galeria -->
+      <section id="visao-galeria">
+        <!-- 2.1 Campo de busca -->
+        <form id="form-busca" class="busca" autocomplete="off" novalidate>
+          <input id="campo-busca" type="text" placeholder="Digite o nome do administrador... ex: @bulma" aria-label="Buscar administrador" />
+          <button class="btn-lupa" type="submit" aria-label="Buscar"><i class="ico" style="--i: url(/icons/lupa.svg)"></i></button>
+        </form>
+        <p id="msg-busca" class="msg-erro msg-centro" role="alert"></p>
+
+        <!-- 2.2 Galeria de filmes -->
+        <div id="galeria" class="galeria" aria-live="polite"></div>
+      </section>
+
+      <!-- Visão: registro de filmes (administrador) -->
+      <section id="visao-registro" hidden>
+        <div class="registro">
+          <h2>Cadastro de Filme</h2>
+          <form id="form-filme" novalidate>
+            <div class="campo">
+              <label for="titulo-filme">Título do Filme</label>
+              <input id="titulo-filme" type="text" placeholder="Ex.: Interestelar" maxlength="150" />
+              <p class="msg-erro" data-erro="titulo_filme"></p>
+            </div>
+            <div class="campo">
+              <label for="genero-filme">Gênero</label>
+              <input id="genero-filme" type="text" placeholder="Ex.: Ficção Científica" maxlength="60" />
+              <p class="msg-erro" data-erro="genero"></p>
+            </div>
+            <div class="campo">
+              <label for="capa-filme">Capa</label>
+              <div class="upload">
+                <label for="capa-filme" class="btn btn-contorno">Escolher arquivo</label>
+                <span id="nome-arquivo" class="nome-arquivo">Nenhum arquivo escolhido</span>
+                <input id="capa-filme" type="file" accept=".jpg,.jpeg,.png,.gif,.webp,image/jpeg,image/png,image/gif,image/webp" hidden />
+              </div>
+              <p class="msg-erro" data-erro="capa"></p>
+            </div>
+            <button class="btn btn-preto" type="submit">Cadastrar</button>
+          </form>
+
+          <h2 class="subtitulo">Filmes cadastrados</h2>
+          <ul id="lista-filmes" class="lista-filmes"></ul>
+          <p id="lista-vazia" class="msg-centro" hidden>Nenhum filme cadastrado.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- 3. Rodapé -->
+    <footer class="rodape">
+      <span class="rodape-esq">StreamFlix</span>
+      <span class="rodape-centro">
+        <a href="#" aria-label="Instagram"><i class="ico branco" style="--i: url(/icons/instagram.svg)"></i></a>
+        <a href="#" aria-label="TikTok"><i class="ico branco" style="--i: url(/icons/tiktok.svg)"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="ico branco" style="--i: url(/icons/linkedIn.svg)"></i></a>
+        <a href="#" aria-label="YouTube"><i class="ico branco" style="--i: url(/icons/youtube.svg)"></i></a>
+      </span>
+      <span class="rodape-dir">Copyright 2026-2027</span>
+    </footer>
+
+    <!-- Menu lateral do perfil (administrador) -->
+    <aside id="menu-lateral" class="menu-lateral" hidden aria-label="Perfil do administrador">
+      <button id="fechar-menu" class="btn-icone btn-fechar" type="button" aria-label="Fechar menu"><i class="ico" style="--i: url(/icons/fechar.svg)"></i></button>
+      <img id="menu-foto" class="foto-perfil grande" src="" alt="Foto do administrador" />
+      <p id="menu-nome" class="menu-nome"></p>
+      <p class="menu-tipo">administrador</p>
+      <p class="menu-numero"><strong id="menu-likes">0</strong> Likes</p>
+      <p class="menu-numero"><strong id="menu-filmes">0</strong> Filmes</p>
+      <button id="btn-seus-filmes" class="btn-seus-filmes" type="button">Seus filmes</button>
+    </aside>
+
+    <!-- Modal de login -->
+    <div id="modal-login" class="overlay" hidden>
+      <form id="form-login" class="modal" role="dialog" aria-modal="true" aria-labelledby="titulo-login" novalidate>
+        <button id="fechar-login" class="btn-icone btn-fechar" type="button" aria-label="Fechar"><i class="ico" style="--i: url(/icons/fechar.svg)"></i></button>
+        <h2 id="titulo-login">Login</h2>
+        <div class="campo">
+          <input id="login-usuario" type="text" placeholder="Digite seu nome_usuario" autocomplete="username" />
+          <p class="msg-erro" data-erro="nome_usuario"></p>
+        </div>
+        <div class="campo">
+          <input id="login-senha" type="password" placeholder="Digite sua senha" autocomplete="current-password" />
+          <p class="msg-erro" data-erro="senha"></p>
+        </div>
+        <p id="login-erro" class="msg-erro msg-centro" role="alert"></p>
+        <div class="modal-botoes">
+          <button id="cancelar-login" class="btn btn-contorno" type="button">Cancelar</button>
+          <button class="btn btn-preto" type="submit">Login</button>
+        </div>
+      </form>
+    </div>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>
